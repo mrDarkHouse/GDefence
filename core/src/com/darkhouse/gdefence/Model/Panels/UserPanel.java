@@ -30,7 +30,7 @@ public class UserPanel extends AbstractPanel {
 //        );
 
 
-        int expBarSize[] = {width/4*3, height - userLevelSize[1]};
+        int expBarSize[] = {width, height - userLevelSize[1]};
         ExpBar bar = new ExpBar(expBarSize[0], expBarSize[1], mainClass);
 
         //add(new GoldPanel(mainClass)).width(width/6*2).height(height);
@@ -44,6 +44,6 @@ public class UserPanel extends AbstractPanel {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        debug();
+        //debug();
     }
 }

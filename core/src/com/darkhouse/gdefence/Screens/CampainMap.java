@@ -17,6 +17,7 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Model.LevelButton;
 import com.darkhouse.gdefence.Model.Panels.ExpBar;
 import com.darkhouse.gdefence.Model.Panels.GemPanel;
+import com.darkhouse.gdefence.Model.Panels.GoldPanel;
 import com.darkhouse.gdefence.Model.Panels.UserPanel;
 import com.darkhouse.gdefence.Screens.BottomPanel.Arsenal;
 import com.darkhouse.gdefence.Screens.BottomPanel.Smith;
@@ -46,36 +47,20 @@ public class CampainMap extends AbstractCampainScreen {
         //stage = new Stage(viewport,batch);
         //Gdx.input.setInputProcessor(stage);
 
-        //ImageButton backButton;
+
         ImageButton[] bottomPanel = new ImageButton[5];
         //ImageButton[] levels = new ImageButton[5];
 
-        //int backButtonsSize[] = {64, 64};
+
         int bottomButtonsSize[] = {Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/5};
 
         int buttons = 5;
 
 
-//        ImageButton.ImageButtonStyle backButtonStyle = new ImageButton.ImageButtonStyle();
-//        backButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.backButton));
-//        backButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.backButton));
-//        backButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.backButton));
-//        backButton = new ImageButton(backButtonStyle);
-//        backButton.setSize(backButtonsSize[0], backButtonsSize[1]);
-//        backButton.setPosition(20, Gdx.graphics.getHeight() - backButtonsSize[1] - 20);
-//        backButton.addListener(new InputListener(){
-//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//                mainClass.setScreen(new MainMenu(mainClass));
-//                return true;
-//            }
-//        });
 
 
-        ImageButton.ImageButtonStyle arsenalButtonStyle = new ImageButton.ImageButtonStyle();
-        arsenalButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[0]));
-        arsenalButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[0]));
-        arsenalButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[0]));
-        bottomPanel[0] = new ImageButton(arsenalButtonStyle);
+
+        bottomPanel[0] = new ImageButton(AssetLoader.getBottomPanelSkin(1));
         bottomPanel[0].setSize(bottomButtonsSize[0], bottomButtonsSize[1]);
         bottomPanel[0].setPosition(0, 0);
         bottomPanel[0].addListener(new InputListener(){
@@ -85,11 +70,8 @@ public class CampainMap extends AbstractCampainScreen {
             }
         });
 
-        ImageButton.ImageButtonStyle storeButtonStyle = new ImageButton.ImageButtonStyle();
-        storeButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[1]));
-        storeButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[1]));
-        storeButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[1]));
-        bottomPanel[1] = new ImageButton(storeButtonStyle);
+
+        bottomPanel[1] = new ImageButton(AssetLoader.getBottomPanelSkin(2));
         bottomPanel[1].setSize(bottomButtonsSize[0], bottomButtonsSize[1]);
         bottomPanel[1].setPosition(bottomButtonsSize[0], 0);
         bottomPanel[1].addListener(new InputListener(){
@@ -99,11 +81,8 @@ public class CampainMap extends AbstractCampainScreen {
             }
         });
 
-        ImageButton.ImageButtonStyle smithButtonStyle = new ImageButton.ImageButtonStyle();
-        smithButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[2]));
-        smithButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[2]));
-        smithButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[2]));
-        bottomPanel[2] = new ImageButton(smithButtonStyle);
+
+        bottomPanel[2] = new ImageButton(AssetLoader.getBottomPanelSkin(3));
         bottomPanel[2].setSize(bottomButtonsSize[0], bottomButtonsSize[1]);
         bottomPanel[2].setPosition(bottomButtonsSize[0]*2, 0);
         bottomPanel[2].addListener(new InputListener(){
@@ -166,13 +145,18 @@ public class CampainMap extends AbstractCampainScreen {
         }
 
 
-        int userPanelSize[] = {300, 120};
-        stage.addActor(new UserPanel(Gdx.graphics.getWidth() - userPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize - 2, userPanelSize[0], userPanelSize[1], mainClass));
+        int userPanelSize[] = {240, 120};
+        int goldPanelSize[] = {60, userPanelSize[1]};
+        stage.addActor(new GoldPanel(Gdx.graphics.getWidth() - userPanelSize[0] - goldPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize - 2,
+                goldPanelSize[0], goldPanelSize[1], mainClass));
+        stage.addActor(new UserPanel(Gdx.graphics.getWidth() - userPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize - 2,
+                userPanelSize[0], userPanelSize[1], mainClass));
         //System.out.println(Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize);
         stage.addActor(new GemPanel(30, 460, 250, 180, mainClass));
 
-        //stage.addActor(bar);
-        //stage.addActor(userlevelButton);
+
+
+
 
 
 

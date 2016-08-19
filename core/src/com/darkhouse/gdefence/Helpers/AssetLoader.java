@@ -120,6 +120,34 @@ public class AssetLoader {
 
         return levelLock;
     }
+    public static ImageButton.ImageButtonStyle getBottomPanelSkin(int index){
+        switch (index){
+            case 1:
+                ImageButton.ImageButtonStyle arsenalButtonStyle = new ImageButton.ImageButtonStyle();
+                arsenalButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[0]));
+                arsenalButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[0]));
+                arsenalButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[0]));
+                return arsenalButtonStyle;
+            case 2:
+                ImageButton.ImageButtonStyle storeButtonStyle = new ImageButton.ImageButtonStyle();
+                storeButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[1]));
+                storeButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[1]));
+                storeButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[1]));
+                return storeButtonStyle;
+            case 3:
+                ImageButton.ImageButtonStyle smithButtonStyle = new ImageButton.ImageButtonStyle();
+                smithButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[2]));
+                smithButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[2]));
+                smithButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[2]));
+                return smithButtonStyle;
+            case 4:
+                return null;
+
+            case 5:
+                return null;
+        }
+        return null;
+    }
 
     public static void dispose() {
         mainMenuButtonsAtlas.dispose();

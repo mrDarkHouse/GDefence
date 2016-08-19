@@ -3,6 +3,8 @@ package com.darkhouse.gdefence.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Model.BackButton;
@@ -41,6 +45,9 @@ public abstract class AbstractCampainScreen implements Screen {
     }
 
     protected void define(){
+        //Camera cam = new PerspectiveCamera();
+        //stage.setViewport(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam));
+
         int backButtonsSize[] = {64, topPadSize};
         int nameButtonSize[] = {Gdx.graphics.getWidth() - backButtonsSize[0]*2, backButtonsSize[1]};
 
@@ -90,7 +97,10 @@ public abstract class AbstractCampainScreen implements Screen {
         shape.end();
     }
 
-
+    @Override
+    public void resize(int width, int height) {
+        //stage.getViewport().update(width, height);
+    }
 
     @Override
     public void render(float delta) {

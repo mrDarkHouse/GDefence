@@ -10,14 +10,18 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class GoldPanel extends AbstractPanel{
 
-    public GoldPanel(GDefence mainClass) {
-        super(mainClass);
+    public GoldPanel(int x, int y, int width, int height, GDefence mainClass) {
+        super(x, y, width, height, mainClass);
 
 
-        add(new Image(AssetLoader.coin)).row();
+        int heightImg = height/2;
+        int widthImg = heightImg;
+        int heightTxt = height - heightImg;
+
+        add(new Image(AssetLoader.coin)).width(widthImg).height(heightImg).padTop(20).align(Align.center).row();
         Label l = new Label(this.mainClass.user.getGold() + "", mainClass.getSkin());
         l.setAlignment(Align.center);
-        l.setFontScale(0.5f);
+        //l.setFontScale(0.5f);
         add(l);
 
 
