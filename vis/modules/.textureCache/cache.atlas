@@ -1,0 +1,111 @@
+
+cache.png
+size: 2048,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Fonts/MainFont_0
+  rotate: false
+  xy: 516, 552
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+arsenal
+  rotate: false
+  xy: 2, 602
+  size: 512, 408
+  orig: 512, 408
+  offset: 0, 0
+  index: -1
+arsenalOLD
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+backButton
+  rotate: false
+  xy: 516, 486
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 918, 890
+  size: 200, 120
+  orig: 200, 120
+  offset: 0, 0
+  index: -1
+cell
+  rotate: false
+  xy: 204, 62
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+cell — копия
+  rotate: false
+  xy: 204, 62
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+dialogSkin
+  rotate: false
+  xy: 516, 810
+  size: 400, 200
+  orig: 400, 200
+  offset: 0, 0
+  index: -1
+expBar1
+  rotate: false
+  xy: 2, 36
+  size: 200, 50
+  orig: 200, 50
+  offset: 0, 0
+  index: -1
+expBar2
+  rotate: false
+  xy: 516, 434
+  size: 2, 50
+  orig: 2, 50
+  offset: 0, 0
+  index: -1
+levelsButtonsAtlas
+  rotate: false
+  xy: 1120, 10
+  size: 200, 1000
+  orig: 200, 1000
+  offset: 0, 0
+  index: -1
+nameButtonFone
+  rotate: false
+  xy: 918, 688
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+smith
+  rotate: false
+  xy: 1322, 946
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+store
+  rotate: false
+  xy: 2, 88
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+storeOLD
+  rotate: false
+  xy: 774, 744
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,130 @@
+package com.darkhouse.gdefence.Helpers;
+
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
+public class AssetLoader {
+
+    public static Texture mainMenuButtonsAtlas;
+    public static Texture mainMenuBg, campainBg;
+    public static TextureRegion[][] mainMenuButtons;
+    public static Texture backButton;
+    public static Texture[] campainMap = new Texture[3];
+    public static Texture campainLevelsAtlas;
+    public static TextureRegion[][] campainLevels;
+    //public static Texture campainLevelSolo;
+    public static Texture cell;
+    public static Texture nameButtonFone;
+    public static Texture dialogSkin;
+    public static Skin uiSkin;
+    public static Texture transparent;
+    public static Texture barFone;
+    public static Texture barTop;
+    public static Texture levelLock;
+    public static Texture levelMapBg;
+    public static Texture[] gemTexture = new Texture[6];
+    public static Texture coin;
+
+    //public static Animation birdAnimation;
+    //public static TextureRegion bird, birdDown, birdUp;
+
+
+    public static void load() {
+
+        loadMainMenu();
+
+
+    }
+
+    private static void loadMainMenu(){
+        mainMenuBg = new Texture("MainMenuBg.png");
+        campainBg = new Texture("CampainBg.png");
+        backButton = new Texture("backButton.png");
+        mainMenuButtonsAtlas = new Texture(Gdx.files.internal("MainMenuAtlas.png"));
+        mainMenuButtons = TextureRegion.split(mainMenuButtonsAtlas, mainMenuButtonsAtlas.getWidth() / 2, mainMenuButtonsAtlas.getHeight() / 10);
+        campainMap[0] = new Texture("arsenal.png");
+        campainMap[1] = new Texture("store.png");
+        campainMap[2] = new Texture("smith.png");
+        campainLevelsAtlas = new Texture(Gdx.files.internal("levelsButtonsAtlas.png"));
+        campainLevels = TextureRegion.split(campainLevelsAtlas, campainLevelsAtlas.getWidth() / 2, campainLevelsAtlas.getHeight() / 10);
+        cell = new Texture("cell.png");
+        nameButtonFone = new Texture("nameButtonFone.png");
+        dialogSkin = new Texture("dialogSkin.png");
+        uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
+        transparent = new Texture("MainMenuTranparent.png");
+        barFone = new Texture("expBar1.png");
+        barTop = new Texture("expBar2.png");
+        levelLock = new Texture("levelLock.png");
+        levelMapBg = new Texture("LevelMapBg.png");
+        gemTexture[0] = new Texture("Gems/redGem.png");
+        gemTexture[1] = new Texture("Gems/yellowGem.png");
+        gemTexture[2] = new Texture("Gems/blueGem.png");
+        gemTexture[3] = new Texture("Gems/blackGem.png");
+        gemTexture[4] = new Texture("Gems/greenGem.png");
+        gemTexture[5] = new Texture("Gems/whiteGem.png");
+        coin = new Texture("coin.png");
+    }
+
+    public static ImageButton.ImageButtonStyle getBackButtonSkin(){
+        ImageButton.ImageButtonStyle backButtonStyle = new ImageButton.ImageButtonStyle();
+        backButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.backButton));
+        backButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.backButton));
+        backButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.backButton));
+
+        return backButtonStyle;
+    }
+
+    public static ProgressBar.ProgressBarStyle getExpBarSkin(){
+        TextureRegionDrawable barFone = new TextureRegionDrawable(new TextureRegion(AssetLoader.barFone));
+        TextureRegionDrawable barTop = new TextureRegionDrawable(new TextureRegion(AssetLoader.barTop));
+        ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle(barFone, barTop);
+        progressBarStyle.knobBefore = progressBarStyle.knob;
+
+        return progressBarStyle;
+
+
+    }
+    public static ImageButton.ImageButtonStyle getCampainLevelSkin(int number){
+        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
+
+        s.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainLevels[number - 1][0]));
+        s.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainLevels[number - 1][1]));
+        s.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainLevels[number - 1][0]));
+
+        return s;
+    }
+    public static ImageTextButton.ImageTextButtonStyle getUserLevelSkin(){
+        ImageTextButton.ImageTextButtonStyle userLevelButtonStyle = new ImageTextButton.ImageTextButtonStyle();
+        userLevelButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.cell));
+        userLevelButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.cell));
+        userLevelButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.cell));
+        userLevelButtonStyle.font = new BitmapFont(Gdx.files.internal("Fonts/MainFont.fnt"));//(/*Gdx.files.internal("Fonts/Impact.ttf"),false*/);
+        //userLevelButtonStyle
+
+        userLevelButtonStyle.fontColor = new Color(0, 0, 0, 255);
+
+
+        return userLevelButtonStyle;
+    }
+    public static Texture getLevelLockTexture(){
+        Texture t;
+
+
+
+        return levelLock;
+    }
+
+    public static void dispose() {
+        mainMenuButtonsAtlas.dispose();
+    }
+
+
+
+}
