@@ -19,7 +19,7 @@ public class UserPanel extends AbstractPanel {
 
         ImageTextButton userlevelButton = new ImageTextButton("" + mainClass.user.getLevel(), AssetLoader.getUserLevelSkin());
         userlevelButton.getLabel().setFontScale(1.5f);
-        int userLevelSize[] = {width/6, width/6};
+        int userLevelSize[] = {width/4, width/4};
         //userlevelButton.setSize(userLevelSize[0], userLevelSize[1]);
         //userlevelButton.setPosition();
 //        userlevelButton.addListener(new InputListener() {
@@ -30,12 +30,12 @@ public class UserPanel extends AbstractPanel {
 //        );
 
 
-        int expBarSize[] = {width/6*3, height - userLevelSize[1]};
+        int expBarSize[] = {width/4*3, height - userLevelSize[1]};
         ExpBar bar = new ExpBar(expBarSize[0], expBarSize[1], mainClass);
 
-        add(new GoldPanel(mainClass)).width(width/6*2).height(height);
+        //add(new GoldPanel(mainClass)).width(width/6*2).height(height);
         add(userlevelButton).width(userLevelSize[0]).height(userLevelSize[1]).row();
-        add(bar).fill();
+        add(bar);
 
         //System.out.println(getY());
 
