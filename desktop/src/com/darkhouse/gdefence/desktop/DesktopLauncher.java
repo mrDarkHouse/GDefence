@@ -6,7 +6,7 @@ import com.darkhouse.gdefence.GDefence;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		System.setProperty("user.name", "\\xD0\\x90\\xD0\\xBD\\xD0\\xB4\\xD1\\x80\\xD0\\xB5\\xD0\\xB9");//Comment if user.name on english
+		//System.setProperty("user.name", "\\xD0\\x90\\xD0\\xBD\\xD0\\xB4\\xD1\\x80\\xD0\\xB5\\xD0\\xB9");//Comment if user.name on english
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "GDefence";
 		config.width = 1280;
