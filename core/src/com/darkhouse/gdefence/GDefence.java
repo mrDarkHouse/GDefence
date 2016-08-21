@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Screens.*;
 import com.darkhouse.gdefence.Screens.BottomPanel.Arsenal;
 import com.darkhouse.gdefence.Screens.BottomPanel.Smith;
@@ -25,6 +26,7 @@ public class GDefence extends Game {
 	@Override
 	public void create () {
         AssetLoader.load();
+		FontLoader.load();
 		setScreen(new MainMenu(this));
 
 
@@ -49,6 +51,7 @@ public class GDefence extends Game {
 	public void dispose () {
 		super.dispose();
         AssetLoader.dispose();
+		FontLoader.dispose();
 	}
 
 	public Screen setPreviousScreen(){

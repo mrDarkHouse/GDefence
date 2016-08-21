@@ -105,7 +105,7 @@ public class AssetLoader {
         userLevelButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.cell));
         userLevelButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.cell));
         userLevelButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.cell));
-        userLevelButtonStyle.font = new BitmapFont(Gdx.files.internal("Fonts/MainFont.fnt"));//(/*Gdx.files.internal("Fonts/Impact.ttf"),false*/);
+        userLevelButtonStyle.font = FontLoader.impact28;
         //userLevelButtonStyle
 
         userLevelButtonStyle.fontColor = new Color(0, 0, 0, 255);

@@ -18,7 +18,7 @@ public class UserPanel extends AbstractPanel {
 
 
         ImageTextButton userlevelButton = new ImageTextButton("" + mainClass.user.getLevel(), AssetLoader.getUserLevelSkin());
-        userlevelButton.getLabel().setFontScale(1.5f);
+        //userlevelButton.getLabel().setFontScale(1.5f);
         int userLevelSize[] = {width/4, width/4};
         //userlevelButton.setSize(userLevelSize[0], userLevelSize[1]);
         //userlevelButton.setPosition();
