@@ -10,16 +10,16 @@ import com.darkhouse.gdefence.GDefence;
 public class LevelPreparationScreen extends AbstractCampainScreen{
     public LevelPreparationScreen(int level, GDefence mainClass) {
         super("" + level, mainClass);
-        load();
+        load(level);
     }
 
-    private void load(){
+    private void load(final int level){
         TextButton startButton = new TextButton("Start", mainClass.getSkin());
         startButton.setSize(150, 70);
         startButton.setPosition(Gdx.graphics.getWidth() - 200, 30);
         startButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mainClass.setScreen(new LevelMap());
+                mainClass.setScreen(new LevelMap(level));
                 return true;
             }
         });

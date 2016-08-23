@@ -13,6 +13,27 @@ public class MapTile {
     private Texture texture;
     private tileType type;
 
+    public tileType getType() {
+        return type;
+    }
+
+    public static tileType getTypeById(int id){
+        switch (id){
+            case 0:
+                return tileType.grass;
+            case 1:
+                return tileType.ground;
+            case 2:
+                return tileType.rock;
+            case 3:
+                return tileType.grass;
+            case 4:
+                return tileType.water;
+            default:
+                return null;
+        }
+    }
+
     public boolean isBuildable(){
         switch (type){
             case ground:

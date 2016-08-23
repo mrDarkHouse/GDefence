@@ -6,13 +6,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Model.Level.Map;
 
 public class LevelMap implements Screen {
     private SpriteBatch batch;
     //private Stage stage;
     private ShapeRenderer shape;
-    public LevelMap() {
+    private Map map;
+    public LevelMap(int number) {
         batch = new SpriteBatch();
+        map = new Map(number);
     }
 
     @Override
