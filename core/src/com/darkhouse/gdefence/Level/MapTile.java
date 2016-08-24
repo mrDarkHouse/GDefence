@@ -9,12 +9,26 @@ public class MapTile {
     public enum tileType{
         ground, tree, grass, rock, water
     }
+    public enum tileLogic{
+        //R - right, L - left, U - up, D - down
+        none, spawnerR, spawnerL, spawnerU, spawnerD, turnR, turnL, turnU, turnD, castle
+    }
 
     private Texture texture;
     private tileType type;
+    private tileLogic logic;
 
     public tileType getType() {
         return type;
+    }
+    public tileLogic getLogic() {
+        return logic;
+    }
+    public void setType(tileType type) {
+        this.type = type;
+    }
+    public void setLogic(tileLogic logic) {
+        this.logic = logic;
     }
 
     public static tileType getTypeById(int id){
@@ -29,6 +43,33 @@ public class MapTile {
                 return tileType.grass;
             case 4:
                 return tileType.water;
+            default:
+                return null;
+        }
+    }
+
+    public static tileLogic getLogicById(int id){
+        switch (id){
+            case 0:
+                return tileLogic.none;
+            case 1:
+                return tileLogic.spawnerR;
+            case 2:
+                return tileLogic.spawnerL;
+            case 3:
+                return tileLogic.spawnerU;
+            case 4:
+                return tileLogic.spawnerD;
+            case 10:
+                return tileLogic.turnR;
+            case 11:
+                return tileLogic.turnL;
+            case 12:
+                return tileLogic.turnU;
+            case 13:
+                return tileLogic.turnD;
+            case 99:
+                return tileLogic.castle;
             default:
                 return null;
         }

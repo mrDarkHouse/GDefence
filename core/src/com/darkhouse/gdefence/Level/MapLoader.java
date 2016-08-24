@@ -34,6 +34,12 @@ public class MapLoader {
                         mapTile[x][y] = new MapTile(MapTile.getTypeById(loadScanner.nextInt()));
                     }
                 }
+                for (int x = 0; x < sizeX; x++){
+                    for (int y = 0; y < sizeY; y++){
+                        mapTile[x][y].setLogic(MapTile.getLogicById(loadScanner.nextInt()));
+                    }
+                }
+
             }
 
 
