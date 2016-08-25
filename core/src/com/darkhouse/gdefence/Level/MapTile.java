@@ -150,6 +150,7 @@ public class MapTile {
         switch (type){
             case ground:
                 setTexture(new TextureRegionDrawable(AssetLoader.ground));
+                break;
             case grass:
                 setTexture(new TextureRegionDrawable(AssetLoader.grass));
                 break;

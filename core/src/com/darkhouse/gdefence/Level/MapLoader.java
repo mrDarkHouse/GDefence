@@ -28,7 +28,7 @@ public class MapLoader {
             sizeX = loadScanner.nextInt();
             sizeY = loadScanner.nextInt();
             mapTile = new MapTile[sizeX][sizeY];
-            while(loadScanner.hasNext()){
+            //while(loadScanner.hasNext()){
                 for (int x = 0; x < sizeX; x++){
                     for (int y = 0; y < sizeY; y++){
                         mapTile[x][y] = new MapTile(MapTile.getTypeById(loadScanner.nextInt()));
@@ -40,7 +40,7 @@ public class MapLoader {
                     }
                 }
 
-            }
+            //}
 
 
             loadScanner.close();

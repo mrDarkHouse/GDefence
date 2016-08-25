@@ -77,7 +77,7 @@ public class AssetLoader {
         Texture groundTileSet = new Texture("tileset_ground.png");
         TextureRegion[][] tileSet = TextureRegion.split(groundTileSet, groundTileSet.getWidth(), groundTileSet.getHeight()/10);
         grass = tileSet[0][0];
-        ground = campainLevels[0][0];//tileSet[1][0];
+        ground = tileSet[1][0];
 
     }
 
