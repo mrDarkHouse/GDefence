@@ -1,75 +1,88 @@
 package com.darkhouse.gdefence.Level;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.darkhouse.gdefence.Level.Tower;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class MapTile {
+    private int x, y, width, height;
 
-    public enum tileType{
+    public enum TileType{
         ground, tree, grass, rock, water
     }
-    public enum tileLogic{
+    public enum TileLogic {
         //R - right, L - left, U - up, D - down
         none, spawnerR, spawnerL, spawnerU, spawnerD, turnR, turnL, turnU, turnD, castle
     }
 
-    private Texture texture;
-    private tileType type;
-    private tileLogic logic;
+    private TextureRegionDrawable texture;
+    private TileType type;
+    private TileLogic logic;
 
-    public tileType getType() {
+    public TextureRegionDrawable getTexture() {
+        return texture;
+    }
+    public void setTexture(TextureRegionDrawable texture) {
+        this.texture = texture;
+    }
+
+    public TileType getType() {
         return type;
     }
-    public tileLogic getLogic() {
+    public TileLogic getLogic() {
         return logic;
     }
-    public void setType(tileType type) {
+    public void setType(TileType type) {
         this.type = type;
     }
-    public void setLogic(tileLogic logic) {
+    public void setLogic(TileLogic logic) {
         this.logic = logic;
     }
 
-    public static tileType getTypeById(int id){
+    public static TileType getTypeById(int id){
         switch (id){
             case 0:
-                return tileType.grass;
+                return TileType.grass;
             case 1:
-                return tileType.ground;
+                return TileType.ground;
             case 2:
-                return tileType.rock;
+                return TileType.rock;
             case 3:
-                return tileType.grass;
+                return TileType.grass;
             case 4:
-                return tileType.water;
+                return TileType.water;
             default:
                 return null;
         }
     }
 
-    public static tileLogic getLogicById(int id){
+    public static TileLogic getLogicById(int id){
         switch (id){
             case 0:
-                return tileLogic.none;
+                return TileLogic.none;
             case 1:
-                return tileLogic.spawnerR;
+                return TileLogic.spawnerR;
             case 2:
-                return tileLogic.spawnerL;
+                return TileLogic.spawnerL;
             case 3:
-                return tileLogic.spawnerU;
+                return TileLogic.spawnerU;
             case 4:
-                return tileLogic.spawnerD;
+                return TileLogic.spawnerD;
             case 10:
-                return tileLogic.turnR;
+                return TileLogic.turnR;
             case 11:
-                return tileLogic.turnL;
+                return TileLogic.turnL;
             case 12:
-                return tileLogic.turnU;
+                return TileLogic.turnU;
             case 13:
-                return tileLogic.turnD;
+                return TileLogic.turnD;
             case 99:
-                return tileLogic.castle;
+                return TileLogic.castle;
             default:
                 return null;
         }
@@ -127,8 +140,27 @@ public class MapTile {
 
 
 
-    public MapTile(tileType type) {
+    public MapTile(TileType type) {
         this.type = type;
+
+        initTexture();
+    }
+
+    private void initTexture(){
+        switch (type){
+            case ground:
+                setTexture(new TextureRegionDrawable(AssetLoader.ground));
+            case grass:
+                setTexture(new TextureRegionDrawable(AssetLoader.grass));
+                break;
+        }
+    }
+
+    public void setBounds(int x, int y, int width, int height){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
 
 
@@ -137,7 +169,18 @@ public class MapTile {
         this.buildedTower = tower;
     }
 
-    public void render(float delta){
-        //draw texture
+    public void draw(float delta, SpriteBatch batch){
+        //RectangleMapObject r = new RectangleMapObject(x, y, width, height);
+
+        Image i = new Image(texture);
+        i.setPosition(x, y);
+        i.setSize(width, height);
+        //System.out.println(getTexture().getName());
+
+        i.draw(batch, 1);
+
+
+
+
     }
 }

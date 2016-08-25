@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Screens;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -13,9 +14,13 @@ public class LevelMap implements Screen {
     //private Stage stage;
     private ShapeRenderer shape;
     private Map map;
+
+
+
     public LevelMap(int number) {
         batch = new SpriteBatch();
-        map = new Map(number);
+        map = new Map(number, 30, Gdx.graphics.getHeight() - 30, 50);
+
     }
 
     @Override
@@ -47,6 +52,7 @@ public class LevelMap implements Screen {
     public void render(float delta) {
         batch.begin();
         batch.draw(AssetLoader.levelMapBg, 0, 0);
+        map.draw(delta, batch);
         batch.end();
     }
 

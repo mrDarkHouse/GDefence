@@ -31,16 +31,19 @@ public class AssetLoader {
     public static Texture levelMapBg;
     public static Texture[] gemTexture = new Texture[6];
     public static Texture coin;
+    public static Texture castle;
+    public static TextureRegion ground;
+    public static TextureRegion grass;
+    public static TextureRegion tree;
+    public static TextureRegion rock;
+    public static TextureRegion water;
 
     //public static Animation birdAnimation;
     //public static TextureRegion bird, birdDown, birdUp;
 
 
     public static void load() {
-
         loadMainMenu();
-
-
     }
 
     private static void loadMainMenu(){
@@ -70,6 +73,12 @@ public class AssetLoader {
         gemTexture[4] = new Texture("Gems/greenGem.png");
         gemTexture[5] = new Texture("Gems/whiteGem.png");
         coin = new Texture("coin.png");
+        castle = new Texture("castle.png");
+        Texture groundTileSet = new Texture("tileset_ground.png");
+        TextureRegion[][] tileSet = TextureRegion.split(groundTileSet, groundTileSet.getWidth(), groundTileSet.getHeight()/10);
+        grass = tileSet[0][0];
+        ground = campainLevels[0][0];//tileSet[1][0];
+
     }
 
     public static ImageButton.ImageButtonStyle getBackButtonSkin(){
