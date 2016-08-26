@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Model.Level.Map;
 
 public class LevelMap implements Screen {
@@ -15,11 +16,16 @@ public class LevelMap implements Screen {
     private ShapeRenderer shape;
     private Map map;
 
+    private Level level;
+
 
 
     public LevelMap(int number) {
         batch = new SpriteBatch();
-        map = new Map(number, 30, Gdx.graphics.getHeight() - 30, 50);
+        map = new Map(number, 60, Gdx.graphics.getHeight() - 60, 45);
+        level = new Level(number);
+
+        level.start();
 
     }
 

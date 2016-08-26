@@ -1,16 +1,21 @@
 package com.darkhouse.gdefence.Level;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Level.Tower.Tower;
 
 public class MapTile {
     private int x, y, width, height;
+
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
 
     public enum TileType{
         ground, tree, grass, rock, water
@@ -179,6 +184,38 @@ public class MapTile {
         //System.out.println(getTexture().getName());
 
         i.draw(batch, 1);
+        Image f;
+        switch (logic){
+            case spawnerR:
+                break;
+            case spawnerL:
+
+                break;
+            case spawnerU:
+
+                break;
+            case spawnerD:
+
+                break;
+            case turnR:
+
+                break;
+            case turnL:
+
+                break;
+            case turnU:
+
+                break;
+            case turnD:
+
+                break;
+            case castle:
+                f = new Image(AssetLoader.castle);
+                f.setPosition(x, y);
+                f.setSize(width, height);
+                f.draw(batch, 1);
+                break;
+        }
 
 
 

@@ -1,7 +1,8 @@
-package com.darkhouse.gdefence.Level;
+package com.darkhouse.gdefence.Level.Loader;
 
 
 import com.badlogic.gdx.Gdx;
+import com.darkhouse.gdefence.Level.MapTile;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,13 +30,14 @@ public class MapLoader {
             sizeY = loadScanner.nextInt();
             mapTile = new MapTile[sizeX][sizeY];
             //while(loadScanner.hasNext()){
-                for (int x = 0; x < sizeX; x++){
-                    for (int y = 0; y < sizeY; y++){
+                for (int y = 0; y < sizeY; y++){
+                    for (int x = 0; x < sizeX; x++){
                         mapTile[x][y] = new MapTile(MapTile.getTypeById(loadScanner.nextInt()));
+                        //System.out.println(MapTile.getTypeById(loadScanner.nextInt()));
                     }
                 }
-                for (int x = 0; x < sizeX; x++){
-                    for (int y = 0; y < sizeY; y++){
+                for (int y = 0; y < sizeY; y++){
+                    for (int x = 0; x < sizeX; x++){
                         mapTile[x][y].setLogic(MapTile.getLogicById(loadScanner.nextInt()));
                     }
                 }
