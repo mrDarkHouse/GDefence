@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Level;
 
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Slime;
 
@@ -11,6 +12,27 @@ public class Wave {
     private int timeSpawn;
     private int mobID;
     public static ArrayList<Mob> mobs = new ArrayList();
+    private MapTile spawner;
+    //private boolean inWave;
+
+    //public boolean isInWave() {
+    //    return inWave;
+    //}
+
+    //public void setInWave(boolean inWave) {
+    //    this.inWave = inWave;
+    //}
+    private boolean isFinished = false;
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setSpawner(MapTile spawner) {
+        this.spawner = spawner;
+    }
+
+    private float spawnDelay;
 
 
     public Wave(int mobID, int numberMobs, int timeSpawn) {
@@ -20,17 +42,60 @@ public class Wave {
     }
 
     public void spawn(MapTile spawner){
-        for(int i = 0; i < numberMobs; i++){
+        //for(int i = 0; i < numberMobs; i++){
             // if(!mobs.get(i).inGame){
+        setSpawner(spawner);
+        //inWave = true;
+
+
+
+            //Thread.sleep(timeSpawn);
+
+
+        //}
+    }
+
+    public void update(float delta){
+        //if(inWave){
+            checkToSpawn(delta);
+        //}
+
+
+    }
+
+    public void draw(float delta, SpriteBatch batch){
+        drawMobs(delta, batch);
+
+
+
+        update(delta);
+    }
+
+    private void drawMobs(float delta, SpriteBatch batch){
+        for (Mob m: mobs){
+            m.draw(batch);
+        }
+    }
+
+
+
+
+    private void checkToSpawn(float delta){
+        spawnDelay += delta;
+
+        if (spawnDelay >= timeSpawn && mobs.size() < numberMobs) {
             mobs.add(Mob.getMobById(mobID));
             mobs.get(mobs.size() - 1).spawn(spawner);
 
-            try {
-                Thread.sleep(timeSpawn);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                System.out.println(this);
-            }
+            System.out.println("spawned");
+
+
+            spawnDelay -= timeSpawn;
+        }
+
+        if(mobs.size() == 0){
+            //isFinished = true;
         }
     }
+
 }

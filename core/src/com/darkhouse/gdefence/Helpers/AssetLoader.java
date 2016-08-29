@@ -38,6 +38,9 @@ public class AssetLoader {
     public static TextureRegion rock;
     public static TextureRegion water;
 
+    public static Texture slime;
+    public static Texture dog;
+
     //public static Animation birdAnimation;
     //public static TextureRegion bird, birdDown, birdUp;
 
@@ -78,6 +81,9 @@ public class AssetLoader {
         TextureRegion[][] tileSet = TextureRegion.split(groundTileSet, groundTileSet.getWidth(), groundTileSet.getHeight()/10);
         grass = tileSet[0][0];
         ground = tileSet[1][0];
+
+        slime = new Texture("Mobs/mob.png");
+        dog = new Texture("Mobs/mob2.png");
 
     }
 

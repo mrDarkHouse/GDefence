@@ -2,7 +2,9 @@ package com.darkhouse.gdefence.Level;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.darkhouse.gdefence.Level.Loader.PropertiesLoader;
+import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
 
 import java.io.File;
@@ -32,18 +34,23 @@ public class Level {
     private int number;
     //public Wave[] waves;
     private ArrayList<Wave> waves;
+    private ArrayList<Tower> towers;
     //private MapTile[][] map;
     private Map map;
     public int currentWave;
     public int numberWaves;
     public int[] timeBetweenWaves;
 
+    private float roundTimer;
 
 
 
-    public Level(int number, Map map) {
+
+    public Level(int number) {
+
         this.number = number;
-        this.map = map;
+        map = new Map(number, 60, Gdx.graphics.getHeight() - 60, 45);
+        //this.map = map;
         loadProperies();
     }
 
@@ -65,32 +72,39 @@ public class Level {
     }
 
     public void start(){
-        for(int i = 0; i < numberWaves; i++){
-            currentWave = i;
-            try {
-                inWave = true;
+//        for(int i = 0; i < numberWaves; i++){
+//            currentWave = i;
+//            //try {
+//                //inWave = true;
+//
+//                waves.get(currentWave).spawn(map.getSpawner().get(0));//
+//
+//                //while (Wave.mobs.size() > 0) {
+//                    //Thread.sleep(100);
+//                    //System.out.println(Wave.mobs.size());
+//                //}
+//                //inWave = false;
+//
+//                if(i == numberWaves && healthNumber > 0){
+//                    winLevel();
+//                    break;
+//                }
+//
+//
+////            }catch (Exception e){
+////                Gdx.app.log("Error", e.getMessage());
+////            }
+//
+//
+//        }
+        waves.get(currentWave).spawn(map.getSpawner().get(0));
+        inWave = true;
 
-                waves.get(currentWave).spawn(map.getSpawner().get(0));//
-
-                while (Wave.mobs.size() > 0) {
-                    Thread.sleep(100);
-                    //System.out.println(Wave.mobs.size());
-                }
-                inWave = false;
-
-                if(i == numberWaves && healthNumber > 0){
-                    winLevel();
-                    break;
-                }
 
 
-            }catch (Exception e){
-                Gdx.app.log("Error", e.getMessage());
-            }
-
-
-        }
     }
+
+
 
     private void winLevel(){
         System.out.println("win");
@@ -98,6 +112,60 @@ public class Level {
 
     private void looseLevel(){
 
+    }
+
+
+
+    public void render(float delta, SpriteBatch batch){
+        if(inWave){
+            map.draw(delta, batch);
+            waves.get(currentWave).draw(delta, batch);
+            drawTowers();
+            drawParticles();
+
+
+
+            if(waves.get(currentWave).isFinished()){
+                if(currentWave < waves.size()) {
+                    currentWave++;
+                    inWave = false;
+                }else {
+                    winLevel();
+                }
+            }
+        }else {
+            updateRoundTimer(delta);
+        }
+
+
+
+
+    }
+
+    private void drawTowers(){
+
+    }
+    private void drawParticles(){
+
+    }
+
+    private void updateRoundTimer(float delta) {
+        timeBetweenWaves[currentWave] -= delta;
+
+        if(timeBetweenWaves[currentWave] <= 0){
+            waves.get(currentWave).spawn(map.getSpawner().get(0));
+            inWave = true;
+        }
+        //if (roundTimer > 0) {
+        //    roundTimer -= delta;
+        //}
+        //else {
+            //waves.get(currentWave).setInWave(true);
+            //roundTimer = timeBetweenWaves[currentWave];
+
+            //prepareLevel(level++);
+            //spawnedEnemies = 0;
+       // }
     }
 
 

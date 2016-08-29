@@ -15,7 +15,7 @@ public abstract class Mob {
     //public int healthSpace = 3, healthHeight = 5;
     protected String name;
     protected int health;
-    protected int speed;
+    protected float speed;
     protected int dmg;
     protected int ID;
     protected int bounty;
@@ -47,7 +47,7 @@ public abstract class Mob {
     public void setHealth(int health) {
         this.health = health;
     }
-    public int getSpeed() {
+    public float getSpeed() {
         return speed;
     }
     public void setSpeed(int speed) {
@@ -102,7 +102,7 @@ public abstract class Mob {
             case 0:
                 return new Slime();
             case 1:
-                return null;
+                return new Dog();
             case 2:
 
             case 3:
@@ -125,9 +125,8 @@ public abstract class Mob {
 
 
     public void draw(SpriteBatch batch){
-        Image i = new Image();
+        Image i = new Image(texture);
         i.setSize(width, height);
-        //i.setPosition(currentTile.getX(), currentTile.getY());
         i.setPosition(x, y);
         i.draw(batch, 1);
     }

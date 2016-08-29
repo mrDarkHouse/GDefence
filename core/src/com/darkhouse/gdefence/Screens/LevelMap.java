@@ -14,7 +14,7 @@ public class LevelMap implements Screen {
     private SpriteBatch batch;
     //private Stage stage;
     private ShapeRenderer shape;
-    private Map map;
+    //private Map map;
 
     private Level level;
 
@@ -22,7 +22,6 @@ public class LevelMap implements Screen {
 
     public LevelMap(int number) {
         batch = new SpriteBatch();
-        map = new Map(number, 60, Gdx.graphics.getHeight() - 60, 45);
         level = new Level(number);
 
         level.start();
@@ -58,7 +57,7 @@ public class LevelMap implements Screen {
     public void render(float delta) {
         batch.begin();
         batch.draw(AssetLoader.levelMapBg, 0, 0);
-        map.draw(delta, batch);
+        level.render(delta, batch);
         batch.end();
     }
 
