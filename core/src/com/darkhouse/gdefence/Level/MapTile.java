@@ -1,21 +1,23 @@
 package com.darkhouse.gdefence.Level;
 
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Model.GDSprite;
 
-public class MapTile {
-    private int x, y, width, height;
+public class MapTile extends GDSprite{
+    //private int x, y, width, height;
 
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
+    //public int getX() {
+    //    return x;
+    //}
+    //public int getY() {
+    //    return y;
+    //}
 
     public enum TileType{
         ground, tree, grass, rock, water
@@ -25,16 +27,16 @@ public class MapTile {
         none, spawnerR, spawnerL, spawnerU, spawnerD, turnR, turnL, turnU, turnD, castle
     }
 
-    private TextureRegionDrawable texture;
+    //private TextureRegionDrawable texture;
     private TileType type;
     private TileLogic logic;
 
-    public TextureRegionDrawable getTexture() {
-        return texture;
-    }
-    public void setTexture(TextureRegionDrawable texture) {
-        this.texture = texture;
-    }
+    //public TextureRegionDrawable getTexture() {
+    //    return texture;
+    //}
+    //public void setTexture(TextureRegionDrawable texture) {
+    //    this.texture = texture;
+    //}
 
     public TileType getType() {
         return type;
@@ -154,19 +156,17 @@ public class MapTile {
     private void initTexture(){
         switch (type){
             case ground:
-                setTexture(new TextureRegionDrawable(AssetLoader.ground));
+                setRegion(AssetLoader.ground);
                 break;
             case grass:
-                setTexture(new TextureRegionDrawable(AssetLoader.grass));
+                setRegion(AssetLoader.grass);
                 break;
         }
     }
 
     public void setBounds(int x, int y, int width, int height){
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        setPosition(x, y);
+        setSize(width, height);
     }
 
 
@@ -178,12 +178,15 @@ public class MapTile {
     public void draw(float delta, SpriteBatch batch){
         //RectangleMapObject r = new RectangleMapObject(x, y, width, height);
 
-        Image i = new Image(texture);
-        i.setPosition(x, y);
-        i.setSize(width, height);
+        //Image i = new Image(texture);
+        //i.setPosition(getX(), getY());
+        //i.setSize(getWidth(), getHeight());
         //System.out.println(getTexture().getName());
 
-        i.draw(batch, 1);
+
+
+
+        draw(batch);
         Image f;
         switch (logic){
             case spawnerR:
@@ -211,8 +214,8 @@ public class MapTile {
                 break;
             case castle:
                 f = new Image(AssetLoader.castle);
-                f.setPosition(x, y);
-                f.setSize(width, height);
+                f.setPosition(getX(), getY());
+                f.setSize(getWidth(), getHeight());
                 f.draw(batch, 1);
                 break;
         }

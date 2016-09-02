@@ -16,8 +16,11 @@ public class LevelMap implements Screen {
     private ShapeRenderer shape;
     //private Map map;
 
-    private Level level;
+    private static Level level;
 
+    public static Level getLevel() {
+        return level;
+    }
 
 
     public LevelMap(int number) {

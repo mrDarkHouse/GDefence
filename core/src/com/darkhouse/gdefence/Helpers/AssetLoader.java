@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Helpers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -32,11 +33,11 @@ public class AssetLoader {
     public static Texture[] gemTexture = new Texture[6];
     public static Texture coin;
     public static Texture castle;
-    public static TextureRegion ground;
-    public static TextureRegion grass;
-    public static TextureRegion tree;
-    public static TextureRegion rock;
-    public static TextureRegion water;
+    public static Texture ground;
+    public static Texture grass;
+    public static Texture tree;
+    public static Texture rock;
+    public static Texture water;
 
     public static Texture slime;
     public static Texture dog;
@@ -79,8 +80,10 @@ public class AssetLoader {
         castle = new Texture("castle.png");
         Texture groundTileSet = new Texture("tileset_ground.png");
         TextureRegion[][] tileSet = TextureRegion.split(groundTileSet, groundTileSet.getWidth(), groundTileSet.getHeight()/10);
-        grass = tileSet[0][0];
-        ground = tileSet[1][0];
+        //grass = tileSet[0][0];
+        //ground = tileSet[1][0];
+        grass = new Texture("grass.png");
+        ground = new Texture("ground.png");
 
         slime = new Texture("Mobs/mob.png");
         dog = new Texture("Mobs/mob2.png");

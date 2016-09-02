@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Level;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.darkhouse.gdefence.Level.Loader.PropertiesLoader;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
 
@@ -26,22 +27,47 @@ public class Level {
         return coinNumber;
     }
 
+    public void addCoin(int coin) {
+        this.coinNumber += coin;
+    }
+    public boolean removeCoin(int coin) {
+        if(coin <= coinNumber) {
+            this.coinNumber -= coinNumber;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void damage(int dmg) {
+        this.healthNumber -= dmg;
+    }
+
+    public void heal(int heal) {
+        if(heal <= startHP) {//startHp to maxHp
+            this.healthNumber += heal;
+        }
+    }
 
 
-    public int coinNumber;
-    public int healthNumber;
+    private int coinNumber;
+    private int healthNumber;
 
     private int number;
     //public Wave[] waves;
     private ArrayList<Wave> waves;
     private ArrayList<Tower> towers;
     //private MapTile[][] map;
-    private Map map;
+    private static Map map;
     public int currentWave;
     public int numberWaves;
     public int[] timeBetweenWaves;
 
     private float roundTimer;
+
+    public static Map getMap(){
+        return map;
+    }
 
 
 
@@ -119,7 +145,8 @@ public class Level {
     public void render(float delta, SpriteBatch batch){
         if(inWave){
             map.draw(delta, batch);
-            waves.get(currentWave).draw(delta, batch);
+            waves.get(currentWave).update(delta);
+            drawMobs(delta, batch);
             drawTowers();
             drawParticles();
 
@@ -141,7 +168,11 @@ public class Level {
 
 
     }
-
+    private void drawMobs(float delta, SpriteBatch batch){
+        for (Mob m: Wave.mobs){
+            m.render(batch);
+        }
+    }
     private void drawTowers(){
 
     }

@@ -30,17 +30,18 @@ public class MapLoader {
             sizeY = loadScanner.nextInt();
             mapTile = new MapTile[sizeX][sizeY];
             //while(loadScanner.hasNext()){
-                for (int y = 0; y < sizeY; y++){
-                    for (int x = 0; x < sizeX; x++){
-                        mapTile[x][y] = new MapTile(MapTile.getTypeById(loadScanner.nextInt()));
-                        //System.out.println(MapTile.getTypeById(loadScanner.nextInt()));
-                    }
+            for (int y = 0; y < sizeY; y++){
+                for (int x = 0; x < sizeX; x++){
+                    mapTile[x][y] = new MapTile(MapTile.getTypeById(loadScanner.nextInt()));
+                    //System.out.println(MapTile.getTypeById(loadScanner.nextInt()));
                 }
-                for (int y = 0; y < sizeY; y++){
-                    for (int x = 0; x < sizeX; x++){
-                        mapTile[x][y].setLogic(MapTile.getLogicById(loadScanner.nextInt()));
-                    }
+            }
+            for (int y = 0; y < sizeY; y++){
+                for (int x = 0; x < sizeX; x++){
+                    mapTile[x][y].setLogic(MapTile.getLogicById(loadScanner.nextInt()));
                 }
+            }
+            //System.out.println(mapTile[4][9].getLogic());
 
             //}
 

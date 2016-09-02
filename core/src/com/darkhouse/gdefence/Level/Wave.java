@@ -56,26 +56,20 @@ public class Wave {
     }
 
     public void update(float delta){
-        //if(inWave){
-            checkToSpawn(delta);
-        //}
+        checkToSpawn(delta);
+        moveMobs(delta);
+
+
 
 
     }
 
-    public void draw(float delta, SpriteBatch batch){
-        drawMobs(delta, batch);
-
-
-
-        update(delta);
-    }
-
-    private void drawMobs(float delta, SpriteBatch batch){
-        for (Mob m: mobs){
-            m.draw(batch);
+    private void moveMobs(float delta){
+        for (Mob m : mobs){//fix with iterator
+            m.move(delta);
         }
     }
+
 
 
 
@@ -87,10 +81,11 @@ public class Wave {
             mobs.add(Mob.getMobById(mobID));
             mobs.get(mobs.size() - 1).spawn(spawner);
 
-            System.out.println("spawned");
+            //System.out.println("spawned");
 
 
             spawnDelay -= timeSpawn;
+
         }
 
         if(mobs.size() == 0){
