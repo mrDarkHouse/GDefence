@@ -61,7 +61,7 @@ public class Level {
     private static Map map;
     public int currentWave;
     public int numberWaves;
-    public int[] timeBetweenWaves;
+    public float[] timeBetweenWaves;
 
     private float roundTimer;
 
@@ -143,8 +143,8 @@ public class Level {
 
 
     public void render(float delta, SpriteBatch batch){
+        map.draw(delta, batch);
         if(inWave){
-            map.draw(delta, batch);
             waves.get(currentWave).update(delta);
             drawMobs(delta, batch);
             drawTowers();
@@ -156,6 +156,7 @@ public class Level {
                 if(currentWave < waves.size()) {
                     currentWave++;
                     inWave = false;
+                    System.out.println("new wave");
                 }else {
                     winLevel();
                 }
@@ -182,6 +183,7 @@ public class Level {
 
     private void updateRoundTimer(float delta) {
         timeBetweenWaves[currentWave] -= delta;
+        System.out.println(timeBetweenWaves[currentWave]);
 
         if(timeBetweenWaves[currentWave] <= 0){
             waves.get(currentWave).spawn(map.getSpawner().get(0));

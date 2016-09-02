@@ -16,7 +16,7 @@ public class PropertiesLoader {
     private int startCoins;
     private int startHp;
     private int numberWaves;
-    private int[] timeBetweenWaves = new int[20];
+    private float[] timeBetweenWaves = new float[20];
     private ArrayList<Wave> waves;
 
     public int getExpFromLvl() {
@@ -34,7 +34,7 @@ public class PropertiesLoader {
     public int getNumberWaves() {
         return numberWaves;
     }
-    public int[] getTimeBetweenWaves() {
+    public float[] getTimeBetweenWaves() {
         return timeBetweenWaves;
     }
     public ArrayList<Wave> getWaves() {

@@ -203,7 +203,7 @@ public abstract class Mob extends GDSprite{
         setPosition(spawner.getX(), spawner.getY());
         setRotation(0);
         //setDrawable(texture);
-        setRegion(texture);
+        setRegion(texture);//nullPointer
 
     }
 
