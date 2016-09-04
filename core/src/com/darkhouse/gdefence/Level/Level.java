@@ -19,6 +19,10 @@ public class Level {
 
     private boolean inWave = false;
 
+    public boolean isInWave() {
+        return inWave;
+    }
+
     public int getHealthNumber() {
         return healthNumber;
     }
@@ -183,7 +187,7 @@ public class Level {
 
     private void updateRoundTimer(float delta) {
         timeBetweenWaves[currentWave] -= delta;
-        System.out.println(timeBetweenWaves[currentWave]);
+        //System.out.println(timeBetweenWaves[currentWave]);
 
         if(timeBetweenWaves[currentWave] <= 0){
             waves.get(currentWave).spawn(map.getSpawner().get(0));

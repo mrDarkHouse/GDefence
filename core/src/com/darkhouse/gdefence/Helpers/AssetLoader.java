@@ -166,6 +166,10 @@ public class AssetLoader {
         }
         return null;
     }
+    public static Skin getSkin(){
+        return new Skin(Gdx.files.internal("uiskin.json"));
+    }
+
 
     public static void dispose() {
         mainMenuButtonsAtlas.dispose();
