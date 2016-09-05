@@ -96,7 +96,7 @@ public class Wave {
             mobsToSpawn.remove(mobsToSpawn.get(mobsToSpawn.size() - 1));
             mobs.get(mobs.size() - 1).spawn(spawner);
 
-            System.out.println("spawned");
+            //System.out.println("spawned");
 
 
             spawnDelay -= timeSpawn;

@@ -181,7 +181,9 @@ public abstract class Mob extends GDSprite{
     private void checkCastle(MapTile currentTile){
         if(currentTile != null){
             if(currentTile.getLogic() == MapTile.TileLogic.castle){
-                damage();
+                if(isInGame()) {
+                    damage();
+                }
             }
         }
     }
@@ -203,7 +205,7 @@ public abstract class Mob extends GDSprite{
         setPosition(spawner.getX(), spawner.getY());
         setRotation(0);
         //setDrawable(texture);
-        setRegion(texture);//nullPointer
+        setRegion(texture);
 
     }
 

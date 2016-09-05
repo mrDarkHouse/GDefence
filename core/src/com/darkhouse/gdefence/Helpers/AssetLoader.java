@@ -170,6 +170,15 @@ public class AssetLoader {
         return new Skin(Gdx.files.internal("uiskin.json"));
     }
 
+    public static Label.LabelStyle getTimerSkin(){
+        Label.LabelStyle l = new Label.LabelStyle();
+        l.font = FontLoader.impact24;
+        l.fontColor = Color.BLACK;
+
+
+        return l;
+    }
+
 
     public static void dispose() {
         mainMenuButtonsAtlas.dispose();

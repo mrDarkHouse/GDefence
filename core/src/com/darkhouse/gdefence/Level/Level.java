@@ -8,14 +8,17 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class Level {
     private int expFromLvl;
     private int goldFromLvl;
-    private int startCoins;
+    private int startEnergy;
     private int startHP;
+
+    public int getStartHP() {
+        return startHP;
+    }
 
     private boolean inWave = false;
 
@@ -27,16 +30,16 @@ public class Level {
         return healthNumber;
     }
 
-    public int getCoinNumber() {
-        return coinNumber;
+    public int getEnergyNumber() {
+        return energyNumber;
     }
 
     public void addCoin(int coin) {
-        this.coinNumber += coin;
+        this.energyNumber += coin;
     }
     public boolean removeCoin(int coin) {
-        if(coin <= coinNumber) {
-            this.coinNumber -= coinNumber;
+        if(coin <= energyNumber) {
+            this.energyNumber -= energyNumber;
             return true;
         }else{
             return false;
@@ -44,7 +47,12 @@ public class Level {
     }
 
     public void damage(int dmg) {
-        this.healthNumber -= dmg;
+        if(dmg < getHealthNumber()) {
+            this.healthNumber -= dmg;
+        }else {
+            this.healthNumber = 0;
+            looseLevel();
+        }
     }
 
     public void heal(int heal) {
@@ -54,7 +62,7 @@ public class Level {
     }
 
 
-    private int coinNumber;
+    private int energyNumber;
     private int healthNumber;
 
     private int number;
@@ -89,13 +97,13 @@ public class Level {
         pl.loadProperties();
         expFromLvl = pl.getExpFromLvl();
         goldFromLvl = pl.getGoldFromLvl();
-        startCoins = pl.getStartCoins();
+        startEnergy = pl.getStartCoins();
         startHP = pl.getStartHp();
         waves = pl.getWaves();
         numberWaves = pl.getNumberWaves();
         timeBetweenWaves = pl.getTimeBetweenWaves();
 
-        coinNumber = startCoins;
+        energyNumber = startEnergy;
         healthNumber = startHP;
 
 
@@ -127,8 +135,8 @@ public class Level {
 //
 //
 //        }
-        waves.get(currentWave).spawn(map.getSpawner().get(0));
-        inWave = true;
+        //waves.get(currentWave).spawn(map.getSpawner().get(0));
+        //inWave = true;                //insta spawn
 
 
 
@@ -141,6 +149,7 @@ public class Level {
     }
 
     private void looseLevel(){
+        System.out.println("loose");
 
     }
 
@@ -160,7 +169,7 @@ public class Level {
                 if(currentWave < waves.size()) {
                     currentWave++;
                     inWave = false;
-                    System.out.println("new wave");
+                    //System.out.println("new wave");
                 }else {
                     winLevel();
                 }
