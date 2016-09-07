@@ -13,9 +13,19 @@ public class Wave {
     private int numberMobs;
     private int timeSpawn;
     private int mobID;
+
+    public int getMobID() {
+        return mobID;
+    }
+
     public static ArrayList<Mob> mobs = new ArrayList();
 
     private ArrayList<Mob> mobsToSpawn = new ArrayList<Mob>();
+
+    public ArrayList<Mob> getMobsToSpawn() {
+        return mobsToSpawn;
+    }
+
     private MapTile spawner;
     //private boolean inWave;
 

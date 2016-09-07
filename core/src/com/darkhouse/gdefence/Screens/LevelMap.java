@@ -82,12 +82,9 @@ public class LevelMap implements Screen {
         stage.addActor(new EnegryBar(60, Gdx.graphics.getHeight() - 60, 0, 0));
     }
     private void initNextWavePanel(){
-        float time = level.timeBetweenWaves[level.currentWave];
-        time = new BigDecimal(time).setScale(2, BigDecimal.ROUND_UP).floatValue();
-
-        Label l = new Label("" + time, AssetLoader.getTimerSkin());
-        l.setPosition(Gdx.graphics.getWidth() - 240, 30);
-        stage.addActor(l);
+        NextWaveInfoPanel panel = new NextWaveInfoPanel();
+        panel.setPosition(Gdx.graphics.getWidth() - 240, 70);
+        stage.addActor(panel);
 
     }
 

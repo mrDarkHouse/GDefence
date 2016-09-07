@@ -48,6 +48,9 @@ public class Level {
             return false;
         }
     }
+    public float getTimerTime(){
+        return timeBetweenWaves[currentWave];
+    }
 
     public void damage(int dmg) {
         if(dmg < getHealthNumber()) {
@@ -71,6 +74,11 @@ public class Level {
     private int number;
     //public Wave[] waves;
     private ArrayList<Wave> waves;
+
+    public Wave getCurrentWave(){
+        return waves.get(currentWave);
+    }
+
     private ArrayList<Tower> towers;
     //private MapTile[][] map;
     private static Map map;

@@ -192,6 +192,15 @@ public class AssetLoader {
 
         return l;
     }
+    public static Label.LabelStyle getInfoPanelSkin(){
+        Label.LabelStyle l = new Label.LabelStyle();
+        l.font = FontLoader.impact16;
+        l.fontColor = Color.BLACK;
+
+
+        return l;
+    }
+
 
 
     public static void dispose() {
