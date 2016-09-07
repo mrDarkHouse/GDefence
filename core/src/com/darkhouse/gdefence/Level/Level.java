@@ -16,6 +16,9 @@ public class Level {
     private int startEnergy;
     private int startHP;
 
+    public int getStartEnergy() {
+        return startEnergy;
+    }
     public int getStartHP() {
         return startHP;
     }

@@ -109,6 +109,20 @@ public class AssetLoader {
 
 
     }
+    public static ProgressBar.ProgressBarStyle getEnergyBarSkin(){
+        TextureRegionDrawable barFone = new TextureRegionDrawable(new TextureRegion(new Texture("energyBarBg.png")));
+        TextureRegionDrawable barTop = new TextureRegionDrawable(new TextureRegion(new Texture("energyBarKnob.png")));
+        ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle(barFone, barTop);
+        progressBarStyle.knobBefore = progressBarStyle.knob;
+
+        return progressBarStyle;
+
+
+    }
+
+
+
+
     public static ImageButton.ImageButtonStyle getCampainLevelSkin(int number){
         ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
 
