@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Screens.LevelMap;
@@ -27,18 +28,22 @@ public class NextWaveInfoPanel extends Table{
 
     private void init(){
         nextWaveTimer = new NextWaveTimer();
-
-
-        add(currentWave).row();
-        add(mobsNumber).row();
-        add(mobName).row();
-        add(mobHealth).row();
-        add(mobSpeed).row();
-        add(mobDmg).row();
-        add(mobBounty).row();
-
-        add(nextWaveTimer);
         setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.infoPanelFone)));
+        //setFillParent(false);
+
+
+        add(currentWave).align(Align.left).row();
+        add(mobsNumber).align(Align.left).row();
+        add(mobName).align(Align.left).row();
+        add(mobHealth).align(Align.left).row();
+        add(mobSpeed).align(Align.left).row();
+        add(mobDmg).align(Align.left).row();
+        add(mobBounty).align(Align.left).padBottom(10).row();
+
+        add(nextWaveTimer).align(Align.left).padLeft(35);//need rework
+        pack();
+
+        //setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.infoPanelFone)));
     }
 
     public void draw(Batch batch, float parentAlpha) {
