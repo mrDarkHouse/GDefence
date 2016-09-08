@@ -42,6 +42,8 @@ public class AssetLoader {
     public static Texture slime;
     public static Texture dog;
 
+    public static Texture infoPanelFone;
+
     //public static Animation birdAnimation;
     //public static TextureRegion bird, birdDown, birdUp;
 
@@ -87,6 +89,8 @@ public class AssetLoader {
 
         slime = new Texture("Mobs/mob.png");
         dog = new Texture("Mobs/mob2.png");
+
+        infoPanelFone = new Texture("infoPanelFone.png");
 
     }
 

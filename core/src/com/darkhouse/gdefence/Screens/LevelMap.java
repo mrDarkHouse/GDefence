@@ -83,7 +83,7 @@ public class LevelMap implements Screen {
     }
     private void initNextWavePanel(){
         NextWaveInfoPanel panel = new NextWaveInfoPanel();
-        panel.setPosition(Gdx.graphics.getWidth() - 240, 70);
+        panel.setPosition(Gdx.graphics.getWidth() - 240, 120);
         stage.addActor(panel);
 
     }

@@ -11,6 +11,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Wave {
     private int numberMobs;
+
+    public int getNumberMobs() {
+        return numberMobs;
+    }
+
     private int timeSpawn;
     private int mobID;
 
@@ -22,9 +27,9 @@ public class Wave {
 
     private ArrayList<Mob> mobsToSpawn = new ArrayList<Mob>();
 
-    public ArrayList<Mob> getMobsToSpawn() {
-        return mobsToSpawn;
-    }
+//    public ArrayList<Mob> getMobsToSpawn() {
+//        return mobsToSpawn;
+//    }
 
     private MapTile spawner;
     //private boolean inWave;
