@@ -9,10 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.Level;
-import com.darkhouse.gdefence.Model.Level.EnegryBar;
-import com.darkhouse.gdefence.Model.Level.HealthBar;
-import com.darkhouse.gdefence.Model.Level.Map;
-import com.darkhouse.gdefence.Model.Level.NextWaveInfoPanel;
+import com.darkhouse.gdefence.Model.Level.*;
 
 import java.math.BigDecimal;
 
@@ -34,7 +31,7 @@ public class LevelMap implements Screen {
         stage = new Stage();
         level = new Level(number);
         initHpMpBar();
-        initNextWavePanel();
+        initWavePanel();
 
         level.start();
 
@@ -70,7 +67,7 @@ public class LevelMap implements Screen {
         batch.begin();
         batch.draw(AssetLoader.levelMapBg, 0, 0);
         level.render(delta, batch);
-        drawNextWavePanel(delta, batch);
+        //drawNextWavePanel(delta, batch);
         //drawHpMpBar();
         batch.end();
         stage.act(delta);
@@ -81,25 +78,29 @@ public class LevelMap implements Screen {
         stage.addActor(new HealthBar(Gdx.graphics.getWidth(), 60, 0, Gdx.graphics.getHeight() - 60));
         stage.addActor(new EnegryBar(60, Gdx.graphics.getHeight() - 60, 0, 0));
     }
-    private void initNextWavePanel(){
+    private void initWavePanel(){
         NextWaveInfoPanel panel = new NextWaveInfoPanel();
         panel.setPosition(Gdx.graphics.getWidth() - 280, 140);
         stage.addActor(panel);
 
+        CurrentWaveInfoPanel cpanel = new CurrentWaveInfoPanel(panel.getNextWaveTimer());
+        cpanel.setPosition(Gdx.graphics.getWidth() - 280, 140);
+        stage.addActor(cpanel);
+
     }
 
 
 
-    private void drawNextWavePanel(float delta, SpriteBatch batch){
-        drawTimer(delta, batch);
+    //private void drawNextWavePanel(float delta, SpriteBatch batch){
+    //    drawTimer(delta, batch);
         //NextWaveInfoPanel npanel = new NextWaveInfoPanel();
         //npanel.draw(batch, 1);
-    }
+    //}
 
 
 
-    private void drawTimer(float delta, SpriteBatch batch){
-        if(!level.isInWave()) {
+    //private void drawTimer(float delta, SpriteBatch batch){
+    //    if(!level.isInWave()) {
 //            float time = level.timeBetweenWaves[level.currentWave];
 //            time = new BigDecimal(time).setScale(2, BigDecimal.ROUND_UP).floatValue();
 
@@ -109,9 +110,9 @@ public class LevelMap implements Screen {
             //Label l = new Label("" + time, AssetLoader.getTimerSkin());
             //l.setPosition(Gdx.graphics.getWidth() - 240, 30);
             //l.draw(batch, 1);
-        }
+    //    }
 
-    }
+    //}
 
 
 

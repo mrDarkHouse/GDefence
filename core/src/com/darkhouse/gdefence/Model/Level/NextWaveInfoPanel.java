@@ -13,6 +13,11 @@ import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class NextWaveInfoPanel extends Table{
     private NextWaveTimer nextWaveTimer;
+
+    public NextWaveTimer getNextWaveTimer() {
+        return nextWaveTimer;
+    }
+
     private Label currentWave = new Label("Prepare Wave: " + (LevelMap.getLevel().currentWave + 1) , AssetLoader.getInfoPanelSkin());
     private Label mobsNumber = new Label("Mobs number: " + LevelMap.getLevel().getCurrentWave().getNumberMobs(), AssetLoader.getInfoPanelSkin());
     private Label mobName = new Label("Name: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getName(), AssetLoader.getInfoPanelSkin());
