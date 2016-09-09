@@ -13,7 +13,7 @@ public abstract class AbstractPanel extends Table{
         setSize(width, height);
     }
 
-    public AbstractPanel(GDefence mainClass) {
-        this.mainClass = mainClass;
+    public AbstractPanel() {
+
     }
 }

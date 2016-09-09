@@ -16,7 +16,7 @@ public class Wave {
         return numberMobs;
     }
 
-    private int timeSpawn;
+    private float timeSpawn;
     private int mobID;
 
     public int getMobID() {
@@ -54,7 +54,7 @@ public class Wave {
     private float spawnDelay;
 
 
-    public Wave(int mobID, int numberMobs, int timeSpawn) {
+    public Wave(int mobID, int numberMobs, float timeSpawn) {
         this.numberMobs = numberMobs;
         this.timeSpawn = timeSpawn;
         this.mobID = mobID;

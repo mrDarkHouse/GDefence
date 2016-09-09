@@ -20,11 +20,18 @@ public class GDefence extends Game {
 	//SpriteBatch batch;
 	//Texture img;
 	//private MainMenu menu;
+	private static GDefence mainClass;
+
+	public static GDefence getInstance(){
+		return mainClass;
+	}
+
 	public User user;
 
 	
 	@Override
 	public void create () {
+		mainClass = this;
         AssetLoader.load();
 		FontLoader.load();
 		setScreen(new MainMenu(this));

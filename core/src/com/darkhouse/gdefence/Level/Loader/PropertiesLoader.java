@@ -60,7 +60,7 @@ public class PropertiesLoader {
             startCoins = loadScanner.nextInt();
             startHp = loadScanner.nextInt();
             while (loadScanner.hasNext()){
-                waves.add(new Wave(loadScanner.nextInt(), loadScanner.nextInt(), loadScanner.nextInt()));
+                waves.add(new Wave(loadScanner.nextInt(), loadScanner.nextInt(), loadScanner.nextFloat()));
                 timeBetweenWaves[waves.size() - 1] = loadScanner.nextInt();
             }
             numberWaves = waves.size();

@@ -32,6 +32,8 @@ public class LevelMap implements Screen {
         level = new Level(number);
         initHpMpBar();
         initWavePanel();
+        initShop();
+
 
         level.start();
 
@@ -54,7 +56,8 @@ public class LevelMap implements Screen {
 
     @Override
     public void hide() {
-
+        System.out.println("aaa");
+        dispose();
     }
 
     @Override
@@ -88,6 +91,10 @@ public class LevelMap implements Screen {
         stage.addActor(cpanel);
 
     }
+    private void initShop(){
+        LevelShopPanel shop = new LevelShopPanel();
+
+    }
 
 
 
@@ -118,6 +125,9 @@ public class LevelMap implements Screen {
 
     @Override
     public void dispose() {
+        batch.dispose();
+        stage.dispose();
+        //level = null;
 
     }
 }

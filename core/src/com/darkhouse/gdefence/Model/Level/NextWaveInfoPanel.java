@@ -60,13 +60,15 @@ public class NextWaveInfoPanel extends Table{
     @Override
     public void act(float delta) {
         super.act(delta);
-        currentWave.setText("Prepare Wave: " + (LevelMap.getLevel().currentWave + 1));
-        mobsNumber.setText("Mobs number: " + LevelMap.getLevel().getCurrentWave().getNumberMobs());
-        mobName.setText("Name: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getName());
-        mobHealth.setText("Health: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getHealth());
-        mobSpeed.setText("Speed: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getSpeed());
-        mobDmg.setText("Dmg: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getDmg());
-        mobBounty.setText("Bounty: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getBounty());
+        if(LevelMap.getLevel().getCurrentWave() != null) {//hotfix
 
+            currentWave.setText("Prepare Wave: " + (LevelMap.getLevel().currentWave + 1));
+            mobsNumber.setText("Mobs number: " + LevelMap.getLevel().getCurrentWave().getNumberMobs());
+            mobName.setText("Name: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getName());
+            mobHealth.setText("Health: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getHealth());
+            mobSpeed.setText("Speed: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getSpeed());
+            mobDmg.setText("Dmg: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getDmg());
+            mobBounty.setText("Bounty: " + Mob.getMobById(LevelMap.getLevel().getCurrentWave().getMobID()).getBounty());
+        }
     }
 }

@@ -19,7 +19,7 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         startButton.setPosition(Gdx.graphics.getWidth() - 200, 30);
         startButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mainClass.setScreen(new LevelMap(level));
+                GDefence.getInstance().setScreen(new LevelMap(level));
                 return true;
             }
         });

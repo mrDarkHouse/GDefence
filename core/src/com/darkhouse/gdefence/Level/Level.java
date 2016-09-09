@@ -3,10 +3,13 @@ package com.darkhouse.gdefence.Level;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Loader.PropertiesLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.Screens.LevelLoose;
+import com.darkhouse.gdefence.Screens.LevelWin;
 
 import java.util.ArrayList;
 
@@ -76,7 +79,11 @@ public class Level {
     private ArrayList<Wave> waves;
 
     public Wave getCurrentWave(){
-        return waves.get(currentWave);
+        if(currentWave < numberWaves) {
+            return waves.get(currentWave);
+        }else {
+            return null;
+        }
     }
 
     private ArrayList<Tower> towers;
@@ -156,11 +163,14 @@ public class Level {
 
 
     private void winLevel(){
-        System.out.println("win");
+        //System.out.println("win");
+        GDefence.getInstance().setScreen(new LevelWin());
     }
 
     private void looseLevel(){
-        System.out.println("loose");
+        //System.out.println("loose");
+        GDefence.getInstance().setScreen(new LevelLoose());
+
 
     }
 
