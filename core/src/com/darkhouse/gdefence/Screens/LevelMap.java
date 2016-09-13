@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Model.Level.*;
@@ -18,8 +19,10 @@ public class LevelMap implements Screen {
     private Stage stage;
     private ShapeRenderer shape;
     //private Map map;
+    private int number;
 
     private static Level level;
+    public static LevelMap levelMap;//debug
 
     public static Level getLevel() {
         return level;
@@ -27,16 +30,7 @@ public class LevelMap implements Screen {
 
 
     public LevelMap(int number) {
-        batch = new SpriteBatch();
-        stage = new Stage();
-        level = new Level(number);
-        initHpMpBar();
-        initWavePanel();
-        initShop();
-
-
-        level.start();
-
+        this.number = number;
     }
 
     @Override
@@ -56,12 +50,25 @@ public class LevelMap implements Screen {
 
     @Override
     public void hide() {
-        System.out.println("aaa");
+        System.out.println("hide");
         dispose();
     }
 
     @Override
     public void show() {
+        batch = new SpriteBatch();
+        stage = new Stage();
+        levelMap = this;
+        level = new Level(number);
+        initHpMpBar();
+        initWavePanel();
+        initShop();
+
+        Gdx.input.setInputProcessor(stage);
+
+
+        level.start();
+
 
     }
 
@@ -126,7 +133,7 @@ public class LevelMap implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        stage.dispose();
+        //stage.dispose();
         //level = null;
 
     }

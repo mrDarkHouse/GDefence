@@ -4,12 +4,15 @@ package com.darkhouse.gdefence.Level;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.StatManager;
 import com.darkhouse.gdefence.Level.Loader.PropertiesLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
-import com.darkhouse.gdefence.Screens.LevelLoose;
-import com.darkhouse.gdefence.Screens.LevelWin;
+import com.darkhouse.gdefence.Screens.CampainMap;
+import com.darkhouse.gdefence.Screens.LevelEndScreen;
+import com.darkhouse.gdefence.Screens.LevelMap;
+import com.darkhouse.gdefence.Screens.MainMenu;
 
 import java.util.ArrayList;
 
@@ -58,7 +61,9 @@ public class Level {
     public void damage(int dmg) {
         if(dmg < getHealthNumber()) {
             this.healthNumber -= dmg;
+            getManager().HpLooseAdd(dmg);
         }else {
+            getManager().HpLooseAdd(getHealthNumber());
             this.healthNumber = 0;
             looseLevel();
         }
@@ -73,6 +78,8 @@ public class Level {
 
     private int energyNumber;
     private int healthNumber;
+
+    private boolean isWin = false;
 
     private int number;
     //public Wave[] waves;
@@ -93,7 +100,13 @@ public class Level {
     public int numberWaves;
     public float[] timeBetweenWaves;
 
-    private float roundTimer;
+    private float timeBeforeSwitchScreen = 2;
+
+
+    private StatManager manager;
+    public StatManager getManager() {
+        return manager;
+    }
 
     public static Map getMap(){
         return map;
@@ -105,6 +118,7 @@ public class Level {
     public Level(int number) {
 
         this.number = number;
+        manager = new StatManager();
         map = new Map(number, 60, Gdx.graphics.getHeight() - 60, 45);
         //this.map = map;
         loadProperies();
@@ -163,13 +177,18 @@ public class Level {
 
 
     private void winLevel(){
-        //System.out.println("win");
-        GDefence.getInstance().setScreen(new LevelWin());
+        isWin = true;
+        System.out.println("win");
+
+        //LevelMap.levelMap.hide();
+
+        GDefence.getInstance().setScreen(new LevelEndScreen(true));
+        //GDefence.getInstance().setScreen(new MainMenu(GDefence.getInstance()));
     }
 
     private void looseLevel(){
         //System.out.println("loose");
-        GDefence.getInstance().setScreen(new LevelLoose());
+        GDefence.getInstance().setScreen(new LevelEndScreen(false));
 
 
     }
@@ -187,12 +206,17 @@ public class Level {
 
 
             if(waves.get(currentWave).isFinished()){
-                if(currentWave < waves.size()) {
+                if(currentWave + 1 < waves.size()) {
                     currentWave++;
                     inWave = false;
                     //System.out.println("new wave");
                 }else {
-                    winLevel();
+                    if(!isWin) {
+                        timeBeforeSwitchScreen -= delta;
+                        if(timeBeforeSwitchScreen <= 0) {
+                            winLevel();
+                        }
+                    }
                 }
             }
         }else {

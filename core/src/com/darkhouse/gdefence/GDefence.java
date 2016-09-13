@@ -56,7 +56,7 @@ public class GDefence extends Game {
 	
 	@Override
 	public void dispose () {
-		super.dispose();
+		//super.dispose();
         AssetLoader.dispose();
 		FontLoader.dispose();
 	}
