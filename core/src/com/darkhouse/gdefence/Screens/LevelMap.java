@@ -50,7 +50,6 @@ public class LevelMap implements Screen {
 
     @Override
     public void hide() {
-        System.out.println("hide");
         dispose();
     }
 

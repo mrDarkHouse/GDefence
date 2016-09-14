@@ -135,7 +135,7 @@ public class CampainMap extends AbstractCampainScreen {
 
         for (int i = 0; i < 5; i++){
             levels[i] = new LevelButton(i + 1, mainClass);
-            if(!mainClass.user.levelsAvailable[i]){
+            if(!mainClass.user.getLevelsAvailable(i)){
                 levels[i].lock();
             }
             levels[i].setSize(levelButtonsSize[0], levelButtonsSize[1]);

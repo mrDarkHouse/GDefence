@@ -94,6 +94,9 @@ public class AssetLoader {
 
         infoPanelFone = new Texture("infoPanelFone.png");
 
+        levelEndFoneLoose = new Texture("levelLooseBg.png");
+        levelEndFoneWin = new Texture("levelWinBg.png");
+
     }
 
     public static ImageButton.ImageButtonStyle getBackButtonSkin(){
@@ -216,7 +219,12 @@ public class AssetLoader {
 
 
     }
-
+    public static Label.LabelStyle getLevelEndResultSkin(){
+        Label.LabelStyle l = new Label.LabelStyle();
+        l.font = FontLoader.impact36;
+        l.fontColor = Color.BLACK;
+        return l;
+    }
 
 
     public static void dispose() {

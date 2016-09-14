@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 public class FontLoader {
     private static FreeTypeFontGenerator generator;
 
-    public static BitmapFont impact12;
+    public static BitmapFont impact12;//refactor
     public static BitmapFont impact14;
     public static BitmapFont impact16;
     public static BitmapFont impact18;
@@ -16,6 +16,7 @@ public class FontLoader {
     public static BitmapFont impact24;
     public static BitmapFont impact26;
     public static BitmapFont impact28;
+    public static BitmapFont impact36;
 
 
 
@@ -45,6 +46,8 @@ public class FontLoader {
         impact26 = generator.generateFont(parameter);
         parameter.size = 28;
         impact28 = generator.generateFont(parameter);
+        parameter.size = 36;
+        impact36 = generator.generateFont(parameter);
 
 
 

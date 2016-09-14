@@ -49,14 +49,21 @@ public class User {
 
     public int getGold() { return gold; }
 
-    public boolean[] getLevelsAvailable() {
-        return levelsAvailable;
+    public boolean getLevelsAvailable(int number) {
+        return levelsAvailable[number];
     }
 
     private String name;
     private int currentMap;
     private int levelsCompletedInt;
-    public boolean[] levelsAvailable = new boolean[100];
+    private boolean[] levelsAvailable = new boolean[100];
+
+    public void openLevel(int number) {
+        levelsAvailable[number] = true;
+    }
+
+
+
     private int totalExp;
     private int currentExp;
     private int gold;

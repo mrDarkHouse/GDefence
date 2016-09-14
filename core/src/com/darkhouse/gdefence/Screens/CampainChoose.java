@@ -39,10 +39,9 @@ public class CampainChoose extends AbstractMenuScreen{
         TextButton loadCamp = new TextButton("Load Campain", mainClass.getSkin());
         loadCamp.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mainClass.user = new User();
+                //mainClass.user = new User();
                 if(mainClass.user.load()) {
                     mainClass.setScreen(new CampainMap(mainClass));
-
                 }
                 return true;
             }

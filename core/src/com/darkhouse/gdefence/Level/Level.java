@@ -178,9 +178,11 @@ public class Level {
 
     private void winLevel(){
         isWin = true;
-        System.out.println("win");
+        //System.out.println("win");
 
         //LevelMap.levelMap.hide();
+        GDefence.getInstance().user.openLevel(number);
+
 
         GDefence.getInstance().setScreen(new LevelEndScreen(true));
         //GDefence.getInstance().setScreen(new MainMenu(GDefence.getInstance()));
