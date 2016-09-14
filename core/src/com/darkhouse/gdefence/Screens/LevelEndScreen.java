@@ -34,14 +34,16 @@ public class LevelEndScreen implements Screen{
     private void init(boolean isWin){
         Table table = new Table();
         table.setWidth(stage.getWidth());
+        table.setHeight(stage.getHeight());
         table.align(Align.center|Align.top);
-        table.setPosition(0, Gdx.graphics.getHeight());
+        table.setPosition(0, 0);//Gdx.graphics.getHeight());
+
 
         continueButton = new TextButton("Continue", AssetLoader.getSkin());
         continueButton.setSize(200, 40);
-        continueButton.align(Align.center);
+        //continueButton.align(Align.center);
         //continueButton.align(Align.bottom);
-        continueButton.pack();
+        //continueButton.pack();
 
         ResultPanel rPanel = new ResultPanel(isWin);
 
@@ -90,6 +92,7 @@ public class LevelEndScreen implements Screen{
         batch.begin();
         batch.draw(AssetLoader.campainBg, 0, 0);
         batch.end();
+        stage.getActors().get(0).debug();
 
         stage.act(delta);
         stage.draw();
