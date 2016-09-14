@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -16,6 +17,7 @@ public class LevelEndScreen implements Screen{
     private Stage stage;
     private TextButton continueButton;
     private boolean isWin;
+    private Texture backGround;
 
     public LevelEndScreen(boolean isWin) {
         this.isWin = isWin;
@@ -32,6 +34,12 @@ public class LevelEndScreen implements Screen{
     }
 
     private void init(boolean isWin){
+        if(isWin){
+            backGround = AssetLoader.campainBg;
+        }else {
+            backGround = AssetLoader.campainBg;
+        }
+
         Table table = new Table();
         table.setWidth(stage.getWidth());
         table.setHeight(stage.getHeight());
@@ -90,7 +98,7 @@ public class LevelEndScreen implements Screen{
     @Override
     public void render(float delta) {
         batch.begin();
-        batch.draw(AssetLoader.campainBg, 0, 0);
+        batch.draw(backGround, 0, 0);
         batch.end();
         stage.getActors().get(0).debug();
 

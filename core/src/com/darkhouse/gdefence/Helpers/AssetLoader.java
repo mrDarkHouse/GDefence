@@ -43,6 +43,8 @@ public class AssetLoader {
     public static Texture dog;
 
     public static Texture infoPanelFone;
+    public static Texture levelEndFoneWin;
+    public static Texture levelEndFoneLoose;
 
     //public static Animation birdAnimation;
     //public static TextureRegion bird, birdDown, birdUp;
