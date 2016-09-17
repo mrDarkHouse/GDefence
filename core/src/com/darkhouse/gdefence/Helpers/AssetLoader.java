@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Objects.GameObject;
 
 public class AssetLoader {
 
@@ -41,6 +43,11 @@ public class AssetLoader {
 
     public static Texture slime;
     public static Texture dog;
+
+    public static Texture basicTower;
+    public static Texture rockTower;
+    public static Texture arrowTower;
+    public static Texture rangeTower;
 
     public static Texture infoPanelFone;
     public static Texture levelEndFoneWin;
@@ -91,6 +98,11 @@ public class AssetLoader {
 
         slime = new Texture("Mobs/mob.png");
         dog = new Texture("Mobs/mob2.png");
+
+        basicTower = new Texture("Tower/basicTower.png");
+        rockTower = new Texture("Tower/rockTower.png");
+        arrowTower = new Texture("Tower/arrowTower.png");
+        rangeTower = new Texture("Tower/rangeTower.png");
 
         infoPanelFone = new Texture("infoPanelFone.png");
 
@@ -224,6 +236,35 @@ public class AssetLoader {
         l.font = FontLoader.impact36;
         l.fontColor = Color.BLACK;
         return l;
+    }
+
+    public static ImageButton.ImageButtonStyle getTowerCellSkin(Tower tower){
+        ImageButton.ImageButtonStyle towerCellStyle = new ImageButton.ImageButtonStyle();
+        switch (tower.getID()){
+            case Basic:
+                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
+                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
+                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
+                break;
+            case Rock:
+                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
+                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
+                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
+                break;
+            case Arrow:
+                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
+                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
+                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
+                break;
+            case Range:
+                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
+                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
+                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
+                break;
+            default:
+                throw new RuntimeException("No tower found with id: " + tower.getID());
+        }
+        return towerCellStyle;
     }
 
 

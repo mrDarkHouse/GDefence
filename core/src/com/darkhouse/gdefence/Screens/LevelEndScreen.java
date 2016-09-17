@@ -69,14 +69,14 @@ public class LevelEndScreen implements Screen{
             }
         });
         //continueButton.align(Align.center);
-        //continueButton.align(Align.bottom);
+        continueButton.align(Align.bottom);
         //continueButton.pack();
 
         ResultPanel rPanel = new ResultPanel(isWin);
 
         //table.add(rPanel).spaceBottom(100).row();
         table.add(rPanel).padBottom(100).row();
-        table.add(continueButton).size(150, 40).align(Align.top);
+        table.add(continueButton).size(150, 40).align(Align.bottom);
 
 
         //stage.addActor(continueButton);

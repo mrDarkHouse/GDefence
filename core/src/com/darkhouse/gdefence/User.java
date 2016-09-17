@@ -3,6 +3,11 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerObject;
 //import ru.Towers.TowerType;
 
+import com.darkhouse.gdefence.Level.Tower.ArrowTower;
+import com.darkhouse.gdefence.Level.Tower.BasicTower;
+import com.darkhouse.gdefence.Level.Tower.RockTower;
+import com.darkhouse.gdefence.Level.Tower.Tower;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -76,7 +81,7 @@ public class User {
     private int level = 1;// = exp - Value.needExp2Lvl[0];
 
     //public TowerObject[] towers;
-   // public ArrayList <TowerObject> towers;
+    public ArrayList <Tower> towers;
 
     /*
     public boolean addTower(TowerObject o){
@@ -139,7 +144,12 @@ public class User {
         this.totalExp = 0;
         addGold(1000);
         currentMap = 1;
-       // towers = new ArrayList<>();
+        towers = new ArrayList<Tower>();
+
+        towers.add(new ArrowTower());
+        towers.add(new RockTower());
+        towers.add(new BasicTower());
+
 //        towers.add(new TowerObject(TowerType.Basic));
 //        towers.add(new TowerObject(TowerType.Basic));
 //        towers.add(new TowerObject(TowerType.Rocky));

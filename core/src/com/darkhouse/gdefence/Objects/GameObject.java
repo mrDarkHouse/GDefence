@@ -10,13 +10,13 @@ public abstract class GameObject {
     public Texture getTexture() {
         return texture;
     }
-    public int getID(){
-        return ID;
-    }
+    //public int getID(){
+    //    return ID;
+    //}
 
     protected String name;
     protected Texture texture;
-    protected int ID;
+    //protected int ID;
 
     public GameObject() {
     }
