@@ -4,9 +4,13 @@ package com.darkhouse.gdefence.Screens.BottomPanel;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Model.CompactArsenal;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 
 public class Arsenal extends AbstractCampainScreen{
+    private CompactArsenal compactArsenal;
+
+
     public Arsenal(GDefence mainClass) {
         super("Arsenal", mainClass);
     }

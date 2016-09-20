@@ -10,8 +10,10 @@ import com.darkhouse.gdefence.Objects.TowerObject;
 public class TowerCell extends ObjectCell{
     private Tower tower;
 
-    public TowerCell(Tower tower) {
+    public TowerCell() {
         super();
+    }
+    public void init(Tower tower){
         this.tower = tower;
         addObject(tower);
         setObject();
