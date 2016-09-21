@@ -11,8 +11,8 @@ public class Arsenal extends AbstractCampainScreen{
     private CompactArsenal compactArsenal;
 
 
-    public Arsenal(GDefence mainClass) {
-        super("Arsenal", mainClass);
+    public Arsenal() {
+        super("Arsenal");
     }
 
     @Override

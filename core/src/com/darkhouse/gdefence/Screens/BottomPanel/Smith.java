@@ -5,8 +5,8 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 
 public class Smith extends AbstractCampainScreen{
-    public Smith(GDefence mainClass) {
-        super("Smith", mainClass);
+    public Smith() {
+        super("Smith");
     }
 
     @Override

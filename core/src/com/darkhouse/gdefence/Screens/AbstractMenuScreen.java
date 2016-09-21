@@ -13,12 +13,18 @@ public abstract class AbstractMenuScreen implements Screen {
 
     protected SpriteBatch batch;
     protected Stage stage;
-    protected GDefence mainClass;
+    private boolean enableBackButton;
 
 
 
-    public AbstractMenuScreen(GDefence mainClass, boolean enableBackButton) {
-        this.mainClass = mainClass;
+    public AbstractMenuScreen(boolean enableBackButton) {
+        this.enableBackButton = enableBackButton;
+    }
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+
         batch = new SpriteBatch();
         stage = new Stage();
 
@@ -27,7 +33,7 @@ public abstract class AbstractMenuScreen implements Screen {
 
     private void loadButtons(boolean enableBackButton){
         if(enableBackButton){
-            stage.addActor(new BackButton(mainClass));
+            stage.addActor(new BackButton());
         }
     }
 
@@ -43,10 +49,7 @@ public abstract class AbstractMenuScreen implements Screen {
     }
 
 
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
+
 
     @Override
     public void hide() {

@@ -16,17 +16,17 @@ public class LevelButton extends ImageButton {
     private int number;
     private boolean isLocked = false;
 
-    public LevelButton(int number, GDefence mainClass) {
+    public LevelButton(int number) {
         super(AssetLoader.getCampainLevelSkin(number));
         this.number = number;
-        load(mainClass);
+        load();
     }
 
-    private void load(final GDefence mainClass){
+    private void load(){
         addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (!isLocked) {
-                    mainClass.setScreen(new LevelPreparationScreen(number, mainClass));
+                    GDefence.getInstance().setScreen(new LevelPreparationScreen(number));
                 }
                 return true;
             }

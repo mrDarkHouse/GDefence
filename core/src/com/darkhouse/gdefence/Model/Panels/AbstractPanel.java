@@ -5,10 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.darkhouse.gdefence.GDefence;
 
 public abstract class AbstractPanel extends Table{
-    protected GDefence mainClass;
 
-    public AbstractPanel(int x, int y, int width, int height, GDefence mainClass) {
-        this.mainClass = mainClass;
+    public AbstractPanel(int x, int y, int width, int height) {
         setPosition(x, y);
         setSize(width, height);
     }

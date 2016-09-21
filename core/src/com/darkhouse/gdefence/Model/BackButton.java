@@ -13,7 +13,7 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class BackButton extends ImageButton{
 
-    public BackButton(final GDefence mainClass) {
+    public BackButton() {
         super(AssetLoader.getBackButtonSkin());
         //super(mainClass.getSkin());
         int backButtonsSize[] = {64, 64};
@@ -23,7 +23,7 @@ public class BackButton extends ImageButton{
         addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 //mainClass.setScreen(new MainMenu(mainClass));
-                mainClass.setPreviousScreen();
+                GDefence.getInstance().setPreviousScreen();
                 return true;
             }
         });

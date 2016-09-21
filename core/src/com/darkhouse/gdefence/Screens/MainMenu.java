@@ -53,8 +53,8 @@ public class MainMenu extends AbstractMenuScreen{
 //    private OrthographicCamera camera;
 
 
-    public MainMenu(GDefence mainClass) {
-        super(mainClass, false);
+    public MainMenu() {
+        super(false);
         //this.mainclass = mainclass;
         //campainMap = new CampainMap(mainclass);
 
@@ -108,7 +108,7 @@ public class MainMenu extends AbstractMenuScreen{
         campainButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, Gdx.graphics.getHeight() - buttonsSize[1] - startBorder);
         campainButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mainClass.setScreen(new CampainChoose(mainClass));
+                GDefence.getInstance().setScreen(new CampainChoose());
                 //mainclass.setScreen(new CampainMap(mainclass));
                 return true;
             }
@@ -119,7 +119,7 @@ public class MainMenu extends AbstractMenuScreen{
         optionsButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, campainButton.getY() - buttonsSize[1] - sizeBetween);
         optionsButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mainClass.setScreen(new OptionScreen(mainClass));
+                GDefence.getInstance().setScreen(new OptionScreen());
                 return true;
             }
         });

@@ -32,8 +32,8 @@ public class CampainMap extends AbstractCampainScreen {
     //private Stage stage;
 
 
-    public CampainMap(GDefence mainClass) {
-        super("Campain", mainClass);
+    public CampainMap() {
+        super("Campain");
         //batch = new SpriteBatch();
         //shape = new ShapeRenderer();
         //this.mainClass = mainClass;
@@ -65,7 +65,7 @@ public class CampainMap extends AbstractCampainScreen {
         bottomPanel[0].setPosition(0, 0);
         bottomPanel[0].addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mainClass.setScreen(new Arsenal(mainClass));
+                GDefence.getInstance().setScreen(new Arsenal());
                 return true;
             }
         });
@@ -76,7 +76,7 @@ public class CampainMap extends AbstractCampainScreen {
         bottomPanel[1].setPosition(bottomButtonsSize[0], 0);
         bottomPanel[1].addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mainClass.setScreen(new Store(mainClass));
+                GDefence.getInstance().setScreen(new Store());
                 return true;
             }
         });
@@ -87,7 +87,7 @@ public class CampainMap extends AbstractCampainScreen {
         bottomPanel[2].setPosition(bottomButtonsSize[0]*2, 0);
         bottomPanel[2].addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mainClass.setScreen(new Smith(mainClass));
+                GDefence.getInstance().setScreen(new Smith());
                 return true;
             }
         });
@@ -134,8 +134,8 @@ public class CampainMap extends AbstractCampainScreen {
         levelButtonsSize[1] = levelButtonsSize[0];
 
         for (int i = 0; i < 5; i++){
-            levels[i] = new LevelButton(i + 1, mainClass);
-            if(!mainClass.user.getLevelsAvailable(i)){
+            levels[i] = new LevelButton(i + 1);
+            if(!GDefence.getInstance().user.getLevelsAvailable(i)){
                 levels[i].lock();
             }
             levels[i].setSize(levelButtonsSize[0], levelButtonsSize[1]);
@@ -148,11 +148,11 @@ public class CampainMap extends AbstractCampainScreen {
         int userPanelSize[] = {240, 120};
         int goldPanelSize[] = {60, userPanelSize[1]};
         stage.addActor(new GoldPanel(Gdx.graphics.getWidth() - userPanelSize[0] - goldPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize - 2,
-                goldPanelSize[0], goldPanelSize[1], mainClass));
+                goldPanelSize[0], goldPanelSize[1]));
         stage.addActor(new UserPanel(Gdx.graphics.getWidth() - userPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize - 2,
-                userPanelSize[0], userPanelSize[1], mainClass));
+                userPanelSize[0], userPanelSize[1]));
         //System.out.println(Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize);
-        stage.addActor(new GemPanel(30, 460, 250, 180, mainClass));
+        stage.addActor(new GemPanel(30, 460, 250, 180));
 
 
 

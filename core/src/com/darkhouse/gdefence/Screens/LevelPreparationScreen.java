@@ -6,15 +6,16 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class LevelPreparationScreen extends AbstractCampainScreen{
-    public LevelPreparationScreen(int level, GDefence mainClass) {
-        super("" + level, mainClass);
+    public LevelPreparationScreen(int level) {
+        super("" + level);
         load(level);
     }
 
     private void load(final int level){
-        TextButton startButton = new TextButton("Start", mainClass.getSkin());
+        TextButton startButton = new TextButton("Start", AssetLoader.getSkin());
         startButton.setSize(150, 70);
         startButton.setPosition(Gdx.graphics.getWidth() - 200, 30);
         startButton.addListener(new InputListener(){

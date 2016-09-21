@@ -24,10 +24,8 @@ import com.darkhouse.gdefence.Model.BackButton;
 
 public abstract class AbstractCampainScreen implements Screen {
 
-    protected ImageButton backButton;
     protected ImageTextButton nameButton;
     protected String name;
-    protected GDefence mainClass;
     protected final int topPadSize = 64;
 
     protected SpriteBatch batch;
@@ -35,9 +33,13 @@ public abstract class AbstractCampainScreen implements Screen {
     protected ShapeRenderer shape;
 
 
-    public AbstractCampainScreen(String name, GDefence mainClass) {
+    public AbstractCampainScreen(String name) {
         this.name = name;
-        this.mainClass = mainClass;
+    }
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
         batch = new SpriteBatch();
         stage = new Stage();
         shape = new ShapeRenderer();
@@ -77,7 +79,7 @@ public abstract class AbstractCampainScreen implements Screen {
 //                return true;
 //            }
 //        });
-        stage.addActor(new BackButton(mainClass));
+        stage.addActor(new BackButton());
 
 
 
@@ -113,10 +115,7 @@ public abstract class AbstractCampainScreen implements Screen {
         drawLines();
     }
 
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
+
 
     @Override
     public void hide() {

@@ -5,8 +5,8 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 
 public class Store extends AbstractCampainScreen{
-    public Store(GDefence mainClass) {
-        super("Store", mainClass);
+    public Store() {
+        super("Store");
     }
 
     @Override

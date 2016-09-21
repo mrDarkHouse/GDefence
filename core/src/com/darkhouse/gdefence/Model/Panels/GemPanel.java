@@ -26,8 +26,8 @@ public class GemPanel extends AbstractPanel{
     //private GDefence mainClass;
     //private ShapeRenderer shape;
 
-    public GemPanel(int x, int y, int width, int height, GDefence mainClass) {
-        super(x, y, width, height, mainClass);
+    public GemPanel(int x, int y, int width, int height) {
+        super(x, y, width, height);
         //this.mainClass = mainClass;
         //shape = new ShapeRenderer();
 
@@ -62,25 +62,25 @@ public class GemPanel extends AbstractPanel{
         add(new Image(AssetLoader.gemTexture[0])).width(horizontal).height(verticalImg).spaceRight(borderSize);
         add(new Image(AssetLoader.gemTexture[1])).width(horizontal).height(verticalImg).spaceRight(borderSize);
         add(new Image(AssetLoader.gemTexture[2])).width(horizontal).height(verticalImg).row();
-        Label l = new Label(mainClass.user.getGemNumber(User.GEM_TYPE.RED) + "", mainClass.getSkin());
+        Label l = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.RED) + "", AssetLoader.getSkin());
         l.setAlignment(Align.center);
         add(l).width(horizontal).height(verticalTxt).spaceBottom(borderSize).spaceRight(borderSize);
-        l = new Label(mainClass.user.getGemNumber(User.GEM_TYPE.YELLOW) + "", mainClass.getSkin());
+        l = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.YELLOW) + "", AssetLoader.getSkin());
         l.setAlignment(Align.center);
         add(l).width(horizontal).height(verticalTxt).spaceBottom(borderSize).spaceRight(borderSize);
-        l = new Label(mainClass.user.getGemNumber(User.GEM_TYPE.BLUE) + "", mainClass.getSkin());
+        l = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.BLUE) + "", AssetLoader.getSkin());
         l.setAlignment(Align.center);
         add(l).width(horizontal).height(verticalTxt).spaceBottom(borderSize).spaceRight(borderSize).row();
         add(new Image(AssetLoader.gemTexture[3])).width(horizontal).height(verticalImg).spaceRight(borderSize);
         add(new Image(AssetLoader.gemTexture[4])).width(horizontal).height(verticalImg).spaceRight(borderSize);
         add(new Image(AssetLoader.gemTexture[5])).width(horizontal).height(verticalImg).spaceRight(borderSize).row();
-        l = new Label(mainClass.user.getGemNumber(User.GEM_TYPE.BLACK) + "", mainClass.getSkin());
+        l = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.BLACK) + "", AssetLoader.getSkin());
         l.setAlignment(Align.center);
         add(l).width(horizontal).height(verticalTxt).spaceRight(borderSize);
-        l = new Label(mainClass.user.getGemNumber(User.GEM_TYPE.GREEN) + "", mainClass.getSkin());
+        l = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.GREEN) + "", AssetLoader.getSkin());
         l.setAlignment(Align.center);
         add(l).width(horizontal).height(verticalTxt).spaceRight(borderSize);
-        l = new Label(mainClass.user.getGemNumber(User.GEM_TYPE.WHITE) + "", mainClass.getSkin());
+        l = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.WHITE) + "", AssetLoader.getSkin());
         l.setAlignment(Align.center);
         add(l).width(horizontal).height(verticalTxt);
 

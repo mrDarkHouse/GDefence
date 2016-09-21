@@ -8,17 +8,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class OptionScreen extends AbstractMenuScreen {
-    public OptionScreen(GDefence mainClass) {
-        super(mainClass, true);
+    public OptionScreen() {
+        super( true);
         loadButtons();
     }
 
     private void loadButtons(){
         Table table = new Table();
 
-        TextButton resolution = new TextButton("Resolution", mainClass.getSkin());
+        TextButton resolution = new TextButton("Resolution", AssetLoader.getSkin());
         resolution.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 
@@ -26,7 +27,7 @@ public class OptionScreen extends AbstractMenuScreen {
                 return true;
             }
         });
-        TextButton sound = new TextButton("Sound", mainClass.getSkin());
+        TextButton sound = new TextButton("Sound", AssetLoader.getSkin());
         sound.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 

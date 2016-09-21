@@ -18,8 +18,8 @@ public class CampainChoose extends AbstractMenuScreen{
     //private TextButton newCamp;
     //private TextButton loadCamp;
 
-    public CampainChoose(GDefence mainClass) {
-        super(mainClass, true);
+    public CampainChoose() {
+        super(true);
         //this.mainclass = mainclass;
         loadButtons();
     }
@@ -27,7 +27,7 @@ public class CampainChoose extends AbstractMenuScreen{
     private void loadButtons(){
         Table table = new Table();
         //ImageButton backButton = new ImageButton();
-        TextButton newCamp = new TextButton("New Campain", mainClass.getSkin());
+        TextButton newCamp = new TextButton("New Campain", GDefence.getInstance().getSkin());
         newCamp.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 newCampDialog();
@@ -36,12 +36,12 @@ public class CampainChoose extends AbstractMenuScreen{
             }
         });
         //newCamp.setSize();
-        TextButton loadCamp = new TextButton("Load Campain", mainClass.getSkin());
+        TextButton loadCamp = new TextButton("Load Campain", GDefence.getInstance().getSkin());
         loadCamp.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 //mainClass.user = new User();
-                if(mainClass.user.load()) {
-                    mainClass.setScreen(new CampainMap(mainClass));
+                if(GDefence.getInstance().user.load()) {
+                    GDefence.getInstance().setScreen(new CampainMap());
                 }
                 return true;
             }
@@ -86,9 +86,9 @@ public class CampainChoose extends AbstractMenuScreen{
             @Override
             protected void result(Object object) {
                 if(object.equals(true)){
-                    mainClass.user = new User();
-                    mainClass.user.save();
-                    mainClass.setScreen(new CampainMap(mainClass));
+                    GDefence.getInstance().user = new User();
+                    GDefence.getInstance().user.save();
+                    GDefence.getInstance().setScreen(new CampainMap());
                 }else{
                     hide();
                 }

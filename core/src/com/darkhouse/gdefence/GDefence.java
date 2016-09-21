@@ -34,7 +34,7 @@ public class GDefence extends Game {
 		mainClass = this;
         AssetLoader.load();
 		FontLoader.load();
-		setScreen(new MainMenu(this));
+		setScreen(new MainMenu());
 
 
 		//batch = new SpriteBatch();
@@ -64,19 +64,19 @@ public class GDefence extends Game {
 	public Screen setPreviousScreen(){
 		Screen currentScreen = getScreen();
 		if(currentScreen.getClass().getName().equals(CampainMap.class.getName())){
-			setScreen(new CampainChoose(this));
+			setScreen(new CampainChoose());
 		}else if(currentScreen.getClass().getName().equals(OptionScreen.class.getName())){
-			setScreen(new MainMenu(this));
+			setScreen(new MainMenu());
 		}else if(currentScreen.getClass().getName().equals(CampainChoose.class.getName())){
-			setScreen(new MainMenu(this));
+			setScreen(new MainMenu());
 		}else if(currentScreen.getClass().getName().equals(Arsenal.class.getName())){
-			setScreen(new CampainMap(this));
+			setScreen(new CampainMap());
 		}else if(currentScreen.getClass().getName().equals(Store.class.getName())){
-			setScreen(new CampainMap(this));
+			setScreen(new CampainMap());
 		}else if(currentScreen.getClass().getName().equals(Smith.class.getName())){
-			setScreen(new CampainMap(this));
+			setScreen(new CampainMap());
 		}else if(currentScreen.getClass().getName().equals(LevelPreparationScreen.class.getName())){
-			setScreen(new CampainMap(this));
+			setScreen(new CampainMap());
 		}
 		return null;
 
