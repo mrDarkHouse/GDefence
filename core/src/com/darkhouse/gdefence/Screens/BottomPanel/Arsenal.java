@@ -16,6 +16,13 @@ public class Arsenal extends AbstractCampainScreen{
     }
 
     @Override
+    public void show() {
+        super.show();
+
+
+    }
+
+    @Override
     public void resize(int width, int height) {
 
     }

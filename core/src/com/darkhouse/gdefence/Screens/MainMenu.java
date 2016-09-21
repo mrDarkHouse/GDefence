@@ -60,18 +60,18 @@ public class MainMenu extends AbstractMenuScreen{
 
         //batch = new SpriteBatch();
        // menuBg = new Texture("MainMenuBg.png");
+        //loadButtons();
+
+    }
+    @Override
+    public void show() {
+        super.show();
         loadButtons();
-
-
-
-
-
 
     }
 
     private void loadButtons(){
-        Viewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage = new Stage(viewport,batch);
+
         //Gdx.input.setInputProcessor(stage);//change
         //texture  = new Texture(Gdx.files.internal("MainMenuAtlas.png"));
         //TextureAtlas mainMenuAtlas = new TextureAtlas("MainMenuAtlas.png");
@@ -249,12 +249,7 @@ public class MainMenu extends AbstractMenuScreen{
     }
 
 
-    @Override
-    public void show() {
-        super.show();
 
-
-    }
 
     @Override
     public void render(float delta) {

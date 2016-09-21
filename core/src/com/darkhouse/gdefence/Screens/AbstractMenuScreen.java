@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkhouse.gdefence.Model.BackButton;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
@@ -23,10 +25,15 @@ public abstract class AbstractMenuScreen implements Screen {
 
     @Override
     public void show() {
+        batch = new SpriteBatch();
+       // stage = new Stage();
+
+        Viewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage = new Stage(viewport,batch);
+
         Gdx.input.setInputProcessor(stage);
 
-        batch = new SpriteBatch();
-        stage = new Stage();
+
 
         loadButtons(enableBackButton);
     }

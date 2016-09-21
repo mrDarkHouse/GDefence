@@ -9,8 +9,17 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class LevelPreparationScreen extends AbstractCampainScreen{
+    private int level;
+
     public LevelPreparationScreen(int level) {
         super("" + level);
+        this.level = level;
+
+    }
+
+    @Override
+    public void show() {
+        super.show();
         load(level);
     }
 

@@ -39,10 +39,11 @@ public abstract class AbstractCampainScreen implements Screen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
         batch = new SpriteBatch();
         stage = new Stage();
         shape = new ShapeRenderer();
+
+        Gdx.input.setInputProcessor(stage);
         define();
     }
 

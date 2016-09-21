@@ -37,6 +37,12 @@ public class CampainMap extends AbstractCampainScreen {
         //batch = new SpriteBatch();
         //shape = new ShapeRenderer();
         //this.mainClass = mainClass;
+
+    }
+
+    @Override
+    public void show() {
+        super.show();
         loadButtons();
         loadFrames();
     }
@@ -221,10 +227,7 @@ public class CampainMap extends AbstractCampainScreen {
 
     }
 
-    @Override
-    public void show() {
-        super.show();
-    }
+
 
     @Override
     public void hide() {
