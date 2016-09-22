@@ -29,7 +29,12 @@ public abstract class AbstractCampainScreen implements Screen {
     protected final int topPadSize = 64;
 
     protected SpriteBatch batch;
-    protected Stage stage;
+    protected static Stage stage;
+
+    public static Stage getStage() {
+        return stage;
+    }
+
     protected ShapeRenderer shape;
 
 

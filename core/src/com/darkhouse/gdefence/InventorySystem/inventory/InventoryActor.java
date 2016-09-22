@@ -36,6 +36,7 @@ public class InventoryActor extends Window {
 
 		TextButton closeButton = new TextButton("X", skin);
 		closeButton.addListener(new HidingClickListener(this));
+		add(closeButton).height(getPadTop());//
 		//getButtonTable().add(closeButton).height(getPadTop());
 
 		setPosition(400, 100);

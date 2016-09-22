@@ -53,6 +53,8 @@ public class AssetLoader {
     public static Texture levelEndFoneWin;
     public static Texture levelEndFoneLoose;
 
+    public static Skin cellSkin;
+
     //public static Animation birdAnimation;
     //public static TextureRegion bird, birdDown, birdUp;
 
@@ -108,6 +110,8 @@ public class AssetLoader {
 
         levelEndFoneLoose = new Texture("levelLooseBg.png");
         levelEndFoneWin = new Texture("levelWinBg.png");
+
+        cellSkin = new Skin(Gdx.files.internal("skins/uiskin.json"));
 
     }
 
