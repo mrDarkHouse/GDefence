@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.utils.Align;
 
 /**
  * @author Daniel Holderbaum
@@ -32,16 +33,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 public class InventoryActor extends Window {
 
 	public InventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin) {
-		super("Inventory...", skin);
+		super("Arsenal", skin);
+		getTitleLabel().setAlignment(Align.center);
+		setMovable(false);
 
-		TextButton closeButton = new TextButton("X", skin);
-		closeButton.addListener(new HidingClickListener(this));
-		add(closeButton).height(getPadTop());//
+		//TextButton closeButton = new TextButton("X", skin);
+		//closeButton.addListener(new HidingClickListener(this));
+		//add(closeButton).height(getPadTop());//
 		//getButtonTable().add(closeButton).height(getPadTop());
 
-		setPosition(400, 100);
+		setPosition(100, 250);
 		defaults().space(8);
+		defaults().size(60, 60);
 		row().fill().expandX();
+
 
 		int i = 0;
 		for (Slot slot : inventory.getSlots()) {
@@ -51,7 +56,7 @@ public class InventoryActor extends Window {
 			add(slotActor);
 
 			i++;
-			if (i % 5 == 0) {
+			if (i % 7 == 0) {
 				row();
 			}
 		}
@@ -59,7 +64,8 @@ public class InventoryActor extends Window {
 		pack();
 
 		// it is hidden by default
-		setVisible(false);
+		//setVisible(false);
+		setVisible(true);
 	}
 
 }

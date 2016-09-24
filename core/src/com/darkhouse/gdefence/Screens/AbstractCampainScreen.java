@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,7 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Model.BackButton;
@@ -37,6 +40,8 @@ public abstract class AbstractCampainScreen implements Screen {
 
     protected ShapeRenderer shape;
 
+    private Viewport viewport;
+
 
     public AbstractCampainScreen(String name) {
         this.name = name;
@@ -53,8 +58,12 @@ public abstract class AbstractCampainScreen implements Screen {
     }
 
     protected void define(){
-        //Camera cam = new PerspectiveCamera();
+        //OrthographicCamera cam = new OrthographicCamera();
+        //cam.setToOrtho(false);
         //stage.setViewport(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam));
+
+        OrthographicCamera camera = new OrthographicCamera();
+        viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 
         int backButtonsSize[] = {64, topPadSize};
         int nameButtonSize[] = {Gdx.graphics.getWidth() - backButtonsSize[0]*2, backButtonsSize[1]};
@@ -107,7 +116,7 @@ public abstract class AbstractCampainScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        //stage.getViewport().update(width, height);
+        viewport.update(width, height);
     }
 
     @Override

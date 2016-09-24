@@ -3,6 +3,7 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerObject;
 //import ru.Towers.TowerType;
 
+import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.Level.Tower.ArrowTower;
 import com.darkhouse.gdefence.Level.Tower.BasicTower;
 import com.darkhouse.gdefence.Level.Tower.RockTower;
@@ -83,6 +84,9 @@ public class User {
     //public TowerObject[] towers;
     public ArrayList <Tower> towers;
 
+    public ArrayList <Item> items;
+
+
     /*
     public boolean addTower(TowerObject o){
         boolean b;
@@ -144,11 +148,16 @@ public class User {
         this.totalExp = 0;
         addGold(1000);
         currentMap = 1;
-        towers = new ArrayList<Tower>();
+        //towers = new ArrayList<Tower>();
+        items = new ArrayList<Item>();
 
-        towers.add(new ArrowTower());
-        towers.add(new RockTower());
-        towers.add(new BasicTower());
+        //towers.add(new ArrowTower());
+        //towers.add(new RockTower());
+        //towers.add(new BasicTower());
+        items.add(Item.BATTERY);
+        items.add(Item.CANNON);
+        items.add(Item.CRYSTAL_GREEN);
+        items.add(Item.CRYSTAL_GREEN);
 
 //        towers.add(new TowerObject(TowerType.Basic));
 //        towers.add(new TowerObject(TowerType.Basic));

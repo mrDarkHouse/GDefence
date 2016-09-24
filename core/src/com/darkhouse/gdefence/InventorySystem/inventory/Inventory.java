@@ -23,6 +23,7 @@ package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
 
 /**
  * @author Daniel Holderbaum
@@ -32,21 +33,32 @@ public class Inventory {
 	private Array<Slot> slots;
 
 	public Inventory() {
-		slots = new Array<Slot>(25);
-		for (int i = 0; i < 25; i++) {
+		slots = new Array<Slot>(35);
+		for (int i = 0; i < 35; i++) {
 			slots.add(new Slot(null, 0));
 		}
 
 		// create some random items
-		for (Slot slot : slots) {
-			slot.add(Item.values()[MathUtils.random(0, Item.values().length - 1)], 1);
-		}
+		//for (Slot slot : slots) {
+		//	slot.add(Item.values()[MathUtils.random(0, Item.values().length - 1)], 1);
+		//}
 
 		// create a few random empty slots
-		for (int i = 0; i < 3; i++) {
-			Slot randomSlot = slots.get(MathUtils.random(0, slots.size - 1));
-			randomSlot.take(randomSlot.getAmount());
+		//for (int i = 0; i < 3; i++) {
+		//	Slot randomSlot = slots.get(MathUtils.random(0, slots.size - 1));
+		//	randomSlot.take(randomSlot.getAmount());
+		//}
+		for(Item i:GDefence.getInstance().user.items){
+			Slot s = firstSlotWithItem(null);
+			if(s != null){
+				s.add(i, 1);
+			}
 		}
+//		for (Slot slot : slots) {
+//
+//			//slot.add(Item.BATTERY, 1);
+//		}
+
 	}
 
 	public int checkInventory(Item item) {

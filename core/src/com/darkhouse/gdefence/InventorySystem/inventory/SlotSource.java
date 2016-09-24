@@ -21,6 +21,7 @@
  */
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -54,7 +55,8 @@ public class SlotSource extends Source {
 		sourceSlot.take(sourceSlot.getAmount());
 		payload.setObject(payloadSlot);
 
-		TextureAtlas icons = LibgdxUtils.assets.get("icons/icons.atlas", TextureAtlas.class);
+		//TextureAtlas icons = LibgdxUtils.assets.get("icons/icons.atlas", TextureAtlas.class);
+		TextureAtlas icons = new TextureAtlas(Gdx.files.internal("icons/icons.atlas"));
 		TextureRegion icon = icons.findRegion(payloadSlot.getItem().getTextureRegion());
 
 		Actor dragActor = new Image(icon);
