@@ -93,6 +93,7 @@ public class CampainChoose extends AbstractMenuScreen{
             protected void result(Object object) {
                 if(object.equals(true)){
                     GDefence.getInstance().user = new User();
+                    GDefence.getInstance().user.init();
                     GDefence.getInstance().user.save();
                     GDefence.getInstance().setScreen(new CampainMap());
                 }else{

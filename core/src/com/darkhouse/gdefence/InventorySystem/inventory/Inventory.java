@@ -48,12 +48,12 @@ public class Inventory {
 		//	Slot randomSlot = slots.get(MathUtils.random(0, slots.size - 1));
 		//	randomSlot.take(randomSlot.getAmount());
 		//}
-		for(Item i:GDefence.getInstance().user.items){
-			Slot s = firstSlotWithItem(null);
-			if(s != null){
-				s.add(i, 1);
-			}
-		}
+//		for(Item i:GDefence.getInstance().user.items){
+//			Slot s = firstSlotWithItem(null);
+//			if(s != null){
+//				s.add(i, 1);
+//			}
+//		}
 //		for (Slot slot : slots) {
 //
 //			//slot.add(Item.BATTERY, 1);

@@ -3,6 +3,7 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerObject;
 //import ru.Towers.TowerType;
 
+import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.Level.Tower.ArrowTower;
 import com.darkhouse.gdefence.Level.Tower.BasicTower;
@@ -84,9 +85,13 @@ public class User {
     //public TowerObject[] towers;
     public ArrayList <Tower> towers;
 
-    public ArrayList <Item> items;
+    //public ArrayList <Item> items;
 
+    private static Inventory inventory;
 
+    public static Inventory getInventory() {
+        return inventory;
+    }
     /*
     public boolean addTower(TowerObject o){
         boolean b;
@@ -145,19 +150,29 @@ public class User {
 
 
     public User() {
+
+    }
+
+    public void init(){
         this.totalExp = 0;
         addGold(1000);
         currentMap = 1;
         //towers = new ArrayList<Tower>();
-        items = new ArrayList<Item>();
+
 
         //towers.add(new ArrowTower());
         //towers.add(new RockTower());
         //towers.add(new BasicTower());
-        items.add(Item.BATTERY);
-        items.add(Item.CANNON);
-        items.add(Item.CRYSTAL_GREEN);
-        items.add(Item.CRYSTAL_GREEN);
+        //items = new ArrayList<Item>();
+        //items.add(Item.BATTERY);
+        //items.add(Item.CANNON);
+        //items.add(Item.CRYSTAL_GREEN);
+        //items.add(Item.CRYSTAL_GREEN);
+
+        inventory = new Inventory();
+        inventory.store(Item.BATTERY, 1);
+        inventory.store(Item.CANNON, 1);
+        inventory.store(Item.CRYSTAL_GREEN, 2);
 
 //        towers.add(new TowerObject(TowerType.Basic));
 //        towers.add(new TowerObject(TowerType.Basic));
@@ -194,6 +209,7 @@ public class User {
             this.levelsAvailable[i] = false;
         }
     }
+
 
     public User(File saveFile) {
         this.saveFile = saveFile;

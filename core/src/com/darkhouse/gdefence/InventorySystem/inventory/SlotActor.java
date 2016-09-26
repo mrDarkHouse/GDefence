@@ -43,7 +43,7 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 	private Skin skin;
 
-	private Label amount;
+	private Amount amount;
 
 	public SlotActor(Skin skin, Slot slot) {
 		super(createStyle(skin, slot));
@@ -52,19 +52,13 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 		slot.addListener(this);
 
-		amount = new Label("" + slot.getAmount(), skin);
-		Label.LabelStyle style = new Label.LabelStyle();
-		style.background = new TextureRegionDrawable(new TextureRegion(AssetLoader.cell));
-		style.font = FontLoader.impact20;
-		style.fontColor = Color.BLACK;
-		amount.setStyle(style);
-		amount.setSize(22, 22);
+
+		amount = new Amount(skin, slot);
 		addActor(amount);
-
 		//do align right
-
 		amount.setAlignment(Align.center);
-		amount.setVisible(false);
+
+
 
 
 
@@ -97,12 +91,8 @@ public class SlotActor extends ImageButton implements SlotListener {
 	@Override
 	public void hasChanged(Slot slot) {
 		setStyle(createStyle(skin, slot));
-		if(slot.getAmount() > 1){
-			amount.setText("" + slot.getAmount());
-			amount.setVisible(true);
-		}else {
-			amount.setVisible(false);
-		}
+		amount.change();
 	}
+
 
 }

@@ -5,11 +5,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
+import com.darkhouse.gdefence.User;
 
 public class LevelPreparationScreen extends AbstractCampainScreen{
     private int level;
+    private InventoryActor inventoryActor;
 
     public LevelPreparationScreen(int level) {
         super("" + level);
@@ -34,6 +38,12 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
             }
         });
         stage.addActor(startButton);
+
+        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), AssetLoader.cellSkin);
+        stage.addActor(inventoryActor);
+        inventoryActor.setPosition(100, 50);
+
+
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
 import com.darkhouse.gdefence.Model.CompactArsenal;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
+import com.darkhouse.gdefence.User;
 
 public class Arsenal extends AbstractCampainScreen{
     private CompactArsenal compactArsenal;
@@ -29,7 +30,7 @@ public class Arsenal extends AbstractCampainScreen{
     public void show() {
         super.show();
         //Skin skin = LibgdxUtils.assets.get("skins/uiskin.json", Skin.class);
-        inventoryActor = new InventoryActor(new Inventory(), new DragAndDrop(), AssetLoader.cellSkin);
+        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), AssetLoader.cellSkin);
         stage.addActor(inventoryActor);
 
         TextButton towerMap = new TextButton("Tower Map", AssetLoader.getSkin());
