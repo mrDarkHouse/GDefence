@@ -63,7 +63,6 @@ public class InventoryActor extends Window {
 
 		pack();
 
-		// it is hidden by default
 		//setVisible(false);
 		setVisible(true);
 	}

@@ -21,23 +21,102 @@
  */
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
+import com.darkhouse.gdefence.Level.Ability.Ability;
+import com.darkhouse.gdefence.Level.Tower.AttackType;
+import com.darkhouse.gdefence.Level.Tower.TowerType;
+
+import java.util.ArrayList;
+
 /**
  * @author Daniel Holderbaum
  */
-public enum Item {
+public enum Item {;
 
-	CRYSTAL_RED("redcrystal"), CRYSTAL_BLUE("bluecrystal"), CRYSTAL_GREEN("greencrystal"), CRYSTAL_YELLOW("yellowcrystal"), CRYSTAL_MAGENTA("magentacrystal"), CRYSTAL_CYAN(
+
+
+	/*CRYSTAL_RED("redcrystal"), CRYSTAL_BLUE("bluecrystal"), CRYSTAL_GREEN("greencrystal"), CRYSTAL_YELLOW("yellowcrystal"), CRYSTAL_MAGENTA("magentacrystal"), CRYSTAL_CYAN(
 			"cyancrystal"), CRYSTAL_ORANGE("orangecrystal"), CRYSTAL_VIOLET("violetcrystal"), TITANIUM("titanium"), PALLADIUM("palladium"), IRIDIUM("iridium"), RHODIUM("rhodium"), HULL(
 			"hullbase"), CANNON("cannonbase"), RAY("raybase"), LAUNCHER("launcherbase"), DROID("droidbase"), MINE("dropperbase"), BATTERY("batterybase");
+*/
+	public enum Tower{
+		Basic(AttackType.projectile, 25, 10, 0.5f){
 
-	private String textureRegion;
+		},
+		Rock(AttackType.projectile, 25, 10, 0.5f),
+		Arror(AttackType.projectile, 25, 10, 0.5f),
+		Range(AttackType.projectile, 25, 10, 0.5f);
 
-	private Item(String textureRegion) {
-		this.textureRegion = textureRegion;
+
+		//protected TowerType ID;
+		private String name;
+		private AttackType attackType;
+		private int dmg;
+		//protected int speed;
+		private float speedDelay;
+		private int cost;
+		private ArrayList<Ability> abilities;
+
+		public ArrayList<Ability> getAbilities() {
+			return abilities;
+		}
+		public AttackType getAttackType() {
+			return attackType;
+		}
+		public int getCost() {
+			return cost;
+		}
+		public int getDmg() {
+			return dmg;
+		}
+		public String getName() {
+			return name;
+		}
+		public float getSpeedDelay() {
+			return speedDelay;
+		}
+
+		Tower(AttackType attackType, int cost, int dmg, float speedDelay) {
+			this.attackType = attackType;
+			this.cost = cost;
+			this.dmg = dmg;
+			this.speedDelay = speedDelay;
+
+		}
+	}
+	public enum Spell {
+		Firestorm("Firestorm", 20, 100),
+		IceBlast("Ice Blast", 10, 60);
+
+
+		private String name;
+		private int dmg;
+		private int manaCost;
+
+		Spell(String name, int dmg, int manaCost) {
+			this.name = name;
+			this.dmg = dmg;
+			this.manaCost = manaCost;
+		}
 	}
 
-	public String getTextureRegion() {
-		return textureRegion;
-	}
+
+
+
+	//Detai;
+
+
+	protected String textureRegion;
+
+
+
+
+//	private Item(String textureRegion) {
+//		this.textureRegion = textureRegion;
+//	}
+
+
+//	public String getTextureRegion() {
+//		return textureRegion;
+//	}
 
 }
