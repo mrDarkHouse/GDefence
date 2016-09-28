@@ -4,10 +4,7 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerType;
 
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
-import com.darkhouse.gdefence.InventorySystem.inventory.Item;
-import com.darkhouse.gdefence.Level.Tower.ArrowTower;
-import com.darkhouse.gdefence.Level.Tower.BasicTower;
-import com.darkhouse.gdefence.Level.Tower.RockTower;
+import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 
 import java.io.*;
@@ -170,9 +167,9 @@ public class User {
         //items.add(Item.CRYSTAL_GREEN);
 
         inventory = new Inventory();
-        inventory.store(Item.BATTERY, 1);
-        inventory.store(Item.CANNON, 1);
-        inventory.store(Item.CRYSTAL_GREEN, 2);
+        inventory.store(ItemEnum.Tower.Basic, 1);
+        inventory.store(ItemEnum.Tower.Rock, 1);
+        inventory.store(ItemEnum.Tower.Arrow, 2);
 
 //        towers.add(new TowerObject(TowerType.Basic));
 //        towers.add(new TowerObject(TowerType.Basic));

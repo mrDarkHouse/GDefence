@@ -21,9 +21,7 @@
  */
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import com.darkhouse.gdefence.GDefence;
 
 /**
  * @author Daniel Holderbaum
