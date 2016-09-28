@@ -39,7 +39,7 @@ public enum ItemEnum {;
 			"hullbase"), CANNON("cannonbase"), RAY("raybase"), LAUNCHER("launcherbase"), DROID("droidbase"), MINE("dropperbase"), BATTERY("batterybase");
 */
 	public enum Tower implements Item {
-		Basic("Basic", AttackType.projectile, 25, 10, 0.5f){
+		Basic(AttackType.projectile, 25, 10, 0.5f){
 			@Override
 			public String getTextureRegion() {
 				return "redcrystal";
@@ -47,40 +47,40 @@ public enum ItemEnum {;
 
 			@Override
 			public String getTooltip() {
-				return getName() + System.getProperty("line.separator") + "Dmg: " + getDmg() + System.getProperty("line.separator")
+				return "Dmg: " + getDmg() + System.getProperty("line.separator")
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
 		},
-		Rock("Rock", AttackType.projectile, 25, 10, 0.5f){
+		Rock(AttackType.projectile, 25, 10, 0.5f){
 			@Override
 			public String getTextureRegion() {
 				return "bluecrystal";
 			}
 			@Override
 			public String getTooltip() {
-				return getName() + System.getProperty("line.separator") + "Dmg: " + getDmg() + System.getProperty("line.separator")
+				return "Dmg: " + getDmg() + System.getProperty("line.separator")
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
 		},
-		Arrow("Arrow", AttackType.projectile, 25, 10, 0.5f){
+		Arrow(AttackType.projectile, 25, 10, 0.5f){
 			@Override
 			public String getTextureRegion() {
 				return "greencrystal";
 			}
 			@Override
 			public String getTooltip() {
-				return getName() + System.getProperty("line.separator") + "Dmg: " + getDmg() + System.getProperty("line.separator")
+				return "Dmg: " + getDmg() + System.getProperty("line.separator")
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
 		},
-		Range("Range", AttackType.projectile, 25, 10, 0.5f){
+		Range(AttackType.projectile, 25, 10, 0.5f){
 			@Override
 			public String getTextureRegion() {
 				return "Range";
 			}
 			@Override
 			public String getTooltip() {
-				return getName() + System.getProperty("line.separator") + "Dmg: " + getDmg() + System.getProperty("line.separator")
+				return "Dmg: " + getDmg() + System.getProperty("line.separator")
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
 		};
@@ -114,7 +114,7 @@ public enum ItemEnum {;
 			return speedDelay;
 		}
 
-		Tower(String name, AttackType attackType, int cost, int dmg, float speedDelay) {
+		Tower(AttackType attackType, int cost, int dmg, float speedDelay) {
 			this.name = name;
 			this.attackType = attackType;
 			this.cost = cost;
