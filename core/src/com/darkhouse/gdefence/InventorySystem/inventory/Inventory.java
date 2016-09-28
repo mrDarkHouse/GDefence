@@ -28,13 +28,10 @@ import com.badlogic.gdx.utils.Array;
  */
 public class Inventory {
 
-	private Array<Slot> slots;
+	protected Array<Slot> slots;
 
 	public Inventory() {
-		slots = new Array<Slot>(35);
-		for (int i = 0; i < 35; i++) {
-			slots.add(new Slot(null, 0));
-		}
+		initSlots();
 
 		// create some random items
 		//for (Slot slot : slots) {
@@ -57,6 +54,12 @@ public class Inventory {
 //			//slot.add(Item.BATTERY, 1);
 //		}
 
+	}
+	protected void initSlots(){
+		slots = new Array<Slot>(35);
+		for (int i = 0; i < 35; i++) {
+			slots.add(new Slot(null, 0));
+		}
 	}
 
 	public int checkInventory(Item item) {
@@ -94,7 +97,7 @@ public class Inventory {
 		return slots;
 	}
 
-	private Slot firstSlotWithItem(Item item) {
+	protected Slot firstSlotWithItem(Item item) {
 		for (Slot slot : slots) {
 			if (slot.getItem() == item) {
 				return slot;
