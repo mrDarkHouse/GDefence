@@ -42,12 +42,24 @@ public class InventoryActor extends Window {
 		//add(closeButton).height(getPadTop());//
 		//getButtonTable().add(closeButton).height(getPadTop());
 
+		setDefaults();
+
+		initCells(dragAndDrop, skin, inventory);
+
+
+		pack();
+
+		//setVisible(false);
+		setVisible(true);
+	}
+
+	protected void setDefaults(){
 		setPosition(100, 250);
 		defaults().space(8);
 		defaults().size(60, 60);
 		row().fill().expandX();
-
-
+	}
+	protected void initCells(DragAndDrop dragAndDrop, Skin skin, Inventory inventory){
 		int i = 0;
 		for (Slot slot : inventory.getSlots()) {
 			SlotActor slotActor = new SlotActor(skin, slot);
@@ -60,11 +72,6 @@ public class InventoryActor extends Window {
 				row();
 			}
 		}
-
-		pack();
-
-		//setVisible(false);
-		setVisible(true);
 	}
 
 }
