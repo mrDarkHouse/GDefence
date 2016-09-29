@@ -127,7 +127,7 @@ public abstract class AbstractCampainScreen implements Screen {
 
         stage.act(delta);
         stage.draw();
-        drawLines();
+        //drawLines();
     }
 
 
