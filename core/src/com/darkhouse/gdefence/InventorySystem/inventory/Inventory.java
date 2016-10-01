@@ -56,8 +56,9 @@ public class Inventory {
 
 	}
 	protected void initSlots(){
-		slots = new Array<Slot>(35);
-		for (int i = 0; i < 35; i++) {
+		int numberSlots = 35;
+		slots = new Array<Slot>(numberSlots);
+		for (int i = 0; i < numberSlots; i++) {
 			slots.add(new Slot(null, 0));
 		}
 	}

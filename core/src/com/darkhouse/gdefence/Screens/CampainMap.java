@@ -53,6 +53,25 @@ public class CampainMap extends AbstractCampainScreen {
         //Viewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //stage = new Stage(viewport,batch);
         //Gdx.input.setInputProcessor(stage);
+        int buttons = 5;
+
+        final LevelButton[] levels = new LevelButton[5];
+        int borderSize = Gdx.graphics.getWidth()/4;
+        int sizeBetween = Gdx.graphics.getWidth()/42;
+        int levelButtonsSize[] = new int[2];
+        levelButtonsSize[0] = (Gdx.graphics.getWidth() - (borderSize * 2 + sizeBetween * (buttons - 1))) / buttons;
+        levelButtonsSize[1] = levelButtonsSize[0];
+
+        for (int i = 0; i < 5; i++){
+            levels[i] = new LevelButton(i + 1);
+            if(!GDefence.getInstance().user.getLevelsAvailable(i)){
+                levels[i].lock();
+            }
+            levels[i].setSize(levelButtonsSize[0], levelButtonsSize[1]);
+            levels[i].setPosition(borderSize + (levelButtonsSize[0] + sizeBetween)*i, Gdx.graphics.getHeight()/2 - Gdx.graphics.getHeight()/8);
+
+            stage.addActor(levels[i]);
+        }
 
 
         stage.addActor(new BottomPanel());

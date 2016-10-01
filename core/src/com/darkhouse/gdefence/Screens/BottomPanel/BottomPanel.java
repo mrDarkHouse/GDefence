@@ -18,19 +18,14 @@ public class BottomPanel extends Table {
     public BottomPanel() {
         super(AssetLoader.getSkin());
 
-
+        init();
     }
 
     private void init(){
         ImageButton[] bottomPanel = new ImageButton[5];
-        //ImageButton[] levels = new ImageButton[5];
 
 
         int bottomButtonsSize[] = {Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/5};
-
-        int buttons = 5;
-
-
 
 
 
@@ -100,23 +95,7 @@ public class BottomPanel extends Table {
 //            });
 //            stage.addActor(levels[i]);
 //        }
-        final LevelButton[] levels = new LevelButton[5];
-        int borderSize = Gdx.graphics.getWidth()/4;
-        int sizeBetween = Gdx.graphics.getWidth()/42;
-        int levelButtonsSize[] = new int[2];
-        levelButtonsSize[0] = (Gdx.graphics.getWidth() - (borderSize * 2 + sizeBetween * (buttons - 1))) / buttons;
-        levelButtonsSize[1] = levelButtonsSize[0];
 
-        for (int i = 0; i < 5; i++){
-            levels[i] = new LevelButton(i + 1);
-            if(!GDefence.getInstance().user.getLevelsAvailable(i)){
-                levels[i].lock();
-            }
-            levels[i].setSize(levelButtonsSize[0], levelButtonsSize[1]);
-            levels[i].setPosition(borderSize + (levelButtonsSize[0] + sizeBetween)*i, Gdx.graphics.getHeight()/2 - Gdx.graphics.getHeight()/8);
-
-            addActor(levels[i]);
-        }
 
 
         int userPanelSize[] = {240, 120};
