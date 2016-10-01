@@ -16,7 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -42,6 +44,8 @@ public abstract class AbstractCampainScreen implements Screen {
 
     private Viewport viewport;
 
+    private Table table;
+
 
     public AbstractCampainScreen(String name) {
         this.name = name;
@@ -65,6 +69,8 @@ public abstract class AbstractCampainScreen implements Screen {
         OrthographicCamera camera = new OrthographicCamera();
         viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 
+        table = new Table();
+
         int backButtonsSize[] = {64, topPadSize};
         int nameButtonSize[] = {Gdx.graphics.getWidth() - backButtonsSize[0]*2, backButtonsSize[1]};
 
@@ -76,25 +82,18 @@ public abstract class AbstractCampainScreen implements Screen {
         nameButtonStyle.font = new BitmapFont(Gdx.files.internal("Fonts/MainFont.fnt"));
         nameButton = new ImageTextButton(name, nameButtonStyle);
         nameButton.setSize(Gdx.graphics.getWidth()/*nameButtonSize[0]*/, nameButtonSize[1]);
-        nameButton.setPosition(0/*backButton.getX() + backButtonsSize[0]*/, Gdx.graphics.getHeight() - backButtonsSize[1]);
+        //nameButton.setPosition(0/*backButton.getX() + backButtonsSize[0]*/, Gdx.graphics.getHeight() - backButtonsSize[1]);
 
-        stage.addActor(nameButton);
 
-//        ImageButton.ImageButtonStyle backButtonStyle = new ImageButton.ImageButtonStyle();
-//        backButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.backButton));
-//        backButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.backButton));
-//        backButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.backButton));
-//        backButton = new ImageButton(backButtonStyle);
-//        backButton.setSize(backButtonsSize[0], backButtonsSize[1]);
-//        backButton.setPosition(0, Gdx.graphics.getHeight() - backButtonsSize[1]);
-//        backButton.addListener(new InputListener(){
-//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//                //mainClass.setScreen(new MainMenu(mainClass));
-//                mainClass.setPreviousScreen();
-//                return true;
-//            }
-//        });
-        stage.addActor(new BackButton());
+        table.setPosition(0, stage.getHeight() - topPadSize);
+        table.setSize(stage.getWidth(), topPadSize);
+        BackButton backButton = new BackButton(true);
+        //table.add(backButton);//do nameButton from 0 to getWidth
+        table.add(nameButton).height(topPadSize).width(Gdx.graphics.getWidth()).align(Align.center);//do without .height .width
+
+        table.pack();
+        stage.addActor(table);
+        stage.addActor(backButton);
 
 
 

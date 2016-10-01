@@ -89,6 +89,11 @@ public class User {
     public static Inventory getInventory() {
         return inventory;
     }
+
+    public static void setInventory(Inventory inventory) {
+        User.inventory = inventory;
+    }
+
     /*
     public boolean addTower(TowerObject o){
         boolean b;

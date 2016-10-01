@@ -26,16 +26,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * @author Daniel Holderbaum
  */
 public class InventoryActor extends Window {
+	protected Array<SlotActor> actorArray;
+
+	public Array<SlotActor> getActorArray() {
+		return actorArray;
+	}
+
+	private DragAndDrop dragAndDrop;
 
 	public InventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin) {
 		super("Arsenal", skin);
 		getTitleLabel().setAlignment(Align.center);
 		setMovable(false);
+
+		this.dragAndDrop = dragAndDrop;
 
 		//TextButton closeButton = new TextButton("X", skin);
 		//closeButton.addListener(new HidingClickListener(this));
@@ -60,17 +70,26 @@ public class InventoryActor extends Window {
 		row().fill().expandX();
 	}
 	protected void initCells(DragAndDrop dragAndDrop, Skin skin, Inventory inventory){
+		actorArray = new Array<SlotActor>();
 		int i = 0;
 		for (Slot slot : inventory.getSlots()) {
 			SlotActor slotActor = new SlotActor(skin, slot);
 			dragAndDrop.addSource(new SlotSource(slotActor));
 			dragAndDrop.addTarget(new SlotTarget(slotActor));
+			actorArray.add(slotActor);
 			add(slotActor);
 
 			i++;
 			if (i % 7 == 0) {
 				row();
 			}
+		}
+	}
+	public void addSlots(Array<SlotActor> slots){
+		for(SlotActor s:slots){
+			dragAndDrop.addSource(new SlotSource(s));
+			dragAndDrop.addTarget(new SlotTarget(s));
+
 		}
 	}
 

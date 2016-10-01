@@ -12,7 +12,12 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class OptionScreen extends AbstractMenuScreen {
     public OptionScreen() {
-        super( true);
+        super(true);
+    }
+
+    @Override
+    public void show() {
+        super.show();
         loadButtons();
     }
 
@@ -72,11 +77,6 @@ public class OptionScreen extends AbstractMenuScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-    }
-
-    @Override
-    public void show() {
-        super.show();
     }
 
     @Override

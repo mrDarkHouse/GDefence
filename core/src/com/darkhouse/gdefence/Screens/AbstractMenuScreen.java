@@ -40,7 +40,7 @@ public abstract class AbstractMenuScreen implements Screen {
 
     private void loadButtons(boolean enableBackButton){
         if(enableBackButton){
-            stage.addActor(new BackButton());
+            stage.addActor(new BackButton(true));
         }
     }
 

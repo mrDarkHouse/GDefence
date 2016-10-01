@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
 import com.darkhouse.gdefence.Model.PreparationTowerInventoryActor;
 import com.darkhouse.gdefence.User;
@@ -16,6 +17,7 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
     private int level;
     private InventoryActor inventoryActor;
     private PreparationTowerInventoryActor preparationTowerInventoryActor;
+    private Inventory saveInventory;
 
     public LevelPreparationScreen(int level) {
         super("" + level);
@@ -26,6 +28,7 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
     @Override
     public void show() {
         super.show();
+        saveInventory = User.getInventory().copy();
         load(level);
     }
 
@@ -44,11 +47,19 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), AssetLoader.cellSkin);
         stage.addActor(inventoryActor);
         preparationTowerInventoryActor = new PreparationTowerInventoryActor(new DragAndDrop(), AssetLoader.cellSkin);
+        inventoryActor.addSlots(preparationTowerInventoryActor.getActorArray());
+        preparationTowerInventoryActor.addSlots(inventoryActor.getActorArray());
         stage.addActor(preparationTowerInventoryActor);
 
         inventoryActor.setPosition(100, 50);
 
 
+    }
+
+    @Override
+    public void hide() {
+        User.setInventory(saveInventory);
+        super.hide();
     }
 
     @Override

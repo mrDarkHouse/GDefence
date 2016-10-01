@@ -72,6 +72,14 @@ public class CampainMap extends AbstractCampainScreen {
 
             stage.addActor(levels[i]);
         }
+        int userPanelSize[] = {240, 120};
+        int goldPanelSize[] = {60, userPanelSize[1]};
+        stage.addActor(new GoldPanel(Gdx.graphics.getWidth() - userPanelSize[0] - goldPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] -
+                topPadSize, goldPanelSize[0], goldPanelSize[1]));
+        stage.addActor(new UserPanel(Gdx.graphics.getWidth() - userPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize,
+                userPanelSize[0], userPanelSize[1]));
+        //System.out.println(Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize);
+        stage.addActor(new GemPanel(30, 460, 250, 180));
 
 
         stage.addActor(new BottomPanel());

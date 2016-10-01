@@ -55,6 +55,17 @@ public class Inventory {
 //		}
 
 	}
+	public Inventory copy(){
+		Inventory newInventory = new Inventory();
+		for(int i = 0; i < slots.size; i++){
+			//newInventory.slots.clear();
+			//newInventory.slots.addAll(slots);
+			newInventory.slots.get(i).add(slots.get(i).getItem(), slots.get(i).getAmount());
+		}
+		return newInventory;
+	}
+
+
 	protected void initSlots(){
 		int numberSlots = 35;
 		slots = new Array<Slot>(numberSlots);

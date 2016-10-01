@@ -13,13 +13,15 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class BackButton extends ImageButton{
 
-    public BackButton() {
+    public BackButton(boolean ownPosition) {
         super(AssetLoader.getBackButtonSkin());
         //super(mainClass.getSkin());
         int backButtonsSize[] = {64, 64};
 
         setSize(backButtonsSize[0], backButtonsSize[1]);
-        setPosition(0, Gdx.graphics.getHeight() - backButtonsSize[1]);
+        if(ownPosition) {
+            setPosition(0, Gdx.graphics.getHeight() - backButtonsSize[1]);
+        }
         addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 //mainClass.setScreen(new MainMenu(mainClass));
