@@ -8,14 +8,8 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 public class PreparationTowerInventory extends Inventory{
 
     public PreparationTowerInventory() {
-        super();
+        initSlots(4);
     }
 
-    @Override
-    protected void initSlots() {
-        slots = new Array<Slot>(4);
-        for (int i = 0; i < 4; i++) {
-            slots.add(new Slot(null, 0));
-        }
-    }
+
 }

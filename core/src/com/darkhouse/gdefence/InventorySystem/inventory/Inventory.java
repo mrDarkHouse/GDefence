@@ -31,7 +31,7 @@ public class Inventory {
 	protected Array<Slot> slots;
 
 	public Inventory() {
-		initSlots();
+		initSlots(35);
 
 		// create some random items
 		//for (Slot slot : slots) {
@@ -55,6 +55,18 @@ public class Inventory {
 //		}
 
 	}
+
+	public Inventory(Inventory copyInventory){
+		this();
+		copy(copyInventory);
+	}
+	public void copy(Inventory inventory){
+		for(int i = 0; i < inventory.getSlots().size; i++){
+			slots.get(i).add(inventory.slots.get(i).getItem(), inventory.slots.get(i).getAmount());
+		}
+	}
+
+
 	public Inventory copy(){
 		Inventory newInventory = new Inventory();
 		for(int i = 0; i < slots.size; i++){
@@ -66,8 +78,9 @@ public class Inventory {
 	}
 
 
-	protected void initSlots(){
-		int numberSlots = 35;
+
+
+	protected void initSlots(int numberSlots){
 		slots = new Array<Slot>(numberSlots);
 		for (int i = 0; i < numberSlots; i++) {
 			slots.add(new Slot(null, 0));

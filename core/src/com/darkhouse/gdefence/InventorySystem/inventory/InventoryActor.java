@@ -33,9 +33,14 @@ import com.badlogic.gdx.utils.Array;
  */
 public class InventoryActor extends Window {
 	protected Array<SlotActor> actorArray;
+	protected Inventory inventory;
 
 	public Array<SlotActor> getActorArray() {
 		return actorArray;
+	}
+
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 	private DragAndDrop dragAndDrop;
@@ -45,6 +50,7 @@ public class InventoryActor extends Window {
 		getTitleLabel().setAlignment(Align.center);
 		setMovable(false);
 
+		this.inventory = inventory;
 		this.dragAndDrop = dragAndDrop;
 
 		//TextButton closeButton = new TextButton("X", skin);

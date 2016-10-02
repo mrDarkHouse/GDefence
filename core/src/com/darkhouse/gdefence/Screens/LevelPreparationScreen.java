@@ -28,22 +28,13 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
     @Override
     public void show() {
         super.show();
-        saveInventory = User.getInventory().copy();
+        //saveInventory = User.getInventory().copy();
+        //saveInventory.copy(User.getInventory());
+        saveInventory = new Inventory(User.getInventory());
         load(level);
     }
 
     private void load(final int level){
-        TextButton startButton = new TextButton("Start", AssetLoader.getSkin());
-        startButton.setSize(150, 70);
-        startButton.setPosition(Gdx.graphics.getWidth() - 200, 30);
-        startButton.addListener(new InputListener(){
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                GDefence.getInstance().setScreen(new LevelMap(level));
-                return true;
-            }
-        });
-        stage.addActor(startButton);
-
         inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), AssetLoader.cellSkin);
         stage.addActor(inventoryActor);
         preparationTowerInventoryActor = new PreparationTowerInventoryActor(new DragAndDrop(), AssetLoader.cellSkin);
@@ -52,6 +43,18 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         stage.addActor(preparationTowerInventoryActor);
 
         inventoryActor.setPosition(100, 50);
+
+        TextButton startButton = new TextButton("Start", AssetLoader.getSkin());
+        startButton.setSize(150, 70);
+        startButton.setPosition(Gdx.graphics.getWidth() - 200, 30);
+        startButton.addListener(new InputListener(){
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                GDefence.getInstance().setScreen(new LevelMap(level, preparationTowerInventoryActor.getInventory()));
+                System.out.println(preparationTowerInventoryActor.getInventory().getSlots());
+                return true;
+            }
+        });
+        stage.addActor(startButton);
 
 
     }
