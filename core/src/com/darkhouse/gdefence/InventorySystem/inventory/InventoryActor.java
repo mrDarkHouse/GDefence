@@ -34,6 +34,10 @@ import com.badlogic.gdx.utils.Array;
 public class InventoryActor extends Window {
 	protected Array<SlotActor> actorArray;
 	protected Inventory inventory;
+	private int rowNumber;
+	public void setRowNumber(int rowNumber) {
+		this.rowNumber = rowNumber;
+	}
 
 	public Array<SlotActor> getActorArray() {
 		return actorArray;
@@ -43,7 +47,7 @@ public class InventoryActor extends Window {
 		return inventory;
 	}
 
-	private DragAndDrop dragAndDrop;
+	protected DragAndDrop dragAndDrop;
 
 	public InventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin) {
 		super("Arsenal", skin);
@@ -59,9 +63,7 @@ public class InventoryActor extends Window {
 		//getButtonTable().add(closeButton).height(getPadTop());
 
 		setDefaults();
-
 		initCells(dragAndDrop, skin, inventory);
-
 
 		pack();
 
@@ -74,23 +76,32 @@ public class InventoryActor extends Window {
 		defaults().space(8);
 		defaults().size(60, 60);
 		row().fill().expandX();
+		setRowNumber(7);
 	}
 	protected void initCells(DragAndDrop dragAndDrop, Skin skin, Inventory inventory){
 		actorArray = new Array<SlotActor>();
 		int i = 0;
 		for (Slot slot : inventory.getSlots()) {
 			SlotActor slotActor = new SlotActor(skin, slot);
-			dragAndDrop.addSource(new SlotSource(slotActor));
-			dragAndDrop.addTarget(new SlotTarget(slotActor));
+			addSourceTarget(dragAndDrop, slotActor);
 			actorArray.add(slotActor);
 			add(slotActor);
-
+			beforeRow(slot, i);
 			i++;
-			if (i % 7 == 0) {
+			if (i % rowNumber == 0) {
 				row();
 			}
 		}
 	}
+	protected void addSourceTarget(DragAndDrop dragAndDrop, SlotActor slotActor){
+		dragAndDrop.addSource(new SlotSource(slotActor));
+		dragAndDrop.addTarget(new SlotTarget(slotActor));
+	}
+
+	protected void beforeRow(Slot slot, int i){}
+
+
+
 	public void addSlots(Array<SlotActor> slots){
 		for(SlotActor s:slots){
 			dragAndDrop.addSource(new SlotSource(s));

@@ -1,8 +1,10 @@
 package com.darkhouse.gdefence.Helpers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class FontLoader {
     private static FreeTypeFontGenerator generator;
@@ -51,6 +53,15 @@ public class FontLoader {
 
 
 
+    }
+    public static Label.LabelStyle generateStyle(int size, Color fontColor){
+        Label.LabelStyle style = new Label.LabelStyle();
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = size;
+        style.font = generator.generateFont(parameter);
+        style.fontColor = fontColor;
+        return style;
     }
 
 

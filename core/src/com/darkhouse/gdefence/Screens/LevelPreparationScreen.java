@@ -50,7 +50,6 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         startButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 GDefence.getInstance().setScreen(new LevelMap(level, preparationTowerInventoryActor.getInventory()));
-                System.out.println(preparationTowerInventoryActor.getInventory().getSlots());
                 return true;
             }
         });

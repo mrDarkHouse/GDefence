@@ -36,7 +36,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
  */
 public class SlotSource extends Source {
 
-	private Slot sourceSlot;
+	protected Slot sourceSlot;
 
 	public SlotSource(SlotActor actor) {
 		super(actor);
@@ -51,7 +51,7 @@ public class SlotSource extends Source {
 
 		Payload payload = new Payload();
 		Slot payloadSlot = new Slot(sourceSlot.getItem(), sourceSlot.getAmount());
-		sourceSlot.take(sourceSlot.getAmount());
+		takeSlot();
 		payload.setObject(payloadSlot);
 
 		//TextureAtlas icons = LibgdxUtils.assets.get("icons/icons.atlas", TextureAtlas.class);
@@ -70,6 +70,9 @@ public class SlotSource extends Source {
 		payload.setInvalidDragActor(invalidDragActor);
 
 		return payload;
+	}
+	protected void takeSlot(){
+		sourceSlot.take(sourceSlot.getAmount());
 	}
 
 	@Override
