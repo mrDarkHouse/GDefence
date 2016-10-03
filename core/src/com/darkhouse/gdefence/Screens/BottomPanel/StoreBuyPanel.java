@@ -12,6 +12,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.*;
 
 public class StoreBuyPanel extends InventoryActor{
     private Label[] cost;
+    private SellButton sellButton;
 
 
 
@@ -19,6 +20,19 @@ public class StoreBuyPanel extends InventoryActor{
         super(inventory, new DragAndDrop(), AssetLoader.cellSkin);
         getTitleLabel().setText("Store");
 
+
+
+
+    }
+
+    @Override
+    protected void beforeInitCells() {
+        sellButton = new SellButton();
+    }
+
+    @Override
+    protected void afterInitCells() {
+        super.add(sellButton).expand().fill().row();
     }
 
     public void store(Item item, int amount){
@@ -47,15 +61,20 @@ public class StoreBuyPanel extends InventoryActor{
 
     @Override
     protected void addSourceTarget(DragAndDrop dragAndDrop, SlotActor slotActor) {
-        dragAndDrop.addSource(new ShopSlotSource(slotActor));
-        //dragAndDrop.addTarget(new SlotTarget(slotActor));
+        dragAndDrop.addSource(new BuySlotSource(slotActor));
+
+        ////dragAndDrop.addTarget(new SlotTarget(slotActor));
     }
 
     @Override
-    public void addSlots(Array<SlotActor> slots) {
-        for(SlotActor s:slots){
-            //dragAndDrop.addSource(new ShopSlotSource(s));
+    public void addSlots(InventoryActor inventory) {
+        for(SlotActor s:inventory.getActorArray()){
+            ////dragAndDrop.addSource(new BuySlotSource(s));
+            ////inventory.getDragAndDrop().addSource(new CombinedSlotSource(s));
             dragAndDrop.addTarget(new SlotTarget(s));
+
+            inventory.getDragAndDrop().addTarget(new SellTarget(sellButton));
+
 
         }
     }

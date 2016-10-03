@@ -22,11 +22,11 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.Screens.BottomPanel.CombinedSlotSource;
 
 /**
  * @author Daniel Holderbaum
@@ -48,6 +48,10 @@ public class InventoryActor extends Window {
 	}
 
 	protected DragAndDrop dragAndDrop;
+
+	public DragAndDrop getDragAndDrop() {
+		return dragAndDrop;
+	}
 
 	public InventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin) {
 		super("Arsenal", skin);
@@ -79,6 +83,7 @@ public class InventoryActor extends Window {
 		setRowNumber(7);
 	}
 	protected void initCells(DragAndDrop dragAndDrop, Skin skin, Inventory inventory){
+		beforeInitCells();
 		actorArray = new Array<SlotActor>();
 		int i = 0;
 		for (Slot slot : inventory.getSlots()) {
@@ -92,18 +97,23 @@ public class InventoryActor extends Window {
 				row();
 			}
 		}
+		afterInitCells();
 	}
 	protected void addSourceTarget(DragAndDrop dragAndDrop, SlotActor slotActor){
-		dragAndDrop.addSource(new SlotSource(slotActor));
+		dragAndDrop.addSource(new CombinedSlotSource(slotActor));
 		dragAndDrop.addTarget(new SlotTarget(slotActor));
 	}
 
 	protected void beforeRow(Slot slot, int i){}
 
+	protected void afterInitCells(){}
+
+	protected void beforeInitCells(){}
 
 
-	public void addSlots(Array<SlotActor> slots){
-		for(SlotActor s:slots){
+
+	public void addSlots(InventoryActor inventory){
+		for(SlotActor s:inventory.getActorArray()){
 			dragAndDrop.addSource(new SlotSource(s));
 			dragAndDrop.addTarget(new SlotTarget(s));
 

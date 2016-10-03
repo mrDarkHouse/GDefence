@@ -40,7 +40,7 @@ public class Store extends AbstractCampainScreen{
         storeBuyPanel.store(ItemEnum.Tower.Arrow, 1);
         storeBuyPanel.store(ItemEnum.Tower.Range, 1);
 
-        storeBuyPanel.addSlots(inventoryActor.getActorArray());
+        storeBuyPanel.addSlots(inventoryActor);
 
 
 

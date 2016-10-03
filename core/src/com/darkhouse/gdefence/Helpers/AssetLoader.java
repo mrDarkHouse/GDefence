@@ -55,6 +55,8 @@ public class AssetLoader {
 
     public static Skin cellSkin;
 
+    public static Texture sellButton;
+
     //public static Animation birdAnimation;
     //public static TextureRegion bird, birdDown, birdUp;
 
@@ -112,6 +114,10 @@ public class AssetLoader {
         levelEndFoneWin = new Texture("levelWinBg.png");
 
         cellSkin = new Skin(Gdx.files.internal("skins/uiskin.json"));
+
+        sellButton = new Texture("sellButton.png");
+
+
 
     }
 
@@ -269,6 +275,17 @@ public class AssetLoader {
                 throw new RuntimeException("No tower found with id: " + tower.getID());
         }
         return towerCellStyle;
+    }
+
+    public static ImageButton.ImageButtonStyle getStoreSellButtonStyle(){
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.up = new TextureRegionDrawable((new TextureRegion(sellButton)));
+        style.over = new TextureRegionDrawable((new TextureRegion(sellButton)));
+        style.down = new TextureRegionDrawable((new TextureRegion(sellButton)));
+
+        return style;
+
+
     }
 
 

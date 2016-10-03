@@ -38,8 +38,8 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), AssetLoader.cellSkin);
         stage.addActor(inventoryActor);
         preparationTowerInventoryActor = new PreparationTowerInventoryActor(new DragAndDrop(), AssetLoader.cellSkin);
-        inventoryActor.addSlots(preparationTowerInventoryActor.getActorArray());
-        preparationTowerInventoryActor.addSlots(inventoryActor.getActorArray());
+        inventoryActor.addSlots(preparationTowerInventoryActor);
+        preparationTowerInventoryActor.addSlots(inventoryActor);
         stage.addActor(preparationTowerInventoryActor);
 
         inventoryActor.setPosition(100, 50);

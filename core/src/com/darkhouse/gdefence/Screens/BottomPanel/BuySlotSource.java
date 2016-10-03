@@ -6,9 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 
-public class ShopSlotSource extends SlotSource{
+public class BuySlotSource extends SlotSource{
 
-    public ShopSlotSource(SlotActor actor) {
+    public BuySlotSource(SlotActor actor) {
         super(actor);
     }
 
@@ -30,15 +30,12 @@ public class ShopSlotSource extends SlotSource{
                     System.out.println("No enought money");
                 }
             } else {
-
+                //dont swap items
             }
         } else {
             //sourceSlot.add(payloadSlot.getItem(), payloadSlot.getAmount());
         }
     }
 
-//    ItemEnum.Tower tower = (ItemEnum.Tower) targetSlot.getItem();
-//    if(GDefence.getInstance().user.deleteGold(tower.getCost())){
-//
-//    }
+
 }

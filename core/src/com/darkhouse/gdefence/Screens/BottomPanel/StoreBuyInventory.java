@@ -6,7 +6,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 public class StoreBuyInventory extends Inventory{
 
     public StoreBuyInventory() {
-        initSlots(6);
+        initSlots(5);
     }
 
 }
