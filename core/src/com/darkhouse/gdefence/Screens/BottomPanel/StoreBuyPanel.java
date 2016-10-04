@@ -32,7 +32,7 @@ public class StoreBuyPanel extends InventoryActor{
 
     @Override
     protected void afterInitCells() {
-        super.add(sellButton).expand().fill().row();
+        super.add(sellButton).expand().fill().row();//do width on 2 columns
     }
 
     public void store(Item item, int amount){
@@ -60,7 +60,7 @@ public class StoreBuyPanel extends InventoryActor{
     }
 
     @Override
-    protected void addSourceTarget(DragAndDrop dragAndDrop, SlotActor slotActor) {
+    protected void addSourceTarget(SlotActor slotActor) {
         dragAndDrop.addSource(new BuySlotSource(slotActor));
 
         ////dragAndDrop.addTarget(new SlotTarget(slotActor));
@@ -73,7 +73,7 @@ public class StoreBuyPanel extends InventoryActor{
             ////inventory.getDragAndDrop().addSource(new CombinedSlotSource(s));
             dragAndDrop.addTarget(new SlotTarget(s));
 
-            inventory.getDragAndDrop().addTarget(new SellTarget(sellButton));
+            inventory.getDragAndDrop().addTarget(new SellTarget(sellButton));//need 1 time
 
 
         }

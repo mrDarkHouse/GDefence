@@ -26,6 +26,12 @@ public class LevelMap implements Screen {
     private int number;
     private Inventory inventory;
 
+    private MapTileActor[][] tileActors;
+
+    public MapTileActor[][] getTiles() {
+        return tileActors;
+    }
+
     private static Level level;
     public static LevelMap levelMap;//debug
 
@@ -64,17 +70,29 @@ public class LevelMap implements Screen {
         batch = new SpriteBatch();
         stage = new Stage();
         levelMap = this;
+        Gdx.input.setInputProcessor(stage);
+
         level = new Level(number);
         initHpMpBar();
         initWavePanel();
+        initMapTileActors();
         initShop(inventory);
 
-        Gdx.input.setInputProcessor(stage);
+
 
 
         level.start();
 
 
+    }
+    private void initMapTileActors(){
+        tileActors = new MapTileActor[Level.getMap().getTiles().length][Level.getMap().getTiles()[0].length];
+        for (int i = 0; i < Level.getMap().getTiles().length; i++){
+            for (int j = 0; j < Level.getMap().getTiles()[0].length; j++){
+                tileActors[i][j] = new MapTileActor(Level.getMap().getTiles()[i][j]);
+                stage.addActor(tileActors[i][j]);
+            }
+        }
     }
 
     @Override
@@ -105,6 +123,8 @@ public class LevelMap implements Screen {
     }
     private void initShop(Inventory inventory){
         LevelShopPanel shop = new LevelShopPanel(inventory);
+
+        shop.addTarget(Level.getMap().getTiles());
         stage.addActor(shop);
 
     }

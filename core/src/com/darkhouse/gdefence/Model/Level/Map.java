@@ -14,6 +14,11 @@ import java.util.ArrayList;
 public class Map {
 
     private MapTile[][] tiles;
+
+    public MapTile[][] getTiles() {
+        return tiles;
+    }
+
     private int x;
     private int y;
     private int cellSize;

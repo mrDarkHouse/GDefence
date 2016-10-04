@@ -88,7 +88,7 @@ public class InventoryActor extends Window {
 		int i = 0;
 		for (Slot slot : inventory.getSlots()) {
 			SlotActor slotActor = new SlotActor(skin, slot);
-			addSourceTarget(dragAndDrop, slotActor);
+			addSourceTarget(slotActor);
 			actorArray.add(slotActor);
 			add(slotActor);
 			beforeRow(slot, i);
@@ -99,7 +99,7 @@ public class InventoryActor extends Window {
 		}
 		afterInitCells();
 	}
-	protected void addSourceTarget(DragAndDrop dragAndDrop, SlotActor slotActor){
+	protected void addSourceTarget(SlotActor slotActor){
 		dragAndDrop.addSource(new CombinedSlotSource(slotActor));
 		dragAndDrop.addTarget(new SlotTarget(slotActor));
 	}

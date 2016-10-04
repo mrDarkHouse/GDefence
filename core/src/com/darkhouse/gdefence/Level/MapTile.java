@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.GDSprite;
 
@@ -143,7 +144,7 @@ public class MapTile extends GDSprite{
         throw new RuntimeException("wrong type");
     }
 
-    private Tower buildedTower;
+    private ItemEnum.Tower buildedTower;
 
 
 
@@ -171,8 +172,10 @@ public class MapTile extends GDSprite{
 
 
 
-    public void build(Tower tower){
+    public void build(ItemEnum.Tower tower){
+        System.out.println("BUILD " + tower);///////////
         this.buildedTower = tower;
+
     }
 
     public void draw(float delta, SpriteBatch batch){
