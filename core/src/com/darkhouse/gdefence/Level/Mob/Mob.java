@@ -2,13 +2,12 @@ package com.darkhouse.gdefence.Level.Mob;
 
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.darkhouse.gdefence.Level.Ability.AbilityManager;
+import com.badlogic.gdx.math.Vector2;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.MapTile;
+import com.darkhouse.gdefence.Level.Tower.AttackLogic;
+import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.GDSprite;
 import com.darkhouse.gdefence.Model.Level.Map;
@@ -17,6 +16,43 @@ import com.darkhouse.gdefence.Screens.LevelMap;
 import java.awt.*;
 
 public abstract class Mob extends GDSprite{
+
+    public static Mob getMobOnMap(AttackLogic logic, Tower tower){
+        Map map = Level.getMap();
+
+        switch (logic){
+            case First:
+                for (Mob m:Wave.mobs) {
+                    if(tower.isInRange(m.getCenter())){
+                        Vector2 castle = map.getCastle().get(0).getPosition();
+
+                        //bla bla bla
+                    }
+                }
+
+
+
+
+                break;
+            case Nearest:
+                Mob currentMob = null;
+                float currentF = 99999;//infinity
+                for (Mob m:Wave.mobs) {
+                    if(tower.isInRange(m.getCenter())){
+                        //if(new Vector2(tower.getRectangle().getCenter(new Vector2())))
+                        if(m.getCenter().dst(tower.getRectangle().getCenter(new Vector2())) < currentF){
+                            currentMob = m;
+                        }
+                    }
+                }
+                return currentMob;
+            }
+        return null;
+    }
+
+
+
+
 
     //private Way way = Way.right;
     private Texture texture;
@@ -39,6 +75,13 @@ public abstract class Mob extends GDSprite{
     //protected int height;
 
     private Way way;// = Way.RIGHT;
+
+    public Vector2 getCenter(){
+        Vector2 v = new Vector2();
+        v.x = getX() + getWidth()/2;
+        v.y = getY() + getHeight()/2;
+        return v;
+    }
 
 
     //public Drawable getTexture() {
@@ -83,6 +126,15 @@ public abstract class Mob extends GDSprite{
     public void setDie() {
         this.inGame = false;
         Wave.mobs.remove(this);//add "if contains this" if error
+    }
+
+    public void hit(int dmg){
+        if(dmg < getHealth()){
+            health -= dmg;
+        }else {
+            health = 0;
+            setDie();
+        }
     }
 //    public int getxC() {
 //        return xC;

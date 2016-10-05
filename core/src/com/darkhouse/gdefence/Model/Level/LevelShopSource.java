@@ -24,8 +24,7 @@ public class LevelShopSource extends SlotSource {
             if (item != null) {
                 // Build
                 MapTile targetTile = ((MapTileActor) target.getActor()).getMapTile();
-                if(targetTile.isBuildable()) {
-                    targetTile.build((ItemEnum.Tower) item);
+                if(targetTile.build((ItemEnum.Tower) item)) {
                     if (amount > 1) {
                         sourceSlot.add(item, amount - 1);
                     }

@@ -13,8 +13,8 @@ public class GDSprite extends Sprite{
 
 
 
-    public Point getPosition(){
-        return new Point((int)getX(), (int)getY());
+    public Vector2 getPosition(){
+        return new Vector2((int)getX(), (int)getY());
     }
 
     public boolean contains(Vector2 point){

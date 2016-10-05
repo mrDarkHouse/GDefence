@@ -1,10 +1,10 @@
 package com.darkhouse.gdefence.Level.Tower;
 
 
-public class BasicTower extends Tower{
+public class BasicTower {
 
     public BasicTower() {
-        setName("Basic");
+
 
     }
 }

@@ -1,8 +1,11 @@
 package com.darkhouse.gdefence.Level;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
@@ -31,6 +34,8 @@ public class MapTile extends GDSprite{
     //private TextureRegionDrawable texture;
     private TileType type;
     private TileLogic logic;
+
+    private TextureRegion towerMask;
 
     //public TextureRegionDrawable getTexture() {
     //    return texture;
@@ -144,7 +149,7 @@ public class MapTile extends GDSprite{
         throw new RuntimeException("wrong type");
     }
 
-    private ItemEnum.Tower buildedTower;
+    private Tower buildedTower;
 
 
 
@@ -172,25 +177,27 @@ public class MapTile extends GDSprite{
 
 
 
-    public void build(ItemEnum.Tower tower){
-        System.out.println("BUILD " + tower);///////////
-        this.buildedTower = tower;
+    public boolean build(ItemEnum.Tower tower){
+        if(isBuildable() && buildedTower == null) {
+            this.buildedTower = new Tower(tower, getX(), getY(), getWidth(), getHeight());
 
+            return true;
+        }else return false;
     }
 
     public void draw(float delta, SpriteBatch batch){
-        //RectangleMapObject r = new RectangleMapObject(x, y, width, height);
-
-        //Image i = new Image(texture);
-        //i.setPosition(getX(), getY());
-        //i.setSize(getWidth(), getHeight());
-        //System.out.println(getTexture().getName());
-
-
-
-
         draw(batch);
         Image f;
+
+        if(buildedTower != null) {
+            buildedTower.physic(delta);
+            buildedTower.draw(batch, delta);
+        }
+//        if(towerMask != null){//
+//
+//            return;
+//        }
+
         switch (logic){
             case spawnerR:
                 break;

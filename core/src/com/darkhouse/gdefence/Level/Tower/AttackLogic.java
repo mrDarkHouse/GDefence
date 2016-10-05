@@ -1,5 +1,6 @@
 package com.darkhouse.gdefence.Level.Tower;
 
 
-public class RockTower{
+public enum AttackLogic {
+    First, Nearest
 }

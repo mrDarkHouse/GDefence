@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Objects.GameObject;
+
+import static com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum.Tower.*;
 
 public class AssetLoader {
 
@@ -248,9 +250,9 @@ public class AssetLoader {
         return l;
     }
 
-    public static ImageButton.ImageButtonStyle getTowerCellSkin(Tower tower){
+    public static ImageButton.ImageButtonStyle getTowerCellSkin(ItemEnum.Tower tower){
         ImageButton.ImageButtonStyle towerCellStyle = new ImageButton.ImageButtonStyle();
-        switch (tower.getID()){
+        switch (tower){
             case Basic:
                 towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
                 towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
@@ -272,10 +274,25 @@ public class AssetLoader {
                 towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
                 break;
             default:
-                throw new RuntimeException("No tower found with id: " + tower.getID());
+                throw new RuntimeException("No tower found with id: " + tower);
         }
         return towerCellStyle;
     }
+    public static Texture getTowerTexture(ItemEnum.Tower tower){
+        switch (tower){
+            case Basic:
+                return basicTower;
+            case Rock:
+                return rockTower;
+            case Arrow:
+                return arrowTower;
+            case Range:
+                return rangeTower;
+            default:
+                throw new RuntimeException("No tower found with id: " + tower);
+        }
+    }
+
 
     public static ImageButton.ImageButtonStyle getStoreSellButtonStyle(){
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
