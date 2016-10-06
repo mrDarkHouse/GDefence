@@ -4,6 +4,8 @@ package com.darkhouse.gdefence.Level.Mob;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.MapTile;
 import com.darkhouse.gdefence.Level.Tower.AttackLogic;
@@ -69,6 +71,7 @@ public abstract class Mob extends GDSprite{
     protected boolean inGame = true;
     //protected int xC, yC;
     protected MapTile currentTile;
+    private ProgressBar hpBar;
     //protected int x;
     //protected int y;
     //protected int width;
@@ -83,6 +86,9 @@ public abstract class Mob extends GDSprite{
         return v;
     }
 
+    public Mob() {
+
+    }
 
     //public Drawable getTexture() {
     //    return texture;
@@ -101,6 +107,7 @@ public abstract class Mob extends GDSprite{
     }
     public void setHealth(int health) {
         this.health = health;
+        hpBar = new ProgressBar(0, getHealth(), 1, false, AssetLoader.getExpBarSkin());
     }
     public float getSpeed() {
         return speed;
@@ -269,7 +276,13 @@ public abstract class Mob extends GDSprite{
 
         if(isInGame()) {
             draw(batch);
+            drawHpBar(batch);
         }
+    }
+    private void drawHpBar(SpriteBatch batch){
+        hpBar.setBounds(getX(), getY() + getHeight() + 30, getWidth(), 10);//WHY FUCKING HEIGHT WRONG
+        hpBar.setValue(getHealth());
+        hpBar.draw(batch, 1);
     }
 
 

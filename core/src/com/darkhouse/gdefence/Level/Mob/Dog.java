@@ -5,6 +5,7 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class Dog extends Mob{
     public Dog() {
+        super();
         setName("Dog");
         setHealth(70);
         setDmg(1);

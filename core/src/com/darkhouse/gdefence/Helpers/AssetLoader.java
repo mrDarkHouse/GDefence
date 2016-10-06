@@ -152,6 +152,11 @@ public class AssetLoader {
 
 
     }
+    public static ProgressBar.ProgressBarStyle getMobHpBarStyle(){
+
+        ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+        return style;
+    }
 
 
 

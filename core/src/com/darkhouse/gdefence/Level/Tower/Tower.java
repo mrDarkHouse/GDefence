@@ -130,8 +130,12 @@ public class Tower extends RectangleMapObject{
         preShotTime += delta;
         if(preShotTime >= towerPrototype.getSpeedDelay()){
             preShotTime = 0;
-            target = Mob.getMobOnMap(AttackLogic.Nearest, this);
-            if(target != null) {
+            if(target == null) {
+                target = Mob.getMobOnMap(AttackLogic.Nearest, this);
+            }//else {
+            //    shot(target);
+            //}
+            if(target != null ) {
                 shot(target);
             }
         }

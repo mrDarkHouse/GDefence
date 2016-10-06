@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Model.Level;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.bullet.Bullet;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.MapTile;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -84,6 +85,7 @@ public class Map {
         this.y = y;
         this.cellSize = cellSize;
         initCells();
+        Bullet.init();
         //System.out.println(tiles.length + " "  + tiles[0].length);
         //System.out.println(tiles[1][0].getType());
         //System.out.println(tiles[2][0].getType());
