@@ -153,8 +153,10 @@ public class AssetLoader {
 
     }
     public static ProgressBar.ProgressBarStyle getMobHpBarStyle(){
-
-        ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle();
+        TextureRegionDrawable barFone = new TextureRegionDrawable(new TextureRegion(new Texture("mobHpBarBg.png")));
+        TextureRegionDrawable barTop = new TextureRegionDrawable(new TextureRegion(new Texture("mobHpBarKnob.png")));
+        ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle(barFone, barTop);
+        style.knobBefore = style.knob;
         return style;
     }
 
@@ -293,6 +295,20 @@ public class AssetLoader {
                 return arrowTower;
             case Range:
                 return rangeTower;
+            default:
+                throw new RuntimeException("No tower found with id: " + tower);
+        }
+    }
+    public static Texture getProjectileTexture(ItemEnum.Tower tower){
+        switch (tower){
+            case Basic:
+                return new Texture("Projectiles/basic.png");
+            case Rock:
+                return new Texture("Projectiles/rock.png");
+            case Arrow:
+                return new Texture("Projectiles/arrow.png");
+            case Range:
+                return new Texture("Projectiles/range.png");
             default:
                 throw new RuntimeException("No tower found with id: " + tower);
         }

@@ -42,7 +42,7 @@ public abstract class Mob extends GDSprite{
                 for (Mob m:Wave.mobs) {
                     if(tower.isInRange(m.getCenter())){
                         //if(new Vector2(tower.getRectangle().getCenter(new Vector2())))
-                        if(m.getCenter().dst(tower.getRectangle().getCenter(new Vector2())) < currentF){
+                        if(m.getCenter().dst(tower.getCenter()) < currentF){
                             currentMob = m;
                         }
                     }
@@ -107,7 +107,7 @@ public abstract class Mob extends GDSprite{
     }
     public void setHealth(int health) {
         this.health = health;
-        hpBar = new ProgressBar(0, getHealth(), 1, false, AssetLoader.getExpBarSkin());
+        hpBar = new ProgressBar(0, getHealth(), 1, false, AssetLoader.getMobHpBarStyle());
     }
     public float getSpeed() {
         return speed;
@@ -211,7 +211,7 @@ public abstract class Mob extends GDSprite{
 
         switch (way){
             case RIGHT:
-                setX(getX() + delta);
+                setX(getX() + delta);//bug when delta > time when check turn
                 break;
             case LEFT:
                 setX(getX() - delta);
@@ -280,7 +280,7 @@ public abstract class Mob extends GDSprite{
         }
     }
     private void drawHpBar(SpriteBatch batch){
-        hpBar.setBounds(getX(), getY() + getHeight() + 30, getWidth(), 10);//WHY FUCKING HEIGHT WRONG
+        hpBar.setBounds(getX(), getY() + getHeight() + 5, getWidth(), getHeight()/5);
         hpBar.setValue(getHealth());
         hpBar.draw(batch, 1);
     }

@@ -14,8 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Mob.Mob;
+import com.darkhouse.gdefence.Model.GameActor;
+import com.darkhouse.gdefence.Model.Level.Map;
 
-public class Tower extends RectangleMapObject{
+public class Tower extends GameActor{
 
 //    public static Tower createTower(ItemEnum.Tower tower){
 //        switch (tower){
@@ -33,13 +35,16 @@ public class Tower extends RectangleMapObject{
 //    }
 
     public Tower(ItemEnum.Tower towerPrototype, float x, float y, float width, float height) {
-        super(x, y, width, height);
+        setBounds(x, y, width, height);
         this.towerPrototype = towerPrototype;
         this.texture = AssetLoader.getTowerTexture(towerPrototype);
     }
 
     protected boolean canAttack = true;
     protected ItemEnum.Tower towerPrototype;
+    public ItemEnum.Tower getTowerPrototype() {
+        return towerPrototype;
+    }
     private float preShotTime;
     private Mob target;
     private Texture texture;
@@ -114,7 +119,7 @@ public class Tower extends RectangleMapObject{
 //        }
 //    }
     public boolean isInRange(Vector2 p){
-        Circle attackRange = new Circle(getRectangle().getCenter(new Vector2()), towerPrototype.getRange());
+        Circle attackRange = new Circle(getCenter(), towerPrototype.getRange());
         return attackRange.contains(p);
     }
 
@@ -127,22 +132,25 @@ public class Tower extends RectangleMapObject{
     }
 
     private void attack(float delta){
-        preShotTime += delta;
-        if(preShotTime >= towerPrototype.getSpeedDelay()){
-            preShotTime = 0;
-            if(target == null) {
-                target = Mob.getMobOnMap(AttackLogic.Nearest, this);
-            }//else {
-            //    shot(target);
-            //}
-            if(target != null ) {
+        //System.out.println(target);
+        if(target == null || !isInRange(target.getCenter()) || !target.isInGame()) {
+            target = Mob.getMobOnMap(AttackLogic.Nearest, this);
+        }else {
+            preShotTime += delta;
+            if(preShotTime >= towerPrototype.getSpeedDelay()){
+                preShotTime = 0;
                 shot(target);
+
             }
+
         }
+
 
     }
     private void shot(Mob target){
-        target.hit(towerPrototype.getDmg());
+        //target.hit(towerPrototype.getDmg());
+        Map.projectiles.add(new Projectile(this, target));
+
 
         //Bullet b = new Bullet();//create bullet
     }
@@ -151,8 +159,8 @@ public class Tower extends RectangleMapObject{
         //TextureAtlas icons = new TextureAtlas(Gdx.files.internal("icons/icons.atlas"));
         //towerMask = icons.findRegion(tower.getTextureRegion());//
         Image f = new Image(texture);
-        f.setPosition(getRectangle().getX(), getRectangle().getY());
-        f.setSize(getRectangle().getWidth(), getRectangle().getHeight());
+        f.setPosition(getX(), getY());
+        f.setSize(getWidth(), getHeight());
         f.draw(batch, 1);
     }
 

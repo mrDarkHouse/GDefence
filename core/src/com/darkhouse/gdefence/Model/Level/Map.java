@@ -9,8 +9,12 @@ import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.MapTile;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
+import com.darkhouse.gdefence.Level.Tower.Projectile;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Map {
 
@@ -19,6 +23,9 @@ public class Map {
     public MapTile[][] getTiles() {
         return tiles;
     }
+
+
+    public static List<Projectile> projectiles;
 
     private int x;
     private int y;
@@ -80,17 +87,12 @@ public class Map {
 
 
     public Map(final int number, int x, int y, int cellSize) {
+        projectiles = new ArrayList<Projectile>();//dirty code
         initMap(number);
         this.x = x;
         this.y = y;
         this.cellSize = cellSize;
         initCells();
-        Bullet.init();
-        //System.out.println(tiles.length + " "  + tiles[0].length);
-        //System.out.println(tiles[1][0].getType());
-        //System.out.println(tiles[2][0].getType());
-        //System.out.println(tiles[3][0].getType());
-        //System.out.println(tiles[4][0].getType());
 
     }
     private void initCells(){
@@ -138,6 +140,18 @@ public class Map {
             for (int y = 0; y < tiles[0].length; y++){
                 tiles[x][y].draw(delta, batch);
             }
+        }
+       // Iterator<Projectile> it = projectiles.iterator();
+        List<Projectile> tmp = new CopyOnWriteArrayList<Projectile>(projectiles);
+
+//        while(it.hasNext()){
+//            Projectile p = it.next();
+//            p.act(delta);
+//            p.draw(batch, 1);
+//        }
+        for (Projectile p:tmp){//ConcurrentModificationException
+            p.act(delta);
+            p.draw(batch, 1);
         }
     }
 
