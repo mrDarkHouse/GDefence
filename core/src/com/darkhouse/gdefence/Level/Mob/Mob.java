@@ -130,17 +130,20 @@ public abstract class Mob extends GDSprite{
     public boolean isInGame() {
         return inGame;
     }
-    public void setDie() {
+    public void setDie(Tower source) {
         this.inGame = false;
         Wave.mobs.remove(this);//add "if contains this" if error
+        if(source!= null){
+            source.addKill(this);
+        }
     }
 
-    public void hit(int dmg){
+    public void hit(int dmg, Tower source){//tower ==> spell&tower
         if(dmg < getHealth()){
             health -= dmg;
-        }else {
+        }else if(isInGame()){
             health = 0;
-            setDie();
+            setDie(source);
         }
     }
 //    public int getxC() {
@@ -252,7 +255,7 @@ public abstract class Mob extends GDSprite{
 
         LevelMap.getLevel().damage(dmg);
         //System.out.println("died");
-        setDie();
+        setDie(null);
     }
 
 
@@ -280,7 +283,7 @@ public abstract class Mob extends GDSprite{
         }
     }
     private void drawHpBar(SpriteBatch batch){
-        hpBar.setBounds(getX(), getY() + getHeight() + 5, getWidth(), getHeight()/5);
+        hpBar.setBounds(getX(), getY() + getHeight() /* + 5 //too high */, getWidth(), getHeight()/5);
         hpBar.setValue(getHealth());
         hpBar.draw(batch, 1);
     }

@@ -16,6 +16,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.GameActor;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class Tower extends GameActor{
 
@@ -118,6 +119,13 @@ public class Tower extends GameActor{
 //                return null;
 //        }
 //    }
+    public void addKill(/*Class<? extends Mob>*/Mob killedMob){
+        //add exp from killedMob
+        LevelMap.getLevel().addEnergy(killedMob.getBounty());
+        LevelMap.getLevel().getManager().MobsKilledAdd(1);
+    }
+
+
     public boolean isInRange(Vector2 p){
         Circle attackRange = new Circle(getCenter(), towerPrototype.getRange());
         return attackRange.contains(p);

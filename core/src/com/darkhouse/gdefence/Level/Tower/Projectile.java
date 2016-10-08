@@ -23,7 +23,6 @@ public class Projectile extends GameActor{
     private Vector2 movement = new Vector2();
     private Vector2 targetV = new Vector2();
     private Vector2 dir = new Vector2();
-    private Vector2 startPosition = new Vector2();
 
     public Projectile(Tower tower, Mob target) {
         this.tower = tower;
@@ -34,7 +33,6 @@ public class Projectile extends GameActor{
         //position.set(tower.getX(), tower.getY());
         setX(tower.getCenter().x);
         setY(tower.getCenter().y);
-        startPosition.set(tower.getCenter().x, tower.getCenter().y);
 
     }
 
@@ -54,17 +52,20 @@ public class Projectile extends GameActor{
             position.add(movement);
         }else {
             position.set(targetV);
-            target.hit(tower.getTowerPrototype().getDmg());
+            hitTarget();
             Map.projectiles.remove(this);
         }
-        float degree = dir.angle();
-        setRotation(degree/* + 90f*/);
+        setRotation(dir.angle());
 
         //rotateBy(degree);
 
         setX(position.x);
         setY(position.y);
     }
+    private void hitTarget(){
+        target.hit(tower.getTowerPrototype().getDmg(), tower);
+    }
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {

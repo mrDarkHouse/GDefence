@@ -20,7 +20,12 @@ public class Level {
     private int expFromLvl;
     private int goldFromLvl;
     private int startEnergy;
+    private int maxEnergy;
     private int startHP;
+
+    public int getMaxEnergy() {
+        return maxEnergy;
+    }
 
     public int getStartEnergy() {
         return startEnergy;
@@ -43,11 +48,11 @@ public class Level {
         return energyNumber;
     }
 
-    public void addCoin(int coin) {
-        this.energyNumber += coin;
+    public void addEnergy(int energy) {
+        this.energyNumber += energy;
     }
-    public boolean removeCoin(int coin) {
-        if(coin <= energyNumber) {
+    public boolean removeEnergy(int energy) {
+        if(energy <= energyNumber) {
             this.energyNumber -= energyNumber;
             return true;
         }else{
@@ -93,7 +98,7 @@ public class Level {
         }
     }
 
-    private ArrayList<Tower> towers;
+    //private ArrayList<Tower> towers;
     //private MapTile[][] map;
     private static Map map;
     public int currentWave;
@@ -129,12 +134,13 @@ public class Level {
         pl.loadProperties();
         expFromLvl = pl.getExpFromLvl();
         goldFromLvl = pl.getGoldFromLvl();
-        startEnergy = pl.getStartCoins();
+        startEnergy = pl.getStartEnergy();
         startHP = pl.getStartHp();
         waves = pl.getWaves();
         numberWaves = pl.getNumberWaves();
         timeBetweenWaves = pl.getTimeBetweenWaves();
 
+        maxEnergy = GDefence.getInstance().user.getMaxEnegry();
         energyNumber = startEnergy;
         healthNumber = startHP;
 

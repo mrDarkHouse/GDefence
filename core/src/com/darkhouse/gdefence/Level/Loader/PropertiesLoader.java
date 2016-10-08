@@ -13,7 +13,7 @@ public class PropertiesLoader {
     private File loadFile;
     private int expFromLvl;
     private int goldFromLvl;
-    private int startCoins;
+    private int startEnergy;
     private int startHp;
     private int numberWaves;
     private float[] timeBetweenWaves = new float[20];
@@ -25,8 +25,8 @@ public class PropertiesLoader {
     public int getGoldFromLvl() {
         return goldFromLvl;
     }
-    public int getStartCoins() {
-        return startCoins;
+    public int getStartEnergy() {
+        return startEnergy;
     }
     public int getStartHp() {
         return startHp;
@@ -57,7 +57,7 @@ public class PropertiesLoader {
 
             expFromLvl = loadScanner.nextInt();
             goldFromLvl = loadScanner.nextInt();
-            startCoins = loadScanner.nextInt();
+            startEnergy = loadScanner.nextInt();
             startHp = loadScanner.nextInt();
             while (loadScanner.hasNext()){
                 waves.add(new Wave(loadScanner.nextInt(), loadScanner.nextInt(), loadScanner.nextFloat()));

@@ -7,7 +7,7 @@ import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class EnegryBar extends ProgressBar{
     public EnegryBar(int width, int height, int x, int y) {
-        super(0, LevelMap.getLevel().getStartEnergy(), 0.5f, true, AssetLoader.getEnergyBarSkin());
+        super(0, LevelMap.getLevel().getMaxEnergy(), 0.5f, true, AssetLoader.getEnergyBarSkin());
 
 
         int expBarSize[] = {width, height};

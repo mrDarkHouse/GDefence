@@ -12,6 +12,7 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.GDSprite;
+import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class MapTile extends GDSprite{
     //private int x, y, width, height;
@@ -178,9 +179,8 @@ public class MapTile extends GDSprite{
 
 
     public boolean build(ItemEnum.Tower tower){
-        if(isBuildable() && buildedTower == null) {
+        if(isBuildable() && buildedTower == null && LevelMap.getLevel().removeEnergy(tower.getCost())) {//tooltip "no enought enegry", "cannot build there"
             this.buildedTower = new Tower(tower, getX(), getY(), getWidth(), getHeight());
-
             return true;
         }else return false;
     }

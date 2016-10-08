@@ -73,6 +73,16 @@ public class User {
     private int gold;
 
 
+    //UPDATES HERE
+    private int maxEnegry;
+    public int getMaxEnegry() {
+        return maxEnegry;
+    }
+    public void addMaxEnegry(int maxEnegry) {
+        this.maxEnegry += maxEnegry;
+    }
+
+
     //private Spell[] spells;
     //private Detail[] details;
 
@@ -159,6 +169,8 @@ public class User {
         this.totalExp = 0;
         addGold(1000);
         currentMap = 1;
+
+        maxEnegry = 50;
         //towers = new ArrayList<Tower>();
 
 
