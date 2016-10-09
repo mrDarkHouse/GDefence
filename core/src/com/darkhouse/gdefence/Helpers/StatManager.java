@@ -4,7 +4,7 @@ package com.darkhouse.gdefence.Helpers;
 public class StatManager {
     private int mobsKilled;
     private int hpLoose;
-    private int moneySpend;
+    private int energySpend;
 
 
     public int getMobsKilled() {
@@ -19,11 +19,11 @@ public class StatManager {
     public void HpLooseAdd(int hpLoose) {
         this.hpLoose += hpLoose;
     }
-    public int getMoneySpend() {
-        return moneySpend;
+    public int getEnergySpend() {
+        return energySpend;
     }
-    public void MoneySpendAdd(int moneySpend) {
-        this.moneySpend += moneySpend;
+    public void energySpendAdd(int energySpend) {
+        this.energySpend += energySpend;
     }
 
 

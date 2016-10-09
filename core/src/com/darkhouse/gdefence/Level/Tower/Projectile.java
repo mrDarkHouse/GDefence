@@ -69,7 +69,7 @@ public class Projectile extends GameActor{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
+//        super.draw(batch, parentAlpha);
         Image f = new Image(texture);
         //f.setSize(12, 8);
         f.setPosition(getX(), getY());

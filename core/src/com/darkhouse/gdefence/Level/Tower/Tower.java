@@ -1,15 +1,11 @@
 package com.darkhouse.gdefence.Level.Tower;
 
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
@@ -35,11 +31,7 @@ public class Tower extends GameActor{
 //        }
 //    }
 
-    public Tower(ItemEnum.Tower towerPrototype, float x, float y, float width, float height) {
-        setBounds(x, y, width, height);
-        this.towerPrototype = towerPrototype;
-        this.texture = AssetLoader.getTowerTexture(towerPrototype);
-    }
+
 
     protected boolean canAttack = true;
     protected ItemEnum.Tower towerPrototype;
@@ -48,7 +40,9 @@ public class Tower extends GameActor{
     }
     private float preShotTime;
     private Mob target;
-    private Texture texture;
+    //private Texture texture;
+    private Circle attackRange;
+    private Texture attackRangeTexture;
 
     /*
     //protected TowerType ID;
@@ -119,15 +113,33 @@ public class Tower extends GameActor{
 //                return null;
 //        }
 //    }
+    public Tower(ItemEnum.Tower towerPrototype, float x, float y, float width, float height) {
+        setBounds(x, y, width, height);
+        this.towerPrototype = towerPrototype;
+        setTexture(AssetLoader.getTowerTexture(towerPrototype));
+        initRange();
+    }
+
+    private void initRange(){
+        attackRange = new Circle(getCenter(), towerPrototype.getRange());
+
+        Pixmap pixmap = new Pixmap((int)attackRange.radius*2, (int)attackRange.radius*2, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.BLACK);
+        //pixmap.drawCircle(attackRange.x, attackRange.y, attackRange.radius);
+        pixmap.drawCircle((int)attackRange.x, (int)attackRange.y, (int)attackRange.radius);
+        //System.out.println((int)attackRange.x + " " + (int)attackRange.y);
+        attackRangeTexture = new Texture(pixmap);//not work
+    }
+
     public void addKill(/*Class<? extends Mob>*/Mob killedMob){
         //add exp from killedMob
         LevelMap.getLevel().addEnergy(killedMob.getBounty());
-        LevelMap.getLevel().getManager().MobsKilledAdd(1);
+        LevelMap.getLevel().getStatManager().MobsKilledAdd(1);
     }
 
 
     public boolean isInRange(Vector2 p){
-        Circle attackRange = new Circle(getCenter(), towerPrototype.getRange());
+        //Circle attackRange = new Circle(getCenter(), towerPrototype.getRange());
         return attackRange.contains(p);
     }
 
@@ -140,7 +152,6 @@ public class Tower extends GameActor{
     }
 
     private void attack(float delta){
-        //System.out.println(target);
         if(target == null || !isInRange(target.getCenter()) || !target.isInGame()) {
             target = Mob.getMobOnMap(AttackLogic.Nearest, this);
         }else {
@@ -160,16 +171,25 @@ public class Tower extends GameActor{
         Map.projectiles.add(new Projectile(this, target));
 
 
-        //Bullet b = new Bullet();//create bullet
     }
 
-    public void draw(SpriteBatch batch, float delta){
-        //TextureAtlas icons = new TextureAtlas(Gdx.files.internal("icons/icons.atlas"));
-        //towerMask = icons.findRegion(tower.getTextureRegion());//
-        Image f = new Image(texture);
-        f.setPosition(getX(), getY());
-        f.setSize(getWidth(), getHeight());
-        f.draw(batch, 1);
+    public void draw(SpriteBatch batch, float delta){//draw from levelMap instead MapTile
+        super.draw(batch, delta);
+//        Image f = new Image(getTexture());
+//        f.setPosition(getX(), getY());
+//        f.setSize(getWidth(), getHeight());
+//        f.draw(batch, 1);
+        //batch.draw(attackRangeTexture, attackRange.x, attackRange.y);
+
+
+
+
+    }
+    public void drawRange(SpriteBatch batch, float delta){
+        Image im = new Image(attackRangeTexture);
+        im.setPosition(getX(), getY());
+        im.setSize(getWidth(), getHeight());
+        im.draw(batch, 1);
     }
 
 

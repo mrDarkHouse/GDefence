@@ -7,12 +7,8 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.StatManager;
 import com.darkhouse.gdefence.Level.Loader.PropertiesLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
-import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
-import com.darkhouse.gdefence.Screens.CampainMap;
 import com.darkhouse.gdefence.Screens.LevelEndScreen;
-import com.darkhouse.gdefence.Screens.LevelMap;
-import com.darkhouse.gdefence.Screens.MainMenu;
 
 import java.util.ArrayList;
 
@@ -66,9 +62,9 @@ public class Level {
     public void damage(int dmg) {
         if(dmg < getHealthNumber()) {
             this.healthNumber -= dmg;
-            getManager().HpLooseAdd(dmg);
+            getStatManager().HpLooseAdd(dmg);
         }else {
-            getManager().HpLooseAdd(getHealthNumber());
+            getStatManager().HpLooseAdd(getHealthNumber());
             this.healthNumber = 0;
             looseLevel();
         }
@@ -109,7 +105,7 @@ public class Level {
 
 
     private StatManager manager;
-    public StatManager getManager() {
+    public StatManager getStatManager() {
         return manager;
     }
 

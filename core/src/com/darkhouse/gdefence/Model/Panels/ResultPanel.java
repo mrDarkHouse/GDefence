@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.StatManager;
-import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class ResultPanel extends AbstractPanel{
@@ -15,7 +14,7 @@ public class ResultPanel extends AbstractPanel{
 
 
     public ResultPanel(boolean isWin) {
-        manager = LevelMap.getLevel().getManager();
+        manager = LevelMap.getLevel().getStatManager();
 
         init();
     }
@@ -23,7 +22,7 @@ public class ResultPanel extends AbstractPanel{
     private void init(){
         String mobsKilled = "Killed mobs: " + manager.getMobsKilled();
         String hpLoose = "Hp loose: " + manager.getHpLoose();
-        String moneySpend = "Money spend: " + manager.getMoneySpend();
+        String moneySpend = "Money spend: " + manager.getEnergySpend();
 
         setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.infoPanelFone)));
 

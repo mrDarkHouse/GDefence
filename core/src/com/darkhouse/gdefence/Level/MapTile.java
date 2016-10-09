@@ -1,13 +1,9 @@
 package com.darkhouse.gdefence.Level;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Tower.Tower;
@@ -36,7 +32,6 @@ public class MapTile extends GDSprite{
     private TileType type;
     private TileLogic logic;
 
-    private TextureRegion towerMask;
 
     //public TextureRegionDrawable getTexture() {
     //    return texture;
@@ -152,7 +147,9 @@ public class MapTile extends GDSprite{
 
     private Tower buildedTower;
 
-
+    public Tower getBuildedTower() {
+        return buildedTower;
+    }
 
     public MapTile(TileType type) {
         this.type = type;
@@ -181,6 +178,7 @@ public class MapTile extends GDSprite{
     public boolean build(ItemEnum.Tower tower){
         if(isBuildable() && buildedTower == null && LevelMap.getLevel().removeEnergy(tower.getCost())) {//tooltip "no enought enegry", "cannot build there"
             this.buildedTower = new Tower(tower, getX(), getY(), getWidth(), getHeight());
+            LevelMap.getLevel().getStatManager().energySpendAdd(tower.getCost());
             return true;
         }else return false;
     }
