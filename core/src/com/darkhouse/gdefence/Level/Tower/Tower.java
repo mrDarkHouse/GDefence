@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Level.Tower;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -123,10 +124,10 @@ public class Tower extends GameActor{
     private void initRange(){
         attackRange = new Circle(getCenter(), towerPrototype.getRange());
 
-        Pixmap pixmap = new Pixmap((int)attackRange.radius*2, (int)attackRange.radius*2, Pixmap.Format.RGBA8888);
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
         //pixmap.drawCircle(attackRange.x, attackRange.y, attackRange.radius);
-        pixmap.drawCircle((int)attackRange.x, (int)attackRange.y, (int)attackRange.radius);
+        pixmap.fillCircle((int)attackRange.x, (int)attackRange.y, (int)attackRange.radius);
         //System.out.println((int)attackRange.x + " " + (int)attackRange.y);
         attackRangeTexture = new Texture(pixmap);//not work
     }
@@ -187,9 +188,11 @@ public class Tower extends GameActor{
     }
     public void drawRange(SpriteBatch batch, float delta){
         Image im = new Image(attackRangeTexture);
-        im.setPosition(getX(), getY());
-        im.setSize(getWidth(), getHeight());
+        im.setPosition(attackRange.x - attackRange.radius, attackRange.y - attackRange.radius);
+        //im.setSize(getWidth(), getHeight());
+        im.setSize(attackRange.radius*2, attackRange.radius*2);
         im.draw(batch, 1);
+        //batch.draw(attackRangeTexture, attackRange.x, attackRange.y);
     }
 
 
