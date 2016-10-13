@@ -23,7 +23,7 @@ public class ExpBar extends ProgressBar{
     }
 
     public ExpBar(int width, int height) {
-        super(0, 100, 0.5f, false, AssetLoader.getExpBarSkin());
+        super(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.5f, false, AssetLoader.getExpBarSkin());
 
         //ProgressBar bar = new ProgressBar(0, 10, 0.5f, false, AssetLoader.getExpBarSkin());
         int expBarSize[] = {width, height};
@@ -33,6 +33,12 @@ public class ExpBar extends ProgressBar{
         // bar.setAnimateDuration(5);
 
         //setValue(7.8f);
+        setValue(GDefence.getInstance().user.getCurrentExp());
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
         setValue(GDefence.getInstance().user.getCurrentExp());
     }
 

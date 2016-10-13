@@ -35,7 +35,6 @@ public class GoldPanel extends AbstractPanel{
     public void act(float delta) {
         super.act(delta);
         textLabel.setText(GDefence.getInstance().user.getGold() + "");
-
     }
 
 }

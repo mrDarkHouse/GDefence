@@ -187,6 +187,8 @@ public class Level {
 
 
         GDefence.getInstance().setScreen(new LevelEndScreen(true));
+        GDefence.getInstance().user.addGold(goldFromLvl);
+        GDefence.getInstance().user.addExp(expFromLvl);
         //GDefence.getInstance().setScreen(new MainMenu(GDefence.getInstance()));
     }
 

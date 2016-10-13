@@ -255,6 +255,7 @@ public class User {
 
     public void addExp(final int value){
         totalExp += value;
+        update();
     }
     public void addGold(final int value) { gold += value; }
 
