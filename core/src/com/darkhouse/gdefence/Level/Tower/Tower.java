@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -44,6 +47,8 @@ public class Tower extends GameActor{
     //private Texture texture;
     private Circle attackRange;
     private Texture attackRangeTexture;
+
+    private ShapeRenderer shape;
 
     /*
     //protected TowerType ID;
@@ -123,13 +128,17 @@ public class Tower extends GameActor{
 
     private void initRange(){
         attackRange = new Circle(getCenter(), towerPrototype.getRange());
+        shape = new ShapeRenderer();
 
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
+        Pixmap pixmap = new Pixmap((int)(attackRange.radius*2), (int)(attackRange.radius*2), Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
+        //Pixmap.setBlending(Pixmap.Blending.None);
+        //Pixmap.setFilter(Pixmap.Filter.BiLinear);
         //pixmap.drawCircle(attackRange.x, attackRange.y, attackRange.radius);
-        pixmap.fillCircle((int)attackRange.x, (int)attackRange.y, (int)attackRange.radius);
+        pixmap.drawCircle((int)attackRange.x, (int)attackRange.y, (int)attackRange.radius);
         //System.out.println((int)attackRange.x + " " + (int)attackRange.y);
         attackRangeTexture = new Texture(pixmap);//not work
+        pixmap.dispose();
     }
 
     public void addKill(/*Class<? extends Mob>*/Mob killedMob){
@@ -187,12 +196,25 @@ public class Tower extends GameActor{
 
     }
     public void drawRange(SpriteBatch batch, float delta){
-        Image im = new Image(attackRangeTexture);
-        im.setPosition(attackRange.x - attackRange.radius, attackRange.y - attackRange.radius);
-        //im.setSize(getWidth(), getHeight());
-        im.setSize(attackRange.radius*2, attackRange.radius*2);
-        im.draw(batch, 1);
-        //batch.draw(attackRangeTexture, attackRange.x, attackRange.y);
+        //Image im = new Image(attackRangeTexture);
+        //im.setScaling(Scaling.none);
+        //im.setDebug(true);
+        //im.setAlign(0);
+        //im.setPosition(attackRange.x - attackRange.radius, attackRange.y - attackRange.radius);
+        //im.setSize(attackRange.radius*2, attackRange.radius*2);
+        //im.draw(batch, 1);
+
+        //batch.draw(attackRangeTexture, attackRange.x - attackRange.radius, attackRange.y,
+        //        attackRangeTexture.getWidth(), attackRangeTexture.getHeight());
+        //batch.end();
+        //shape.setAutoShapeType(true);
+        //shape.setColor(Color.BLACK);
+        //shape.begin();
+        //shape.circle(attackRange.x, attackRange.y, attackRange.radius);//work
+        //shape.end();
+        //shape.setAutoShapeType(false);
+        //batch.begin();
+
     }
 
 

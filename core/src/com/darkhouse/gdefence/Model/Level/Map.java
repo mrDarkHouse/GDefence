@@ -139,6 +139,10 @@ public class Map {
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles[0].length; y++){
                 tiles[x][y].draw(delta, batch);
+            }
+        }
+        for (int x = 0; x < tiles.length; x++){
+            for (int y = 0; y < tiles[0].length; y++){
                 if(tiles[x][y].getBuildedTower() != null) {
                     tiles[x][y].getBuildedTower().drawRange(batch, delta);
                 }
