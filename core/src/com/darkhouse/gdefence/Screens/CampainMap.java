@@ -1,28 +1,13 @@
 package com.darkhouse.gdefence.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Model.LevelButton;
-import com.darkhouse.gdefence.Model.Panels.ExpBar;
 import com.darkhouse.gdefence.Model.Panels.GemPanel;
 import com.darkhouse.gdefence.Model.Panels.GoldPanel;
 import com.darkhouse.gdefence.Model.Panels.UserPanel;
-import com.darkhouse.gdefence.Screens.BottomPanel.Arsenal;
 import com.darkhouse.gdefence.Screens.BottomPanel.BottomPanel;
-import com.darkhouse.gdefence.Screens.BottomPanel.Smith;
-import com.darkhouse.gdefence.Screens.BottomPanel.Store;
 
 public class CampainMap extends AbstractCampainScreen {
     //private GDefence mainClass;
@@ -64,7 +49,7 @@ public class CampainMap extends AbstractCampainScreen {
 
         for (int i = 0; i < 5; i++){
             levels[i] = new LevelButton(i + 1);
-            if(!GDefence.getInstance().user.getLevelsAvailable(i)){
+            if(!GDefence.getInstance().user.getLevelAvailable(i)){
                 levels[i].lock();
             }
             levels[i].setSize(levelButtonsSize[0], levelButtonsSize[1]);

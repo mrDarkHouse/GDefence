@@ -3,6 +3,7 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerObject;
 //import ru.Towers.TowerType;
 
+import com.badlogic.gdx.Gdx;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Tower.Tower;
@@ -19,8 +20,22 @@ public class User {
 //        return levelsAvailable;
 //    }
     public int getLevelsCompletedInt() {
-        return levelsCompletedInt;
+        int completed = 0;
+        for (boolean b: levelsCompleted){
+            if(b){
+                completed++;
+            }
+        }
+        return completed;
     }
+
+    public void setLevelsCompleted(int number) {
+        for (int i = 0; i < number; i++){
+            levelsCompleted[i] = true;
+        }
+    }
+
+
     public String getName() {
         return name;
     }
@@ -40,9 +55,6 @@ public class User {
         return currentExp;
     }
 
-    public void setLevelsCompletedInt(int levelsCompletedInt) {
-        this.levelsCompletedInt = levelsCompletedInt;
-    }
     public void setName(String name) {
         this.name = name;
     }
@@ -53,17 +65,33 @@ public class User {
 
     public int getGold() { return gold; }
 
-    public boolean getLevelsAvailable(int number) {
+    public boolean getLevelCompleted(int numberLevel) {
+        if(numberLevel > 0) {
+            return levelsCompleted[numberLevel - 1];//array
+        }else {
+            Gdx.app.log("Error", "Wrong level number");
+            return false;//can do throw exception
+        }
+    }
+    public void setLevelCompleted(int numberLevel) {
+        if(numberLevel > 0) {
+            levelsCompleted[numberLevel - 1] = true;//array
+        }else {
+            Gdx.app.log("Error", "Wrong level number");
+        }
+    }
+
+    public boolean getLevelAvailable(int number) {
         return levelsAvailable[number];
     }
 
     private String name;
     private int currentMap;
-    private int levelsCompletedInt;
+    private boolean[] levelsCompleted = new boolean[100];
     private boolean[] levelsAvailable = new boolean[100];
 
     public void openLevel(int number) {
-        levelsAvailable[number] = true;
+        levelsAvailable[number - 1] = true;//because array
     }
 
 
@@ -217,11 +245,13 @@ public class User {
         update();
 
 
-        this.levelsCompletedInt = 0;
+        //this.levelsCompletedInt = 0;
         this.levelsAvailable[0] = true;
         for(int i = 1; i < 5; i++) {
             this.levelsAvailable[i] = false;
         }
+
+        //openLevel(2);
     }
 
 
@@ -278,7 +308,7 @@ public class User {
             //writer.print(getCurrentExp());
             //writer.println(getLevel());
             writer.println(getLevelsCompletedInt());
-            //writer.println(getLevelsAvailable());
+            //writer.println(getLevelAvailable());
             writer.print(redGems + " " + yellowGems + " " + blueGems + " " + blackGems + " " + greenGems + " " + whiteGems);
             writer.close();
             //System.out.println(f.getCanonicalPath());
@@ -297,7 +327,7 @@ public class User {
             gold = sc.nextInt();
             totalExp = sc.nextInt();
             //level = sc.nextInt();
-            levelsCompletedInt = sc.nextInt();
+            setLevelsCompleted(sc.nextInt());
             redGems = sc.nextInt();
             yellowGems = sc.nextInt();
             blueGems = sc.nextInt();

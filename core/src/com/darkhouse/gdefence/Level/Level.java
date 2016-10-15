@@ -183,12 +183,22 @@ public class Level {
         //System.out.println("win");
 
         //LevelMap.levelMap.hide();
-        GDefence.getInstance().user.openLevel(number);
+        if(!GDefence.getInstance().user.getLevelCompleted(number)) {
+            GDefence.getInstance().user.addGold(goldFromLvl);
+            GDefence.getInstance().user.addExp(expFromLvl);
+        }else {
+            GDefence.getInstance().user.addGold(goldFromLvl/4);//recomplete penalty
+            GDefence.getInstance().user.addExp(expFromLvl/4);
+        }
+
+
+        GDefence.getInstance().user.setLevelCompleted(number);
+        GDefence.getInstance().user.openLevel(number + 1);
 
 
         GDefence.getInstance().setScreen(new LevelEndScreen(true));
-        GDefence.getInstance().user.addGold(goldFromLvl);
-        GDefence.getInstance().user.addExp(expFromLvl);
+
+
         //GDefence.getInstance().setScreen(new MainMenu(GDefence.getInstance()));
     }
 
