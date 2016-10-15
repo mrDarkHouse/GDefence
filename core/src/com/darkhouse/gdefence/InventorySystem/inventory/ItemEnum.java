@@ -39,7 +39,7 @@ public enum ItemEnum {;
 			"hullbase"), CANNON("cannonbase"), RAY("raybase"), LAUNCHER("launcherbase"), DROID("droidbase"), MINE("dropperbase"), BATTERY("batterybase");
 */
 	public enum Tower implements Item {
-		Basic(AttackType.projectile, 10, 100, 5, 100, 1.2f){
+		Basic(AttackType.projectile, 10, 100, 10, 125, 1.2f){
 			@Override
 			public String getTextureRegion() {
 				return "redcrystal";

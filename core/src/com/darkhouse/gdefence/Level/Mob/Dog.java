@@ -7,10 +7,10 @@ public class Dog extends Mob{
     public Dog() {
         super();
         setName("Dog");
-        setHealth(70);
-        setDmg(1);
-        setBounty(3);
-        setSpeed(120);
+        setHealth(30);
+        setDmg(2);
+        setBounty(7);
+        setSpeed(100);
         setTextureDrawable(AssetLoader.dog);
 
     }

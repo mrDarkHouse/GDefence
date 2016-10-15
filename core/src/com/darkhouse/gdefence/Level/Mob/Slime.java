@@ -7,9 +7,9 @@ public class Slime extends Mob{
     public Slime() {
         super();
         setName("Slime");
-        setHealth(70);
+        setHealth(50);
         setDmg(1);
-        setBounty(3);
+        setBounty(5);
         setSpeed(50);
         setTextureDrawable(AssetLoader.slime);
 

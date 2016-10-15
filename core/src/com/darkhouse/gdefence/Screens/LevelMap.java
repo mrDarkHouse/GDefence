@@ -129,33 +129,6 @@ public class LevelMap implements Screen {
 
     }
 
-
-
-    //private void drawNextWavePanel(float delta, SpriteBatch batch){
-    //    drawTimer(delta, batch);
-        //NextWaveInfoPanel npanel = new NextWaveInfoPanel();
-        //npanel.draw(batch, 1);
-    //}
-
-
-
-    //private void drawTimer(float delta, SpriteBatch batch){
-    //    if(!level.isInWave()) {
-//            float time = level.timeBetweenWaves[level.currentWave];
-//            time = new BigDecimal(time).setScale(2, BigDecimal.ROUND_UP).floatValue();
-
-            //NextWaveInfoPanel npanel = new NextWaveInfoPanel();
-            //npanel.draw(batch, 1);
-
-            //Label l = new Label("" + time, AssetLoader.getTimerSkin());
-            //l.setPosition(Gdx.graphics.getWidth() - 240, 30);
-            //l.draw(batch, 1);
-    //    }
-
-    //}
-
-
-
     @Override
     public void dispose() {
         batch.dispose();
