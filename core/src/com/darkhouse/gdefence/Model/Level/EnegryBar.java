@@ -1,31 +1,49 @@
 package com.darkhouse.gdefence.Model.Level;
 
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
-public class EnegryBar extends ProgressBar{
+public class EnegryBar extends WidgetGroup{
+    private ProgressBar energyBar;
+    private Label text;
+
     public EnegryBar(int width, int height, int x, int y) {
-        super(0, LevelMap.getLevel().getMaxEnergy(), 0.5f, true, AssetLoader.getEnergyBarSkin());
-
-
-        int expBarSize[] = {width, height};
-        setPosition(x, y);
+        energyBar = new ProgressBar(0, LevelMap.getLevel().getMaxEnergy(), 0.5f, true, AssetLoader.getEnergyBarSkin());
+        energyBar.setPosition(x, y);
         //setPosition(Gdx.graphics.getWidth() - expBarSize[0], userlevelButton.getY() - expBarSize[1] - 4);
-        setSize(expBarSize[0], expBarSize[1]);
+        energyBar.setSize(width, height);
         // bar.setAnimateDuration(5);
+        energyBar.setValue(LevelMap.getLevel().getEnergyNumber());
+        addActor(energyBar);
+        initLabel();
+    }
 
-        setValue(LevelMap.getLevel().getEnergyNumber());
-        //System.out.println();
+    private void initLabel(){
+        text = new Label(LevelMap.getLevel().getEnergyNumber() + "/" + LevelMap.getLevel().getMaxEnergy(),
+                FontLoader.generateStyle(26, Color.BLACK));
+        Container l = new Container(text);
+        l.setPosition(energyBar.getX() + energyBar.getWidth()/2,
+                energyBar.getY() + energyBar.getHeight()/2);
 
+        l.setTransform(true);
+        l.addAction(Actions.rotateTo(90));
+
+        addActor(l);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        setValue(LevelMap.getLevel().getEnergyNumber());
-        //System.out.println(LevelMap.getLevel().getHealthNumber());
+        energyBar.setValue(LevelMap.getLevel().getEnergyNumber());
+        text.setText(LevelMap.getLevel().getEnergyNumber() + "/" + LevelMap.getLevel().getMaxEnergy());
     }
 
 
