@@ -42,7 +42,7 @@ public enum ItemEnum {;
 		Basic(AttackType.projectile, 10, 100, 10, 125, 1.2f){
 			@Override
 			public String getTextureRegion() {
-				return "redcrystal";
+				return "basic";
 			}
 
 			@Override
@@ -55,7 +55,7 @@ public enum ItemEnum {;
 		Rock(AttackType.projectile, 25, 125, 25, 150, 1.0f){
 			@Override
 			public String getTextureRegion() {
-				return "bluecrystal";
+				return "rock";
 			}
 			@Override
 			public String getTooltip() {
@@ -67,7 +67,7 @@ public enum ItemEnum {;
 		Arrow(AttackType.projectile, 25, 140, 10, 150, 0.5f){
 			@Override
 			public String getTextureRegion() {
-				return "greencrystal";
+				return "arrow";
 			}
 			@Override
 			public String getTooltip() {
@@ -79,7 +79,7 @@ public enum ItemEnum {;
 		Range(AttackType.projectile, 25, 130, 15, 250, 0.8f){
 			@Override
 			public String getTextureRegion() {
-				return "yellowcrystal";
+				return "range";
 			}
 			@Override
 			public String getTooltip() {
