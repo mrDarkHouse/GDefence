@@ -7,7 +7,7 @@ public class Slime extends Mob{
     public Slime() {
         super();
         setName("Slime");
-        setHealth(50);
+        setHealth(80);
         setDmg(1);
         setBounty(5);
         setSpeed(50);

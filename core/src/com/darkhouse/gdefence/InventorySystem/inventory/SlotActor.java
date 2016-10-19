@@ -55,7 +55,7 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 		amount = new Amount(skin, slot);
 		addActor(amount);
-		//do align right
+		//do align right //TODO
 		amount.setAlignment(Align.center);
 
 

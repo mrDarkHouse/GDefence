@@ -41,6 +41,7 @@ public class SlotTooltip extends Window implements SlotListener {
 		hasChanged(slot);
 		slot.addListener(this);
 		setVisible(false);
+
 	}
 
 	@Override

@@ -45,7 +45,13 @@ public class Level {
     }
 
     public void addEnergy(int energy) {
-        this.energyNumber += energy;
+        if(energy + energyNumber <= GDefence.getInstance().user.getMaxEnegry()) {
+            this.energyNumber += energy;
+        }else {
+            if(this.energyNumber != GDefence.getInstance().user.getMaxEnegry()) {
+                this.energyNumber = GDefence.getInstance().user.getMaxEnegry();
+            }
+        }
     }
     public boolean removeEnergy(int energy) {
         if(energy <= energyNumber) {
