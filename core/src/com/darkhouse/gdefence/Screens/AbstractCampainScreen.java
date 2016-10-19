@@ -27,18 +27,14 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Model.BackButton;
 
-public abstract class AbstractCampainScreen implements Screen {
+public abstract class AbstractCampainScreen extends AbstractScreen {
 
     protected ImageTextButton nameButton;
     protected String name;
     protected final int topPadSize = 64;
 
     protected SpriteBatch batch;
-    protected static Stage stage;
 
-    public static Stage getStage() {
-        return stage;
-    }
 
     protected ShapeRenderer shape;
 

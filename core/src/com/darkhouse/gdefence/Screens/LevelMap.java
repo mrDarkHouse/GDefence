@@ -18,9 +18,8 @@ import com.darkhouse.gdefence.Model.Level.*;
 
 import java.math.BigDecimal;
 
-public class LevelMap implements Screen {
+public class LevelMap extends AbstractScreen {
     private SpriteBatch batch;
-    private Stage stage;
     private ShapeRenderer shape;
     //private Map map;
     private int number;

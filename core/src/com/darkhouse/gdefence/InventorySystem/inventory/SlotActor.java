@@ -22,6 +22,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -29,9 +30,12 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.LibgdxUtils;
+import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
+import com.darkhouse.gdefence.Screens.AbstractScreen;
 import com.darkhouse.gdefence.Screens.BottomPanel.Arsenal;
 
 /**
@@ -57,14 +61,14 @@ public class SlotActor extends ImageButton implements SlotListener {
 		addActor(amount);
 		//do align right //TODO
 		amount.setAlignment(Align.center);
+		addTooltip();
+	}
 
-
-
-
-
+	protected void addTooltip(){
 		SlotTooltip tooltip = new SlotTooltip(slot, skin);
 		tooltip.setTouchable(Touchable.disabled); // allows for mouse to hit tooltips in the top-right corner of the screen without flashing
-		Arsenal.getStage().addActor(tooltip);
+		//Arsenal.getStage().addActor(tooltip);
+		((AbstractScreen)GDefence.getInstance().getScreen()).getStage().addActor(tooltip);
 		addListener(new TooltipListener(tooltip, true));
 	}
 

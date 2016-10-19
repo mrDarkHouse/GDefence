@@ -14,6 +14,7 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.LevelToolip;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.TooltipListener;
+import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 import com.darkhouse.gdefence.Screens.BottomPanel.Arsenal;
 import com.darkhouse.gdefence.Screens.CampainMap;
 import com.darkhouse.gdefence.Screens.LevelPreparationScreen;
@@ -36,7 +37,8 @@ public class LevelButton extends ImageButton {
     private void load(){
         LevelToolip tooltip = new LevelToolip(this, AssetLoader.cellSkin);
         tooltip.setTouchable(Touchable.disabled);
-        CampainMap.getStage().addActor(tooltip);
+        //CampainMap.getStage().addActor(tooltip);
+        ((AbstractCampainScreen)GDefence.getInstance().getScreen()).getStage().addActor(tooltip);
         addListener(new TooltipListener(tooltip, true));
 
 

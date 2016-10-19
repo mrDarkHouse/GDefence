@@ -11,10 +11,9 @@ import com.darkhouse.gdefence.Model.BackButton;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 
-public abstract class AbstractMenuScreen implements Screen {
+public abstract class AbstractMenuScreen extends AbstractScreen {
 
     protected SpriteBatch batch;
-    protected Stage stage;
     private boolean enableBackButton;
 
 
