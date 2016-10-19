@@ -17,6 +17,8 @@ public class EnegryBar extends WidgetGroup{
 
     public EnegryBar(int width, int height, int x, int y) {
         energyBar = new ProgressBar(0, LevelMap.getLevel().getMaxEnergy(), 0.5f, true, AssetLoader.getEnergyBarSkin());
+        energyBar.getStyle().background.setMinWidth(width);
+        energyBar.getStyle().knob.setMinWidth(width);
         energyBar.setPosition(x, y);
         //setPosition(Gdx.graphics.getWidth() - expBarSize[0], userlevelButton.getY() - expBarSize[1] - 4);
         energyBar.setSize(width, height);

@@ -15,12 +15,15 @@ public class HealthBar extends WidgetGroup{
 
     public HealthBar(int width, int height, int x, int y) {
         healthBar = new ProgressBar(0, LevelMap.getLevel().getStartHP(), 0.5f, false, AssetLoader.getExpBarSkin());
+        healthBar.getStyle().background.setMinHeight(height);
+        healthBar.getStyle().knob.setMinHeight(height);
         healthBar.setPosition(x, y);
         //setPosition(Gdx.graphics.getWidth() - expBarSize[0], userlevelButton.getY() - expBarSize[1] - 4);
         healthBar.setSize(width, height);
         //setAnimateDuration(5);
         healthBar.setValue(LevelMap.getLevel().getHealthNumber());
         addActor(healthBar);
+        //add(healthBar);
         initLabel();
     }
 
@@ -30,6 +33,7 @@ public class HealthBar extends WidgetGroup{
         text.setPosition(healthBar.getX() + healthBar.getWidth()/2 - text.getWidth()/2,
                 healthBar.getY() + healthBar.getHeight()/2 - text.getHeight()/2);
         addActor(text);
+        //add(text);
     }
 
     @Override
