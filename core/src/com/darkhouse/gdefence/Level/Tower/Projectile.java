@@ -27,7 +27,7 @@ public class Projectile extends GameActor{
     public Projectile(Tower tower, Mob target) {
         this.tower = tower;
         this.target = target;
-        this.speed = 120;
+        this.speed = 180;//custom
         texture = AssetLoader.getProjectileTexture(tower.getTowerPrototype());
 
         //position.set(tower.getX(), tower.getY());
