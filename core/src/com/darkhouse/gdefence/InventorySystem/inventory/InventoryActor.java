@@ -35,6 +35,7 @@ public class InventoryActor extends Window {
 	protected Array<SlotActor> actorArray;
 	protected Inventory inventory;
 	private int rowNumber;
+	private int pages;
 	public void setRowNumber(int rowNumber) {
 		this.rowNumber = rowNumber;
 	}

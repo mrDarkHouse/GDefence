@@ -22,6 +22,7 @@ public class HealthBar extends WidgetGroup{
         healthBar.setSize(width, height);
         //setAnimateDuration(5);
         healthBar.setValue(LevelMap.getLevel().getHealthNumber());
+        healthBar.setAnimateDuration(0.5f);
         addActor(healthBar);
         //add(healthBar);
         initLabel();

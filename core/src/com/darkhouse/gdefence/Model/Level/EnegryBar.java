@@ -24,6 +24,7 @@ public class EnegryBar extends WidgetGroup{
         energyBar.setSize(width, height);
         // bar.setAnimateDuration(5);
         energyBar.setValue(LevelMap.getLevel().getEnergyNumber());
+        energyBar.setAnimateDuration(0.5f);
         addActor(energyBar);
         initLabel();
     }
