@@ -1,10 +1,12 @@
 package com.darkhouse.gdefence.Model.Level;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.bullet.Bullet;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.MapTile;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -24,6 +26,11 @@ public class Map {
         return tiles;
     }
 
+    private boolean isBuild = false;
+
+    public void setBuild(boolean build) {
+        isBuild = build;
+    }
 
     public static List<Projectile> projectiles;
 
@@ -138,7 +145,7 @@ public class Map {
     public void draw(float delta, SpriteBatch batch){
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles[0].length; y++){
-                tiles[x][y].draw(delta, batch);
+                tiles[x][y].draw(batch, delta);
             }
         }
         for (int x = 0; x < tiles.length; x++){
@@ -160,6 +167,35 @@ public class Map {
             p.act(delta);
             p.draw(batch, 1);
         }
+
+        if(isBuild){
+            drawBuildGrid(batch, delta);
+        }
+
     }
 
+    public void drawBuildGrid(SpriteBatch batch, float delta){
+        Texture linePixel = AssetLoader.buildGridLinePixel;
+        for (int x = 0; x < tiles.length; x++){
+            for (int y = 0; y < tiles[0].length; y++){
+                for (int i = 0; i < tiles[x][y].getWidth(); i++){
+                    batch.draw(linePixel, tiles[x][y].getX() + i, tiles[x][y].getY() + tiles[x][y].getHeight());
+                }
+                for (int i = 0; i < tiles[x][y].getHeight(); i++){
+                    batch.draw(linePixel, tiles[x][y].getX(), tiles[x][y].getY() + i);
+                }
+            }
+        }
+        for (int x = 0; x < tiles.length; x++) {//draw last x lane
+            for (int i = 0; i < tiles[0][0].getWidth(); i++){
+                batch.draw(linePixel, tiles[x][tiles[0].length - 1].getX() + i, tiles[x][tiles[0].length - 1].getY());
+            }
+        }
+        for (int y = 0; y < tiles[0].length; y++) {//draw last y lane
+            for (int i = 0; i < tiles[0][0].getHeight(); i++){
+                batch.draw(linePixel, tiles[tiles.length - 1][y].getX() + tiles[0][0].getWidth(),
+                        tiles[tiles.length - 1][y].getY() + i);
+            }
+        }
+    }
 }

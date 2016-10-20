@@ -1,16 +1,9 @@
-package com.darkhouse.gdefence.Model.Level;
+package com.darkhouse.gdefence.InventorySystem.inventory;
 
 
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.utils.Array;
-import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
-import com.darkhouse.gdefence.InventorySystem.inventory.*;
-import com.darkhouse.gdefence.Level.LevelShop;
 import com.darkhouse.gdefence.Level.MapTile;
-import com.darkhouse.gdefence.Model.Panels.AbstractPanel;
-import com.darkhouse.gdefence.Screens.BottomPanel.CombinedSlotSource;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class LevelShopPanel extends InventoryActor {

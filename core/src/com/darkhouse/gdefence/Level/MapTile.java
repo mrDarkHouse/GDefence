@@ -183,7 +183,7 @@ public class MapTile extends GDSprite{
         }else return false;
     }
 
-    public void draw(float delta, SpriteBatch batch){
+    public void draw(SpriteBatch batch, float delta){
         draw(batch);
         Image f;
 

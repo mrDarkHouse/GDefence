@@ -58,6 +58,7 @@ public class AssetLoader {
     public static Skin cellSkin;
 
     public static Texture sellButton;
+    public static Texture buildGridLinePixel;
 
     //public static Animation birdAnimation;
     //public static TextureRegion bird, birdDown, birdUp;
@@ -118,6 +119,7 @@ public class AssetLoader {
         cellSkin = new Skin(Gdx.files.internal("skins/uiskin.json"));
 
         sellButton = new Texture("sellButton.png");
+        buildGridLinePixel = new Texture("buildGridLinePixel.png");
 
 
 

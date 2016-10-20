@@ -1,10 +1,12 @@
-package com.darkhouse.gdefence.Model.Level;
+package com.darkhouse.gdefence.InventorySystem.inventory;
 
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
+import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.MapTile;
+import com.darkhouse.gdefence.Model.Level.MapTileActor;
 
 public class LevelShopSource extends SlotSource {
     public LevelShopSource(SlotActor actor) {
@@ -12,7 +14,14 @@ public class LevelShopSource extends SlotSource {
     }
 
     @Override
+    public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
+        Level.getMap().setBuild(true);//start drawing build grid
+        return super.dragStart(event, x, y, pointer);
+    }
+
+    @Override
     public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
+        Level.getMap().setBuild(false);// end drawing build grid
         Slot payloadSlot = (Slot) payload.getObject();
         if(target == null){
             sourceSlot.add(payloadSlot.getItem(), payloadSlot.getAmount());

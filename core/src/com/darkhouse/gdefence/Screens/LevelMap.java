@@ -2,21 +2,14 @@ package com.darkhouse.gdefence.Screens;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Array;
-import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
-import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
-import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
+import com.darkhouse.gdefence.InventorySystem.inventory.LevelShopPanel;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Model.Level.*;
-
-import java.math.BigDecimal;
 
 public class LevelMap extends AbstractScreen {
     private SpriteBatch batch;
@@ -107,8 +100,8 @@ public class LevelMap extends AbstractScreen {
 
     }
     private void initHpMpBar(){
-        stage.addActor(new HealthBar(Gdx.graphics.getWidth(), 60, 0, Gdx.graphics.getHeight() - 60));
-        stage.addActor(new EnegryBar(60, Gdx.graphics.getHeight() - 60, 0, 0));
+        stage.addActor(new HealthBar(Gdx.graphics.getWidth(), 55, 0, Gdx.graphics.getHeight() - 55));
+        stage.addActor(new EnegryBar(55, Gdx.graphics.getHeight() - 55, 0, 0));
     }
     private void initWavePanel(){
         NextWaveInfoPanel panel = new NextWaveInfoPanel();
