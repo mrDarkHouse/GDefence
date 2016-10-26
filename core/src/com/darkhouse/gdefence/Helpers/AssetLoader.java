@@ -59,6 +59,7 @@ public class AssetLoader {
 
     public static Texture sellButton;
     public static Texture buildGridLinePixel;
+    public static Texture attackRangeTexture;
 
     //public static Animation birdAnimation;
     //public static TextureRegion bird, birdDown, birdUp;
@@ -120,6 +121,7 @@ public class AssetLoader {
 
         sellButton = new Texture("sellButton.png");
         buildGridLinePixel = new Texture("buildGridLinePixel.png");
+        attackRangeTexture = new Texture("towerRangeTexture.png");
 
 
 

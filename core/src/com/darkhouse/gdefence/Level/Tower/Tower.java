@@ -140,7 +140,7 @@ public class Tower extends GameActor{
         //attackRangeTexture = new Texture(pixmap);//not work
         //pixmap.dispose();
 
-        attackRangeTexture = new Texture("towerRangeTexture.png");
+        attackRangeTexture = AssetLoader.attackRangeTexture;
     }
 
     public void addKill(/*Class<? extends Mob>*/Mob killedMob){

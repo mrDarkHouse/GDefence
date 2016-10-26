@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.MapTile;
@@ -27,7 +28,7 @@ public class LevelShopPanel extends InventoryActor {
 
     @Override
     protected void addSourceTarget(SlotActor slotActor) {
-        dragAndDrop.addSource(new LevelShopSource(slotActor));
+        dragAndDrop.addSource(new LevelShopSource(slotActor, dragAndDrop));
         dragAndDrop.addTarget(new SlotTarget(slotActor));
     }
 
@@ -38,7 +39,7 @@ public class LevelShopPanel extends InventoryActor {
     public void addTarget(MapTile[][] tiles){
         for (int i = 0; i < tiles.length; i++){
             for (int j = 0; j < tiles[0].length; j++){
-                dragAndDrop.addTarget(new TileTarget(LevelMap.levelMap.getTiles()[i][j]));
+                dragAndDrop.addTarget(new TileTarget(LevelMap.levelMap.getTiles()[i][j], dragAndDrop));
             }
         }
 

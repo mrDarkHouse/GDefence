@@ -3,10 +3,13 @@ package com.darkhouse.gdefence.Model.Level;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.bullet.Bullet;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.MapTile;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -27,10 +30,15 @@ public class Map {
     }
 
     private boolean isBuild = false;
+    private ItemEnum.Tower rangeTower;
+    private DragAndDrop.Payload payload;
 
-    public void setBuild(boolean build) {
+    public void setBuild(boolean build, ItemEnum.Tower rangeTower, DragAndDrop.Payload payload) {//
         isBuild = build;
+        this.rangeTower = rangeTower;
+        this.payload = payload;
     }
+
 
     public static List<Projectile> projectiles;
 
@@ -170,6 +178,7 @@ public class Map {
 
         if(isBuild){
             drawBuildGrid(batch, delta);
+            drawTowerRange(batch);
         }
 
     }
@@ -197,5 +206,18 @@ public class Map {
                         tiles[tiles.length - 1][y].getY() + i);
             }
         }
+    }
+
+
+    private void drawTowerRange(SpriteBatch batch){//rework with draw in payload
+        float x = payload.getValidDragActor().getX();
+        float y = payload.getValidDragActor().getY();
+        float width = payload.getValidDragActor().getWidth();
+        float height = payload.getValidDragActor().getHeight();
+
+        Circle attackRange = new Circle(x + width/2, y + height/2, rangeTower.getRange());
+        batch.draw(AssetLoader.attackRangeTexture, attackRange.x - attackRange.radius, attackRange.y - attackRange.radius,
+                attackRange.radius*2, attackRange.radius*2);
+
     }
 }
