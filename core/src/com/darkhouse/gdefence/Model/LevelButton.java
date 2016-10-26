@@ -63,8 +63,8 @@ public class LevelButton extends ImageButton {
 
     public void lock(){
         isLocked = true;
-        getStyle().up = new TextureRegionDrawable(new TextureRegion(AssetLoader.levelLock));
-        getStyle().over = new TextureRegionDrawable(new TextureRegion(AssetLoader.levelLock));
-        getStyle().down = new TextureRegionDrawable(new TextureRegion(AssetLoader.levelLock));
+        getStyle().up = new TextureRegionDrawable(AssetLoader.getLevelLockTexture(number));
+        getStyle().over = new TextureRegionDrawable(AssetLoader.getLevelLockTexture(number));
+        getStyle().down = new TextureRegionDrawable(AssetLoader.getLevelLockTexture(number));
     }
 }

@@ -32,7 +32,7 @@ public class AssetLoader {
     public static Texture transparent;
     public static Texture barFone;
     public static Texture barTop;
-    public static Texture levelLock;
+    public static TextureRegion[][] levelLock/* = new TextureRegion[10][1]*/;
     public static Texture levelMapBg;
     public static Texture[] gemTexture = new Texture[6];
     public static Texture coin;
@@ -61,9 +61,6 @@ public class AssetLoader {
     public static Texture buildGridLinePixel;
     public static Texture attackRangeTexture;
 
-    //public static Animation birdAnimation;
-    //public static TextureRegion bird, birdDown, birdUp;
-
 
     public static void load() {
         loadMainMenu();
@@ -87,7 +84,10 @@ public class AssetLoader {
         transparent = new Texture("MainMenuTranparent.png");
         barFone = new Texture("expBar1.png");
         barTop = new Texture("expBar2.png");
-        levelLock = new Texture("levelLock.png");
+        //levelLock = new Texture("levelLock.png");
+
+
+
         levelMapBg = new Texture("LevelMapBg.png");
         gemTexture[0] = new Texture("Gems/redGem.png");
         gemTexture[1] = new Texture("Gems/yellowGem.png");
@@ -189,13 +189,18 @@ public class AssetLoader {
 
         return userLevelButtonStyle;
     }
-    public static Texture getLevelLockTexture(){
-        Texture t;
-
-
-
-        return levelLock;
+    public static TextureRegion getLevelLockTexture(int number){
+        //Texture t;
+        //return levelLock;
+        Texture atlas = new Texture(Gdx.files.internal("LevelsLockAtlas.png"));
+        levelLock =  TextureRegion.split(atlas, atlas.getWidth(),
+                atlas.getHeight() / 10);
+        return levelLock[number - 1][0];
     }
+
+
+
+
     public static ImageButton.ImageButtonStyle getBottomPanelSkin(int index){
         switch (index){
             case 1:
