@@ -82,7 +82,7 @@ public class User {
     }
 
     public boolean getLevelAvailable(int number) {
-        return levelsAvailable[number];
+        return levelsAvailable[number - 1];//array
     }
 
     private String name;
@@ -251,7 +251,7 @@ public class User {
             this.levelsAvailable[i] = false;
         }
 
-        //openLevel(2);
+        openLevel(6);
     }
 
 

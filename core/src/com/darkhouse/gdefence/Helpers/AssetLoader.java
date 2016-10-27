@@ -32,7 +32,7 @@ public class AssetLoader {
     public static Texture transparent;
     public static Texture barFone;
     public static Texture barTop;
-    public static TextureRegion[][] levelLock/* = new TextureRegion[10][1]*/;
+    public static Texture levelLock/* = new TextureRegion[10][1]*/;
     public static Texture levelMapBg;
     public static Texture[] gemTexture = new Texture[6];
     public static Texture coin;
@@ -61,6 +61,9 @@ public class AssetLoader {
     public static Texture buildGridLinePixel;
     public static Texture attackRangeTexture;
 
+    public static Texture prevButton;
+    public static Texture nextButton;
+
 
     public static void load() {
         loadMainMenu();
@@ -84,7 +87,7 @@ public class AssetLoader {
         transparent = new Texture("MainMenuTranparent.png");
         barFone = new Texture("expBar1.png");
         barTop = new Texture("expBar2.png");
-        //levelLock = new Texture("levelLock.png");
+        levelLock = new Texture("levelLock.png");
 
 
 
@@ -123,9 +126,30 @@ public class AssetLoader {
         buildGridLinePixel = new Texture("buildGridLinePixel.png");
         attackRangeTexture = new Texture("towerRangeTexture.png");
 
+        prevButton = new Texture("prevButton.png");
+        nextButton = new Texture("nextButton.png");
+
 
 
     }
+    public static ImageButton.ImageButtonStyle getPrevButtonSkin(){
+        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
+        s.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.prevButton));
+        s.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.prevButton));
+        s.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.prevButton));
+
+        return s;
+    }
+    public static ImageButton.ImageButtonStyle getNextButtonSkin(){
+        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
+        s.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.nextButton));
+        s.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.nextButton));
+        s.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.nextButton));
+
+        return s;
+    }
+
+
 
     public static ImageButton.ImageButtonStyle getBackButtonSkin(){
         ImageButton.ImageButtonStyle backButtonStyle = new ImageButton.ImageButtonStyle();
@@ -164,7 +188,15 @@ public class AssetLoader {
         return style;
     }
 
+    public static TextButton.TextButtonStyle getCampainLevelStyle(){
+        TextButton.TextButtonStyle s = new TextButton.TextButtonStyle();
 
+        s.up = new TextureRegionDrawable(new TextureRegion(cell));
+        s.font = FontLoader.generateFont(52);
+        s.fontColor = Color.BLACK;
+
+        return s;
+    }
 
 
     public static ImageButton.ImageButtonStyle getCampainLevelSkin(int number){
@@ -189,14 +221,14 @@ public class AssetLoader {
 
         return userLevelButtonStyle;
     }
-    public static TextureRegion getLevelLockTexture(int number){
+    //public static TextureRegion getLevelLockTexture(int number){
         //Texture t;
         //return levelLock;
-        Texture atlas = new Texture(Gdx.files.internal("LevelsLockAtlas.png"));
-        levelLock =  TextureRegion.split(atlas, atlas.getWidth(),
-                atlas.getHeight() / 10);
-        return levelLock[number - 1][0];
-    }
+        //Texture atlas = new Texture(Gdx.files.internal("LevelsLockAtlas.png"));
+        //levelLock =  TextureRegion.split(atlas, atlas.getWidth(),
+        //        atlas.getHeight() / 10);
+       // return levelLock[number - 1][0];
+    //}
 
 
 

@@ -64,6 +64,13 @@ public class FontLoader {
         return style;
     }
 
+    public static BitmapFont generateFont(int size){
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = size;
+        return  generator.generateFont(parameter);
+    }
+
 
 
     public static void dispose(){
