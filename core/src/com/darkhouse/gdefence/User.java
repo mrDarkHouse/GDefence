@@ -95,19 +95,33 @@ public class User {
     }
 
 
+    //private int[] maxHealths = new int[]{10, 15, 20, 25, 30, 35};
+    //private int[] maxEnergys = new int[]{50, 60, 70, 80, 90, 100};
+
+    private int maxHealth;
+    private int maxEnegry;
+
+    public void upHealth(){
+        addMaxHealth(5);
+    }
+
+    public void upEnergy(){
+        addMaxEnegry(10);
+    }
 
     private int totalExp;
     private int currentExp;
     private int gold;
 
 
-    //UPDATES HERE
-    private int maxEnegry;
     public int getMaxEnegry() {
         return maxEnegry;
     }
     public void addMaxEnegry(int maxEnegry) {
         this.maxEnegry += maxEnegry;
+    }
+    public void addMaxHealth(int maxHealth) {
+        this.maxHealth += maxHealth;
     }
 
 
