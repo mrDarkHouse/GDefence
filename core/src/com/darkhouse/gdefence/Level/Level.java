@@ -18,9 +18,13 @@ public class Level {
     private int startEnergy;
     private int maxEnergy;
     private int startHP;
+    private int maxHP;
 
     public int getMaxEnergy() {
         return maxEnergy;
+    }
+    public int getMaxHP() {
+        return maxHP;
     }
 
     public int getStartEnergy() {
@@ -45,11 +49,11 @@ public class Level {
     }
 
     public void addEnergy(int energy) {
-        if(energy + energyNumber <= GDefence.getInstance().user.getMaxEnegry()) {
+        if(energy + energyNumber <= GDefence.getInstance().user.maxEnegry.getCurrentValue()) {
             this.energyNumber += energy;
         }else {
-            if(this.energyNumber != GDefence.getInstance().user.getMaxEnegry()) {
-                this.energyNumber = GDefence.getInstance().user.getMaxEnegry();
+            if(this.energyNumber != GDefence.getInstance().user.maxEnegry.getCurrentValue()) {
+                this.energyNumber = GDefence.getInstance().user.maxEnegry.getCurrentValue();
             }
         }
     }
@@ -77,9 +81,9 @@ public class Level {
     }
 
     public void heal(int heal) {
-        if(heal <= startHP) {//startHp to maxHp
+        if(heal <= maxHP) {
             this.healthNumber += heal;
-        }
+        }else this.healthNumber = maxHP;
     }
 
 
@@ -142,8 +146,9 @@ public class Level {
         numberWaves = pl.getNumberWaves();
         timeBetweenWaves = pl.getTimeBetweenWaves();
 
-        maxEnergy = GDefence.getInstance().user.getMaxEnegry();
+        maxEnergy = GDefence.getInstance().user.maxEnegry.getCurrentValue();
         energyNumber = startEnergy;
+        maxHP = GDefence.getInstance().user.maxHealth.getCurrentValue();
         healthNumber = startHP;
 
 

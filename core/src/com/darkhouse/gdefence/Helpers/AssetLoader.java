@@ -64,6 +64,9 @@ public class AssetLoader {
     public static Texture prevButton;
     public static Texture nextButton;
 
+    public static Texture maxHpGrade;
+    public static Texture maxEnergyGrade;
+
 
     public static void load() {
         loadMainMenu();
@@ -129,9 +132,24 @@ public class AssetLoader {
         prevButton = new Texture("prevButton.png");
         nextButton = new Texture("nextButton.png");
 
+        maxHpGrade = new Texture("maxHpGrade.png");
+        maxEnergyGrade = new Texture("maxEnergyGrade.png");
 
 
     }
+    public static ImageButton.ImageButtonStyle generateImageButtonSkin(Texture t){
+        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
+        s.up = new TextureRegionDrawable(new TextureRegion(t));
+        s.over = new TextureRegionDrawable(new TextureRegion(t));
+        s.down = new TextureRegionDrawable(new TextureRegion(t));
+
+        return s;
+
+    }
+
+
+
+
     public static ImageButton.ImageButtonStyle getPrevButtonSkin(){
         ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
         s.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.prevButton));

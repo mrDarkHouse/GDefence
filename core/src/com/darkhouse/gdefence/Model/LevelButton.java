@@ -41,7 +41,7 @@ public class LevelButton extends TextButton {
         LevelToolip tooltip = new LevelToolip(this, AssetLoader.cellSkin);
         tooltip.setTouchable(Touchable.disabled);
         //CampainMap.getStage().addActor(tooltip);
-        ((AbstractCampainScreen)GDefence.getInstance().getScreen()).getStage().addActor(tooltip);
+        ((AbstractCampainScreen)GDefence.getInstance().getScreen()).getStage().addActor(tooltip);//do inside tooltip
         addListener(new TooltipListener(tooltip, true));
 
 
@@ -76,6 +76,8 @@ public class LevelButton extends TextButton {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if(isLocked){
+            Texture t = AssetLoader.levelLock;
+            t.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             batch.draw(AssetLoader.levelLock, getX(), getY(), getWidth(), getHeight());
         }
 

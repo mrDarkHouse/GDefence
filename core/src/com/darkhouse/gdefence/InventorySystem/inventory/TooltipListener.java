@@ -25,6 +25,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**
  * Makes a given tooltip actor visible when the actor this listener is attached
@@ -33,11 +34,16 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
  * 
  * @author Daniel Holderbaum
  */
-public class TooltipListener extends InputListener {
+public class TooltipListener extends ClickListener {
 
 	private boolean inside;
 
 	private Actor tooltip;
+
+	public Actor getTooltip() {
+		return tooltip;
+	}
+
 	private boolean followCursor;
 
 	private Vector2 position = new Vector2();
@@ -60,6 +66,7 @@ public class TooltipListener extends InputListener {
 
 	@Override
 	public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		super.enter(event, x, y, pointer, fromActor);
 		inside = true;
 		tooltip.setVisible(true);
 		tmp.set(x, y);
@@ -70,9 +77,15 @@ public class TooltipListener extends InputListener {
 
 	@Override
 	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-		inside = false;
-		tooltip.setVisible(false);
+		super.exit(event, x, y, pointer, toActor);
+		if(/*toActor == null*/pointer == -1) {
+			inside = false;
+			tooltip.setVisible(false);
+			//System.out.println(toActor);
+		}
+
 	}
+
 
 	/**
 	 * The offset of the tooltip from the touch position. It should not be

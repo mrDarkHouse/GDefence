@@ -14,7 +14,7 @@ public class HealthBar extends WidgetGroup{
     private Label text;
 
     public HealthBar(int width, int height, int x, int y) {
-        healthBar = new ProgressBar(0, LevelMap.getLevel().getStartHP(), 0.5f, false, AssetLoader.getExpBarSkin());
+        healthBar = new ProgressBar(0, LevelMap.getLevel().getMaxHP(), 0.5f, false, AssetLoader.getExpBarSkin());
         healthBar.getStyle().background.setMinHeight(height);
         healthBar.getStyle().knob.setMinHeight(height);
         healthBar.setPosition(x, y);
@@ -29,7 +29,7 @@ public class HealthBar extends WidgetGroup{
     }
 
     private void initLabel(){
-        text = new Label(LevelMap.getLevel().getHealthNumber() + "/" + LevelMap.getLevel().getStartHP(),
+        text = new Label(LevelMap.getLevel().getHealthNumber() + "/" + LevelMap.getLevel().getMaxHP(),
                 FontLoader.generateStyle(30, Color.BLACK));
         text.setPosition(healthBar.getX() + healthBar.getWidth()/2 - text.getWidth()/2,
                 healthBar.getY() + healthBar.getHeight()/2 - text.getHeight()/2);
@@ -41,6 +41,6 @@ public class HealthBar extends WidgetGroup{
     public void act(float delta) {
         super.act(delta);
         healthBar.setValue(LevelMap.getLevel().getHealthNumber());
-        text.setText(LevelMap.getLevel().getHealthNumber() + "/" + LevelMap.getLevel().getStartHP());
+        text.setText(LevelMap.getLevel().getHealthNumber() + "/" + LevelMap.getLevel().getMaxHP());
     }
 }

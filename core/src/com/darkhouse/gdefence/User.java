@@ -95,34 +95,76 @@ public class User {
     }
 
 
-    //private int[] maxHealths = new int[]{10, 15, 20, 25, 30, 35};
-    //private int[] maxEnergys = new int[]{50, 60, 70, 80, 90, 100};
+    public class Gradable{
+        private int maxLevel;
+        private int currentLevel = 1;
+        private int[] grades;
+        private int[] cost;
+        private String name;
 
-    private int maxHealth;
-    private int maxEnegry;
+        public String getName() {
+            return name;
+        }
 
-    public void upHealth(){
-        addMaxHealth(5);
+        public int getCurrentValue() {
+            return grades[currentLevel - 1];
+        }
+        public int getNextValue(){
+            if(currentLevel != maxLevel)
+            return grades[currentLevel];
+            else return 0;//////
+        }
+
+        public int getNextCost(){
+            if(currentLevel != maxLevel) {
+                return cost[currentLevel - 1];
+            }
+            return 0;///////
+        }
+
+        public int getCurrentLevel() {
+            return currentLevel;
+        }
+        public boolean isMaxLevel(){
+            return currentLevel == maxLevel;
+        }
+
+        public void up(){
+            if(currentLevel!= maxLevel) currentLevel++;
+        }
+
+
+
+        public Gradable(String name, int maxLevel, int firstValue, int stepGrade, int firstCost, int costStep) {
+            this.name = name;
+            this.maxLevel = maxLevel;
+            grades = new int[maxLevel];
+            cost = new int[maxLevel];
+            for (int i = 0; i < grades.length; i++){
+                grades[i] = firstValue + stepGrade*i;
+                cost[i] = firstCost + costStep*i;
+            }
+        }
     }
 
-    public void upEnergy(){
-        addMaxEnegry(10);
-    }
+    public Gradable maxHealth = new Gradable("Max Health", 5, 10, 5, 100, 25);
+    public Gradable maxEnegry = new Gradable("Max Energy", 5, 50, 10, 100, 25);
+
+    //public void upHealth(){
+    //    addMaxHealth(5);
+    //}
+
+//    public void upEnergy(){
+//        addMaxEnegry(10);
+//    }
 
     private int totalExp;
     private int currentExp;
     private int gold;
 
 
-    public int getMaxEnegry() {
-        return maxEnegry;
-    }
-    public void addMaxEnegry(int maxEnegry) {
-        this.maxEnegry += maxEnegry;
-    }
-    public void addMaxHealth(int maxHealth) {
-        this.maxHealth += maxHealth;
-    }
+
+
 
 
     //private Spell[] spells;
@@ -209,10 +251,10 @@ public class User {
 
     public void init(){
         this.totalExp = 0;
-        addGold(1000);
+        addGold(3000);
         currentMap = 1;
 
-        maxEnegry = 50;
+
         //towers = new ArrayList<Tower>();
 
 
