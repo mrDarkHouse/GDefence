@@ -2,7 +2,9 @@ package com.darkhouse.gdefence.Level.Loader;
 
 
 import com.badlogic.gdx.Gdx;
+import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Wave;
+import com.darkhouse.gdefence.Model.Level.Map;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,7 +16,7 @@ public class PropertiesLoader {
     private int expFromLvl;
     private int goldFromLvl;
     private int startEnergy;
-    private int startHp;
+    private float startHpPercent;
     private int numberWaves;
     private float[] timeBetweenWaves = new float[20];
     private ArrayList<Wave> waves;
@@ -28,8 +30,8 @@ public class PropertiesLoader {
     public int getStartEnergy() {
         return startEnergy;
     }
-    public int getStartHp() {
-        return startHp;
+    public float getStartHpPercent() {
+        return startHpPercent;
     }
     public int getNumberWaves() {
         return numberWaves;
@@ -50,18 +52,27 @@ public class PropertiesLoader {
 
     }
 
-    public void loadProperties(){
+    public void loadProperties(int spawners, boolean forRealMap){
         try {
+            if(spawners == 0){//empty maps
+                return;
+            }
+
             Scanner loadScanner = new Scanner(loadFile);
             waves = new ArrayList<Wave>();
 
             expFromLvl = loadScanner.nextInt();
             goldFromLvl = loadScanner.nextInt();
             startEnergy = loadScanner.nextInt();
-            startHp = loadScanner.nextInt();
+            startHpPercent = loadScanner.nextFloat();
             while (loadScanner.hasNext()){
-                waves.add(new Wave(loadScanner.nextInt(), loadScanner.nextInt(), loadScanner.nextFloat()));
-                timeBetweenWaves[waves.size() - 1] = loadScanner.nextInt();
+                for (int i = 0; i < spawners; i++) {
+                    waves.add(new Wave(loadScanner.nextInt(), loadScanner.nextInt(), loadScanner.nextFloat()));
+                    timeBetweenWaves[waves.size() - 1] = loadScanner.nextInt();
+                    if(forRealMap) {
+                        waves.get(waves.size() - 1).setSpawner(Level.getMap().getSpawner().get(i));
+                    }
+                }
             }
             numberWaves = waves.size();
         } catch (FileNotFoundException e) {

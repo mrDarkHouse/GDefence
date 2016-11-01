@@ -25,6 +25,8 @@ public class Wave {
 
     public static ArrayList<Mob> mobs = new ArrayList();
 
+    //public ArrayList<Mob> mobs = new ArrayList();
+
     private ArrayList<Mob> mobsToSpawn = new ArrayList<Mob>();
 
 //    public ArrayList<Mob> getMobsToSpawn() {
@@ -60,19 +62,11 @@ public class Wave {
         this.mobID = mobID;
     }
 
-    public void spawn(MapTile spawner){
-        //for(int i = 0; i < numberMobs; i++){
-            // if(!mobs.get(i).inGame){
+    public void spawn(/*MapTile spawner*/){
+
         initMobsToSpawn();
-        setSpawner(spawner);
-        //inWave = true;
+        //setSpawner(spawner);
 
-
-
-            //Thread.sleep(timeSpawn);
-
-
-        //}
     }
 
     private void initMobsToSpawn(){
@@ -83,11 +77,7 @@ public class Wave {
 
     public void update(float delta){
         checkToSpawn(delta);
-        moveMobs(delta);
-
-
-
-
+        //moveMobs(delta);
     }
 
     private void moveMobs(float delta){
@@ -103,6 +93,7 @@ public class Wave {
 
 
 
+
     private void checkToSpawn(float delta){
         spawnDelay += delta;
 
@@ -110,6 +101,7 @@ public class Wave {
             mobs.add(mobsToSpawn.get(mobsToSpawn.size() - 1));
             mobsToSpawn.remove(mobsToSpawn.get(mobsToSpawn.size() - 1));
             mobs.get(mobs.size() - 1).spawn(spawner);
+            //System.out.println("spawned " + timeSpawn);
 
             //System.out.println("spawned");
 

@@ -5,7 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
+import com.darkhouse.gdefence.Level.Level;
+import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.Loader.PropertiesLoader;
+import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Model.LevelButton;
 
 public class LevelToolip extends Window{
@@ -28,13 +31,15 @@ public class LevelToolip extends Window{
         getTitleLabel().setText("Level " + levelButton.getNumber());
         getTitleLabel().setAlignment(Align.center);
         clear();
+        MapLoader ml = new MapLoader(levelButton.getNumber());
+        ml.loadMap();
         PropertiesLoader pl = new PropertiesLoader(levelButton.getNumber());
-        pl.loadProperties();
-        String waves = "Waves " + pl.getNumberWaves();
-        String exp = "Exp " + pl.getExpFromLvl();
-        String gold = "Gold " + pl.getGoldFromLvl();
-        String hp = "Start health " + pl.getStartHp();
-        String en = "Start energy " + pl.getStartEnergy();
+        pl.loadProperties(ml.getSpawnersNumber(), false);
+        String waves = "Waves: " + pl.getNumberWaves();
+        String exp = "Exp: " + pl.getExpFromLvl();
+        String gold = "Gold: " + pl.getGoldFromLvl();
+        String hp = "Start health: " + (int)(pl.getStartHpPercent() * 100) + "%";
+        String en = "Start energy: " + pl.getStartEnergy();
 
 
 

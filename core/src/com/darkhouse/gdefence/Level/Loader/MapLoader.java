@@ -12,6 +12,12 @@ import java.util.Scanner;
 public class MapLoader {
     private File loadFile;
 
+    private int spawnersNumber;
+
+    public int getSpawnersNumber() {
+        return spawnersNumber;
+    }
+
     public MapLoader(int map) {
         try{
             loadFile = new File("Maps/Map" + map + ".gdm");
@@ -39,8 +45,16 @@ public class MapLoader {
             for (int y = 0; y < sizeY; y++){
                 for (int x = 0; x < sizeX; x++){
                     mapTile[x][y].setLogic(MapTile.getLogicById(loadScanner.nextInt()));
+
+                    if(mapTile[x][y].getLogic() == MapTile.TileLogic.spawnerR ||
+                       mapTile[x][y].getLogic() == MapTile.TileLogic.spawnerL ||
+                       mapTile[x][y].getLogic() == MapTile.TileLogic.spawnerU ||
+                       mapTile[x][y].getLogic() == MapTile.TileLogic.spawnerD){
+                        spawnersNumber++;
+                    }
                 }
             }
+
             //System.out.println(mapTile[4][9].getLogic());
 
             //}

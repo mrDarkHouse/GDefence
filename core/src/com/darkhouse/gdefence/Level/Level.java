@@ -11,6 +11,8 @@ import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Screens.LevelEndScreen;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Level {
     private int expFromLvl;
@@ -104,6 +106,12 @@ public class Level {
         }
     }
 
+    public Wave getWave(int wave){
+        if(wave > 0 && wave <= waves.size()) {
+            return waves.get(wave - 1);
+        }else return null;
+    }
+
     //private ArrayList<Tower> towers;
     //private MapTile[][] map;
     private static Map map;
@@ -132,16 +140,16 @@ public class Level {
         manager = new StatManager();
         map = new Map(number, 60, Gdx.graphics.getHeight() - 60, 45);
         //this.map = map;
-        loadProperies();
+        loadProperies(map.getSpawner().size());
     }
 
-    private void loadProperies(){
+    private void loadProperies(int spawners){
         PropertiesLoader pl = new PropertiesLoader(number);
-        pl.loadProperties();
+        pl.loadProperties(spawners, true);
         expFromLvl = pl.getExpFromLvl();
         goldFromLvl = pl.getGoldFromLvl();
         startEnergy = pl.getStartEnergy();
-        startHP = pl.getStartHp();
+        startHP = (int)(GDefence.getInstance().user.maxHealth.getCurrentValue() * pl.getStartHpPercent());
         waves = pl.getWaves();
         numberWaves = pl.getNumberWaves();
         timeBetweenWaves = pl.getTimeBetweenWaves();
@@ -225,8 +233,10 @@ public class Level {
     public void render(float delta, SpriteBatch batch){
         map.draw(delta, batch);
         if(inWave){
-            waves.get(currentWave).update(delta);
-            drawMobs(delta, batch);
+            for (int i = 0; i < map.getSpawner().size(); i++) {
+                waves.get(currentWave + i).update(delta);
+            }
+            physicMobs(batch, delta);
             drawTowers();
             drawParticles();
 
@@ -234,7 +244,7 @@ public class Level {
 
             if(waves.get(currentWave).isFinished()){
                 if(currentWave + 1 < waves.size()) {
-                    currentWave++;
+                    currentWave += map.getSpawner().size();
                     inWave = false;
                     //System.out.println("new wave");
                 }else {
@@ -254,11 +264,20 @@ public class Level {
 
 
     }
-    private void drawMobs(float delta, SpriteBatch batch){
-        for (Mob m: Wave.mobs){
+//    private void drawWave(float delta, SpriteBatch batch){
+//        for (int i = 0; i < map.getSpawner().size(); i++){
+//            waves.get(currentWave + i).render(batch);
+//        }
+//    }
+    private void physicMobs(SpriteBatch batch, float delta){
+        List<Mob> tmpMobs = new CopyOnWriteArrayList<Mob>(Wave.mobs);
+        for (Mob m: tmpMobs){
+            m.move(delta);
             m.render(batch);
         }
     }
+
+
     private void drawTowers(){
 
     }
@@ -271,8 +290,13 @@ public class Level {
         //System.out.println(timeBetweenWaves[currentWave]);
 
         if(timeBetweenWaves[currentWave] <= 0){
-            waves.get(currentWave).spawn(map.getSpawner().get(0));
+            for (int i = 0; i < map.getSpawner().size(); i++) {
+                if(currentWave + i < waves.size()) {//hotfix
+                    waves.get(currentWave + i).spawn(/*map.getSpawner().get(0)*/);
+                }
+            }
             inWave = true;
+
         }
         //if (roundTimer > 0) {
         //    roundTimer -= delta;
