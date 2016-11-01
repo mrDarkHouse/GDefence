@@ -172,7 +172,7 @@ public class CampainMap extends AbstractCampainScreen {
     public void show() {
         super.show();
         loadButtons();
-        loadFrames();
+        //loadFrames();
     }
 
     private void loadButtons(){

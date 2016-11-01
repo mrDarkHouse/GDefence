@@ -234,7 +234,9 @@ public class Level {
         map.draw(delta, batch);
         if(inWave){
             for (int i = 0; i < map.getSpawner().size(); i++) {
-                waves.get(currentWave + i).update(delta);
+                if(currentWave + i < waves.size()) {//hotfix
+                    waves.get(currentWave + i).update(delta);
+                }
             }
             physicMobs(batch, delta);
             drawTowers();
@@ -243,7 +245,7 @@ public class Level {
 
 
             if(waves.get(currentWave).isFinished()){
-                if(currentWave + 1 < waves.size()) {
+                if(currentWave + map.getSpawner().size() < waves.size()) {
                     currentWave += map.getSpawner().size();
                     inWave = false;
                     //System.out.println("new wave");
