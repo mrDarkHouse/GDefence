@@ -179,10 +179,11 @@ public abstract class Mob extends GDSprite{
             case 1:
                 return new Dog();
             case 2:
-
+                return new Worm();
             case 3:
-
+                return new JungleBat();
             case 4:
+                return new Boar();
 
             case 5:
 

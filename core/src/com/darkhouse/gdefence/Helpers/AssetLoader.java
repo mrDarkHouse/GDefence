@@ -45,6 +45,9 @@ public class AssetLoader {
 
     public static Texture slime;
     public static Texture dog;
+    public static Texture worm;
+    public static Texture jungleBat;
+    public static Texture boar;
 
     public static Texture basicTower;
     public static Texture rockTower;
@@ -112,6 +115,9 @@ public class AssetLoader {
 
         slime = new Texture("Mobs/mob.png");
         dog = new Texture("Mobs/mob2.png");
+        worm = new Texture("Mobs/mob3.png");
+        jungleBat = new Texture("Mobs/mob4.png");
+        boar = new Texture("Mobs/mob5.png");
 
         basicTower = new Texture("Tower/basicTower.png");
         rockTower = new Texture("Tower/rockTower.png");

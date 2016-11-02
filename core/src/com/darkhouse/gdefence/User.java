@@ -309,6 +309,7 @@ public class User {
 
         openLevel(6);
         openLevel(7);
+        openLevel(3);
     }
 
 
