@@ -307,8 +307,6 @@ public class User {
             this.levelsAvailable[i] = false;
         }
 
-        openLevel(6);
-        openLevel(7);
         openLevel(3);
     }
 

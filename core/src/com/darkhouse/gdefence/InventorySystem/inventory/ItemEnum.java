@@ -52,7 +52,7 @@ public enum ItemEnum {;
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
 		},
-		Rock(AttackType.projectile, 25, 125, 25, 120, 1.0f){
+		Rock(AttackType.projectile, 20, 125, 25, 120, 1.0f){
 			@Override
 			public String getTextureRegion() {
 				return "rock";
@@ -64,7 +64,7 @@ public enum ItemEnum {;
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
 		},
-		Arrow(AttackType.projectile, 25, 140, 10, 120, 0.5f){
+		Arrow(AttackType.projectile, 20, 140, 10, 120, 0.5f){
 			@Override
 			public String getTextureRegion() {
 				return "arrow";
@@ -76,7 +76,7 @@ public enum ItemEnum {;
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
 		},
-		Range(AttackType.projectile, 25, 130, 15, 180, 0.8f){
+		Range(AttackType.projectile, 20, 130, 15, 180, 0.8f){
 			@Override
 			public String getTextureRegion() {
 				return "range";
@@ -127,7 +127,7 @@ public enum ItemEnum {;
 		}
 
 		Tower(AttackType attackType, int cost, int globalCost, int dmg, int range, float speedDelay) {
-			this.name = name;
+			//this.name = name;
 			this.globalCost = globalCost;
 			this.attackType = attackType;
 			this.cost = cost;
@@ -152,6 +152,8 @@ public enum ItemEnum {;
 			this.manaCost = manaCost;
 		}
 	}
+
+	//Иличев Глеб
 
 
 
