@@ -63,6 +63,7 @@ public abstract class Mob extends GDSprite{
     //public int healthSpace = 3, healthHeight = 5;
     protected String name;
     protected int health;
+    protected int armor;
     protected float speed;
     protected int dmg;
     protected int ID;
@@ -109,6 +110,12 @@ public abstract class Mob extends GDSprite{
         this.health = health;
         hpBar = new ProgressBar(0, getHealth(), 1, false, AssetLoader.getMobHpBarStyle());
     }
+    public int getArmor() {
+        return armor;
+    }
+    public void setArmor(int armor) {
+        this.armor = armor;
+    }
     public float getSpeed() {
         return speed;
     }
@@ -139,8 +146,10 @@ public abstract class Mob extends GDSprite{
     }
 
     public void hit(int dmg, Tower source){//tower ==> spell&tower
-        if(dmg < getHealth()){
-            health -= dmg;
+        float resistDmg = dmg * getArmorReduction(getArmor());
+
+        if(resistDmg < getHealth()){
+            health -= resistDmg;
         }else if(isInGame()){
             health = 0;
             setDie(source);
@@ -191,6 +200,11 @@ public abstract class Mob extends GDSprite{
                 return null;
         }
     }
+
+    public static float getArmorReduction(int armor){
+        return armor/10;
+    }
+
 
 //    public Mob() {
 

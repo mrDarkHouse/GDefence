@@ -8,6 +8,7 @@ public class Dog extends Mob{
         super();
         setName("Dog");
         setHealth(50);
+        setArmor(1);
         setDmg(2);
         setBounty(4);
         setSpeed(100);

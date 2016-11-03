@@ -8,6 +8,7 @@ public class Slime extends Mob{
         super();
         setName("Slime");
         setHealth(80);
+        setArmor(0);
         setDmg(1);
         setBounty(3);
         setSpeed(50);

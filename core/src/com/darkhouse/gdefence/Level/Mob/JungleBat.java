@@ -8,6 +8,7 @@ public class JungleBat extends Mob{
         super();
         setName("Jungle Bat");
         setHealth(70);
+        setArmor(2);
         setDmg(3);
         setBounty(5);
         setSpeed(110);

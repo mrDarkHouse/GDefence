@@ -8,6 +8,7 @@ public class Boar extends Mob{
         super();
         setName("Boar");
         setHealth(250);
+        setArmor(4);
         setDmg(2);
         setBounty(7);
         setSpeed(60);
