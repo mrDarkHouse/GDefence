@@ -52,6 +52,12 @@ public abstract class Mob extends GDSprite{
         return null;
     }
 
+//    public enum MoveType{
+//        ground, water
+//
+//
+//    }
+
 
 
 
@@ -64,6 +70,7 @@ public abstract class Mob extends GDSprite{
     protected String name;
     protected int health;
     protected int armor;
+    protected MapTile.TileType moveType;
     protected float speed;
     protected int dmg;
     protected int ID;
@@ -115,6 +122,12 @@ public abstract class Mob extends GDSprite{
     }
     public void setArmor(int armor) {
         this.armor = armor;
+    }
+    public MapTile.TileType getMoveType() {
+        return moveType;
+    }
+    public void setMoveType(MapTile.TileType moveType) {
+        this.moveType = moveType;
     }
     public float getSpeed() {
         return speed;
@@ -224,7 +237,10 @@ public abstract class Mob extends GDSprite{
 
     private void step(float delta){
         currentTile = Level.getMap().getTileContainMob(this);
+        //MapTile nextTile = Level.getMap().getNextTile(currentTile, way);
+        //if(nextTile!= null && nextTile.getType() != moveType){
         checkTurn(currentTile);
+        //}
         checkCastle(currentTile);
 
         switch (way){

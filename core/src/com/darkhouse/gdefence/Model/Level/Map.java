@@ -100,6 +100,42 @@ public class Map {
         return null;
     }
 
+    public void setIndexTiles(){
+        for (int x = 0; x < tiles.length; x++){
+            for (int y = 0; y < tiles[0].length; y++){
+                tiles[x][y].setIndex(x, y);
+            }
+        }
+
+
+    }
+    public MapTile getNextTile(MapTile tile, Way way){
+        switch (way){
+            case RIGHT:
+                if(tile.indexX + 1 > tiles.length) {
+                    return getTiles()[tile.indexX + 1][tile.indexY];
+                }
+                break;
+            case LEFT:
+                if(tile.indexX - 1 < tiles.length) {
+                    return getTiles()[tile.indexX - 1][tile.indexY];
+                }
+                break;
+            case UP:
+                System.out.println(tile.indexY);
+                if(tile.indexY + 1 > tiles[0].length) {
+                    return getTiles()[tile.indexX][tile.indexY + 1];
+                }
+                break;
+            case DOWN:
+                if(tile.indexY - 1 < tiles[0].length) {
+                    return getTiles()[tile.indexX][tile.indexY - 1];
+                }
+        }
+        return null;
+
+    }
+
 
     public Map(final int number, int x, int y, int cellSize) {
         projectiles = new ArrayList<Projectile>();//dirty code
@@ -121,6 +157,7 @@ public class Map {
     private void initMap(final int number){
         MapLoader ml = new MapLoader(number);
         tiles = ml.loadMap();
+        //setIndexTiles();//
         searchSpawner();
         searchCastle();
     }

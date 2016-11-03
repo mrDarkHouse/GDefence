@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Level.Mob;
 
 
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Level.MapTile;
 
 public class JungleBat extends Mob{
     public JungleBat() {
@@ -11,6 +12,7 @@ public class JungleBat extends Mob{
         setArmor(2);
         setDmg(3);
         setBounty(5);
+        setMoveType(MapTile.TileType.ground);
         setSpeed(110);
         setTextureDrawable(AssetLoader.jungleBat);
     }

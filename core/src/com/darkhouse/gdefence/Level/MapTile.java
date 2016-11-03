@@ -32,6 +32,16 @@ public class MapTile extends GDSprite{
     private TileType type;
     private TileLogic logic;
 
+    public int indexX;
+    public int indexY;
+
+
+
+    public void setIndex(int indexX, int indexY) {
+        this.indexX = indexX;
+        this.indexY = indexY;
+    }
+
 
     //public TextureRegionDrawable getTexture() {
     //    return texture;
@@ -152,7 +162,7 @@ public class MapTile extends GDSprite{
     }
 
     public MapTile(TileType type) {
-        this.type = type;
+        setType(type);
 
         initTexture();
     }
