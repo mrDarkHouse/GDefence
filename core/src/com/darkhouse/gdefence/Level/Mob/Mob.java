@@ -146,7 +146,7 @@ public abstract class Mob extends GDSprite{
     }
 
     public void hit(int dmg, Tower source){//tower ==> spell&tower
-        float resistDmg = dmg * getArmorReduction(getArmor());
+        float resistDmg = dmg * (1 - getArmorReduction(getArmor()));
 
         if(resistDmg < getHealth()){
             health -= resistDmg;
@@ -202,7 +202,7 @@ public abstract class Mob extends GDSprite{
     }
 
     public static float getArmorReduction(int armor){
-        return armor/10;
+        return (float) armor/10;
     }
 
 

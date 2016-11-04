@@ -26,6 +26,7 @@ public class NextWaveInfoPanel extends Table{
     private String mobsNumberS;
     private String mobNameS;
     private String mobHealthS;
+    private String mobArmorS;
     private String mobSpeedS;
     private String mobDmgS;
     private String mobBountyS;
@@ -34,6 +35,7 @@ public class NextWaveInfoPanel extends Table{
     private Label mobsNumber;
     private Label mobName;
     private Label mobHealth;
+    private Label mobArmor;
     private Label mobSpeed;
     private Label mobDmg;
     private Label mobBounty;
@@ -56,6 +58,7 @@ public class NextWaveInfoPanel extends Table{
         mobsNumber = new Label(mobsNumberS, AssetLoader.getInfoPanelSkin());
         mobName = new Label(mobNameS, AssetLoader.getInfoPanelSkin());
         mobHealth = new Label(mobHealthS, AssetLoader.getInfoPanelSkin());
+        mobArmor = new Label(mobArmorS, AssetLoader.getInfoPanelSkin());
         mobSpeed = new Label(mobSpeedS, AssetLoader.getInfoPanelSkin());
         mobDmg = new Label(mobDmgS, AssetLoader.getInfoPanelSkin());
         mobBounty = new Label(mobBountyS, AssetLoader.getInfoPanelSkin());
@@ -67,6 +70,7 @@ public class NextWaveInfoPanel extends Table{
         add(mobsNumber).align(Align.left).row();
         add(mobName).align(Align.left).row();
         add(mobHealth).align(Align.left).row();
+        add(mobArmor).align(Align.left).row();
         add(mobSpeed).align(Align.left).row();
         add(mobDmg).align(Align.left).row();
         add(mobBounty).align(Align.left).padBottom(10).row();
@@ -84,6 +88,7 @@ public class NextWaveInfoPanel extends Table{
                 mobsNumberS = "Mobs number: " + lvl.getCurrentWave().getNumberMobs();
                 mobNameS = "Name: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getName();
                 mobHealthS = "Health: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getHealth();
+                mobArmorS = "Armor: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getArmor();
                 mobSpeedS = "Speed: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getSpeed();
                 mobDmgS = "Dmg: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getDmg();
                 mobBountyS = "Bounty: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getBounty();
@@ -94,6 +99,7 @@ public class NextWaveInfoPanel extends Table{
                 if(lvl.getCurrentWave().getMobID() == lvl.getWave(lvl.currentWave + 2).getMobID()) {
                     mobNameS = "Name: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getName();
                     mobHealthS = "Health: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getHealth();
+                    mobArmorS = "Armor: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getArmor();
                     mobSpeedS = "Speed: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getSpeed();
                     mobDmgS = "Dmg: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getDmg();
                     mobBountyS = "Bounty: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getBounty();
@@ -107,6 +113,7 @@ public class NextWaveInfoPanel extends Table{
         mobsNumber.setText(mobsNumberS);
         mobName.setText(mobNameS);
         mobHealth.setText(mobHealthS);
+        mobArmor.setText(mobArmorS);
         mobSpeed.setText(mobSpeedS);
         mobDmg.setText(mobDmgS);
         mobBounty.setText(mobBountyS);
