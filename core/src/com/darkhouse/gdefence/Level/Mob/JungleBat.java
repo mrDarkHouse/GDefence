@@ -8,10 +8,10 @@ public class JungleBat extends Mob{
     public JungleBat() {
         super();
         setName("Jungle Bat");
-        setHealth(70);
+        setHealth(85);
         setArmor(2);
         setDmg(3);
-        setBounty(5);
+        setBounty(3);
         setMoveType(MapTile.TileType.ground);
         setSpeed(110);
         setTextureDrawable(AssetLoader.jungleBat);

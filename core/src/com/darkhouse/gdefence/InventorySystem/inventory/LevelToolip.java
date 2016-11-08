@@ -39,7 +39,7 @@ public class LevelToolip extends Window{
         String exp = "Exp: " + pl.getExpFromLvl();
         String gold = "Gold: " + pl.getGoldFromLvl();
         String hp = "Start health: " + (int)(pl.getStartHpPercent() * 100) + "%";
-        String en = "Start energy: " + pl.getStartEnergy();
+        String en = "Start energy: " + (int)(pl.getStartEnergyPercent() * 100) + "%";
 
 
 

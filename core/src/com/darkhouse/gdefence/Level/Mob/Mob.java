@@ -21,28 +21,29 @@ public abstract class Mob extends GDSprite{
 
     public static Mob getMobOnMap(AttackLogic logic, Tower tower){
         Map map = Level.getMap();
+        Mob currentMob;
 
         switch (logic){
             case First:
+                currentMob = null;
+                int firstIndex = 99;
                 for (Mob m:Wave.mobs) {
                     if(tower.isInRange(m.getCenter())){
-                        Vector2 castle = map.getCastle().get(0).getPosition();
-
-                        //bla bla bla
+                        if(Wave.mobs.indexOf(m) < firstIndex){
+                            firstIndex = Wave.mobs.indexOf(m);
+                            currentMob = m;
+                        }
                     }
                 }
-
-
-
-
-                break;
+                return currentMob;
             case Nearest:
-                Mob currentMob = null;
+                currentMob = null;
                 float currentF = 99999;//infinity
                 for (Mob m:Wave.mobs) {
                     if(tower.isInRange(m.getCenter())){
                         //if(new Vector2(tower.getRectangle().getCenter(new Vector2())))
                         if(m.getCenter().dst(tower.getCenter()) < currentF){
+                            currentF = m.getCenter().dst(tower.getCenter());
                             currentMob = m;
                         }
                     }
@@ -206,7 +207,6 @@ public abstract class Mob extends GDSprite{
                 return new JungleBat();
             case 4:
                 return new Boar();
-
             case 5:
 
             default:

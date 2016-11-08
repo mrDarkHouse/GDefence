@@ -39,7 +39,7 @@ public enum ItemEnum {;
 			"hullbase"), CANNON("cannonbase"), RAY("raybase"), LAUNCHER("launcherbase"), DROID("droidbase"), MINE("dropperbase"), BATTERY("batterybase");
 */
 	public enum Tower implements Item {
-		Basic(AttackType.projectile, 10, 100, 10, 100, 1.2f){
+		Basic(AttackType.projectile, 10, 80, 10, 100, 1.2f){
 			@Override
 			public String getTextureRegion() {
 				return "basic";
@@ -52,7 +52,7 @@ public enum ItemEnum {;
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
 		},
-		Rock(AttackType.projectile, 20, 125, 25, 120, 1.0f){
+		Rock(AttackType.projectile, 20, 140, 25, 120, 1.0f){
 			@Override
 			public String getTextureRegion() {
 				return "rock";
@@ -76,7 +76,7 @@ public enum ItemEnum {;
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
 		},
-		Range(AttackType.projectile, 20, 130, 15, 180, 0.8f){
+		Range(AttackType.projectile, 20, 180, 15, 160, 1.0f){
 			@Override
 			public String getTextureRegion() {
 				return "range";

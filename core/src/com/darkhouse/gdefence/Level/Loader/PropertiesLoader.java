@@ -15,7 +15,7 @@ public class PropertiesLoader {
     private File loadFile;
     private int expFromLvl;
     private int goldFromLvl;
-    private int startEnergy;
+    private float startEnergyPercent;
     private float startHpPercent;
     private int numberWaves;
     private float[] timeBetweenWaves = new float[20];
@@ -27,8 +27,8 @@ public class PropertiesLoader {
     public int getGoldFromLvl() {
         return goldFromLvl;
     }
-    public int getStartEnergy() {
-        return startEnergy;
+    public float getStartEnergyPercent() {
+        return startEnergyPercent;
     }
     public float getStartHpPercent() {
         return startHpPercent;
@@ -63,7 +63,7 @@ public class PropertiesLoader {
 
             expFromLvl = loadScanner.nextInt();
             goldFromLvl = loadScanner.nextInt();
-            startEnergy = loadScanner.nextInt();
+            startEnergyPercent = loadScanner.nextFloat();
             startHpPercent = loadScanner.nextFloat();
             while (loadScanner.hasNext()){
                 for (int i = 0; i < spawners; i++) {

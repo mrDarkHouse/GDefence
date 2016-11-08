@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
@@ -24,6 +25,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Map {
 
     private MapTile[][] tiles;
+
+    private Array<MapTile> path;
 
     public MapTile[][] getTiles() {
         return tiles;
@@ -135,6 +138,13 @@ public class Map {
         return null;
 
     }
+
+    private void initPath(){
+        //MapTile castle = getCastle().get(0);
+
+
+    }
+
 
 
     public Map(final int number, int x, int y, int cellSize) {

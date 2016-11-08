@@ -164,14 +164,14 @@ public class Tower extends GameActor{
     }
 
     private void attack(float delta){
+        target = Mob.getMobOnMap(AttackLogic.First, this);//if !shot one target
         if(target == null || !isInRange(target.getCenter()) || !target.isInGame()) {
-            target = Mob.getMobOnMap(AttackLogic.Nearest, this);
+            target = Mob.getMobOnMap(AttackLogic.First, this);
         }else {
             preShotTime += delta;
             if(preShotTime >= towerPrototype.getSpeedDelay()){
                 preShotTime = 0;
                 shot(target);
-
             }
 
         }

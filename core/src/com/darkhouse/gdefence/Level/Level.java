@@ -148,7 +148,7 @@ public class Level {
         pl.loadProperties(spawners, true);
         expFromLvl = pl.getExpFromLvl();
         goldFromLvl = pl.getGoldFromLvl();
-        startEnergy = pl.getStartEnergy();
+        startEnergy = (int)(GDefence.getInstance().user.maxEnegry.getCurrentValue() * pl.getStartEnergyPercent());
         startHP = (int)(GDefence.getInstance().user.maxHealth.getCurrentValue() * pl.getStartHpPercent());
         waves = pl.getWaves();
         numberWaves = pl.getNumberWaves();
