@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
@@ -28,11 +29,17 @@ public class GDefence extends Game {
 
 	public User user;
 
+	public AssetLoader assetLoader;
+
+	//public AssetManager assets;
+
 	
 	@Override
 	public void create () {
 		mainClass = this;
-        AssetLoader.load();
+		//assets = new AssetManager();
+        assetLoader.loadAll();
+
 		FontLoader.load();
 		setScreen(new MainMenu());
 
@@ -57,7 +64,7 @@ public class GDefence extends Game {
 	@Override
 	public void dispose () {
 		//super.dispose();
-        AssetLoader.dispose();
+        assetLoader.dispose();
 		FontLoader.dispose();
 	}
 

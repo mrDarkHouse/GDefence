@@ -11,5 +11,8 @@ public abstract class AbstractScreen implements Screen {
         return stage;
     }
 
-
+    @Override
+    public void show() {
+        stage = new Stage();
+    }
 }

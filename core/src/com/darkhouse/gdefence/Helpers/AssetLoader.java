@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Helpers;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
@@ -15,7 +16,7 @@ import com.darkhouse.gdefence.Objects.GameObject;
 
 import static com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum.Tower.*;
 
-public class AssetLoader {
+public class AssetLoader extends AssetManager{
 
     public static Texture mainMenuButtonsAtlas;
     public static Texture mainMenuBg, campainBg;
@@ -71,11 +72,15 @@ public class AssetLoader {
     public static Texture maxEnergyGrade;
 
 
-    public static void load() {
+    public void loadAll() {
         loadMainMenu();
+        loadLevelMap();
+        loadShop();
+        loadSmith();
     }
 
-    private static void loadMainMenu(){
+    private void loadMainMenu(){
+        load("MainMenuBg.png", Texture.class);
         mainMenuBg = new Texture("MainMenuBg.png");
         campainBg = new Texture("CampainBg.png");
         backButton = new Texture("backButton.png");
@@ -143,6 +148,54 @@ public class AssetLoader {
 
 
     }
+    private void loadTextures(){
+
+
+
+
+    }
+    private void loadLevelMap(){
+
+        load("grass.png", Texture.class);
+        load("ground.png", Texture.class);
+        load("Mobs/mob.png", Texture.class);
+        load("Mobs/mob2.png", Texture.class);
+        load("Mobs/mob3.png", Texture.class);
+        load("Mobs/mob4.png", Texture.class);
+        load("Mobs/mob5.png", Texture.class);
+        load("Tower/basicTower.png", Texture.class);
+        load("Tower/rockTower.png", Texture.class);
+        load("Tower/arrowTower.png", Texture.class);
+        load("Tower/rangeTower.png", Texture.class);
+        load("levelLooseBg.png", Texture.class);
+        load("levelWinBg.png", Texture.class);
+        load("buildGridLinePixel.png", Texture.class);
+        load("towerRangeTexture.png", Texture.class);
+
+
+
+
+
+    }
+    private void loadShop(){
+        load("sellButton.png", Texture.class);
+
+
+
+    }
+    private void loadSmith(){
+        load("maxHpGrade.png", Texture.class);
+        load("maxEnergyGrade.png", Texture.class);
+        load("prevButton.png", Texture.class);
+        load("nextButton.png", Texture.class);
+
+
+
+
+    }
+
+
+
     public static ImageButton.ImageButtonStyle generateImageButtonSkin(Texture t){
         ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
         s.up = new TextureRegionDrawable(new TextureRegion(t));
@@ -184,7 +237,7 @@ public class AssetLoader {
         return backButtonStyle;
     }
 
-    public static ProgressBar.ProgressBarStyle getExpBarSkin(){
+    public ProgressBar.ProgressBarStyle getExpBarSkin(){
         TextureRegionDrawable barFone = new TextureRegionDrawable(new TextureRegion(AssetLoader.barFone));
         TextureRegionDrawable barTop = new TextureRegionDrawable(new TextureRegion(AssetLoader.barTop));
         ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle(barFone, barTop);
@@ -392,7 +445,7 @@ public class AssetLoader {
     }
 
 
-    public static void dispose() {
+    public void dispose() {
         mainMenuButtonsAtlas.dispose();
     }
 

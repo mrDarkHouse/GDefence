@@ -15,7 +15,7 @@ public class ExpBar extends ProgressBar{
     }
 
     public ExpBar(int width, int height) {
-        super(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.5f, false, AssetLoader.getExpBarSkin());
+        super(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.5f, false, GDefence.getInstance().assetLoader.getExpBarSkin());
 
         //ProgressBar bar = new ProgressBar(0, 10, 0.5f, false, AssetLoader.getExpBarSkin());
         int expBarSize[] = {width, height};

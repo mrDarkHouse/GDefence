@@ -37,7 +37,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.InventoryScreen;
  * This is the very first {@link Screen} which is shown when the game starts. It
  * loads the most common resources and displays a splash image for a couple of
  * seconds. The most common resources are the ones needed for the main menu,
- * lobby and options screen. The {@link LoadingScreen} will be responsible to
+ * lobby and options screen. The {//@link LoadingScreen} will be responsible to
  * load all resources needed for the gaming screen.
  * 
  * @author Daniel Holderbaum

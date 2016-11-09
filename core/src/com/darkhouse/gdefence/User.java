@@ -251,7 +251,7 @@ public class User {
 
     public void init(){
         this.totalExp = 0;
-        addGold(3000);
+        addGold(300);
         currentMap = 1;
 
 
@@ -270,7 +270,7 @@ public class User {
         inventory = new Inventory();
         inventory.store(ItemEnum.Tower.Basic, 1);
         inventory.store(ItemEnum.Tower.Rock, 1);
-        inventory.store(ItemEnum.Tower.Arrow, 2);
+        inventory.store(ItemEnum.Tower.Arrow, 1);
 
 //        towers.add(new TowerObject(TowerType.Basic));
 //        towers.add(new TowerObject(TowerType.Basic));
@@ -306,8 +306,6 @@ public class User {
         for(int i = 1; i < 5; i++) {
             this.levelsAvailable[i] = false;
         }
-
-        openLevel(3);
     }
 
 
