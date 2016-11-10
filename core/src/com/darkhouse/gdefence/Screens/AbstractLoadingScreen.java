@@ -13,6 +13,7 @@ public class AbstractLoadingScreen extends AbstractScreen {
 
 
     protected int progress;
+    protected LoadingStage stage;
 
     public AbstractLoadingScreen() {
         super();
@@ -33,8 +34,8 @@ public class AbstractLoadingScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        progress = (int)GDefence.getInstance().assetLoader.getProgress() * 100;
-        System.out.println(progress);
+        progress = (int)(GDefence.getInstance().assetLoader.getProgress() * 100);
+        stage.update(progress);
         if(GDefence.getInstance().assetLoader.update()){
             //if (Gdx.input.isTouched()) {
                 onLoad();

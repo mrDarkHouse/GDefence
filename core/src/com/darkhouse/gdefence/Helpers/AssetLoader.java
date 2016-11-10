@@ -258,7 +258,7 @@ public class AssetLoader extends AssetManager{
 
 
     }
-    public static ProgressBar.ProgressBarStyle getMobHpBarStyle(){
+    public ProgressBar.ProgressBarStyle getMobHpBarStyle(){
         TextureRegionDrawable barFone = new TextureRegionDrawable(new TextureRegion(new Texture("mobHpBarBg.png")));
         TextureRegionDrawable barTop = new TextureRegionDrawable(new TextureRegion(new Texture("mobHpBarKnob.png")));
         ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle(barFone, barTop);

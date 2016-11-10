@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.MapTile;
@@ -116,7 +117,7 @@ public abstract class Mob extends GDSprite{
     }
     public void setHealth(int health) {
         this.health = health;
-        hpBar = new ProgressBar(0, getHealth(), 1, false, AssetLoader.getMobHpBarStyle());
+        hpBar = new ProgressBar(0, getHealth(), 1, false, GDefence.getInstance().assetLoader.getMobHpBarStyle());
     }
     public int getArmor() {
         return armor;
