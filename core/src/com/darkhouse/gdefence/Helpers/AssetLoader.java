@@ -73,14 +73,14 @@ public class AssetLoader extends AssetManager{
 
 
     public void loadAll() {
-        loadMainMenu();
         loadLevelMap();
         loadShop();
         loadSmith();
     }
-
+    public void loadOld(){
+        loadMainMenu();
+    }
     private void loadMainMenu(){
-        load("MainMenuBg.png", Texture.class);
         mainMenuBg = new Texture("MainMenuBg.png");
         campainBg = new Texture("CampainBg.png");
         backButton = new Texture("backButton.png");
@@ -155,6 +155,7 @@ public class AssetLoader extends AssetManager{
 
     }
     private void loadLevelMap(){
+        //load("MainMenuBg.png", Texture.class);
 
         load("grass.png", Texture.class);
         load("ground.png", Texture.class);

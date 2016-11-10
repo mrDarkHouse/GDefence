@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Screens.LevelMap;
@@ -14,7 +15,7 @@ public class HealthBar extends WidgetGroup{
     private Label text;
 
     public HealthBar(int width, int height, int x, int y) {
-        healthBar = new ProgressBar(0, LevelMap.getLevel().getMaxHP(), 0.5f, false, AssetLoader.getExpBarSkin());
+        healthBar = new ProgressBar(0, LevelMap.getLevel().getMaxHP(), 0.5f, false, GDefence.getInstance().assetLoader.getExpBarSkin());
         healthBar.getStyle().background.setMinHeight(height);
         healthBar.getStyle().knob.setMinHeight(height);
         healthBar.setPosition(x, y);

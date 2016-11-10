@@ -29,7 +29,7 @@ public class GDefence extends Game {
 
 	public User user;
 
-	public AssetLoader assetLoader;
+	public AssetLoader assetLoader = new AssetLoader();
 
 	//public AssetManager assets;
 
@@ -38,10 +38,12 @@ public class GDefence extends Game {
 	public void create () {
 		mainClass = this;
 		//assets = new AssetManager();
-        assetLoader.loadAll();
+		Texture.setAssetManager(assetLoader);
+        assetLoader.loadOld();
+
 
 		FontLoader.load();
-		setScreen(new MainMenu());
+		setScreen(new StartingLoadScreen());
 
 
 		//batch = new SpriteBatch();
