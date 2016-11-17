@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -101,7 +102,7 @@ public class CampainChoose extends AbstractMenuScreen{
                 }
             }
         };
-        d.setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.transparent)));
+        d.setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("MainMenuTranparent.png", Texture.class))));
         d.getBackground().setMinWidth(Gdx.graphics.getWidth());
         d.getBackground().setMinHeight(Gdx.graphics.getHeight());
         d.show(stage);

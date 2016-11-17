@@ -59,9 +59,9 @@ public class GemPanel extends AbstractPanel{
 
 
         //setBackground(new TextureRegionDrawable(new TextureRegion(t)));
-        add(new Image(AssetLoader.gemTexture[0])).width(horizontal).height(verticalImg).spaceRight(borderSize);
-        add(new Image(AssetLoader.gemTexture[1])).width(horizontal).height(verticalImg).spaceRight(borderSize);
-        add(new Image(AssetLoader.gemTexture[2])).width(horizontal).height(verticalImg).row();
+        add(new Image(GDefence.getInstance().assetLoader.get("Gems/redGem.png", Texture.class))).width(horizontal).height(verticalImg).spaceRight(borderSize);
+        add(new Image(GDefence.getInstance().assetLoader.get("Gems/yellowGem.png", Texture.class))).width(horizontal).height(verticalImg).spaceRight(borderSize);
+        add(new Image(GDefence.getInstance().assetLoader.get("Gems/blueGem.png", Texture.class))).width(horizontal).height(verticalImg).row();
         Label l = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.RED) + "", AssetLoader.getSkin());
         l.setAlignment(Align.center);
         add(l).width(horizontal).height(verticalTxt).spaceBottom(borderSize).spaceRight(borderSize);
@@ -71,9 +71,9 @@ public class GemPanel extends AbstractPanel{
         l = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.BLUE) + "", AssetLoader.getSkin());
         l.setAlignment(Align.center);
         add(l).width(horizontal).height(verticalTxt).spaceBottom(borderSize).spaceRight(borderSize).row();
-        add(new Image(AssetLoader.gemTexture[3])).width(horizontal).height(verticalImg).spaceRight(borderSize);
-        add(new Image(AssetLoader.gemTexture[4])).width(horizontal).height(verticalImg).spaceRight(borderSize);
-        add(new Image(AssetLoader.gemTexture[5])).width(horizontal).height(verticalImg).spaceRight(borderSize).row();
+        add(new Image(GDefence.getInstance().assetLoader.get("Gems/blackGem.png", Texture.class))).width(horizontal).height(verticalImg).spaceRight(borderSize);
+        add(new Image(GDefence.getInstance().assetLoader.get("Gems/greenGem.png", Texture.class))).width(horizontal).height(verticalImg).spaceRight(borderSize);
+        add(new Image(GDefence.getInstance().assetLoader.get("Gems/whiteGem.png", Texture.class))).width(horizontal).height(verticalImg).spaceRight(borderSize).row();
         l = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.BLACK) + "", AssetLoader.getSkin());
         l.setAlignment(Align.center);
         add(l).width(horizontal).height(verticalTxt).spaceRight(borderSize);

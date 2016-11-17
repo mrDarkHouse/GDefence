@@ -44,8 +44,8 @@ public class CampainMap extends AbstractCampainScreen {
             addActor(pages[1]);
             addActor(pages[2]);
 
-            next = new ImageButton(AssetLoader.getNextButtonSkin());
-            prev = new ImageButton(AssetLoader.getPrevButtonSkin());
+            next = new ImageButton(GDefence.getInstance().assetLoader.getNextButtonSkin());
+            prev = new ImageButton(GDefence.getInstance().assetLoader.getPrevButtonSkin());
             next.setPosition(900, 200);
             next.addListener(new InputListener(){
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

@@ -71,12 +71,8 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
         int nameButtonSize[] = {Gdx.graphics.getWidth() - backButtonsSize[0]*2, backButtonsSize[1]};
 
 
-        ImageTextButton.ImageTextButtonStyle nameButtonStyle = new ImageTextButton.ImageTextButtonStyle();
-        nameButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.nameButtonFone));
-        nameButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.nameButtonFone));
-        nameButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.nameButtonFone));
-        nameButtonStyle.font = new BitmapFont(Gdx.files.internal("Fonts/MainFont.fnt"));
-        nameButton = new ImageTextButton(name, nameButtonStyle);
+
+        nameButton = new ImageTextButton(name, GDefence.getInstance().assetLoader.getNameButtonStyle());
         nameButton.setSize(Gdx.graphics.getWidth()/*nameButtonSize[0]*/, nameButtonSize[1]);
         //nameButton.setPosition(0/*backButton.getX() + backButtonsSize[0]*/, Gdx.graphics.getHeight() - backButtonsSize[1]);
 

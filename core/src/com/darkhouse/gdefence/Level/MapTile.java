@@ -1,9 +1,11 @@
 package com.darkhouse.gdefence.Level;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Tower.Tower;
@@ -170,10 +172,10 @@ public class MapTile extends GDSprite{
     private void initTexture(){
         switch (type){
             case ground:
-                setRegion(AssetLoader.ground);
+                setRegion(GDefence.getInstance().assetLoader.get("ground.png", Texture.class));
                 break;
             case grass:
-                setRegion(AssetLoader.grass);
+                setRegion(GDefence.getInstance().assetLoader.get("grass.png", Texture.class));
                 break;
         }
     }

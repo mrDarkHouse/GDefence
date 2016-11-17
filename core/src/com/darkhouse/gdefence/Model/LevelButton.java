@@ -32,7 +32,7 @@ public class LevelButton extends TextButton {
     public boolean isLocked = false;
 
     public LevelButton(int number) {
-        super("" + number, AssetLoader.getCampainLevelStyle());
+        super("" + number, GDefence.getInstance().assetLoader.getCampainLevelStyle());
         this.number = number;
         load();
     }
@@ -76,9 +76,9 @@ public class LevelButton extends TextButton {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if(isLocked){
-            Texture t = AssetLoader.levelLock;
+            Texture t = GDefence.getInstance().assetLoader.get("levelLock.png", Texture.class);
             t.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            batch.draw(AssetLoader.levelLock, getX(), getY(), getWidth(), getHeight());
+            batch.draw(t, getX(), getY(), getWidth(), getHeight());
         }
 
 

@@ -14,7 +14,7 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 public class BackButton extends ImageButton{
 
     public BackButton(boolean ownPosition) {
-        super(AssetLoader.getBackButtonSkin());
+        super(GDefence.getInstance().assetLoader.getBackButtonSkin());
         //super(mainClass.getSkin());
         int backButtonsSize[] = {64, 64};
 
