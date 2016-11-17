@@ -52,7 +52,8 @@ public class Projectile extends GameActor{
             position.add(movement);
         }else {
             position.set(targetV);
-            hitTarget();
+//            hitTarget();
+            tower.hitTarget();
             Map.projectiles.remove(this);
         }
         setRotation(dir.angle());
@@ -62,9 +63,9 @@ public class Projectile extends GameActor{
         setX(position.x);
         setY(position.y);
     }
-    private void hitTarget(){
-        target.hit(tower.getTowerPrototype().getDmg(), tower);
-    }
+//    private void hitTarget(){
+//        target.hit(tower.getTowerPrototype().getDmg(), tower);
+//    }
 
 
     @Override

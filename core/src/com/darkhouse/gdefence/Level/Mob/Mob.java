@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Level.Ability.Debuff;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.MapTile;
 import com.darkhouse.gdefence.Level.Tower.AttackLogic;
@@ -17,6 +18,7 @@ import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class Mob extends GDSprite{
 
@@ -82,6 +84,28 @@ public abstract class Mob extends GDSprite{
     //protected int xC, yC;
     protected MapTile currentTile;
     private ProgressBar hpBar;
+    private ArrayList <Debuff> effects;//Effect[]
+
+    public void addDebuff(Debuff d){
+        if(!haveDebuff(d)) {
+            effects.add(d);
+            d.apply();//start debuff
+        }
+    }
+    public void deleteDebuff(Debuff d){
+        if(haveDebuff(d)) {
+            effects.remove(d);
+        }
+    }
+    public boolean haveDebuff(Debuff d){
+        for (Debuff db: effects){
+            if(db.getClass() == d.getClass()){
+                return true;
+            }
+        }
+        return false;
+    }
+
     //protected int x;
     //protected int y;
     //protected int width;
@@ -97,7 +121,7 @@ public abstract class Mob extends GDSprite{
     }
 
     public Mob() {
-
+        effects = new ArrayList<Debuff>();
     }
 
     //public Drawable getTexture() {
@@ -134,7 +158,7 @@ public abstract class Mob extends GDSprite{
     public float getSpeed() {
         return speed;
     }
-    public void setSpeed(int speed) {
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
     public int getDmg() {
@@ -170,6 +194,17 @@ public abstract class Mob extends GDSprite{
             setDie(source);
         }
     }
+
+    public void changeSpeed(float value){
+        //speed = speed*percent;
+        if(speed + value > 5) {//minimum speed const
+            speed += value;
+        }else {
+            speed = 5;
+        }
+    }
+
+
 //    public int getxC() {
 //        return xC;
 //    }

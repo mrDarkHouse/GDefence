@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.Level.Ability.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.GameActor;
 import com.darkhouse.gdefence.Model.Level.Map;
@@ -124,6 +125,9 @@ public class Tower extends GameActor{
         this.towerPrototype = towerPrototype;
         setTexture(AssetLoader.getTowerTexture(towerPrototype));
         initRange();
+        for (Ability a:towerPrototype.getAbilities()) {
+            a.setOwner(this);
+        }
     }
 
     private void initRange(){
@@ -183,6 +187,14 @@ public class Tower extends GameActor{
         Map.projectiles.add(new Projectile(this, target));
 
 
+    }
+    public void hitTarget(){
+        for (Ability a:towerPrototype.getAbilities()){
+            if(a.getUseType() == Ability.UseType.onHit){
+                a.use(target);
+            }
+        }
+        target.hit(getTowerPrototype().getDmg(), this);
     }
 
     public void draw(SpriteBatch batch, float delta){//draw from levelMap instead MapTile

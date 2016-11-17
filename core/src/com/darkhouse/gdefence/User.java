@@ -251,7 +251,7 @@ public class User {
 
     public void init(){
         this.totalExp = 0;
-        addGold(300);
+        addGold(3000);
         currentMap = 1;
 
 

@@ -22,7 +22,7 @@ public class ResultPanel extends AbstractPanel{
     private void init(){
         String mobsKilled = "Killed mobs: " + manager.getMobsKilled();
         String hpLoose = "Hp loose: " + manager.getHpLoose();
-        String moneySpend = "Money spend: " + manager.getEnergySpend();
+        String moneySpend = "Energy spend: " + manager.getEnergySpend();
 
         setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.infoPanelFone)));
 

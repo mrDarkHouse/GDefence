@@ -23,6 +23,7 @@ package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.darkhouse.gdefence.Level.Ability.Ability;
+import com.darkhouse.gdefence.Level.Ability.PoisonArrow;
 import com.darkhouse.gdefence.Level.Tower.AttackType;
 
 import java.util.ArrayList;
@@ -51,6 +52,11 @@ public enum ItemEnum {;
 						+ "Range: " + getRange() + System.getProperty("line.separator")
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
+
+			@Override
+			protected void addAbilities() {
+
+			}
 		},
 		Rock(AttackType.projectile, 20, 140, 25, 120, 1.0f){
 			@Override
@@ -62,6 +68,11 @@ public enum ItemEnum {;
 				return "Dmg: " + getDmg() + System.getProperty("line.separator")
 						+ "Range: " + getRange() + System.getProperty("line.separator")
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
+			}
+
+			@Override
+			protected void addAbilities() {
+
 			}
 		},
 		Arrow(AttackType.projectile, 20, 140, 10, 120, 0.5f){
@@ -75,6 +86,11 @@ public enum ItemEnum {;
 						+ "Range: " + getRange() + System.getProperty("line.separator")
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
 			}
+
+			@Override
+			protected void addAbilities() {
+				abilities.add(new PoisonArrow());
+			}
 		},
 		Range(AttackType.projectile, 20, 180, 15, 160, 1.0f){
 			@Override
@@ -86,6 +102,11 @@ public enum ItemEnum {;
 				return "Dmg: " + getDmg() + System.getProperty("line.separator")
 						+ "Range: " + getRange() + System.getProperty("line.separator")
 						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
+			}
+
+			@Override
+			protected void addAbilities() {
+
 			}
 		};
 
@@ -99,7 +120,12 @@ public enum ItemEnum {;
 		private float speedDelay;
 		private int cost;
 		private int globalCost;
-		private ArrayList<Ability> abilities;
+		protected ArrayList<Ability> abilities;
+
+		protected void addAbilities(){
+		}
+
+
 
 		public ArrayList<Ability> getAbilities() {
 			return abilities;
@@ -134,6 +160,10 @@ public enum ItemEnum {;
 			this.dmg = dmg;
 			this.range = range;
 			this.speedDelay = speedDelay;
+
+
+			abilities = new ArrayList<Ability>();
+			addAbilities();
 
 		}
 	}
