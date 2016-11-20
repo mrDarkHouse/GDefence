@@ -69,7 +69,7 @@ public class CampainChoose extends AbstractMenuScreen{
     }
 
     private void newCampDialog(){
-        Dialog d = new Dialog("", AssetLoader.uiSkin){
+        Dialog d = new Dialog("", GDefence.getInstance().assetLoader.get("uiskin.json", Skin.class)){
 
             {
                 text("Are you sure to start new campain?").padTop(250);

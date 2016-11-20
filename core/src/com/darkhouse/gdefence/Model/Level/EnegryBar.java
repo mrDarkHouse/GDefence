@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Screens.LevelMap;
@@ -16,7 +17,7 @@ public class EnegryBar extends WidgetGroup{
     private Label text;
 
     public EnegryBar(int width, int height, int x, int y) {
-        energyBar = new ProgressBar(0, LevelMap.getLevel().getMaxEnergy(), 0.5f, true, AssetLoader.getEnergyBarSkin());
+        energyBar = new ProgressBar(0, LevelMap.getLevel().getMaxEnergy(), 0.5f, true, GDefence.getInstance().assetLoader.getEnergyBarSkin());
         energyBar.getStyle().background.setMinWidth(width);
         energyBar.getStyle().knob.setMinWidth(width);
         energyBar.setPosition(x, y);

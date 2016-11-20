@@ -6,7 +6,7 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import java.awt.*;
 
 public abstract class Debuff {
-
+    protected float duration;
     private Color color = Color.RED;
     protected Mob owner;
 
@@ -18,4 +18,10 @@ public abstract class Debuff {
 
     public abstract void dispell();
 
+    public void updateDuration(){
+        if (owner.haveDebuff(this)) {
+            owner.deleteDebuff(this);
+            owner.addDebuff(this);
+        }
+    }
 }

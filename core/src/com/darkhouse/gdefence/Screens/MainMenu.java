@@ -40,7 +40,7 @@ public class MainMenu extends AbstractMenuScreen{
    // private Texture menuBg;
     //private Texture texture;
 //    private ImageButton campainButton;
-    public Map<String, TextureRegion> textureRegions = new HashMap<String, TextureRegion>();
+//    public Map<String, TextureRegion> textureRegions = new HashMap<String, TextureRegion>();
    // private Stage stage;
     private static final float BUTTON_WIDTH = 300f;
     private static final float BUTTON_HEIGHT = 60f;
@@ -84,26 +84,26 @@ public class MainMenu extends AbstractMenuScreen{
         int startBorder = Gdx.graphics.getHeight()/16;
         int sizeBetween = Gdx.graphics.getHeight()/24;
         //TextureRegion tmp[][] = TextureRegion.split(texture, texture.getWidth() / 2, texture.getHeight() / 10);
-        textureRegions.put("campain", AssetLoader.mainMenuButtons[0][0]);
-        textureRegions.put("campainPressed", AssetLoader.mainMenuButtons[0][1]);
-        textureRegions.put("options", AssetLoader.mainMenuButtons[1][0]);
-        textureRegions.put("optionsPressed", AssetLoader.mainMenuButtons[1][1]);
-        textureRegions.put("exit", AssetLoader.mainMenuButtons[2][0]);
-        textureRegions.put("exitPressed", AssetLoader.mainMenuButtons[2][1]);
-        ImageButton.ImageButtonStyle campainStyle = new ImageButton.ImageButtonStyle();
-        campainStyle.up = new TextureRegionDrawable(textureRegions.get("campain"));
-        campainStyle.over = new TextureRegionDrawable(textureRegions.get("campainPressed"));
-        campainStyle.down = new TextureRegionDrawable(textureRegions.get("campainPressed"));
-        ImageButton.ImageButtonStyle optionsStyle = new ImageButton.ImageButtonStyle();
-        optionsStyle.up = new TextureRegionDrawable(textureRegions.get("options"));
-        optionsStyle.over = new TextureRegionDrawable(textureRegions.get("optionsPressed"));
-        optionsStyle.down = new TextureRegionDrawable(textureRegions.get("optionsPressed"));
-        ImageButton.ImageButtonStyle exitStyle = new ImageButton.ImageButtonStyle();
-        exitStyle.up = new TextureRegionDrawable(textureRegions.get("exit"));
-        exitStyle.over = new TextureRegionDrawable(textureRegions.get("exitPressed"));
-        exitStyle.down = new TextureRegionDrawable(textureRegions.get("exitPressed"));
+//        textureRegions.put("campain", AssetLoader.mainMenuButtons[0][0]);
+//        textureRegions.put("campainPressed", AssetLoader.mainMenuButtons[0][1]);
+//        textureRegions.put("options", AssetLoader.mainMenuButtons[1][0]);
+//        textureRegions.put("optionsPressed", AssetLoader.mainMenuButtons[1][1]);
+//        textureRegions.put("exit", AssetLoader.mainMenuButtons[2][0]);
+//        textureRegions.put("exitPressed", AssetLoader.mainMenuButtons[2][1]);
+//        ImageButton.ImageButtonStyle campainStyle = new ImageButton.ImageButtonStyle();
+//        campainStyle.up = new TextureRegionDrawable(textureRegions.get("campain"));
+//        campainStyle.over = new TextureRegionDrawable(textureRegions.get("campainPressed"));
+//        campainStyle.down = new TextureRegionDrawable(textureRegions.get("campainPressed"));
+//        ImageButton.ImageButtonStyle optionsStyle = new ImageButton.ImageButtonStyle();
+//        optionsStyle.up = new TextureRegionDrawable(textureRegions.get("options"));
+//        optionsStyle.over = new TextureRegionDrawable(textureRegions.get("optionsPressed"));
+//        optionsStyle.down = new TextureRegionDrawable(textureRegions.get("optionsPressed"));
+//        ImageButton.ImageButtonStyle exitStyle = new ImageButton.ImageButtonStyle();
+//        exitStyle.up = new TextureRegionDrawable(textureRegions.get("exit"));
+//        exitStyle.over = new TextureRegionDrawable(textureRegions.get("exitPressed"));
+//        exitStyle.down = new TextureRegionDrawable(textureRegions.get("exitPressed"));
 
-        ImageButton campainButton = new ImageButton(campainStyle);
+        ImageButton campainButton = new ImageButton(GDefence.getInstance().assetLoader.getMainMenuButtons(1));
         campainButton.setSize(buttonsSize[0], buttonsSize[1]);
         campainButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, Gdx.graphics.getHeight() - buttonsSize[1] - startBorder);
         campainButton.addListener(new InputListener(){
@@ -114,7 +114,7 @@ public class MainMenu extends AbstractMenuScreen{
             }
         });
 
-        ImageButton optionsButton = new ImageButton(optionsStyle);
+        ImageButton optionsButton = new ImageButton(GDefence.getInstance().assetLoader.getMainMenuButtons(2));
         optionsButton.setSize(buttonsSize[0], buttonsSize[1]);
         optionsButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, campainButton.getY() - buttonsSize[1] - sizeBetween);
         optionsButton.addListener(new InputListener(){
@@ -124,7 +124,7 @@ public class MainMenu extends AbstractMenuScreen{
             }
         });
 
-        ImageButton exitButton = new ImageButton(exitStyle);
+        ImageButton exitButton = new ImageButton(GDefence.getInstance().assetLoader.getMainMenuButtons(3));
         exitButton.setSize(buttonsSize[0], buttonsSize[1]);
         exitButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, optionsButton.getY() - buttonsSize[1] - sizeBetween);
         exitButton.addListener(new InputListener(){
@@ -159,7 +159,7 @@ public class MainMenu extends AbstractMenuScreen{
 
 
 
-        Dialog d = new Dialog("", AssetLoader.uiSkin){
+        Dialog d = new Dialog("", GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
 
             {
                 text("Are you sure exit?").padTop(250);
@@ -193,7 +193,7 @@ public class MainMenu extends AbstractMenuScreen{
 
         //d.getButtonTable().center().top();
         //d.getButtonTable().defaults().width(200);
-        d.setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.transparent)));
+        d.setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("MainMenuTranparent.png", Texture.class))));
         d.getBackground().setMinWidth(Gdx.graphics.getWidth());
         d.getBackground().setMinHeight(Gdx.graphics.getHeight());
         d.show(stage);
@@ -208,7 +208,7 @@ public class MainMenu extends AbstractMenuScreen{
     }
 
     private void newCampDialog(){
-        Dialog d = new Dialog("", AssetLoader.uiSkin){
+        Dialog d = new Dialog("", GDefence.getInstance().assetLoader.get("uiskin.json", Skin.class)){
 
             {
                 text("Are you sure to start new campain?").padTop(250);
@@ -242,7 +242,7 @@ public class MainMenu extends AbstractMenuScreen{
 
         //d.getButtonTable().center().top();
         //d.getButtonTable().defaults().width(200);
-        d.setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.transparent)));
+        d.setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("MainMenuTranparent.png", Texture.class))));
         d.getBackground().setMinWidth(Gdx.graphics.getWidth());
         d.getBackground().setMinHeight(Gdx.graphics.getHeight());
         d.show(stage);

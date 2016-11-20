@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Model.Level;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
@@ -17,7 +18,7 @@ public class NextWaveTimer extends Label{
     }
 
     public NextWaveTimer() {
-        super("", AssetLoader.getTimerSkin());
+        super("", GDefence.getInstance().assetLoader.getTimerSkin());
     }
 
     @Override

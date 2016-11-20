@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
@@ -17,7 +18,7 @@ public class StoreBuyPanel extends InventoryActor{
 
 
     public StoreBuyPanel(Inventory inventory) {
-        super(inventory, new DragAndDrop(), AssetLoader.cellSkin);
+        super(inventory, new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         getTitleLabel().setText("Store");
 
 

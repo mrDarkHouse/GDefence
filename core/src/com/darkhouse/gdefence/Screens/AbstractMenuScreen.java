@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -47,7 +48,7 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         batch.begin();
-        batch.draw(AssetLoader.mainMenuBg, 0, 0);
+        batch.draw(GDefence.getInstance().assetLoader.get("MainMenuBg.png", Texture.class), 0, 0);
         batch.end();
 
         stage.act(delta);

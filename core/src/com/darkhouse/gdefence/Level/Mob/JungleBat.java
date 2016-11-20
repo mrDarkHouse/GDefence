@@ -1,6 +1,8 @@
 package com.darkhouse.gdefence.Level.Mob;
 
 
+import com.badlogic.gdx.graphics.Texture;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.MapTile;
 
@@ -14,6 +16,6 @@ public class JungleBat extends Mob{
         setBounty(3);
         setMoveType(MapTile.TileType.ground);
         setSpeed(110);
-        setTextureDrawable(AssetLoader.jungleBat);
+        setTextureDrawable(GDefence.getInstance().assetLoader.get("Mobs/mob4.png", Texture.class));
     }
 }

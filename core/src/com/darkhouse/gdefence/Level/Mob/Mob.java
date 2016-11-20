@@ -90,6 +90,8 @@ public abstract class Mob extends GDSprite{
         if(!haveDebuff(d)) {
             effects.add(d);
             d.apply();//start debuff
+        }else {
+            d.updateDuration();
         }
     }
     public void deleteDebuff(Debuff d){

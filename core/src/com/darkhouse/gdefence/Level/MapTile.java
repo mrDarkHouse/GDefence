@@ -233,7 +233,7 @@ public class MapTile extends GDSprite{
 
                 break;
             case castle:
-                f = new Image(AssetLoader.castle);
+                f = new Image(GDefence.getInstance().assetLoader.get("castle.png", Texture.class));
                 f.setPosition(getX(), getY());
                 f.setSize(getWidth(), getHeight());
                 f.draw(batch, 1);

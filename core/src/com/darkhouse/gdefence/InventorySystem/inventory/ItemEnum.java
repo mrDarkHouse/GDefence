@@ -23,6 +23,8 @@ package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.darkhouse.gdefence.Level.Ability.Ability;
+import com.darkhouse.gdefence.Level.Ability.Crit;
+import com.darkhouse.gdefence.Level.Ability.MultiShot;
 import com.darkhouse.gdefence.Level.Ability.PoisonArrow;
 import com.darkhouse.gdefence.Level.Tower.AttackType;
 
@@ -72,7 +74,7 @@ public enum ItemEnum {;
 
 			@Override
 			protected void addAbilities() {
-
+				abilities.add(new Crit(0.2f, 2.5f));
 			}
 		},
 		Arrow(AttackType.projectile, 20, 140, 10, 120, 0.5f){
@@ -106,7 +108,7 @@ public enum ItemEnum {;
 
 			@Override
 			protected void addAbilities() {
-
+				abilities.add(new MultiShot(2));
 			}
 		};
 

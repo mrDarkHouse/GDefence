@@ -4,32 +4,32 @@ package com.darkhouse.gdefence.Level.Ability;
 import com.badlogic.gdx.utils.Timer;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
-public class Slow extends Debuff {
-    private float percent;
-    private float changeSpeed;
+public class ArmorReduction extends Debuff{
+    private int armor;
+    private float duration;
 
-    public Slow(Mob owner, float percent, float duration) {
+
+    public ArmorReduction(Mob owner, int armor, float duration) {
         super(owner);
-        this.percent = percent;
+        this.armor = armor;
         this.duration = duration;
     }
 
-    public void apply(){
+    @Override
+    public void apply() {
         Timer t = new Timer();
-        changeSpeed = owner.getSpeed()*percent;
-        owner.changeSpeed(-changeSpeed);
+        owner.setArmor(owner.getArmor() - armor);
         t.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
                 dispell();
             }
         }, duration);
-
     }
 
     @Override
     public void dispell() {
-        owner.changeSpeed(changeSpeed);
+        owner.setArmor(owner.getArmor() + armor);
         owner.deleteDebuff(this);
     }
 }

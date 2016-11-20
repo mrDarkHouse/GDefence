@@ -17,6 +17,8 @@ public class LoadingStage extends Stage{
 
     public LoadingStage() {
         GDefence.getInstance().assetLoader.load("MainMenuBg.png", Texture.class);
+        GDefence.getInstance().assetLoader.load("mobHpBarBg.png", Texture.class);
+        GDefence.getInstance().assetLoader.load("mobHpBarKnob.png", Texture.class);
         GDefence.getInstance().assetLoader.finishLoading();
 
 

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
@@ -30,15 +31,14 @@ public class Smith extends AbstractCampainScreen{
     @Override
     public void show() {
         super.show();
-
         final User user = GDefence.getInstance().user;
 
-        upHealth = new ImageButton(AssetLoader.generateImageButtonSkin(AssetLoader.maxHpGrade));
-        upEnergy = new ImageButton(AssetLoader.generateImageButtonSkin(AssetLoader.maxEnergyGrade));
+        upHealth = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(GDefence.getInstance().assetLoader.get("maxHpGrade.png", Texture.class)));
+        upEnergy = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(GDefence.getInstance().assetLoader.get("maxEnergyGrade.png", Texture.class)));
 
         upHealth.setSize(120, 80);
         upHealth.setPosition(40, Gdx.graphics.getHeight() - upHealth.getHeight() - super.topPadSize - 30);
-        upHealth.addListener(new TooltipListener(new GradableTooltip(user.maxHealth, AssetLoader.cellSkin), true));
+        upHealth.addListener(new TooltipListener(new GradableTooltip(user.maxHealth, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
         upHealth.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 if(user.deleteGold(user.maxHealth.getNextCost())) user.maxHealth.up();
@@ -51,7 +51,7 @@ public class Smith extends AbstractCampainScreen{
 
         upEnergy.setSize(120, 80);
         upEnergy.setPosition(40, upHealth.getY() - upHealth.getHeight() - 20);
-        upEnergy.addListener(new TooltipListener(new GradableTooltip(user.maxEnegry, AssetLoader.cellSkin), true));
+        upEnergy.addListener(new TooltipListener(new GradableTooltip(user.maxEnegry, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
         upEnergy.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 if(user.deleteGold(user.maxEnegry.getNextCost())) user.maxEnegry.up();

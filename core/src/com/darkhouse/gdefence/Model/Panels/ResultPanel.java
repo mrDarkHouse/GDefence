@@ -1,10 +1,12 @@
 package com.darkhouse.gdefence.Model.Panels;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.StatManager;
 import com.darkhouse.gdefence.Screens.LevelMap;
@@ -24,11 +26,11 @@ public class ResultPanel extends AbstractPanel{
         String hpLoose = "Hp loose: " + manager.getHpLoose();
         String moneySpend = "Energy spend: " + manager.getEnergySpend();
 
-        setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.infoPanelFone)));
+        setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("infoPanelFone.png", Texture.class))));
 
-        Label mobsKilledLabel = new Label(mobsKilled, AssetLoader.getTimerSkin());
-        Label hpLooseLabel = new Label(hpLoose, AssetLoader.getTimerSkin());
-        Label mobeySpendLabel = new Label(moneySpend, AssetLoader.getTimerSkin());
+        Label mobsKilledLabel = new Label(mobsKilled, GDefence.getInstance().assetLoader.getTimerSkin());
+        Label hpLooseLabel = new Label(hpLoose, GDefence.getInstance().assetLoader.getTimerSkin());
+        Label mobeySpendLabel = new Label(moneySpend, GDefence.getInstance().assetLoader.getTimerSkin());
 
         add(mobsKilledLabel).align(Align.left).row();
         add(hpLooseLabel).align(Align.left).row();

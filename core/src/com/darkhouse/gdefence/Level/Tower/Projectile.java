@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -28,7 +29,7 @@ public class Projectile extends GameActor{
         this.tower = tower;
         this.target = target;
         this.speed = 250;//custom
-        texture = AssetLoader.getProjectileTexture(tower.getTowerPrototype());
+        texture = GDefence.getInstance().assetLoader.getProjectileTexture(tower.getTowerPrototype());
 
         //position.set(tower.getX(), tower.getY());
         setX(tower.getCenter().x);
@@ -53,7 +54,7 @@ public class Projectile extends GameActor{
         }else {
             position.set(targetV);
 //            hitTarget();
-            tower.hitTarget();
+            tower.hitTarget(target);
             Map.projectiles.remove(this);
         }
         setRotation(dir.angle());

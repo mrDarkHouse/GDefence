@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
@@ -231,7 +232,7 @@ public class Map {
     }
 
     public void drawBuildGrid(SpriteBatch batch, float delta){
-        Texture linePixel = AssetLoader.buildGridLinePixel;
+        Texture linePixel = GDefence.getInstance().assetLoader.get("buildGridLinePixel.png", Texture.class);
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles[0].length; y++){
                 for (int i = 0; i < tiles[x][y].getWidth(); i++){
@@ -263,7 +264,7 @@ public class Map {
         float height = payload.getValidDragActor().getHeight();
 
         Circle attackRange = new Circle(x + width/2, y + height/2, rangeTower.getRange());
-        batch.draw(AssetLoader.attackRangeTexture, attackRange.x - attackRange.radius, attackRange.y - attackRange.radius,
+        batch.draw(GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class), attackRange.x - attackRange.radius, attackRange.y - attackRange.radius,
                 attackRange.radius*2, attackRange.radius*2);
 
     }

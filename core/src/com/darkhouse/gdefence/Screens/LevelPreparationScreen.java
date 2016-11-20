@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
@@ -35,9 +36,9 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
     }
 
     private void load(final int level){
-        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), AssetLoader.cellSkin);
+        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(inventoryActor);
-        preparationTowerInventoryActor = new PreparationTowerInventoryActor(new DragAndDrop(), AssetLoader.cellSkin);
+        preparationTowerInventoryActor = new PreparationTowerInventoryActor(new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         inventoryActor.addSlots(preparationTowerInventoryActor);
         preparationTowerInventoryActor.addSlots(inventoryActor);
         stage.addActor(preparationTowerInventoryActor);

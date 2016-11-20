@@ -2,8 +2,10 @@ package com.darkhouse.gdefence.Screens.BottomPanel;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
@@ -22,7 +24,7 @@ public class Arsenal extends AbstractCampainScreen{
     public void show() {
         super.show();
         //Skin skin = LibgdxUtils.assets.get("skins/uiskin.json", Skin.class);
-        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), AssetLoader.cellSkin);
+        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(inventoryActor);
 
         TextButton towerMap = new TextButton("Tower Map", AssetLoader.getSkin());

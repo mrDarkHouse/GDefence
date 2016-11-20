@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Model.Panels;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -19,7 +20,7 @@ public class GoldPanel extends AbstractPanel{
         int widthImg = heightImg;
         int heightTxt = height - heightImg;
 
-        add(new Image(AssetLoader.coin)).width(widthImg).height(heightImg).padTop(20).align(Align.center).row();
+        add(new Image(GDefence.getInstance().assetLoader.get("coin.png", Texture.class))).width(widthImg).height(heightImg).padTop(20).align(Align.center).row();
         textLabel = new Label(GDefence.getInstance().user.getGold() + "", AssetLoader.getSkin());//do with FontLoader
         textLabel.setAlignment(Align.center);
         //l.setFontScale(0.5f);

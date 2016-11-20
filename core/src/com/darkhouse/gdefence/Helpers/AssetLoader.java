@@ -19,58 +19,58 @@ import static com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum.Tower.*;
 
 public class AssetLoader extends AssetManager{
 
-    public static Texture mainMenuButtonsAtlas;
-    public static Texture mainMenuBg, campainBg;
-    public static TextureRegion[][] mainMenuButtons;
-    public static Texture backButton;
-    public static Texture[] campainMap = new Texture[3];
-    public static Texture campainLevelsAtlas;
-    public static TextureRegion[][] campainLevels;
+//    public static Texture mainMenuButtonsAtlas;
+//    public static Texture mainMenuBg, campainBg;
+//    public static TextureRegion[][] mainMenuButtons;
+//    public static Texture backButton;
+//    public static Texture[] campainMap = new Texture[3];
+//    public static Texture campainLevelsAtlas;
+//    public static TextureRegion[][] campainLevels;
     //public static Texture campainLevelSolo;
-    public static Texture cell;
-    public static Texture nameButtonFone;
-    public static Texture dialogSkin;
-    public static Skin uiSkin;
-    public static Texture transparent;
-    public static Texture barFone;
-    public static Texture barTop;
-    public static Texture levelLock/* = new TextureRegion[10][1]*/;
-    public static Texture levelMapBg;
-    public static Texture[] gemTexture = new Texture[6];
-    public static Texture coin;
-    public static Texture castle;
-    public static Texture ground;
-    public static Texture grass;
-    public static Texture tree;
-    public static Texture rock;
-    public static Texture water;
+//    public static Texture cell;
+//    public static Texture nameButtonFone;
+//    public static Texture dialogSkin;
+//    public static Skin uiSkin;
+//    public static Texture transparent;
+//    public static Texture barFone;
+//    public static Texture barTop;
+//    public static Texture levelLock/* = new TextureRegion[10][1]*/;
+//    public static Texture levelMapBg;
+//    public static Texture[] gemTexture = new Texture[6];
+//    public static Texture coin;
+//    public static Texture castle;
+//    public static Texture ground;
+//    public static Texture grass;
+//    public static Texture tree;
+//    public static Texture rock;
+//    public static Texture water;
 
-    public static Texture slime;
-    public static Texture dog;
-    public static Texture worm;
-    public static Texture jungleBat;
-    public static Texture boar;
+//    public static Texture slime;
+//    public static Texture dog;
+//    public static Texture worm;
+//    public static Texture jungleBat;
+//    public static Texture boar;
+//
+//    public static Texture basicTower;
+//    public static Texture rockTower;
+//    public static Texture arrowTower;
+//    public static Texture rangeTower;
 
-    public static Texture basicTower;
-    public static Texture rockTower;
-    public static Texture arrowTower;
-    public static Texture rangeTower;
+    //public static Texture infoPanelFone;
+//    public static Texture levelEndFoneWin;
+//    public static Texture levelEndFoneLoose;
 
-    public static Texture infoPanelFone;
-    public static Texture levelEndFoneWin;
-    public static Texture levelEndFoneLoose;
+//    public static Skin cellSkin;
 
-    public static Skin cellSkin;
+//    public static Texture sellButton;
+//    public static Texture buildGridLinePixel;
+//    public static Texture attackRangeTexture;
 
-    public static Texture sellButton;
-    public static Texture buildGridLinePixel;
-    public static Texture attackRangeTexture;
+//    public static Texture prevButton;
+//    public static Texture nextButton;
 
-    public static Texture prevButton;
-    public static Texture nextButton;
-
-    public static Texture maxHpGrade;
-    public static Texture maxEnergyGrade;
+//    public static Texture maxHpGrade;
+//    public static Texture maxEnergyGrade;
 
 
     public void loadAll() {
@@ -83,20 +83,20 @@ public class AssetLoader extends AssetManager{
         loadMainMenu();
     }
     private void loadMainMenu(){
-        mainMenuBg = new Texture("MainMenuBg.png");
-        campainBg = new Texture("CampainBg.png");
+//        mainMenuBg = new Texture("MainMenuBg.png");
+//        campainBg = new Texture("CampainBg.png");
         //backButton = new Texture("backButton.png");
-        mainMenuButtonsAtlas = new Texture(Gdx.files.internal("MainMenuAtlas.png"));
-        mainMenuButtons = TextureRegion.split(mainMenuButtonsAtlas, mainMenuButtonsAtlas.getWidth() / 2, mainMenuButtonsAtlas.getHeight() / 10);
-        campainMap[0] = new Texture("arsenal.png");
-        campainMap[1] = new Texture("store.png");
-        campainMap[2] = new Texture("smith.png");
-        campainLevelsAtlas = new Texture(Gdx.files.internal("levelsButtonsAtlas.png"));
-        campainLevels = TextureRegion.split(campainLevelsAtlas, campainLevelsAtlas.getWidth() / 2, campainLevelsAtlas.getHeight() / 10);
+//        mainMenuButtonsAtlas = new Texture(Gdx.files.internal("MainMenuAtlas.png"));
+//        mainMenuButtons = TextureRegion.split(mainMenuButtonsAtlas, mainMenuButtonsAtlas.getWidth() / 2, mainMenuButtonsAtlas.getHeight() / 10);
+//        campainMap[0] = new Texture("arsenal.png");
+//        campainMap[1] = new Texture("store.png");
+//        campainMap[2] = new Texture("smith.png");
+//        campainLevelsAtlas = new Texture(Gdx.files.internal("levelsButtonsAtlas.png"));
+//        campainLevels = TextureRegion.split(campainLevelsAtlas, campainLevelsAtlas.getWidth() / 2, campainLevelsAtlas.getHeight() / 10);
 //        cell = new Texture("cell.png");
 //        nameButtonFone = new Texture("nameButtonFone.png");
 //        dialogSkin = new Texture("dialogSkin.png");
-        uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
+//        uiSkin = new Skin(Gdx.files.internal("uiskin.json"));
 //        transparent = new Texture("MainMenuTranparent.png");
 //        barFone = new Texture("expBar1.png");
 //        barTop = new Texture("expBar2.png");
@@ -111,10 +111,10 @@ public class AssetLoader extends AssetManager{
 //        gemTexture[3] = new Texture("Gems/blackGem.png");
 //        gemTexture[4] = new Texture("Gems/greenGem.png");
 //        gemTexture[5] = new Texture("Gems/whiteGem.png");
-        coin = new Texture("coin.png");
-        castle = new Texture("castle.png");
-        Texture groundTileSet = new Texture("tileset_ground.png");
-        TextureRegion[][] tileSet = TextureRegion.split(groundTileSet, groundTileSet.getWidth(), groundTileSet.getHeight()/10);
+//        coin = new Texture("coin.png");
+//        castle = new Texture("castle.png");
+//        Texture groundTileSet = new Texture("tileset_ground.png");
+//        TextureRegion[][] tileSet = TextureRegion.split(groundTileSet, groundTileSet.getWidth(), groundTileSet.getHeight()/10);
         //grass = tileSet[0][0];
         //ground = tileSet[1][0];
 //        grass = new Texture("grass.png");
@@ -131,12 +131,12 @@ public class AssetLoader extends AssetManager{
 //        arrowTower = new Texture("Tower/arrowTower.png");
 //        rangeTower = new Texture("Tower/rangeTower.png");
 
-        infoPanelFone = new Texture("infoPanelFone.png");
+//        infoPanelFone = new Texture("infoPanelFone.png");
 
 //        levelEndFoneLoose = new Texture("levelLooseBg.png");
 //        levelEndFoneWin = new Texture("levelWinBg.png");
 
-        cellSkin = new Skin(Gdx.files.internal("skins/uiskin.json"));
+        //cellSkin = new Skin(Gdx.files.internal("skins/uiskin.json"));
 
         //sellButton = new Texture("sellButton.png");
         //buildGridLinePixel = new Texture("buildGridLinePixel.png");
@@ -151,6 +151,10 @@ public class AssetLoader extends AssetManager{
 
     }
     private void loadTextures(){
+        load("MainMenuAtlas.png", Texture.class);
+
+        load("MainMenuBg.png", Texture.class);
+        load("CampainBg.png", Texture.class);
         load("LevelMapBg.png", Texture.class);
         load("Gems/redGem.png", Texture.class);
         load("Gems/yellowGem.png", Texture.class);
@@ -166,7 +170,24 @@ public class AssetLoader extends AssetManager{
         load("MainMenuTranparent.png", Texture.class);
         load("expBar1.png", Texture.class);
         load("expBar2.png", Texture.class);
+        load("energyBarBg.png", Texture.class);
+        load("energyBarKnob.png", Texture.class);
+//        load("mobHpBarBg.png", Texture.class);
+//        load("mobHpBarKnob.png", Texture.class);
         load("levelLock.png", Texture.class);
+        load("arsenal.png", Texture.class);
+        load("store.png", Texture.class);
+        load("smith.png", Texture.class);
+        load("Projectiles/basic.png", Texture.class);
+        load("Projectiles/rock.png", Texture.class);
+        load("Projectiles/arrow.png", Texture.class);
+        load("Projectiles/range.png", Texture.class);
+        load("coin.png", Texture.class);
+        load("castle.png", Texture.class);
+
+
+        load("skins/uiskin.json", Skin.class);
+        load("uiskin.json", Skin.class);
 
 
 
@@ -186,6 +207,7 @@ public class AssetLoader extends AssetManager{
         load("Tower/rockTower.png", Texture.class);
         load("Tower/arrowTower.png", Texture.class);
         load("Tower/rangeTower.png", Texture.class);
+        load("infoPanelFone.png", Texture.class);
         load("levelLooseBg.png", Texture.class);
         load("levelWinBg.png", Texture.class);
         load("buildGridLinePixel.png", Texture.class);
@@ -215,7 +237,7 @@ public class AssetLoader extends AssetManager{
 
 
 
-    public static ImageButton.ImageButtonStyle generateImageButtonSkin(Texture t){
+    public ImageButton.ImageButtonStyle generateImageButtonSkin(Texture t){
         ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
         s.up = new TextureRegionDrawable(new TextureRegion(t));
         s.over = new TextureRegionDrawable(new TextureRegion(t));
@@ -223,6 +245,30 @@ public class AssetLoader extends AssetManager{
 
         return s;
 
+    }
+    public ImageButton.ImageButtonStyle getMainMenuButtons(int number){
+        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
+        Texture mainMenuButtonsAtlas = get("MainMenuAtlas.png", Texture.class);
+        TextureRegion[][] mainMenuButtons = TextureRegion.split(mainMenuButtonsAtlas, mainMenuButtonsAtlas.getWidth() / 2, mainMenuButtonsAtlas.getHeight() / 10);
+
+        switch (number){
+            case 1:
+                s.up = new TextureRegionDrawable(mainMenuButtons[0][0]);
+                s.over = new TextureRegionDrawable(mainMenuButtons[0][1]);
+                s.down = new TextureRegionDrawable(mainMenuButtons[0][1]);
+                return s;
+            case 2:
+                s.up = new TextureRegionDrawable(mainMenuButtons[1][0]);
+                s.over = new TextureRegionDrawable(mainMenuButtons[1][1]);
+                s.down = new TextureRegionDrawable(mainMenuButtons[1][1]);
+                return s;
+            case 3:
+                s.up = new TextureRegionDrawable(mainMenuButtons[2][0]);
+                s.over = new TextureRegionDrawable(mainMenuButtons[2][1]);
+                s.down = new TextureRegionDrawable(mainMenuButtons[2][1]);
+                return s;
+        }
+        return null;
     }
 
 
@@ -239,31 +285,31 @@ public class AssetLoader extends AssetManager{
 
 
     public ImageButton.ImageButtonStyle getPrevButtonSkin(){
-        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
-        s.up = new TextureRegionDrawable(new TextureRegion(get("prevButton.png", Texture.class)));
-        s.over = new TextureRegionDrawable(new TextureRegion(get("prevButton.png", Texture.class)));
-        s.down = new TextureRegionDrawable(new TextureRegion(get("prevButton.png", Texture.class)));
+//        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
+//        s.up = new TextureRegionDrawable(new TextureRegion(get("prevButton.png", Texture.class)));
+//        s.over = new TextureRegionDrawable(new TextureRegion(get("prevButton.png", Texture.class)));
+//        s.down = new TextureRegionDrawable(new TextureRegion(get("prevButton.png", Texture.class)));
 
-        return s;
+        return generateImageButtonSkin(get("prevButton.png", Texture.class));
     }
     public ImageButton.ImageButtonStyle getNextButtonSkin(){
-        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
-        s.up = new TextureRegionDrawable(new TextureRegion(get("nextButton.png", Texture.class)));
-        s.over = new TextureRegionDrawable(new TextureRegion(get("nextButton.png", Texture.class)));
-        s.down = new TextureRegionDrawable(new TextureRegion(get("nextButton.png", Texture.class)));
+//        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
+//        s.up = new TextureRegionDrawable(new TextureRegion(get("nextButton.png", Texture.class)));
+//        s.over = new TextureRegionDrawable(new TextureRegion(get("nextButton.png", Texture.class)));
+//        s.down = new TextureRegionDrawable(new TextureRegion(get("nextButton.png", Texture.class)));
 
-        return s;
+        return generateImageButtonSkin(get("nextButton.png", Texture.class));
     }
 
 
 
     public ImageButton.ImageButtonStyle getBackButtonSkin(){
-        ImageButton.ImageButtonStyle backButtonStyle = new ImageButton.ImageButtonStyle();
-        backButtonStyle.up = new TextureRegionDrawable(new TextureRegion(get("backButton.png", Texture.class)));
-        backButtonStyle.over = new TextureRegionDrawable(new TextureRegion(get("backButton.png", Texture.class)));
-        backButtonStyle.down = new TextureRegionDrawable(new TextureRegion(get("backButton.png", Texture.class)));
+//        ImageButton.ImageButtonStyle backButtonStyle = new ImageButton.ImageButtonStyle();
+//        backButtonStyle.up = new TextureRegionDrawable(new TextureRegion(get("backButton.png", Texture.class)));
+//        backButtonStyle.over = new TextureRegionDrawable(new TextureRegion(get("backButton.png", Texture.class)));
+//        backButtonStyle.down = new TextureRegionDrawable(new TextureRegion(get("backButton.png", Texture.class)));
 
-        return backButtonStyle;
+        return generateImageButtonSkin(get("backButton.png", Texture.class));
     }
 
     public ProgressBar.ProgressBarStyle getExpBarSkin(){
@@ -276,9 +322,9 @@ public class AssetLoader extends AssetManager{
 
 
     }
-    public static ProgressBar.ProgressBarStyle getEnergyBarSkin(){
-        TextureRegionDrawable barFone = new TextureRegionDrawable(new TextureRegion(new Texture("energyBarBg.png")));
-        TextureRegionDrawable barTop = new TextureRegionDrawable(new TextureRegion(new Texture("energyBarKnob.png")));
+    public ProgressBar.ProgressBarStyle getEnergyBarSkin(){
+        TextureRegionDrawable barFone = new TextureRegionDrawable(new TextureRegion(get("energyBarBg.png", Texture.class)));
+        TextureRegionDrawable barTop = new TextureRegionDrawable(new TextureRegion(get("energyBarKnob.png", Texture.class)));
         ProgressBar.ProgressBarStyle progressBarStyle = new ProgressBar.ProgressBarStyle(barFone, barTop);
         progressBarStyle.knobBefore = progressBarStyle.knob;
 
@@ -287,8 +333,8 @@ public class AssetLoader extends AssetManager{
 
     }
     public ProgressBar.ProgressBarStyle getMobHpBarStyle(){
-        TextureRegionDrawable barFone = new TextureRegionDrawable(new TextureRegion(new Texture("mobHpBarBg.png")));
-        TextureRegionDrawable barTop = new TextureRegionDrawable(new TextureRegion(new Texture("mobHpBarKnob.png")));
+        TextureRegionDrawable barFone = new TextureRegionDrawable(new TextureRegion(get("mobHpBarBg.png", Texture.class)));
+        TextureRegionDrawable barTop = new TextureRegionDrawable(new TextureRegion(get("mobHpBarKnob.png", Texture.class)));
         ProgressBar.ProgressBarStyle style = new ProgressBar.ProgressBarStyle(barFone, barTop);
         style.knobBefore = style.knob;
         return style;
@@ -305,15 +351,15 @@ public class AssetLoader extends AssetManager{
     }
 
 
-    public static ImageButton.ImageButtonStyle getCampainLevelSkin(int number){
-        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
-
-        s.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainLevels[number - 1][0]));
-        s.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainLevels[number - 1][1]));
-        s.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainLevels[number - 1][0]));
-
-        return s;
-    }
+//    public  ImageButton.ImageButtonStyle getCampainLevelSkin(int number){
+//        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
+//
+//        s.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainLevels[number - 1][0]));
+//        s.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainLevels[number - 1][1]));
+//        s.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainLevels[number - 1][0]));
+//
+//        return s;
+//    }
     public ImageTextButton.ImageTextButtonStyle getUserLevelSkin(){
         ImageTextButton.ImageTextButtonStyle userLevelButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         userLevelButtonStyle.up = new TextureRegionDrawable(new TextureRegion(get("cell.png", Texture.class)));
@@ -339,26 +385,29 @@ public class AssetLoader extends AssetManager{
 
 
 
-    public static ImageButton.ImageButtonStyle getBottomPanelSkin(int index){
+    public ImageButton.ImageButtonStyle getBottomPanelSkin(int index){
         switch (index){
             case 1:
-                ImageButton.ImageButtonStyle arsenalButtonStyle = new ImageButton.ImageButtonStyle();
-                arsenalButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[0]));
-                arsenalButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[0]));
-                arsenalButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[0]));
-                return arsenalButtonStyle;
+                return generateImageButtonSkin(get("arsenal.png", Texture.class));
+//                ImageButton.ImageButtonStyle arsenalButtonStyle = new ImageButton.ImageButtonStyle();
+//                arsenalButtonStyle.up = new TextureRegionDrawable(new TextureRegion(get("arsenal.png", Texture.class)));
+//                arsenalButtonStyle.over = new TextureRegionDrawable(new TextureRegion(get("arsenal.png", Texture.class)));
+//                arsenalButtonStyle.down = new TextureRegionDrawable(new TextureRegion(get("arsenal.png", Texture.class)));
+//                return arsenalButtonStyle;
             case 2:
-                ImageButton.ImageButtonStyle storeButtonStyle = new ImageButton.ImageButtonStyle();
-                storeButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[1]));
-                storeButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[1]));
-                storeButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[1]));
-                return storeButtonStyle;
+                return generateImageButtonSkin(get("store.png", Texture.class));
+//                ImageButton.ImageButtonStyle storeButtonStyle = new ImageButton.ImageButtonStyle();
+//                storeButtonStyle.up = new TextureRegionDrawable(new TextureRegion(get("store.png", Texture.class)));
+//                storeButtonStyle.over = new TextureRegionDrawable(new TextureRegion(get("store.png", Texture.class)));
+//                storeButtonStyle.down = new TextureRegionDrawable(new TextureRegion(get("store.png", Texture.class)));
+//                return storeButtonStyle;
             case 3:
-                ImageButton.ImageButtonStyle smithButtonStyle = new ImageButton.ImageButtonStyle();
-                smithButtonStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[2]));
-                smithButtonStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[2]));
-                smithButtonStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.campainMap[2]));
-                return smithButtonStyle;
+                return generateImageButtonSkin(get("smith.png", Texture.class));
+//                ImageButton.ImageButtonStyle smithButtonStyle = new ImageButton.ImageButtonStyle();
+//                smithButtonStyle.up = new TextureRegionDrawable(new TextureRegion(get("smith.png", Texture.class)));
+//                smithButtonStyle.over = new TextureRegionDrawable(new TextureRegion(get("smith.png", Texture.class)));
+//                smithButtonStyle.down = new TextureRegionDrawable(new TextureRegion(get("smith.png", Texture.class)));
+//                return smithButtonStyle;
             case 4:
                 return null;
 
@@ -371,111 +420,103 @@ public class AssetLoader extends AssetManager{
         return new Skin(Gdx.files.internal("uiskin.json"));
     }
 
-    public static Label.LabelStyle getTimerSkin(){
-        Label.LabelStyle l = new Label.LabelStyle();
-        l.font = FontLoader.impact24;
-        l.fontColor = Color.BLACK;
-
-
-        return l;
+    public Label.LabelStyle getTimerSkin(){
+//        Label.LabelStyle l = new Label.LabelStyle();
+//        l.font = FontLoader.impact24;
+//        l.fontColor = Color.BLACK;
+        return FontLoader.generateStyle(24, Color.BLACK);
     }
-    public static Label.LabelStyle getInfoPanelSkin(){
-        Label.LabelStyle l = new Label.LabelStyle();
-        l.font = FontLoader.impact16;
-        l.fontColor = Color.BLACK;
-
-
-        return l;
+    public Label.LabelStyle getInfoPanelSkin(){
+//        Label.LabelStyle l = new Label.LabelStyle();
+//        l.font = FontLoader.impact16;
+//        l.fontColor = Color.BLACK;
+        return FontLoader.generateStyle(16, Color.BLACK);
     }
-    public static Label.LabelStyle getCurrentInfoPanelSkin(){
-        Label.LabelStyle l = new Label.LabelStyle();
-        l.font = FontLoader.impact24;
-        l.fontColor = Color.BLACK;
-
-
-        return l;
-
-
+    public Label.LabelStyle getCurrentInfoPanelSkin(){
+//        Label.LabelStyle l = new Label.LabelStyle();
+//        l.font = FontLoader.impact24;
+//        l.fontColor = Color.BLACK;
+        return FontLoader.generateStyle(24, Color.BLACK);
     }
     public static Label.LabelStyle getLevelEndResultSkin(){
-        Label.LabelStyle l = new Label.LabelStyle();
-        l.font = FontLoader.impact36;
-        l.fontColor = Color.BLACK;
-        return l;
+//        Label.LabelStyle l = new Label.LabelStyle();
+//        l.font = FontLoader.impact36;
+//        l.fontColor = Color.BLACK;
+        return FontLoader.generateStyle(36, Color.BLACK);
     }
 
-    public static ImageButton.ImageButtonStyle getTowerCellSkin(ItemEnum.Tower tower){
-        ImageButton.ImageButtonStyle towerCellStyle = new ImageButton.ImageButtonStyle();
+//    public ImageButton.ImageButtonStyle getTowerCellSkin(ItemEnum.Tower tower){
+//        ImageButton.ImageButtonStyle towerCellStyle = new ImageButton.ImageButtonStyle();
+//        switch (tower){
+//            case Basic:
+//                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
+//                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
+//                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
+//                break;
+//            case Rock:
+//                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
+//                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
+//                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
+//                break;
+//            case Arrow:
+//                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
+//                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
+//                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
+//                break;
+//            case Range:
+//                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
+//                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
+//                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
+//                break;
+//            default:
+//                throw new RuntimeException("No tower found with id: " + tower);
+//        }
+//        return towerCellStyle;
+//    }
+    public Texture getTowerTexture(ItemEnum.Tower tower){
         switch (tower){
             case Basic:
-                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
-                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
-                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
-                break;
+                return get("Tower/basicTower.png", Texture.class);
             case Rock:
-                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
-                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
-                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
-                break;
+                return get("Tower/rockTower.png", Texture.class);
             case Arrow:
-                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
-                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
-                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
-                break;
+                return get("Tower/arrowTower.png", Texture.class);
             case Range:
-                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
-                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
-                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
-                break;
-            default:
-                throw new RuntimeException("No tower found with id: " + tower);
-        }
-        return towerCellStyle;
-    }
-    public static Texture getTowerTexture(ItemEnum.Tower tower){
-        switch (tower){
-            case Basic:
-                return basicTower;
-            case Rock:
-                return rockTower;
-            case Arrow:
-                return arrowTower;
-            case Range:
-                return rangeTower;
-            default:
-                throw new RuntimeException("No tower found with id: " + tower);
-        }
-    }
-    public static Texture getProjectileTexture(ItemEnum.Tower tower){
-        switch (tower){
-            case Basic:
-                return new Texture("Projectiles/basic.png");
-            case Rock:
-                return new Texture("Projectiles/rock.png");
-            case Arrow:
-                return new Texture("Projectiles/arrow.png");
-            case Range:
-                return new Texture("Projectiles/range.png");
+                return get("Tower/rangeTower.png", Texture.class);
             default:
                 throw new RuntimeException("No tower found with id: " + tower);
         }
     }
+    public Texture getProjectileTexture(ItemEnum.Tower tower){
+        switch (tower){
+            case Basic:
+                return get("Projectiles/basic.png", Texture.class);
+            case Rock:
+                return get("Projectiles/rock.png", Texture.class);
+            case Arrow:
+                return get("Projectiles/arrow.png", Texture.class);
+            case Range:
+                return get("Projectiles/range.png", Texture.class);
+            default:
+                throw new RuntimeException("No tower found with id: " + tower);
+        }
+    }
 
 
-    public static ImageButton.ImageButtonStyle getStoreSellButtonStyle(){
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-        style.up = new TextureRegionDrawable((new TextureRegion(sellButton)));
-        style.over = new TextureRegionDrawable((new TextureRegion(sellButton)));
-        style.down = new TextureRegionDrawable((new TextureRegion(sellButton)));
+    public ImageButton.ImageButtonStyle getStoreSellButtonStyle(){
+//        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+//        style.up = new TextureRegionDrawable((new TextureRegion(sellButton)));
+//        style.over = new TextureRegionDrawable((new TextureRegion(sellButton)));
+//        style.down = new TextureRegionDrawable((new TextureRegion(sellButton)));
 
-        return style;
+        return generateImageButtonSkin(get("sellButton.png", Texture.class));
 
 
     }
 
 
     public void dispose() {
-        mainMenuButtonsAtlas.dispose();
+//        mainMenuButtonsAtlas.dispose();
     }
 
 

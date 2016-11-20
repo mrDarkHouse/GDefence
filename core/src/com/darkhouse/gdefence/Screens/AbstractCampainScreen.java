@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -113,7 +114,7 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         batch.begin();
-        batch.draw(AssetLoader.campainBg, 0, 0);
+        batch.draw(GDefence.getInstance().assetLoader.get("CampainBg.png", Texture.class), 0, 0);
         batch.end();
 
         stage.act(delta);

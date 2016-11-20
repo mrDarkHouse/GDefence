@@ -7,7 +7,10 @@ import com.darkhouse.gdefence.Level.Tower.Tower;
 public abstract class Ability {
 
     public enum UseType{
-        preattack, onHit, onBuild, onKilled
+        preattack, onHit, onBuild, onKilled;
+
+
+//        public
     }
     protected UseType useType;
 
@@ -27,5 +30,11 @@ public abstract class Ability {
         this.useType = useType;
     }
 
-    public abstract void use(Mob target);
+    public abstract void use(Mob target);//targetly
+
+    public int getDmg(int dmgStart){
+        return dmgStart;
+    }//only dmg
+
+
 }

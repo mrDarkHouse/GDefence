@@ -41,10 +41,10 @@ public class LevelEndScreen implements Screen{
 
     private void init(boolean isWin){
         if(isWin){
-            backGround = AssetLoader.levelEndFoneWin;
+            backGround = GDefence.getInstance().assetLoader.get("levelWinBg.png", Texture.class);
             result = "Win";
         }else {
-            backGround = AssetLoader.levelEndFoneLoose;
+            backGround = GDefence.getInstance().assetLoader.get("levelLooseBg.png", Texture.class);
             result = "Loose";
         }
 

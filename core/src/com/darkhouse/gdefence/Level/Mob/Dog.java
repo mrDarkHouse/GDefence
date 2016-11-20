@@ -1,6 +1,8 @@
 package com.darkhouse.gdefence.Level.Mob;
 
 
+import com.badlogic.gdx.graphics.Texture;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.MapTile;
 
@@ -14,7 +16,7 @@ public class Dog extends Mob{
         setBounty(4);
         setMoveType(MapTile.TileType.ground);
         setSpeed(100);
-        setTextureDrawable(AssetLoader.dog);
+        setTextureDrawable(GDefence.getInstance().assetLoader.get("Mobs/mob2.png", Texture.class));
 
     }
 }

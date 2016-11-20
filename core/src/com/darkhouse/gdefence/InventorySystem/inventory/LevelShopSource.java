@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.Level.Level;
@@ -30,7 +31,7 @@ public class LevelShopSource extends SlotSource {
 
         Image i = ((Image)payload.getValidDragActor());
         Image inv = ((Image)payload.getDragActor());
-        TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(AssetLoader.getTowerTexture(tower)));
+        TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.getTowerTexture(tower)));
         i.setDrawable(t);
         inv.setDrawable(t);
         dragAndDrop.setDragActorPosition(-i.getWidth()/2, i.getHeight()/2);

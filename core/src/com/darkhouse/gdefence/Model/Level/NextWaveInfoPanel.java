@@ -1,13 +1,14 @@
 package com.darkhouse.gdefence.Model.Level;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Screens.LevelMap;
@@ -50,18 +51,18 @@ public class NextWaveInfoPanel extends Table{
 
     private void init(){
         nextWaveTimer = new NextWaveTimer();
-        setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.infoPanelFone)));
+        setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("infoPanelFone.png", Texture.class))));
         //setFillParent(false);
         initString(Level.getMap().getSpawner().size());
 
-        currentWave = new Label(currentWaveS, AssetLoader.getInfoPanelSkin());
-        mobsNumber = new Label(mobsNumberS, AssetLoader.getInfoPanelSkin());
-        mobName = new Label(mobNameS, AssetLoader.getInfoPanelSkin());
-        mobHealth = new Label(mobHealthS, AssetLoader.getInfoPanelSkin());
-        mobArmor = new Label(mobArmorS, AssetLoader.getInfoPanelSkin());
-        mobSpeed = new Label(mobSpeedS, AssetLoader.getInfoPanelSkin());
-        mobDmg = new Label(mobDmgS, AssetLoader.getInfoPanelSkin());
-        mobBounty = new Label(mobBountyS, AssetLoader.getInfoPanelSkin());
+        currentWave = new Label(currentWaveS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
+        mobsNumber = new Label(mobsNumberS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
+        mobName = new Label(mobNameS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
+        mobHealth = new Label(mobHealthS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
+        mobArmor = new Label(mobArmorS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
+        mobSpeed = new Label(mobSpeedS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
+        mobDmg = new Label(mobDmgS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
+        mobBounty = new Label(mobBountyS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
 
 
 

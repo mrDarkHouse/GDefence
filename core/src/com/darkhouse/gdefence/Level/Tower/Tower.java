@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Ability.Ability;
@@ -123,7 +124,7 @@ public class Tower extends GameActor{
     public Tower(ItemEnum.Tower towerPrototype, float x, float y, float width, float height) {
         setBounds(x, y, width, height);
         this.towerPrototype = towerPrototype;
-        setTexture(AssetLoader.getTowerTexture(towerPrototype));
+        setTexture(GDefence.getInstance().assetLoader.getTowerTexture(towerPrototype));
         initRange();
         for (Ability a:towerPrototype.getAbilities()) {
             a.setOwner(this);
@@ -144,7 +145,7 @@ public class Tower extends GameActor{
         //attackRangeTexture = new Texture(pixmap);//not work
         //pixmap.dispose();
 
-        attackRangeTexture = AssetLoader.attackRangeTexture;
+        attackRangeTexture = GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class);
     }
 
     public void addKill(/*Class<? extends Mob>*/Mob killedMob){
@@ -175,6 +176,11 @@ public class Tower extends GameActor{
             preShotTime += delta;
             if(preShotTime >= towerPrototype.getSpeedDelay()){
                 preShotTime = 0;
+                for (Ability a:towerPrototype.getAbilities()){
+                    if(a.getUseType() == Ability.UseType.preattack){
+                        a.use(target);
+                    }
+                }
                 shot(target);
             }
 
@@ -182,19 +188,35 @@ public class Tower extends GameActor{
 
 
     }
+    private void procAbility(Ability.UseType type){
+        switch (type){
+            case preattack:
+
+                break;
+            case onHit:
+
+
+                break;
+
+        }
+    }
     private void shot(Mob target){
         //target.hit(towerPrototype.getDmg());
         Map.projectiles.add(new Projectile(this, target));
 
 
     }
-    public void hitTarget(){
+    public void hitTarget(Mob target){
+        int dmg = getTowerPrototype().getDmg();
         for (Ability a:towerPrototype.getAbilities()){
             if(a.getUseType() == Ability.UseType.onHit){
-                a.use(target);
+                a.use(target);//if main target//now work on mulitshot
+                dmg = a.getDmg(dmg);
             }
         }
-        target.hit(getTowerPrototype().getDmg(), this);
+        if(target != null) {//hotfix
+            target.hit(dmg, this);
+        }
     }
 
     public void draw(SpriteBatch batch, float delta){//draw from levelMap instead MapTile

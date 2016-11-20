@@ -32,7 +32,7 @@ public class BottomPanel extends Table {
 
 
 
-        bottomPanel[0] = new ImageButton(AssetLoader.getBottomPanelSkin(1));
+        bottomPanel[0] = new ImageButton(GDefence.getInstance().assetLoader.getBottomPanelSkin(1));
         //bottomPanel[0].setSize(bottomButtonsSize[0], bottomButtonsSize[1]);
         //bottomPanel[0].setPosition(0, 0);
         bottomPanel[0].addListener(new InputListener(){
@@ -43,7 +43,7 @@ public class BottomPanel extends Table {
         });
 
 
-        bottomPanel[1] = new ImageButton(AssetLoader.getBottomPanelSkin(2));
+        bottomPanel[1] = new ImageButton(GDefence.getInstance().assetLoader.getBottomPanelSkin(2));
         //bottomPanel[1].setSize(bottomButtonsSize[0], bottomButtonsSize[1]);
         //bottomPanel[1].setPosition(bottomButtonsSize[0], 0);
         bottomPanel[1].addListener(new InputListener(){
@@ -54,7 +54,7 @@ public class BottomPanel extends Table {
         });
 
 
-        bottomPanel[2] = new ImageButton(AssetLoader.getBottomPanelSkin(3));
+        bottomPanel[2] = new ImageButton(GDefence.getInstance().assetLoader.getBottomPanelSkin(3));
         //bottomPanel[2].setSize(bottomButtonsSize[0], bottomButtonsSize[1]);
         //bottomPanel[2].setPosition(bottomButtonsSize[0]*2, 0);
         bottomPanel[2].addListener(new InputListener(){
