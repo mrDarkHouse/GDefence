@@ -3,8 +3,9 @@ package com.darkhouse.gdefence.Model;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
+import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 
 public class PreparationTowerInventoryActor extends InventoryActor{
 

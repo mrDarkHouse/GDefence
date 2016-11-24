@@ -19,12 +19,14 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.darkhouse.gdefence.InventorySystem.inventory;
+package com.darkhouse.gdefence.InventorySystem.inventory.Target;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
+import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
+import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
 
 /**
  * @author Daniel Holderbaum

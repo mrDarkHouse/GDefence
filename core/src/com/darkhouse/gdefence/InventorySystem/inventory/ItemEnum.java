@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 
 public enum ItemEnum {;
-	public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
+	//public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
 
 
 
@@ -48,12 +48,12 @@ public enum ItemEnum {;
 				return "basic";
 			}
 
-			@Override
-			public String getTooltip() {
-				return "Dmg: " + getDmg() + System.getProperty("line.separator")
-						+ "Range: " + getRange() + System.getProperty("line.separator")
-						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
-			}
+//			@Override
+//			public String getTooltip() {
+//				return "Dmg: " + getDmg() + System.getProperty("line.separator")
+//						+ "Range: " + getRange() + System.getProperty("line.separator")
+//						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
+//			}
 
 			@Override
 			protected void addAbilities() {
@@ -65,12 +65,12 @@ public enum ItemEnum {;
 			public String getTextureRegion() {
 				return "rock";
 			}
-			@Override
-			public String getTooltip() {
-				return "Dmg: " + getDmg() + System.getProperty("line.separator")
-						+ "Range: " + getRange() + System.getProperty("line.separator")
-						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
-			}
+//			@Override
+//			public String getTooltip() {
+//				return "Dmg: " + getDmg() + System.getProperty("line.separator")
+//						+ "Range: " + getRange() + System.getProperty("line.separator")
+//						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
+//			}
 
 			@Override
 			protected void addAbilities() {
@@ -82,12 +82,12 @@ public enum ItemEnum {;
 			public String getTextureRegion() {
 				return "arrow";
 			}
-			@Override
-			public String getTooltip() {
-				return "Dmg: " + getDmg() + System.getProperty("line.separator")
-						+ "Range: " + getRange() + System.getProperty("line.separator")
-						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
-			}
+//			@Override
+//			public String getTooltip() {
+//				return "Dmg: " + getDmg() + System.getProperty("line.separator")
+//						+ "Range: " + getRange() + System.getProperty("line.separator")
+//						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
+//			}
 
 			@Override
 			protected void addAbilities() {
@@ -99,12 +99,12 @@ public enum ItemEnum {;
 			public String getTextureRegion() {
 				return "range";
 			}
-			@Override
-			public String getTooltip() {
-				return "Dmg: " + getDmg() + System.getProperty("line.separator")
-						+ "Range: " + getRange() + System.getProperty("line.separator")
-						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
-			}
+//			@Override
+//			public String getTooltip() {
+//				return "Dmg: " + getDmg() + System.getProperty("line.separator")
+//						+ "Range: " + getRange() + System.getProperty("line.separator")
+//						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
+//			}
 
 			@Override
 			protected void addAbilities() {
@@ -179,11 +179,6 @@ public enum ItemEnum {;
 			}
 
 			@Override
-			public String getTooltip() {
-				return null;
-			}
-
-			@Override
 			public int getGlobalCost() {
 				return 0;
 			}
@@ -194,10 +189,6 @@ public enum ItemEnum {;
 				return null;
 			}
 
-			@Override
-			public String getTooltip() {
-				return null;
-			}
 
 			@Override
 			public int getGlobalCost() {
@@ -226,11 +217,6 @@ public enum ItemEnum {;
 		Recipe{
 			@Override
 			public String getTextureRegion() {
-				return null;
-			}
-
-			@Override
-			public String getTooltip() {
 				return null;
 			}
 

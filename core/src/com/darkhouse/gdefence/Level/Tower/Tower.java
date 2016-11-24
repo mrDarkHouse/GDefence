@@ -18,6 +18,7 @@ import com.darkhouse.gdefence.Level.Ability.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.GameActor;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class Tower extends GameActor{
@@ -40,8 +41,8 @@ public class Tower extends GameActor{
 
 
     protected boolean canAttack = true;
-    protected ItemEnum.Tower towerPrototype;
-    public ItemEnum.Tower getTowerPrototype() {
+    protected TowerObject towerPrototype;
+    public TowerObject getTowerPrototype() {
         return towerPrototype;
     }
     private float preShotTime;
@@ -121,10 +122,10 @@ public class Tower extends GameActor{
 //                return null;
 //        }
 //    }
-    public Tower(ItemEnum.Tower towerPrototype, float x, float y, float width, float height) {
+    public Tower(TowerObject towerPrototype, float x, float y, float width, float height) {
         setBounds(x, y, width, height);
         this.towerPrototype = towerPrototype;
-        setTexture(GDefence.getInstance().assetLoader.getTowerTexture(towerPrototype));
+        setTexture(GDefence.getInstance().assetLoader.getTowerTexture(towerPrototype.getPrototype()));
         initRange();
         for (Ability a:towerPrototype.getAbilities()) {
             a.setOwner(this);

@@ -19,11 +19,13 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.darkhouse.gdefence.InventorySystem.inventory;
+package com.darkhouse.gdefence.InventorySystem.inventory.Tooltip;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
+import com.darkhouse.gdefence.InventorySystem.inventory.SlotListener;
 
 /**
  * @author Daniel Holderbaum
@@ -57,7 +59,7 @@ public class SlotTooltip extends Window implements SlotListener {
 		getTitleLabel().setText(/*slot.getAmount() + "x " + */"" + slot.getPrototype());
 		clear();
 		//Label label = //new Label("Super awesome description of " + slot.getPrototype(), skin);
-		Label label = new Label(slot.getPrototype().getTooltip(), skin);
+		Label label = new Label(slot.getLast().getTooltip(), skin);
 		add(label);
 		pack();
 	}

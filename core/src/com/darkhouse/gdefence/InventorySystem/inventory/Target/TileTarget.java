@@ -1,4 +1,4 @@
-package com.darkhouse.gdefence.InventorySystem.inventory;
+package com.darkhouse.gdefence.InventorySystem.inventory.Target;
 
 
 import com.badlogic.gdx.graphics.Color;

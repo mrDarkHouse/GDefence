@@ -1,4 +1,4 @@
-package com.darkhouse.gdefence.Screens.BottomPanel;
+package com.darkhouse.gdefence.InventorySystem.inventory.Tooltip;
 
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
+import com.darkhouse.gdefence.Screens.BottomPanel.Recipe;
 
 public class RecipeTooltip extends Window{
     private Skin skin;

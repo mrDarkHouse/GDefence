@@ -83,14 +83,31 @@ public class Slot {
 //
 //		return false;
 //	}
+	public static Array<GameObject> genereateStartObjects(Item item, int amount){
+		Array<GameObject> tmp = new Array<GameObject>();
+		for (int i = 0; i < amount; i++){
+			if (item instanceof ItemEnum.Tower){					//it's can be a method
+				tmp.add(new TowerObject(((ItemEnum.Tower) item)));
+			}else if(item instanceof ItemEnum.Spell){
+				tmp.add(new SpellObject(((ItemEnum.Spell) item)));
+			}else if(item instanceof ItemEnum.Detail){
+				tmp.add(new DetailObject(((ItemEnum.Detail) item)));
+			}
+		}
+		return tmp;
+	}
 
-	public boolean add(Array<GameObject> o){
-		if(isEqualPrototype(prototype, o.first())) {
+	public boolean add(Array<GameObject> o){//boolean not need now
+		if(isEqualPrototype(prototype, o.first()) || prototype == null) {
 			itemsArray.addAll(o);
+			if(prototype != o.peek().getPrototype()) prototype = o.peek().getPrototype();
+
+			notifyListeners();
 			return true;
 		}
 		return false;
 	}
+
 
 	private boolean isEqualPrototype(Item prototype, GameObject object){
 		if(prototype instanceof ItemEnum.Tower && object instanceof TowerObject){
@@ -139,6 +156,18 @@ public class Slot {
 //
 //		return false;
 //	}
+//	public GameObject takeLast(){
+//		GameObject o = itemsArray.peek();
+//		itemsArray.removeValue(itemsArray.peek(), true);
+//		return o;
+//	}
+	public GameObject getLast(){
+		return itemsArray.peek();
+	}
+	public Array<GameObject> getAll(){
+		return itemsArray;
+	}
+
 
 	public Array<GameObject> take(int amount){
 		Array<GameObject> tmpArr = new Array<GameObject>();
@@ -148,12 +177,18 @@ public class Slot {
 				itemsArray.removeValue(itemsArray.peek(), true);
 			}
 		}
+		if(getAmount() == 0) prototype = null;
+
+		notifyListeners();
 		return tmpArr;
 	}
 
 	public Array<GameObject> takeAll(){
 		Array<GameObject> tmpArr = new Array<GameObject>(itemsArray);
 		itemsArray.clear();
+		prototype = null;
+
+		notifyListeners();
 		return tmpArr;
 	}
 

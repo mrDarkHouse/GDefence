@@ -2,8 +2,11 @@ package com.darkhouse.gdefence.Objects;
 
 
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.Level.Ability.Ability;
+import com.darkhouse.gdefence.Level.Tower.AttackType;
 import com.darkhouse.gdefence.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TowerObject extends GameObject{
@@ -20,6 +23,37 @@ public class TowerObject extends GameObject{
     private float speedDelay;
     private int cost;
     private int globalCost;
+    protected ArrayList<Ability> abilities;
+
+    public ArrayList<Ability> getAbilities() {
+        return abilities;
+    }
+//    public AttackType getAttackType() {
+//        return attackType;
+//    }
+
+    public ItemEnum.Tower getPrototype() {
+        return prototype;
+    }
+
+    public int getRange() {
+        return range;
+    }
+    public int getCost() {
+        return cost;
+    }
+    public int getGlobalCost() {
+        return globalCost;
+    }
+    public int getDmg() {
+        return dmg;
+    }
+    public String getName() {
+        return name;
+    }
+    public float getSpeedDelay() {
+        return speedDelay;
+    }
 
 //    private HashMap<User.GEM_TYPE, Integer> gemsNumber;
     private int[] gemsNumber;
@@ -31,7 +65,7 @@ public class TowerObject extends GameObject{
         updateExp();
     }
     public void addGems(User.GEM_TYPE type, int value){
-        //gemsNumber[type.ordinal()] += value;
+        gemsNumber[type.ordinal()] += value;
         updateGemStat(type.ordinal(), value);
     }
 
@@ -60,11 +94,19 @@ public class TowerObject extends GameObject{
         speedDelay = prototype.getSpeedDelay();
         cost = prototype.getCost();
         globalCost = prototype.getGlobalCost();
+        abilities = new ArrayList<Ability>(prototype.getAbilities());
 
 
         gemsNumber = new int[]{0, 0, 0, 0, 0, 0};
 //        gemsNumber = new HashMap<User.GEM_TYPE, Integer>();
 //        gemsNumber.put(User.GEM_TYPE.RED, 0);
+    }
+
+    @Override
+    public String getTooltip() {
+        return "Dmg: " + getDmg() + System.getProperty("line.separator")
+                + "Range: " + getRange() + System.getProperty("line.separator")
+                + "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
     }
 
     public void updateGemStat(int gemType, int value){

@@ -1,4 +1,4 @@
-package com.darkhouse.gdefence.Screens.BottomPanel;
+package com.darkhouse.gdefence.Model.Panels;
 
 
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradeTooltip;
+import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.User;
 
 public class GemGradePanel extends Window{
@@ -89,11 +92,11 @@ public class GemGradePanel extends Window{
     }
 
     private void addGems(User.GEM_TYPE type){
-        Item i = gradeTowerSlot.getSlot().getPrototype();
-        if(i != null){
-            if(i instanceof ItemEnum.Tower){
+        GameObject object = gradeTowerSlot.getSlot().getLast();
+        if(object != null){
+            if(object instanceof TowerObject){
                 if(GDefence.getInstance().user.spendGems(type, 1))
-                    ((ItemEnum.Tower) i).addGems(type, 1);
+                    ((TowerObject) object).addGems(type, 1);
             }
         }
     }

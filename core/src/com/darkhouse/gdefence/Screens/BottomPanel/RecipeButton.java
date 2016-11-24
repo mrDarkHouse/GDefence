@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.RecipeTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.TooltipListener;
 import com.darkhouse.gdefence.User;
 

@@ -61,19 +61,21 @@ public class Inventory {
 		copy(copyInventory);
 	}
 	public void copy(Inventory inventory){
-		for(int i = 0; i < inventory.getSlots().size; i++){
-			slots.get(i).add(inventory.slots.get(i).getPrototype(), inventory.slots.get(i).getAmount());
-		}
+//		for(int i = 0; i < inventory.getSlots().size; i++){
+//			slots.get(i).add(inventory.slots.get(i).getAll());
+//		}
+		slots = new Array<Slot>(inventory.getSlots());
 	}
 
 
 	public Inventory copy(){
 		Inventory newInventory = new Inventory();
-		for(int i = 0; i < slots.size; i++){
-			//newInventory.slots.clear();
-			//newInventory.slots.addAll(slots);
-			newInventory.slots.get(i).add(slots.get(i).getPrototype(), slots.get(i).getAmount());
-		}
+//		for(int i = 0; i < slots.size; i++){
+//			//newInventory.slots.clear();
+//			//newInventory.slots.addAll(slots);
+//			newInventory.slots.get(i).add(slots.get(i).getPrototype(), slots.get(i).getAmount());
+//		}
+		newInventory.slots = new Array<Slot>(slots);
 		return newInventory;
 	}
 
@@ -103,13 +105,14 @@ public class Inventory {
 		// first check for a slot with the same item type
 		Slot itemSlot = firstSlotWithItem(item);
 		if (itemSlot != null) {
-			itemSlot.add(item, amount);
+//			itemSlot.add(item, amount);
+			itemSlot.add(Slot.genereateStartObjects(item, amount));
 			return true;
 		} else {
 			// now check for an available empty slot
 			Slot emptySlot = firstSlotWithItem(null);
 			if (emptySlot != null) {
-				emptySlot.add(item, amount);
+				emptySlot.add(Slot.genereateStartObjects(item, amount));
 				return true;
 			}
 		}

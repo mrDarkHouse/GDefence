@@ -262,7 +262,7 @@ public abstract class Mob extends GDSprite{
 //    }
 
     public void actEffects(float delta){
-        for (Debuff d:effects){
+        for (Debuff d:effects){//concurrent;
             d.act(delta);
         }
     }

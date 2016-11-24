@@ -1,4 +1,4 @@
-package com.darkhouse.gdefence.InventorySystem.inventory;
+package com.darkhouse.gdefence.InventorySystem.inventory.Source;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -7,9 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.TileTarget;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.MapTile;
 import com.darkhouse.gdefence.Model.Level.MapTileActor;
+import com.darkhouse.gdefence.Objects.TowerObject;
 
 public class LevelShopSource extends SlotSource {
     private DragAndDrop dragAndDrop;
@@ -21,7 +24,7 @@ public class LevelShopSource extends SlotSource {
 
     @Override
     public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
-        ItemEnum.Tower tower = (ItemEnum.Tower) sourceSlot.getPrototype();
+        TowerObject tower = (TowerObject) sourceSlot.getLast();
 
 
         DragAndDrop.Payload payload = super.dragStart(event, x, y, pointer);
@@ -29,7 +32,7 @@ public class LevelShopSource extends SlotSource {
 
         Image i = ((Image)payload.getValidDragActor());
         Image inv = ((Image)payload.getDragActor());
-        TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.getTowerTexture(tower)));
+        TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.getTowerTexture(tower.getPrototype())));
         i.setDrawable(t);
         inv.setDrawable(t);
         dragAndDrop.setDragActorPosition(-i.getWidth()/2, i.getHeight()/2);
@@ -37,40 +40,28 @@ public class LevelShopSource extends SlotSource {
     }
 
     @Override
+    protected void takeSlot() {
+        payloadSlot.add(sourceSlot.take(1));
+    }
+
+    @Override
     public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
         Level.getMap().setBuild(false, null, null);// end drawing build grid
-        Slot payloadSlot = (Slot) payload.getObject();
-        if(target == null){
-            sourceSlot.add(payloadSlot.getPrototype(), payloadSlot.getAmount());
-            return;
-        }
-        if (target.getClass() == TileTarget.class) {
-            Item item = payloadSlot.getPrototype();
-            int amount = payloadSlot.getAmount();
-            if (item != null) {
+        super.dragStop(event, x, y, pointer, payload, target);
+        if (target instanceof TileTarget) {
+            TowerObject tower = ((TowerObject) payloadSlot.getLast());
+            if (tower != null) {
                 // Build
                 MapTile targetTile = ((MapTileActor) target.getActor()).getMapTile();
-                if(targetTile.build((ItemEnum.Tower) item)) {
-                    if (amount > 1) {
-                        sourceSlot.add(item, amount - 1);
-                    }
+                if(targetTile.build(tower)) {
+//                    if (amount > 1) {
+//                        sourceSlot.add(item, amount - 1);
+//                    }
                 }else {
-                    sourceSlot.add(payloadSlot.getPrototype(), payloadSlot.getAmount());
+                    sourceSlot.add(payloadSlot.takeAll());
                     return;
                 }
             }
-        } else if(target.getClass() == SlotTarget.class){
-            Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-            if (targetSlot.getPrototype() == payloadSlot.getPrototype() || targetSlot.getPrototype() == null) {
-                targetSlot.add(payloadSlot.getPrototype(), payloadSlot.getAmount());
-            } else {
-                Item targetType = targetSlot.getPrototype();
-                int targetAmount = targetSlot.getAmount();
-                targetSlot.take(targetAmount);
-                targetSlot.add(payloadSlot.getPrototype(), payloadSlot.getAmount());
-                sourceSlot.add(targetType, targetAmount);
-            }
-        } else {
         }
     }
 

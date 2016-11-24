@@ -1,13 +1,12 @@
-package com.darkhouse.gdefence.Screens.BottomPanel;
+package com.darkhouse.gdefence.InventorySystem.inventory.Target;
 
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
-import com.darkhouse.gdefence.InventorySystem.inventory.SlotTarget;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 
-public class GemGradeTarget extends SlotTarget{
+public class GemGradeTarget extends DragAndDrop.Target{
     public GemGradeTarget(SlotActor actor) {
         super(actor);
     }

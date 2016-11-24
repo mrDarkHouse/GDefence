@@ -26,7 +26,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.darkhouse.gdefence.Screens.BottomPanel.CombinedSlotSource;
+import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
+import com.darkhouse.gdefence.InventorySystem.inventory.Source.CombinedSlotSource;
 
 /**
  * @author Daniel Holderbaum

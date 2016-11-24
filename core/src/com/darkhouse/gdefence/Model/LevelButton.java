@@ -3,23 +3,14 @@ package com.darkhouse.gdefence.Model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
-import com.darkhouse.gdefence.InventorySystem.inventory.LevelToolip;
-import com.darkhouse.gdefence.InventorySystem.inventory.SlotTooltip;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.LevelToolip;
 import com.darkhouse.gdefence.InventorySystem.inventory.TooltipListener;
-import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
-import com.darkhouse.gdefence.Screens.BottomPanel.Arsenal;
-import com.darkhouse.gdefence.Screens.CampainMap;
 import com.darkhouse.gdefence.Screens.LevelPreparationScreen;
 
 public class LevelButton extends TextButton {

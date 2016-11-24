@@ -1,4 +1,4 @@
-package com.darkhouse.gdefence.Screens.BottomPanel;
+package com.darkhouse.gdefence.InventorySystem.inventory.Tooltip;
 
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;

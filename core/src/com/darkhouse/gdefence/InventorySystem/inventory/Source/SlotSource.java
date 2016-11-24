@@ -19,7 +19,7 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.darkhouse.gdefence.InventorySystem.inventory;
+package com.darkhouse.gdefence.InventorySystem.inventory.Source;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -31,6 +31,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
+import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.Objects.GameObject;
 
 /**
@@ -40,6 +43,7 @@ public class SlotSource extends Source {
 
 	protected Slot sourceSlot;
 	protected Slot payloadSlot;
+//	protected Slot targetSlot;
 
 	public SlotSource(SlotActor actor) {
 		super(actor);
@@ -81,20 +85,28 @@ public class SlotSource extends Source {
 
 	@Override
 	public void dragStop(InputEvent event, float x, float y, int pointer, Payload payload, Target target) {
-		Slot payloadSlot = (Slot) payload.getObject();
-		if (target != null) {
-			Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-			if (targetSlot.getPrototype() == payloadSlot.getPrototype() || targetSlot.getPrototype() == null) {
-				targetSlot.add(payloadSlot.takeAll());
-			} else {
-				//Item targetType = targetSlot.getPrototype();
-				//int targetAmount = targetSlot.getAmount();
-				Array<GameObject> tmp = targetSlot.takeAll();
-				targetSlot.add(payloadSlot.takeAll());
-				sourceSlot.add(tmp);
-			}
-		} else {
-			sourceSlot.add(payloadSlot.takeAll());
+		//Slot payloadSlot = (Slot) payload.getObject();
+		if (target == null) {
+			ifNullTarget();
+		} else if(target instanceof SlotTarget){
+			ifSlotTarget(target);
 		}
 	}
+	protected void ifNullTarget(){
+		sourceSlot.add(payloadSlot.takeAll());
+	}
+	protected void ifSlotTarget(Target target){
+		Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
+		if (targetSlot.getPrototype() == payloadSlot.getPrototype() || targetSlot.getPrototype() == null) {
+			targetSlot.add(payloadSlot.takeAll());
+		} else {
+			//Item targetType = targetSlot.getPrototype();
+			//int targetAmount = targetSlot.getAmount();
+			Array<GameObject> tmp = targetSlot.takeAll();
+			targetSlot.add(payloadSlot.takeAll());
+			sourceSlot.add(tmp);
+		}
+	}
+
+
 }

@@ -1,4 +1,4 @@
-package com.darkhouse.gdefence.Screens.BottomPanel;
+package com.darkhouse.gdefence.Model.Panels;
 
 
 import com.badlogic.gdx.graphics.Color;
@@ -8,6 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
+import com.darkhouse.gdefence.InventorySystem.inventory.Source.BuySlotSource;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SellTarget;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
+import com.darkhouse.gdefence.Screens.BottomPanel.SellButton;
 
 public class StoreBuyPanel extends InventoryActor{
     private Label[] cost;
