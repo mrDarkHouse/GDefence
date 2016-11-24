@@ -17,6 +17,7 @@ import com.darkhouse.gdefence.Level.MapTile;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
+import com.darkhouse.gdefence.Objects.TowerObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,10 +35,10 @@ public class Map {
     }
 
     private boolean isBuild = false;
-    private ItemEnum.Tower rangeTower;
+    private TowerObject rangeTower;
     private DragAndDrop.Payload payload;
 
-    public void setBuild(boolean build, ItemEnum.Tower rangeTower, DragAndDrop.Payload payload) {//
+    public void setBuild(boolean build, TowerObject rangeTower, DragAndDrop.Payload payload) {//
         isBuild = build;
         this.rangeTower = rangeTower;
         this.payload = payload;

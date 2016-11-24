@@ -42,8 +42,8 @@ public class SlotTarget extends Target {
 	@Override
 	public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
 		Slot payloadSlot = (Slot) payload.getObject();
-		// if (targetSlot.getItem() == payloadSlot.getItem() ||
-		// targetSlot.getItem() == null) {
+		// if (targetSlot.getPrototype() == payloadSlot.getPrototype() ||
+		// targetSlot.getPrototype() == null) {
 		getActor().setColor(Color.WHITE);
 		return true;
 		// } else {

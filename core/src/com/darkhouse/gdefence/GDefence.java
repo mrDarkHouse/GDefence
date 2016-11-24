@@ -27,13 +27,33 @@ public class GDefence extends Game {
 		return mainClass;
 	}
 
+	private MainMenu mainMenu;
+	private CampainChoose campainChoose;
+	private OptionScreen optionScreen;
+	private CampainMap campainMap;
+
+	public MainMenu getMainMenu() {
+		return mainMenu;
+	}
+	public CampainChoose getCampainChoose() {
+		return campainChoose;
+	}
+	public OptionScreen getOptionScreen() {
+		return optionScreen;
+	}
+	public CampainMap getCampainMap() {
+		return campainMap;
+	}
+
+	//private Screen currentScreen;
+
 	public User user;
 
 	public AssetLoader assetLoader = new AssetLoader();
 
 	//public AssetManager assets;
 
-	
+
 	@Override
 	public void create () {
 		mainClass = this;
@@ -43,8 +63,13 @@ public class GDefence extends Game {
 
 
 		FontLoader.load();
-		setScreen(new StartingLoadScreen());
 
+		user = new User();//
+		GDefence.getInstance().user.init();//
+		GDefence.getInstance().user.save();//
+		//setScreen(new StartingLoadScreen());
+		switchScreen(new StartingLoadScreen());
+		//initScreens();
 
 		//batch = new SpriteBatch();
 		//img = new Texture("badlogic.jpg");
@@ -69,6 +94,20 @@ public class GDefence extends Game {
         assetLoader.dispose();
 		FontLoader.dispose();
 	}
+	public void initScreens(){
+		mainMenu = new MainMenu();
+		mainMenu.init();
+		campainChoose = new CampainChoose();
+		optionScreen = new OptionScreen();
+		campainMap = new CampainMap();
+		//campainMap.init();
+	}
+
+	public void switchScreen(Screen screen){
+		setScreen(screen);
+		//setInputProcessor
+	}
+
 
 	public Screen setPreviousScreen(){
 		Screen currentScreen = getScreen();

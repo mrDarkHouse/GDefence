@@ -22,10 +22,10 @@ public class BuySlotSource extends SlotSource{
         Slot payloadSlot = (Slot) payload.getObject();
         if (target != null) {
             Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-            if (targetSlot.getItem() == payloadSlot.getItem() || targetSlot.getItem() == null) {
-                Item item = sourceSlot.getItem();
+            if (targetSlot.getPrototype() == payloadSlot.getPrototype() || targetSlot.getPrototype() == null) {
+                Item item = sourceSlot.getPrototype();
                 if(GDefence.getInstance().user.deleteGold(item.getGlobalCost())){
-                    targetSlot.add(payloadSlot.getItem(), payloadSlot.getAmount());
+                    targetSlot.add(payloadSlot.getPrototype(), payloadSlot.getAmount());
                 } else {
                     System.out.println("No enought money");
                 }
@@ -33,7 +33,7 @@ public class BuySlotSource extends SlotSource{
                 //dont swap items
             }
         } else {
-            //sourceSlot.add(payloadSlot.getItem(), payloadSlot.getAmount());
+            //sourceSlot.add(payloadSlot.getPrototype(), payloadSlot.getAmount());
         }
     }
 

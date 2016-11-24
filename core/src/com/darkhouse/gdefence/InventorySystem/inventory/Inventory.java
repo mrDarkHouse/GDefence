@@ -62,7 +62,7 @@ public class Inventory {
 	}
 	public void copy(Inventory inventory){
 		for(int i = 0; i < inventory.getSlots().size; i++){
-			slots.get(i).add(inventory.slots.get(i).getItem(), inventory.slots.get(i).getAmount());
+			slots.get(i).add(inventory.slots.get(i).getPrototype(), inventory.slots.get(i).getAmount());
 		}
 	}
 
@@ -72,7 +72,7 @@ public class Inventory {
 		for(int i = 0; i < slots.size; i++){
 			//newInventory.slots.clear();
 			//newInventory.slots.addAll(slots);
-			newInventory.slots.get(i).add(slots.get(i).getItem(), slots.get(i).getAmount());
+			newInventory.slots.get(i).add(slots.get(i).getPrototype(), slots.get(i).getAmount());
 		}
 		return newInventory;
 	}
@@ -91,7 +91,7 @@ public class Inventory {
 		int amount = 0;
 
 		for (Slot slot : slots) {
-			if (slot.getItem() == item) {
+			if (slot.getPrototype() == item) {
 				amount += slot.getAmount();
 			}
 		}
@@ -124,7 +124,7 @@ public class Inventory {
 
 	protected Slot firstSlotWithItem(Item item) {
 		for (Slot slot : slots) {
-			if (slot.getItem() == item) {
+			if (slot.getPrototype() == item) {
 				return slot;
 			}
 		}

@@ -19,8 +19,8 @@ public class SellTarget extends DragAndDrop.Target{
     @Override
     public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
         Slot payloadSlot = (Slot) payload.getObject();
-        // if (targetSlot.getItem() == payloadSlot.getItem() ||
-        // targetSlot.getItem() == null) {
+        // if (targetSlot.getPrototype() == payloadSlot.getPrototype() ||
+        // targetSlot.getPrototype() == null) {
         getActor().setColor(Color.WHITE);
         return true;
         // } else {

@@ -8,12 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
-import com.darkhouse.gdefence.InventorySystem.inventory.GradableTooltip;
-import com.darkhouse.gdefence.InventorySystem.inventory.SlotListener;
-import com.darkhouse.gdefence.InventorySystem.inventory.TooltipListener;
+import com.darkhouse.gdefence.InventorySystem.inventory.*;
+import com.darkhouse.gdefence.Model.Panels.GemPanel;
 import com.darkhouse.gdefence.Model.Panels.GoldPanel;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 import com.darkhouse.gdefence.User;
@@ -21,6 +21,7 @@ import com.darkhouse.gdefence.User;
 public class Smith extends AbstractCampainScreen{
     private ImageButton upHealth;
     private ImageButton upEnergy;
+    private InventoryActor inventoryActor;
 
     //private Array<SlotListener> slotListeners = new Array<SlotListener>();
 
@@ -59,13 +60,37 @@ public class Smith extends AbstractCampainScreen{
                 return true;
             }
         });
+        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
+            @Override
+            protected void setDefaults() {
+                setPosition(100, 150);
+                defaults().space(8);
+                defaults().size(60, 60);
+                row().fill().expandX();
+                setRowNumber(5);
+                setRows(3);
+            }
+        };
+        GemGradePanel pn = new GemGradePanel(new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
+            @Override
+            protected void setDefaults() {
+                super.setDefaults();
+                setPosition(600, 150);
+            }
+        };
+        inventoryActor.getDragAndDrop().addTarget(new GemGradeTarget(pn.getGradeTowerSlot()));
+        pn.getDragAndDrop().addSource(new GemGradeSource(pn.getGradeTowerSlot()));
+        for (SlotActor a:inventoryActor.getActorArray()) {
+            pn.getDragAndDrop().addTarget(new SlotTarget(a));
+        }
 
 
-
-
+        stage.addActor(inventoryActor);
+        stage.addActor(pn);
         stage.addActor(upHealth);
         stage.addActor(upEnergy);
         stage.addActor(new GoldPanel(1000, 500, 160, 100));
+        stage.addActor(new GemPanel(1000, 300, 270, 160));
     }
 
     private void notifyListeners(){

@@ -21,7 +21,7 @@ public class GoldPanel extends AbstractPanel{
         int heightTxt = height - heightImg;
 
         add(new Image(GDefence.getInstance().assetLoader.get("coin.png", Texture.class))).width(widthImg).height(heightImg).padTop(20).align(Align.center).row();
-        textLabel = new Label(GDefence.getInstance().user.getGold() + "", AssetLoader.getSkin());//do with FontLoader
+        textLabel = new Label(GDefence.getInstance().user.getGold() + "", GDefence.getInstance().assetLoader.getSkin());//do with FontLoader
         textLabel.setAlignment(Align.center);
         //l.setFontScale(0.5f);
         add(textLabel);

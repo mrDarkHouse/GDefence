@@ -45,17 +45,24 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
 
 
     public AbstractCampainScreen(String name) {
+        super();
         this.name = name;
+        batch = new SpriteBatch();
+        //stage = new Stage();
+        shape = new ShapeRenderer();
+
+//        Gdx.input.setInputProcessor(stage);
+        define();
     }
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
-        stage = new Stage();
-        shape = new ShapeRenderer();
-
+//        batch = new SpriteBatch();
+//        //stage = new Stage();
+//        shape = new ShapeRenderer();
+//
         Gdx.input.setInputProcessor(stage);
-        define();
+//        define();
     }
 
     protected void define(){

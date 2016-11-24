@@ -7,12 +7,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public abstract class AbstractScreen implements Screen {
     protected Stage stage;
 
+    public AbstractScreen() {
+        stage = new Stage();
+    }
+
     public Stage getStage() {
         return stage;
     }
 
     @Override
     public void show() {
-        stage = new Stage();
+      //  stage = new Stage();
     }
 }

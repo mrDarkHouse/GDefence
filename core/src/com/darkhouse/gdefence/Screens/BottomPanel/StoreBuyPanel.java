@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 
@@ -43,7 +41,7 @@ public class StoreBuyPanel extends InventoryActor{
 
     private void addCost(){
         for (int i = 0; i < getInventory().getSlots().size; i++){
-            Item item = getInventory().getSlots().get(i).getItem();
+            Item item = getInventory().getSlots().get(i).getPrototype();
             if(item!= null){
                 cost[i].setText("$" + item.getGlobalCost());
             }
@@ -58,6 +56,7 @@ public class StoreBuyPanel extends InventoryActor{
         defaults().size(60, 60);
         row().fill().expandX();
         setRowNumber(1);
+        setRows(4);
     }
 
     @Override
@@ -82,7 +81,7 @@ public class StoreBuyPanel extends InventoryActor{
 
     @Override
     protected void beforeRow(Slot slot, int i) {
-        //Item item = slot.getItem();
+        //Item item = slot.getPrototype();
         //if(item != null) {
         //    ItemEnum.Tower tower = (ItemEnum.Tower) item;
         //    super.add(new Label("$" + tower.getCost(), FontLoader.generateStyle(16, Color.BLACK)));

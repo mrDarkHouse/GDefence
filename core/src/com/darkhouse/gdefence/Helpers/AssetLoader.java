@@ -416,7 +416,7 @@ public class AssetLoader extends AssetManager{
         }
         return null;
     }
-    public static Skin getSkin(){
+    public Skin getSkin(){
         return new Skin(Gdx.files.internal("uiskin.json"));
     }
 
@@ -445,34 +445,20 @@ public class AssetLoader extends AssetManager{
         return FontLoader.generateStyle(36, Color.BLACK);
     }
 
-//    public ImageButton.ImageButtonStyle getTowerCellSkin(ItemEnum.Tower tower){
-//        ImageButton.ImageButtonStyle towerCellStyle = new ImageButton.ImageButtonStyle();
-//        switch (tower){
-//            case Basic:
-//                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
-//                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
-//                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.basicTower));
-//                break;
-//            case Rock:
-//                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
-//                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
-//                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.rockTower));
-//                break;
-//            case Arrow:
-//                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
-//                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
-//                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.arrowTower));
-//                break;
-//            case Range:
-//                towerCellStyle.up = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
-//                towerCellStyle.over = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
-//                towerCellStyle.down = new TextureRegionDrawable(new TextureRegion(AssetLoader.rangeTower));
-//                break;
-//            default:
-//                throw new RuntimeException("No tower found with id: " + tower);
-//        }
-//        return towerCellStyle;
-//    }
+    public ImageButton.ImageButtonStyle getTowerCellSkin(ItemEnum.Tower tower){
+        switch (tower){
+            case Basic:
+                return generateImageButtonSkin(get("Tower/basicTower.png", Texture.class));
+            case Rock:
+                return generateImageButtonSkin(get("Tower/rockTower.png", Texture.class));
+            case Arrow:
+                return generateImageButtonSkin(get("Tower/arrowTower.png", Texture.class));
+            case Range:
+                return generateImageButtonSkin(get("Tower/rangeTower.png", Texture.class));
+            default:
+                throw new RuntimeException("No tower found with id: " + tower);
+        }
+    }
     public Texture getTowerTexture(ItemEnum.Tower tower){
         switch (tower){
             case Basic:

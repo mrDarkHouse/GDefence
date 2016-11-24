@@ -9,22 +9,13 @@ public class Slow extends Debuff {
     private float changeSpeed;
 
     public Slow(Mob owner, float percent, float duration) {
-        super(owner);
+        super(owner, duration);
         this.percent = percent;
-        this.duration = duration;
     }
 
     public void apply(){
-        Timer t = new Timer();
         changeSpeed = owner.getSpeed()*percent;
         owner.changeSpeed(-changeSpeed);
-        t.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-                dispell();
-            }
-        }, duration);
-
     }
 
     @Override

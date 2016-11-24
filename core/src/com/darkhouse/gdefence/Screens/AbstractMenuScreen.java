@@ -20,22 +20,34 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
 
 
     public AbstractMenuScreen(boolean enableBackButton) {
+        super();
         this.enableBackButton = enableBackButton;
-    }
-
-    @Override
-    public void show() {
         batch = new SpriteBatch();
-       // stage = new Stage();
+        // stage = new Stage();
 
         Viewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage = new Stage(viewport,batch);
 
-        Gdx.input.setInputProcessor(stage);
+        //Gdx.input.setInputProcessor(stage);
 
 
 
         loadButtons(enableBackButton);
+    }
+
+    @Override
+    public void show() {
+//        batch = new SpriteBatch();
+//       // stage = new Stage();
+//
+//        Viewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        stage = new Stage(viewport,batch);
+//
+        Gdx.input.setInputProcessor(stage);
+//
+//
+//
+//        loadButtons(enableBackButton);
     }
 
     private void loadButtons(boolean enableBackButton){

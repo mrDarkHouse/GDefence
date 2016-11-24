@@ -26,6 +26,7 @@ public class LevelShopPanel extends InventoryActor {
         defaults().size(60, 60);
         row().fill().expandX();
         setRowNumber(8);//infinity
+        setRows(1);
     }
 
     @Override

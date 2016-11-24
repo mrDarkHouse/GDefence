@@ -16,7 +16,7 @@ import com.darkhouse.gdefence.Model.Panels.UserPanel;
 public class BottomPanel extends Table {
 
     public BottomPanel() {
-        super(AssetLoader.getSkin());
+        super(GDefence.getInstance().assetLoader.getSkin());
 
         init();
     }

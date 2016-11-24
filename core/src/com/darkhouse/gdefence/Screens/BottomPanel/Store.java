@@ -32,6 +32,7 @@ public class Store extends AbstractCampainScreen{
                 defaults().size(60, 60);
                 row().fill().expandX();
                 setRowNumber(7);
+                setRows(4);
             }
         };
         storeBuyPanel = new StoreBuyPanel(new StoreBuyInventory());

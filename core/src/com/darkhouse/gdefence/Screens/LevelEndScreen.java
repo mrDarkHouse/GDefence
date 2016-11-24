@@ -60,7 +60,7 @@ public class LevelEndScreen implements Screen{
         table.add(resultLabel).padTop(70).padBottom(100).row();
 
 
-        continueButton = new TextButton("Continue", AssetLoader.getSkin());
+        continueButton = new TextButton("Continue", GDefence.getInstance().assetLoader.getSkin());
         //continueButton.setSize(200, 40);
         continueButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

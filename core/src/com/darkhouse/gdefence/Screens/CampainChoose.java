@@ -93,10 +93,11 @@ public class CampainChoose extends AbstractMenuScreen{
             @Override
             protected void result(Object object) {
                 if(object.equals(true)){
-                    GDefence.getInstance().user = new User();
-                    GDefence.getInstance().user.init();
-                    GDefence.getInstance().user.save();
-                    GDefence.getInstance().setScreen(new CampainMap());
+//                    GDefence.getInstance().user = new User();
+//                    GDefence.getInstance().user.init();
+//                    GDefence.getInstance().user.save();
+                    GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainMap());
+                    //GDefence.getInstance().setScreen(new CampainMap());
                 }else{
                     hide();
                 }

@@ -24,7 +24,7 @@ public class OptionScreen extends AbstractMenuScreen {
     private void loadButtons(){
         Table table = new Table();
 
-        TextButton resolution = new TextButton("Resolution", AssetLoader.getSkin());
+        TextButton resolution = new TextButton("Resolution", GDefence.getInstance().assetLoader.getSkin());
         resolution.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 
@@ -32,7 +32,7 @@ public class OptionScreen extends AbstractMenuScreen {
                 return true;
             }
         });
-        TextButton sound = new TextButton("Sound", AssetLoader.getSkin());
+        TextButton sound = new TextButton("Sound", GDefence.getInstance().assetLoader.getSkin());
         sound.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 

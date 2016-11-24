@@ -62,11 +62,16 @@ public class MainMenu extends AbstractMenuScreen{
        // menuBg = new Texture("MainMenuBg.png");
         //loadButtons();
 
+
     }
+    public void init(){
+        loadButtons();
+    }
+
     @Override
     public void show() {
         super.show();
-        loadButtons();
+//        loadButtons();
 
     }
 
@@ -108,7 +113,8 @@ public class MainMenu extends AbstractMenuScreen{
         campainButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, Gdx.graphics.getHeight() - buttonsSize[1] - startBorder);
         campainButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                GDefence.getInstance().setScreen(new CampainChoose());
+                GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainChoose());
+                //GDefence.getInstance().setScreen(new CampainChoose());
                 //mainclass.setScreen(new CampainMap(mainclass));
                 return true;
             }
@@ -119,7 +125,8 @@ public class MainMenu extends AbstractMenuScreen{
         optionsButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, campainButton.getY() - buttonsSize[1] - sizeBetween);
         optionsButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                GDefence.getInstance().setScreen(new OptionScreen());
+                GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
+                //GDefence.getInstance().setScreen(new OptionScreen());
                 return true;
             }
         });

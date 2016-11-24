@@ -162,16 +162,21 @@ public class CampainMap extends AbstractCampainScreen {
 
     public CampainMap() {
         super("Campain");
+//        loadButtons();
         //batch = new SpriteBatch();
         //shape = new ShapeRenderer();
         //this.mainClass = mainClass;
 
     }
 
+    public void init(){
+        loadButtons();
+    }
+
     @Override
     public void show() {
         super.show();
-        loadButtons();
+        init();
         //loadFrames();
     }
 

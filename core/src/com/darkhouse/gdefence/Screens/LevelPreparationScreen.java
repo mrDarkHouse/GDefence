@@ -45,7 +45,7 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
 
         inventoryActor.setPosition(100, 50);
 
-        TextButton startButton = new TextButton("Start", AssetLoader.getSkin());
+        TextButton startButton = new TextButton("Start", GDefence.getInstance().assetLoader.getSkin());
         startButton.setSize(150, 70);
         startButton.setPosition(Gdx.graphics.getWidth() - 200, 30);
         startButton.addListener(new InputListener(){

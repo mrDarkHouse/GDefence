@@ -27,13 +27,13 @@ import com.darkhouse.gdefence.Level.Ability.Crit;
 import com.darkhouse.gdefence.Level.Ability.MultiShot;
 import com.darkhouse.gdefence.Level.Ability.PoisonArrow;
 import com.darkhouse.gdefence.Level.Tower.AttackType;
+import com.darkhouse.gdefence.User;
 
 import java.util.ArrayList;
 
-/**
- * @author Daniel Holderbaum
- */
+
 public enum ItemEnum {;
+	public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
 
 
 
@@ -154,6 +154,7 @@ public enum ItemEnum {;
 			return speedDelay;
 		}
 
+
 		Tower(AttackType attackType, int cost, int globalCost, int dmg, int range, float speedDelay) {
 			//this.name = name;
 			this.globalCost = globalCost;
@@ -168,10 +169,41 @@ public enum ItemEnum {;
 			addAbilities();
 
 		}
+
 	}
-	public enum Spell {
-		Firestorm("Firestorm", 20, 100),
-		IceBlast("Ice Blast", 10, 60);
+	public enum Spell implements Item{
+		Firestorm("Firestorm", 20, 100) {
+			@Override
+			public String getTextureRegion() {
+				return null;
+			}
+
+			@Override
+			public String getTooltip() {
+				return null;
+			}
+
+			@Override
+			public int getGlobalCost() {
+				return 0;
+			}
+		},
+		IceBlast("Ice Blast", 10, 60) {
+			@Override
+			public String getTextureRegion() {
+				return null;
+			}
+
+			@Override
+			public String getTooltip() {
+				return null;
+			}
+
+			@Override
+			public int getGlobalCost() {
+				return 0;
+			}
+		};
 
 
 		private String name;
@@ -183,10 +215,32 @@ public enum ItemEnum {;
 			this.dmg = dmg;
 			this.manaCost = manaCost;
 		}
+
+
 	}
 
 	//Иличев Глеб
 
+
+	public enum Detail implements Item{
+		Recipe{
+			@Override
+			public String getTextureRegion() {
+				return null;
+			}
+
+			@Override
+			public String getTooltip() {
+				return null;
+			}
+
+			@Override
+			public int getGlobalCost() {
+				return 0;
+			}
+		}
+
+	}
 
 
 

@@ -1,5 +1,106 @@
 package com.darkhouse.gdefence.Objects;
 
 
+import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.User;
+
+import java.util.HashMap;
+
 public class TowerObject extends GameObject{
+    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
+
+    private ItemEnum.Tower prototype;
+    private int level;
+    private int totalExp;
+    private int currentExp;
+
+    private int range;
+    private int dmg;
+    //protected int speed;
+    private float speedDelay;
+    private int cost;
+    private int globalCost;
+
+//    private HashMap<User.GEM_TYPE, Integer> gemsNumber;
+    private int[] gemsNumber;
+
+
+
+    public void addExp(int value){
+        totalExp += value;
+        updateExp();
+    }
+    public void addGems(User.GEM_TYPE type, int value){
+        //gemsNumber[type.ordinal()] += value;
+        updateGemStat(type.ordinal(), value);
+    }
+
+    public int getLevel() {
+        return level;
+    }
+    public int getTotalExp() {
+        return totalExp;
+    }
+    public int getCurrentExp() {
+        return currentExp;
+    }
+    public int[] getSimplyGemStat(){
+        return new int[]{gemsNumber[0], gemsNumber[1], gemsNumber[2]};
+    }
+
+
+    public TowerObject(ItemEnum.Tower prototype) {
+        this.prototype = prototype;
+        level = 1;
+        totalExp = 0;
+        updateExp();
+
+        dmg = prototype.getDmg();
+        range = prototype.getRange();
+        speedDelay = prototype.getSpeedDelay();
+        cost = prototype.getCost();
+        globalCost = prototype.getGlobalCost();
+
+
+        gemsNumber = new int[]{0, 0, 0, 0, 0, 0};
+//        gemsNumber = new HashMap<User.GEM_TYPE, Integer>();
+//        gemsNumber.put(User.GEM_TYPE.RED, 0);
+    }
+
+    public void updateGemStat(int gemType, int value){
+        switch (gemType){
+            case 0:
+                for (int i = 0; i < value; i++){
+                    dmg += 5;
+                }
+                break;
+            case 1:
+                for (int i = 0; i < value; i++){
+                    speedDelay -= 0.2f;
+                }
+                break;
+            case 2:
+                for (int i = 0; i < value; i++){
+                    range += 20;
+                }
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+
+                break;
+        }
+    }
+
+    public void updateExp(){
+        currentExp = getTotalExp();
+        for(int i = level - 1; currentExp >= exp2nextLvl[i]; i ++){
+            currentExp -= exp2nextLvl[i];
+            level++;
+        }
+    }
 }

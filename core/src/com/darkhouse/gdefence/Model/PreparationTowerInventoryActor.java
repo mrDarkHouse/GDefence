@@ -15,23 +15,23 @@ public class PreparationTowerInventoryActor extends InventoryActor{
     }
 
 
-    @Override
-    protected void initCells(DragAndDrop dragAndDrop, Skin skin, Inventory inventory) {
-        actorArray = new Array<SlotActor>();
-        int i = 0;
-        for (Slot slot : inventory.getSlots()) {
-            SlotActor slotActor = new SlotActor(skin, slot);
-            dragAndDrop.addSource(new SlotSource(slotActor));
-            dragAndDrop.addTarget(new SlotTarget(slotActor));
-            actorArray.add(slotActor);
-            add(slotActor);
-
-            i++;
-            if (i % 4 == 0) {
-                row();
-            }
-        }
-    }
+//    @Override
+//    protected void initCells(DragAndDrop dragAndDrop, Skin skin, Inventory inventory) {
+//        actorArray = new Array<SlotActor>();
+//        int i = 0;
+//        for (Slot slot : inventory.getSlots()) {
+//            SlotActor slotActor = new SlotActor(skin, slot);
+//            dragAndDrop.addSource(new SlotSource(slotActor));
+//            dragAndDrop.addTarget(new SlotTarget(slotActor));
+//            actorArray.add(slotActor);
+//            add(slotActor);
+//
+//            i++;
+//            if (i % 4 == 0) {
+//                row();
+//            }
+//        }
+//    }
 
     @Override
     protected void setDefaults() {
@@ -39,5 +39,13 @@ public class PreparationTowerInventoryActor extends InventoryActor{
         defaults().space(8);
         defaults().size(60, 60);
         row().fill().expandX();
+        setRowNumber(4);
+        setRows(4);
+    }
+
+    @Override
+    protected void addSourceTarget(SlotActor slotActor) {
+        dragAndDrop.addSource(new SlotSource(slotActor));
+        dragAndDrop.addTarget(new SlotTarget(slotActor));
     }
 }

@@ -10,6 +10,7 @@ import com.darkhouse.gdefence.Level.Tower.Tower;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class User {
@@ -174,7 +175,7 @@ public class User {
     private int level = 1;// = exp - Value.needExp2Lvl[0];
 
     //public TowerObject[] towers;
-    public ArrayList <Tower> towers;
+    //public ArrayList <Tower> towers;
 
     //public ArrayList <Item> items;
 
@@ -186,6 +187,39 @@ public class User {
 
     public static void setInventory(Inventory inventory) {
         User.inventory = inventory;
+    }
+
+    public enum RecipeType{
+        opened, canOpen, locked
+    }
+
+    private HashMap <ItemEnum.Tower, RecipeType> openedTowers;
+
+
+    private void initOpenedTowers(){
+        openedTowers = new HashMap<ItemEnum.Tower, RecipeType>();
+        openedTowers.put(ItemEnum.Tower.Basic, RecipeType.opened);
+        openedTowers.put(ItemEnum.Tower.Rock, RecipeType.locked);
+        openedTowers.put(ItemEnum.Tower.Arrow, RecipeType.locked);
+        openedTowers.put(ItemEnum.Tower.Range, RecipeType.locked);
+
+
+        openRecipes();
+    }
+    public RecipeType isOpenedTower(ItemEnum.Tower t){
+        return openedTowers.get(t);
+    }
+    public void buyTowerRecipe(ItemEnum.Tower t){
+        openedTowers.put(t, RecipeType.opened);
+        openRecipes();
+    }
+    private void openRecipes(){
+        if(isOpenedTower(ItemEnum.Tower.Basic) == RecipeType.opened){
+            openedTowers.put(ItemEnum.Tower.Rock, RecipeType.canOpen);
+            openedTowers.put(ItemEnum.Tower.Arrow, RecipeType.canOpen);
+            openedTowers.put(ItemEnum.Tower.Range, RecipeType.canOpen);
+        }
+        //if() etc
     }
 
     /*
@@ -212,7 +246,27 @@ public class User {
     }
 
     public enum GEM_TYPE{
-        RED, YELLOW, BLUE, BLACK, GREEN, WHITE
+        RED, YELLOW, BLUE, BLACK, GREEN, WHITE;
+
+
+        public static int getBoost(GEM_TYPE type){
+            switch (type){
+                case RED:
+                    return 5;//dmg
+                case YELLOW:
+                    return 10;//as
+                case BLUE:
+                    return 20;//range
+                case BLACK:
+                    //
+                case GREEN:
+                    //
+                case WHITE:
+                    //
+            }
+            return 0;
+        }
+
     }
 
     public int getGemNumber(GEM_TYPE t){
@@ -231,6 +285,36 @@ public class User {
                 return whiteGems;
         }
         return 0;
+    }
+
+    public boolean spendGems(GEM_TYPE t, int number){
+        switch (t){
+            case RED:
+                if(redGems >= number){
+                    redGems -= number;
+                    return true;
+                }
+                break;
+            case YELLOW:
+                if(yellowGems >= number){
+                    yellowGems -= number;
+                    return true;
+                }
+                break;
+            case BLUE:
+                if(blueGems >= number){
+                    blueGems -= number;
+                    return true;
+                }
+                break;
+//            case BLACK:
+//                return blackGems;
+//            case GREEN:
+//                return greenGems;
+//            case WHITE:
+//                return whiteGems;
+        }
+        return false;
     }
 
 
@@ -258,6 +342,8 @@ public class User {
         //towers = new ArrayList<Tower>();
 
 
+
+
         //towers.add(new ArrowTower());
         //towers.add(new RockTower());
         //towers.add(new BasicTower());
@@ -270,7 +356,9 @@ public class User {
         inventory = new Inventory();
         inventory.store(ItemEnum.Tower.Basic, 1);
         inventory.store(ItemEnum.Tower.Rock, 1);
-        inventory.store(ItemEnum.Tower.Arrow, 1);
+        inventory.store(ItemEnum.Tower.Arrow, 3);
+
+        initOpenedTowers();
 
 //        towers.add(new TowerObject(TowerType.Basic));
 //        towers.add(new TowerObject(TowerType.Basic));

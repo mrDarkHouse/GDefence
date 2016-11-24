@@ -30,6 +30,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
+import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.Objects.GameObject;
 
 /**
  * @author Daniel Holderbaum
@@ -37,6 +39,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 public class SlotSource extends Source {
 
 	protected Slot sourceSlot;
+	protected Slot payloadSlot;
 
 	public SlotSource(SlotActor actor) {
 		super(actor);
@@ -50,13 +53,14 @@ public class SlotSource extends Source {
 		}
 
 		Payload payload = new Payload();
-		Slot payloadSlot = new Slot(sourceSlot.getItem(), sourceSlot.getAmount());
+//		Slot payloadSlot = new Slot(sourceSlot.getPrototype(), sourceSlot.getAmount());
+		payloadSlot = new Slot(sourceSlot.getPrototype(), 0);
 		takeSlot();
 		payload.setObject(payloadSlot);
 
 		//TextureAtlas icons = LibgdxUtils.assets.get("icons/icons.atlas", TextureAtlas.class);
 		TextureAtlas icons = new TextureAtlas(Gdx.files.internal("icons/icons.atlas"));
-		TextureRegion icon = icons.findRegion(payloadSlot.getItem().getTextureRegion());
+		TextureRegion icon = icons.findRegion(payloadSlot.getPrototype().getTextureRegion());
 
 		Actor dragActor = new Image(icon);
 		payload.setDragActor(dragActor);
@@ -72,7 +76,7 @@ public class SlotSource extends Source {
 		return payload;
 	}
 	protected void takeSlot(){
-		sourceSlot.take(sourceSlot.getAmount());
+		payloadSlot.add(sourceSlot.takeAll());
 	}
 
 	@Override
@@ -80,17 +84,17 @@ public class SlotSource extends Source {
 		Slot payloadSlot = (Slot) payload.getObject();
 		if (target != null) {
 			Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-			if (targetSlot.getItem() == payloadSlot.getItem() || targetSlot.getItem() == null) {
-				targetSlot.add(payloadSlot.getItem(), payloadSlot.getAmount());
+			if (targetSlot.getPrototype() == payloadSlot.getPrototype() || targetSlot.getPrototype() == null) {
+				targetSlot.add(payloadSlot.takeAll());
 			} else {
-				Item targetType = targetSlot.getItem();
-				int targetAmount = targetSlot.getAmount();
-				targetSlot.take(targetAmount);
-				targetSlot.add(payloadSlot.getItem(), payloadSlot.getAmount());
-				sourceSlot.add(targetType, targetAmount);
+				//Item targetType = targetSlot.getPrototype();
+				//int targetAmount = targetSlot.getAmount();
+				Array<GameObject> tmp = targetSlot.takeAll();
+				targetSlot.add(payloadSlot.takeAll());
+				sourceSlot.add(tmp);
 			}
 		} else {
-			sourceSlot.add(payloadSlot.getItem(), payloadSlot.getAmount());
+			sourceSlot.add(payloadSlot.takeAll());
 		}
 	}
 }

@@ -22,8 +22,6 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -31,12 +29,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
-import com.darkhouse.gdefence.Helpers.FontLoader;
-import com.darkhouse.gdefence.InventorySystem.LibgdxUtils;
-import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 import com.darkhouse.gdefence.Screens.AbstractScreen;
-import com.darkhouse.gdefence.Screens.BottomPanel.Arsenal;
 
 /**
  * @author Daniel Holderbaum
@@ -76,8 +69,8 @@ public class SlotActor extends ImageButton implements SlotListener {
 		//TextureAtlas icons = LibgdxUtils.assets.get("icons/icons.atlas", TextureAtlas.class);
 		TextureAtlas icons = new TextureAtlas(Gdx.files.internal("icons/icons.atlas"));
 		TextureRegion image;
-		if (slot.getItem() != null) {
-			image = icons.findRegion(slot.getItem().getTextureRegion());
+		if (slot.getPrototype() != null) {
+			image = icons.findRegion(slot.getPrototype().getTextureRegion());
 		} else {
 			image = icons.findRegion("nothing");
 		}

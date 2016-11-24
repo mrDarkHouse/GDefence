@@ -22,25 +22,91 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.Objects.DetailObject;
+import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.Objects.SpellObject;
+import com.darkhouse.gdefence.Objects.TowerObject;
 
 /**
  * @author Daniel Holderbaum
  */
 public class Slot {
 
-	private Item item;
+	private Item prototype;
 
-	private int amount;
+	private Array <GameObject> itemsArray;
+
+	//private int amount;
 
 	private Array<SlotListener> slotListeners = new Array<SlotListener>();
 
 	public Slot(Item item, int amount) {
-		this.item = item;
-		this.amount = amount;
+		this.prototype = item;
+		//this.amount = amount;
+		itemsArray = new Array<GameObject>();
+		for (int i = 0; i < amount; i++){
+			//itemsArray.add(prototype);
+		}
 	}
 
+	/**
+	 * Returns {@code true} in case this slot has the same prototype type and at
+	 * least the same amount of items as the given other slot.
+	 *
+	 * @param //other
+	 *            The other slot to be checked.
+	 * @return {@code True} in case this slot has the same prototype type and at
+	 *         least the same amount of items as the given other slot.
+	 *         {@code False} otherwise.
+	 */
+//	public boolean matches(Slot other) {
+//		return this.prototype == other.prototype && this.amount >= other.amount;
+//	}
+
+//	public boolean add(Item item, int amount) {
+//		if (this.prototype == item || this.prototype == null) {
+//			this.prototype = item;
+//			//this.amount += amount;
+//			if(prototype instanceof ItemEnum.Tower){
+//				itemsArray.add(new TowerObject(((ItemEnum.Tower) prototype)));
+//			}else if(prototype instanceof  ItemEnum.Spell){
+//				itemsArray.add(new SpellObject(((ItemEnum.Spell) prototype)));
+//			}else if(prototype instanceof  ItemEnum.Detail){
+//				itemsArray.add(new DetailObject(((ItemEnum.Detail) prototype)));
+//			}
+//
+//
+//			updateArray();
+//			notifyListeners();
+//			return true;
+//		}
+//
+//		return false;
+//	}
+
+	public boolean add(Array<GameObject> o){
+		if(isEqualPrototype(prototype, o.first())) {
+			itemsArray.addAll(o);
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isEqualPrototype(Item prototype, GameObject object){
+		if(prototype instanceof ItemEnum.Tower && object instanceof TowerObject){
+			return true;
+		}else if(prototype instanceof ItemEnum.Spell && object instanceof SpellObject){
+			return true;
+		}else if(prototype instanceof  ItemEnum.Detail && object instanceof DetailObject){
+			return true;
+		}
+		return false;
+	}
+
+
+
 	public boolean isEmpty() {
-		return item == null || amount <= 0;
+		return prototype == null || itemsArray.size <= 0;
 	}
 
 	public void addListener(SlotListener slotListener) {
@@ -51,60 +117,76 @@ public class Slot {
 		slotListeners.removeValue(slotListener, true);
 	}
 
-	/**
-	 * Returns {@code true} in case this slot has the same item type and at
-	 * least the same amount of items as the given other slot.
-	 * 
-	 * @param other
-	 *            The other slot to be checked.
-	 * @return {@code True} in case this slot has the same item type and at
-	 *         least the same amount of items as the given other slot.
-	 *         {@code False} otherwise.
-	 */
-	public boolean matches(Slot other) {
-		return this.item == other.item && this.amount >= other.amount;
-	}
 
-	public boolean add(Item item, int amount) {
-		if (this.item == item || this.item == null) {
-			this.item = item;
-			this.amount += amount;
-			notifyListeners();
-			return true;
-		}
 
-		return false;
-	}
 
-	public boolean take(int amount) {
-		if (this.amount >= amount) {
-			this.amount -= amount;
-			if (this.amount == 0) {
-				item = null;
+//	public boolean take(int amount) {
+//		if (getAmount() >= amount) {
+//			//this.amount -= amount;
+//			if (getAmount() == 0) {
+//				prototype = null;
+//				//itemsArray.clear();
+//			}
+//			for (int i = 0; i < amount; i++){
+////				itemsArray.removeIndex(itemsArray.size - 1);
+//				itemsArray.removeValue(itemsArray.peek(), true);
+//				updateArray();
+//			}
+//
+//			notifyListeners();
+//			return true;
+//		}
+//
+//		return false;
+//	}
+
+	public Array<GameObject> take(int amount){
+		Array<GameObject> tmpArr = new Array<GameObject>();
+		if(getAmount() >= amount){
+			for (int i = 0; i < amount; i++){
+				tmpArr.add(itemsArray.peek());
+				itemsArray.removeValue(itemsArray.peek(), true);
 			}
-			notifyListeners();
-			return true;
 		}
-
-		return false;
+		return tmpArr;
 	}
 
-	private void notifyListeners() {
+	public Array<GameObject> takeAll(){
+		Array<GameObject> tmpArr = new Array<GameObject>(itemsArray);
+		itemsArray.clear();
+		return tmpArr;
+	}
+
+
+
+
+
+
+	private void updateArray(){
+		//itemsArray.sort();
+
+	}
+
+	public void notifyListeners() {
 		for (SlotListener slotListener : slotListeners) {
 			slotListener.hasChanged(this);
 		}
 	}
 
-	public Item getItem() {
-		return item;
+	public Item getPrototype() {
+		return prototype;
+		//if(itemsArray.size > 0) {
+		//	return itemsArray.get(itemsArray.size - 1);
+		//}else return null;
 	}
 
 	public int getAmount() {
-		return amount;
+		//return amount;
+		return itemsArray.size;
 	}
 
 	@Override
 	public String toString() {
-		return "Slot[" + item + ":" + amount + "]";
+		return "Slot[" + prototype + ":" + getAmount() + "]";
 	}
 }

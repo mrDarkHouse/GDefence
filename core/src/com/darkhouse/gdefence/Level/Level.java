@@ -274,6 +274,7 @@ public class Level {
     private void physicMobs(SpriteBatch batch, float delta){
         List<Mob> tmpMobs = new CopyOnWriteArrayList<Mob>(Wave.mobs);
         for (Mob m: tmpMobs){
+            m.actEffects(delta);
             m.move(delta);
             m.render(batch);
         }

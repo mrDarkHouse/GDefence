@@ -35,9 +35,14 @@ public class InventoryActor extends Window {
 	protected Array<SlotActor> actorArray;
 	protected Inventory inventory;
 	private int rowNumber;
+	private int rows;
 	private int pages;
 	public void setRowNumber(int rowNumber) {
 		this.rowNumber = rowNumber;
+	}
+
+	public void setRows(int rows) {
+		this.rows = rows;
 	}
 
 	public Array<SlotActor> getActorArray() {
@@ -82,6 +87,7 @@ public class InventoryActor extends Window {
 		defaults().size(60, 60);
 		row().fill().expandX();
 		setRowNumber(7);
+		setRows(5);
 	}
 	protected void initCells(DragAndDrop dragAndDrop, Skin skin, Inventory inventory){
 		beforeInitCells();
@@ -96,6 +102,9 @@ public class InventoryActor extends Window {
 			i++;
 			if (i % rowNumber == 0) {
 				row();
+			}
+			if(i / rowNumber == rows){
+				break;//next page
 			}
 		}
 		afterInitCells();
