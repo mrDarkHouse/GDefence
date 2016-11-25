@@ -35,7 +35,7 @@ public class StoreBuyPanel extends InventoryActor{
 
     @Override
     protected void afterInitCells() {
-        super.add(sellButton).expand().fill().row();//do width on 2 columns
+        super.add(sellButton).colspan(2).growX().expandX().row();
     }
 
     public void store(Item item, int amount){
@@ -45,7 +45,7 @@ public class StoreBuyPanel extends InventoryActor{
 
     private void addCost(){
         for (int i = 0; i < getInventory().getSlots().size; i++){
-            Item item = getInventory().getSlots().get(i).getPrototype();
+            Item item = getInventory().getSlots().get(i).getPrototype();//TowerObject can be instead prototype
             if(item!= null){
                 cost[i].setText("$" + item.getGlobalCost());
             }

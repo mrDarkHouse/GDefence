@@ -42,6 +42,7 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
 //
 //        Viewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //        stage = new Stage(viewport,batch);
+
 //
         Gdx.input.setInputProcessor(stage);
 //
@@ -73,7 +74,7 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-        dispose();
+        //dispose();
     }
 
     @Override

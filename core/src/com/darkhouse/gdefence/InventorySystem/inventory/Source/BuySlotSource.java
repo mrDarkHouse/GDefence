@@ -26,9 +26,7 @@ public class BuySlotSource extends SlotSource {
     @Override
     protected void takeSlot() {
         //dont take from shop
-        Array<GameObject> tmp = new Array<GameObject>();//shit code
-        tmp.add(sourceSlot.getLast());
-        payloadSlot.add(tmp);
+        payloadSlot.add(Slot.genereateStartObjects(sourceSlot.getPrototype(), 1));
     }
 
     @Override
@@ -48,6 +46,7 @@ public class BuySlotSource extends SlotSource {
 
     @Override
     protected void ifNullTarget() {
+        payloadSlot.takeAll();
         //no return back
     }
 }

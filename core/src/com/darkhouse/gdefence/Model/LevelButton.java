@@ -32,8 +32,7 @@ public class LevelButton extends TextButton {
         LevelToolip tooltip = new LevelToolip(this, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         tooltip.setTouchable(Touchable.disabled);
         //CampainMap.getStage().addActor(tooltip);
-        //((AbstractCampainScreen)GDefence.getInstance().getScreen()).getStage().addActor(tooltip);//do inside tooltip
-        GDefence.getInstance().getCampainMap().getStage().addActor(tooltip);
+//        GDefence.getInstance().getCampainMap().getStage().addActor(tooltip);
         addListener(new TooltipListener(tooltip, true));
 
 

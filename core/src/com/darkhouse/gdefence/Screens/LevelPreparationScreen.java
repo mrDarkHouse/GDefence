@@ -38,10 +38,12 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
     private void load(final int level){
         inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(inventoryActor);
+        inventoryActor.init();
         preparationTowerInventoryActor = new PreparationTowerInventoryActor(new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         inventoryActor.addSlots(preparationTowerInventoryActor);
         preparationTowerInventoryActor.addSlots(inventoryActor);
         stage.addActor(preparationTowerInventoryActor);
+        preparationTowerInventoryActor.init();
 
         inventoryActor.setPosition(100, 50);
 

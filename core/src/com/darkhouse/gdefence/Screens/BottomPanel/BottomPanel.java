@@ -37,7 +37,7 @@ public class BottomPanel extends Table {
         //bottomPanel[0].setPosition(0, 0);
         bottomPanel[0].addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                GDefence.getInstance().setScreen(new Arsenal());
+                GDefence.getInstance().switchScreen(GDefence.getInstance().getArsenal());
                 return true;
             }
         });
@@ -48,7 +48,7 @@ public class BottomPanel extends Table {
         //bottomPanel[1].setPosition(bottomButtonsSize[0], 0);
         bottomPanel[1].addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                GDefence.getInstance().setScreen(new Store());
+                GDefence.getInstance().switchScreen(GDefence.getInstance().getStore());
                 return true;
             }
         });
@@ -59,7 +59,7 @@ public class BottomPanel extends Table {
         //bottomPanel[2].setPosition(bottomButtonsSize[0]*2, 0);
         bottomPanel[2].addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                GDefence.getInstance().setScreen(new Smith());
+                GDefence.getInstance().switchScreen(GDefence.getInstance().getSmith());
                 return true;
             }
         });

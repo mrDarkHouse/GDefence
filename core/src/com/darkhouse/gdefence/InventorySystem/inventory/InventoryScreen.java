@@ -49,6 +49,7 @@ public class InventoryScreen implements Screen {
 		DragAndDrop dragAndDrop = new DragAndDrop();
 		inventoryActor = new InventoryActor(new Inventory(), dragAndDrop, skin);
 		stage.addActor(inventoryActor);
+		inventoryActor.init();
 	}
 
 	@Override

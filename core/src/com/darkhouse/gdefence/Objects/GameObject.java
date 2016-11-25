@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 
 public abstract class GameObject {
-    public String getName() {
-        return name;
-    }
+    public abstract String getName(); //{
+//        return name;
+//    }
     public Texture getTexture() {
         return texture;
     }
@@ -26,7 +26,7 @@ public abstract class GameObject {
 //        this.prototype = prototype;
 //    }
 
-    protected String name;
+//    protected String name;
     protected Texture texture;
     //protected int ID;
 

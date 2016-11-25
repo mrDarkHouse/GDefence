@@ -49,7 +49,7 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
         this.name = name;
         batch = new SpriteBatch();
         //stage = new Stage();
-        shape = new ShapeRenderer();
+        //shape = new ShapeRenderer();
 
 //        Gdx.input.setInputProcessor(stage);
         define();
@@ -134,12 +134,13 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-        dispose();
+        //dispose();
     }
 
     @Override
     public void dispose() {
+        batch.dispose();
         stage.dispose();
-        shape.dispose();
+        //shape.dispose();
     }
 }

@@ -56,6 +56,7 @@ public class InventoryActor extends Window {
 	}
 
 	protected DragAndDrop dragAndDrop;
+	protected Skin skin;
 
 	public DragAndDrop getDragAndDrop() {
 		return dragAndDrop;
@@ -68,19 +69,26 @@ public class InventoryActor extends Window {
 
 		this.inventory = inventory;
 		this.dragAndDrop = dragAndDrop;
+		this.skin = skin;
 
 		//TextButton closeButton = new TextButton("X", skin);
 		//closeButton.addListener(new HidingClickListener(this));
 		//add(closeButton).height(getPadTop());//
 		//getButtonTable().add(closeButton).height(getPadTop());
-
 		setDefaults();
-		initCells(dragAndDrop, skin, inventory);
+
+		initCells(dragAndDrop, skin, inventory);//
 
 		pack();
 
 		//setVisible(false);
 		setVisible(true);
+	}
+	public void init(){//init must be after stage.add(InventoryActor)
+		for(SlotActor a: actorArray) {
+			a.addTooltip(getStage());//
+		}
+
 	}
 
 	protected void setDefaults(){

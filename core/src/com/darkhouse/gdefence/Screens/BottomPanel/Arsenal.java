@@ -21,15 +21,20 @@ public class Arsenal extends AbstractCampainScreen{
 
     public Arsenal() {
         super("Arsenal");
+        //init();
     }
 
     @Override
     public void show() {
         super.show();
+//        init();
+    }
 
+    public void init(){
         //Skin skin = LibgdxUtils.assets.get("skins/uiskin.json", Skin.class);
         inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(inventoryActor);
+        inventoryActor.init();
         towerMap = new TowerMap(GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(towerMap);
         final TextButton towerMapButton = new TextButton("Tower Map", GDefence.getInstance().assetLoader.getSkin());
@@ -42,13 +47,6 @@ public class Arsenal extends AbstractCampainScreen{
             }
         });
         stage.addActor(towerMapButton);
-
-
-
-
-
-
-
     }
 
     @Override
@@ -57,14 +55,10 @@ public class Arsenal extends AbstractCampainScreen{
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
     public void render(float delta) {

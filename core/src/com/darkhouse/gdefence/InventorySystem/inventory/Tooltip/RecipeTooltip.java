@@ -25,7 +25,8 @@ public class RecipeTooltip extends Window{
         this.skin = skin;
         init();
         setVisible(false);
-        ((AbstractCampainScreen) GDefence.getInstance().getScreen()).getStage().addActor(this);
+//        ((AbstractCampainScreen) GDefence.getInstance().getScreen()).getStage().addActor(this);
+        GDefence.getInstance().getArsenal().getStage().addActor(this);//haven't direct access to stage
     }
 
 
@@ -34,8 +35,15 @@ public class RecipeTooltip extends Window{
         getTitleLabel().setAlignment(Align.center);
         //setText();
         if(recipe.getComponents().size > 0) {
-            Label components = new Label(recipe.getComponents().get(0).getName() + " ", skin);
-            add(components).row();
+            if(recipe.getComponents().size == 1) {
+                Label components = new Label(recipe.getComponents().get(0).getPrototype().getName() + " " + recipe.getComponents().get(0).getSimplyGemStatString(), skin);
+                add(components).row();
+            }else if(recipe.getComponents().size == 2) {
+                Label components = new Label(recipe.getComponents().get(0).getPrototype().getName() + " " + recipe.getComponents().get(0).getSimplyGemStatString() +
+                      " + " + System.getProperty("line.separator") + recipe.getComponents().get(1).getPrototype().getName() + " " +
+                      recipe.getComponents().get(1).getSimplyGemStatString(), skin);
+                add(components).row();
+            }
         }
         Label cost = new Label("500 gold", skin);
         add(cost);

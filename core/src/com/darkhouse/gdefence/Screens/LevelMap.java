@@ -120,6 +120,7 @@ public class LevelMap extends AbstractScreen {
 
         shop.addTarget(Level.getMap().getTiles());
         stage.addActor(shop);
+        shop.init();
 
     }
 

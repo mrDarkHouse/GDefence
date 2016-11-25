@@ -21,6 +21,7 @@ public class CampainChoose extends AbstractMenuScreen{
 
     public CampainChoose() {
         super(true);
+        loadButtons();
         //this.mainclass = mainclass;
 
     }
@@ -28,7 +29,7 @@ public class CampainChoose extends AbstractMenuScreen{
     @Override
     public void show() {
         super.show();
-        loadButtons();
+//        loadButtons();
     }
 
     private void loadButtons(){
@@ -138,8 +139,8 @@ public class CampainChoose extends AbstractMenuScreen{
         super.hide();
     }
 
-    @Override
-    public void dispose() {
-
-    }
+//    @Override
+//    public void dispose() {
+//
+//    }
 }

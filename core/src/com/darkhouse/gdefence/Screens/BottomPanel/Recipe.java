@@ -3,6 +3,8 @@ package com.darkhouse.gdefence.Screens.BottomPanel;
 
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.Objects.TowerObject;
+import com.darkhouse.gdefence.User;
 
 public class Recipe {
     private ItemEnum.Tower tower;
@@ -11,9 +13,9 @@ public class Recipe {
         return tower;
     }
 
-    private Array <ItemEnum.Tower> components;
+    private Array <TowerObject> components;
 
-    public Array<ItemEnum.Tower> getComponents() {
+    public Array<TowerObject> getComponents() {
         return components;
     }
 
@@ -26,17 +28,32 @@ public class Recipe {
 
 
     private void initComponents(ItemEnum.Tower t){
-        components = new Array<ItemEnum.Tower>();
+        components = new Array<TowerObject>();
+        TowerObject o;//
         switch (t){
             case Rock:
-                components.add(ItemEnum.Tower.Basic);//4 1 1
+                o = new TowerObject(ItemEnum.Tower.Basic);
+                o.addGems(User.GEM_TYPE.RED, 3);
+                o.addGems(User.GEM_TYPE.YELLOW, 1);
+                o.addGems(User.GEM_TYPE.BLUE, 1);
+                components.add(o);//3 1 1
                 break;
             case Arrow:
-                components.add(ItemEnum.Tower.Basic);//1 4 1
+                o = new TowerObject(ItemEnum.Tower.Basic);
+                o.addGems(User.GEM_TYPE.RED, 1);
+                o.addGems(User.GEM_TYPE.YELLOW, 3);
+                o.addGems(User.GEM_TYPE.BLUE, 1);
+                components.add(o);//1 3 1
                 break;
             case Range:
-                components.add(ItemEnum.Tower.Basic);//1 1 4
+                o = new TowerObject(ItemEnum.Tower.Basic);
+                o.addGems(User.GEM_TYPE.RED, 1);
+                o.addGems(User.GEM_TYPE.YELLOW, 1);
+                o.addGems(User.GEM_TYPE.BLUE, 3);
+                components.add(o);//1 1 3
                 break;
+
+
         }
     }
 }

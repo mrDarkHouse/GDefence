@@ -42,7 +42,7 @@ public enum ItemEnum {;
 			"hullbase"), CANNON("cannonbase"), RAY("raybase"), LAUNCHER("launcherbase"), DROID("droidbase"), MINE("dropperbase"), BATTERY("batterybase");
 */
 	public enum Tower implements Item {
-		Basic(AttackType.projectile, 10, 80, 10, 100, 1.2f){
+		Basic("Basic", AttackType.projectile, 10, 80, 10, 100, 1.2f){
 			@Override
 			public String getTextureRegion() {
 				return "basic";
@@ -60,7 +60,7 @@ public enum ItemEnum {;
 
 			}
 		},
-		Rock(AttackType.projectile, 20, 140, 25, 120, 1.0f){
+		Rock("Rock", AttackType.projectile, 20, 140, 25, 120, 1.0f){
 			@Override
 			public String getTextureRegion() {
 				return "rock";
@@ -77,7 +77,7 @@ public enum ItemEnum {;
 				abilities.add(new Crit(0.2f, 2.5f));
 			}
 		},
-		Arrow(AttackType.projectile, 20, 140, 10, 120, 0.5f){
+		Arrow("Arrow", AttackType.projectile, 20, 140, 10, 120, 0.5f){
 			@Override
 			public String getTextureRegion() {
 				return "arrow";
@@ -94,7 +94,7 @@ public enum ItemEnum {;
 				abilities.add(new PoisonArrow());
 			}
 		},
-		Range(AttackType.projectile, 20, 180, 15, 160, 1.0f){
+		Range("Range", AttackType.projectile, 20, 180, 15, 160, 1.0f){
 			@Override
 			public String getTextureRegion() {
 				return "range";
@@ -155,8 +155,8 @@ public enum ItemEnum {;
 		}
 
 
-		Tower(AttackType attackType, int cost, int globalCost, int dmg, int range, float speedDelay) {
-			//this.name = name;
+		Tower(String name, AttackType attackType, int cost, int globalCost, int dmg, int range, float speedDelay) {
+			this.name = name;
 			this.globalCost = globalCost;
 			this.attackType = attackType;
 			this.cost = cost;

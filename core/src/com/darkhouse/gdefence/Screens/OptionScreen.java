@@ -13,12 +13,13 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 public class OptionScreen extends AbstractMenuScreen {
     public OptionScreen() {
         super(true);
+        loadButtons();
     }
 
     @Override
     public void show() {
         super.show();
-        loadButtons();
+//        loadButtons();
     }
 
     private void loadButtons(){
@@ -79,13 +80,13 @@ public class OptionScreen extends AbstractMenuScreen {
         super.render(delta);
     }
 
-    @Override
-    public void hide() {
-        super.hide();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
+//    @Override
+//    public void hide() {
+//        super.hide();
+//    }
+//
+//    @Override
+//    public void dispose() {
+//        super.dispose();
+//    }
 }

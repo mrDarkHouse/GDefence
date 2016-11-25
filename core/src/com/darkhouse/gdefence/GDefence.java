@@ -31,6 +31,10 @@ public class GDefence extends Game {
 	private CampainChoose campainChoose;
 	private OptionScreen optionScreen;
 	private CampainMap campainMap;
+	private Arsenal arsenal;
+	private Store store;
+	private Smith smith;
+	//private LevelPreparationScreen levelPreparationScreen;
 
 	public MainMenu getMainMenu() {
 		return mainMenu;
@@ -44,7 +48,18 @@ public class GDefence extends Game {
 	public CampainMap getCampainMap() {
 		return campainMap;
 	}
-
+	public Arsenal getArsenal() {
+		return arsenal;
+	}
+	public Store getStore() {
+		return store;
+	}
+	public Smith getSmith() {
+		return smith;
+	}
+//	public LevelPreparationScreen getLevelPreparationScreen() {
+//		return levelPreparationScreen;
+//	}
 	//private Screen currentScreen;
 
 	public User user;
@@ -100,7 +115,14 @@ public class GDefence extends Game {
 		campainChoose = new CampainChoose();
 		optionScreen = new OptionScreen();
 		campainMap = new CampainMap();
-		//campainMap.init();
+		campainMap.init();
+		arsenal = new Arsenal();
+		arsenal.init();
+		store = new Store();
+		store.init();
+		smith = new Smith();
+		smith.init();
+		//levelPreparationScreen = new LevelPreparationScreen();
 	}
 
 	public void switchScreen(Screen screen){
@@ -111,20 +133,20 @@ public class GDefence extends Game {
 
 	public Screen setPreviousScreen(){
 		Screen currentScreen = getScreen();
-		if(currentScreen.getClass().getName().equals(CampainMap.class.getName())){
-			setScreen(new CampainChoose());
-		}else if(currentScreen.getClass().getName().equals(OptionScreen.class.getName())){
-			setScreen(new MainMenu());
-		}else if(currentScreen.getClass().getName().equals(CampainChoose.class.getName())){
-			setScreen(new MainMenu());
-		}else if(currentScreen.getClass().getName().equals(Arsenal.class.getName())){
-			setScreen(new CampainMap());
-		}else if(currentScreen.getClass().getName().equals(Store.class.getName())){
-			setScreen(new CampainMap());
-		}else if(currentScreen.getClass().getName().equals(Smith.class.getName())){
-			setScreen(new CampainMap());
-		}else if(currentScreen.getClass().getName().equals(LevelPreparationScreen.class.getName())){
-			setScreen(new CampainMap());
+		if(currentScreen instanceof CampainMap){
+			setScreen(campainChoose);
+		}else if(currentScreen instanceof OptionScreen){
+			setScreen(mainMenu);
+		}else if(currentScreen instanceof CampainChoose){
+			setScreen(mainMenu);
+		}else if(currentScreen instanceof Arsenal){
+			setScreen(campainMap);
+		}else if(currentScreen instanceof Store){
+			setScreen(campainMap);
+		}else if(currentScreen instanceof Smith){
+			setScreen(campainMap);
+		}else if(currentScreen instanceof LevelPreparationScreen){
+			setScreen(campainMap);
 		}
 		return null;
 

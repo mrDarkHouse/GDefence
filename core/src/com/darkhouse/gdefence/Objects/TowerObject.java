@@ -49,7 +49,7 @@ public class TowerObject extends GameObject{
         return dmg;
     }
     public String getName() {
-        return name;
+        return prototype.getName() + " " + getSimplyGemStatString();
     }
     public float getSpeedDelay() {
         return speedDelay;
@@ -80,6 +80,18 @@ public class TowerObject extends GameObject{
     }
     public int[] getSimplyGemStat(){
         return new int[]{gemsNumber[0], gemsNumber[1], gemsNumber[2]};
+    }
+    public String getSimplyGemStatString(){
+        int[] gems = getSimplyGemStat();
+        String s = "{";
+        for (int i = 0; i < gems.length; i++){
+            s += gems[i];
+            if(i != gems.length - 1){
+                s += ", ";
+            }
+        }
+        s += "}";
+        return s;
     }
 
 

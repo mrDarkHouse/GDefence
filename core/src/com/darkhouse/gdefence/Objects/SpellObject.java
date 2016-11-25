@@ -10,6 +10,11 @@ public class SpellObject extends GameObject{
     }
 
     @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
     public Item getPrototype() {
         return null;
     }

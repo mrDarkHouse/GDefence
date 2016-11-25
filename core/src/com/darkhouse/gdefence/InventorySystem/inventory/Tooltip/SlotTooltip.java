@@ -21,9 +21,11 @@
  */
 package com.darkhouse.gdefence.InventorySystem.inventory.Tooltip;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotListener;
 
@@ -36,7 +38,7 @@ public class SlotTooltip extends Window implements SlotListener {
 
 	private Slot slot;
 
-	public SlotTooltip(Slot slot, Skin skin) {
+	public SlotTooltip(Stage stage, Slot slot, Skin skin) {
 		super("Tooltip...", skin);
 		this.slot = slot;
 		this.skin = skin;
@@ -44,6 +46,8 @@ public class SlotTooltip extends Window implements SlotListener {
 		slot.addListener(this);
 		setVisible(false);
 
+		stage.addActor(this);
+//		GDefence.getInstance().getSmith().getStage().addActor(this);
 	}
 
 	@Override
@@ -56,7 +60,7 @@ public class SlotTooltip extends Window implements SlotListener {
 		// title displays the amount
 
 		//setTitle(slot.getAmount() + "x " + slot.getPrototype());
-		getTitleLabel().setText(/*slot.getAmount() + "x " + */"" + slot.getPrototype());
+		getTitleLabel().setText(/*slot.getAmount() + "x " + */slot.getLast().getName());
 		clear();
 		//Label label = //new Label("Super awesome description of " + slot.getPrototype(), skin);
 		Label label = new Label(slot.getLast().getTooltip(), skin);

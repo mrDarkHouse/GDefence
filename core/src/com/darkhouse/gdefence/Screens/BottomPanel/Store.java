@@ -18,12 +18,16 @@ public class Store extends AbstractCampainScreen{
 
     public Store() {
         super("Store");
+        //init();
     }
 
     @Override
     public void show() {
         super.show();
+//        init();
 
+    }
+    public void init(){
         inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
             @Override
             protected void setDefaults() {
@@ -43,15 +47,11 @@ public class Store extends AbstractCampainScreen{
 
         storeBuyPanel.addSlots(inventoryActor);
 
-
-
-
-
         stage.addActor(inventoryActor);
+        inventoryActor.init();
         stage.addActor(storeBuyPanel);
+        storeBuyPanel.init();
         stage.addActor(new GoldPanel(1100, 500, 100, 90));
-
-
     }
 
     @Override

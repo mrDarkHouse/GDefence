@@ -1,5 +1,6 @@
 package com.darkhouse.gdefence.InventorySystem.inventory.Tooltip;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -14,13 +15,15 @@ public class GradableTooltip extends Window {
     private Skin skin;
     private User.Gradable gradable;
 
-    public GradableTooltip(User.Gradable gradable, Skin skin) {
+    public GradableTooltip(Stage stage, User.Gradable gradable, Skin skin) {
         super("Tooltip...", skin);
         this.skin = skin;
         this.gradable = gradable;
         hasChanged();
         setVisible(false);
-        ((AbstractCampainScreen) GDefence.getInstance().getScreen()).getStage().addActor(this);
+        //((AbstractCampainScreen) GDefence.getInstance().getScreen()).getStage().addActor(this);
+        stage.addActor(this);
+//        GDefence.getInstance().getSmith().getStage().addActor(this);//haven't direct access to stage
     }
 
     public void hasChanged() {

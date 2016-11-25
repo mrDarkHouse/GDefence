@@ -73,7 +73,7 @@ public class GemGradePanel extends Window{
                     return true;
                 }
             });
-            gemGrades[i].addListener(new TooltipListener(new GemGradeTooltip(User.GEM_TYPE.values()[index], GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
+//            gemGrades[i].addListener(new TooltipListener(new GemGradeTooltip(User.GEM_TYPE.values()[index], GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
         }
         for (ImageButton i:gemGrades){
             add(i);
@@ -85,6 +85,15 @@ public class GemGradePanel extends Window{
         setVisible(true);
 
     }
+
+    public void addTooltips(){//after stage.addActor
+        for (int i = 0; i < gemGrades.length; i++){
+            gemGrades[i].addListener(new TooltipListener(new GemGradeTooltip(getStage(), User.GEM_TYPE.values()[i], GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
+        }
+
+
+        gradeTowerSlot.addTooltip(getStage());
+    }
     private void notifyListeners(){
         gradeTowerSlot.getSlot().notifyListeners();
 
@@ -95,8 +104,9 @@ public class GemGradePanel extends Window{
         GameObject object = gradeTowerSlot.getSlot().getLast();
         if(object != null){
             if(object instanceof TowerObject){
-                if(GDefence.getInstance().user.spendGems(type, 1))
+                if(GDefence.getInstance().user.spendGems(type, 1)) {
                     ((TowerObject) object).addGems(type, 1);
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory.Tooltip;
 
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -16,13 +17,15 @@ public class GemGradeTooltip extends Window {
     private Label upLabel;
     private String s = "";
 
-    public GemGradeTooltip(User.GEM_TYPE gemType, Skin skin) {
+    public GemGradeTooltip(Stage stage, User.GEM_TYPE gemType, Skin skin) {
         super("Grade...", skin);
         this.gemType = gemType;
         this.skin = skin;
         init();
         setVisible(false);
-        ((AbstractCampainScreen) GDefence.getInstance().getScreen()).getStage().addActor(this);
+        //((AbstractCampainScreen) GDefence.getInstance().getScreen()).getStage().addActor(this);
+        //GDefence.getInstance().getSmith().getStage().addActor(this);//haven't direct access to stage
+        stage.addActor(this);
     }
 
     private void init(){

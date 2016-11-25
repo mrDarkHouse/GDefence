@@ -30,11 +30,15 @@ public class Smith extends AbstractCampainScreen{
 
     public Smith() {
         super("Smith");
+//        init();
     }
 
     @Override
     public void show() {
         super.show();
+//        init();
+    }
+    public void init(){
         final User user = GDefence.getInstance().user;
 
         upHealth = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(GDefence.getInstance().assetLoader.get("maxHpGrade.png", Texture.class)));
@@ -42,7 +46,7 @@ public class Smith extends AbstractCampainScreen{
 
         upHealth.setSize(120, 80);
         upHealth.setPosition(40, Gdx.graphics.getHeight() - upHealth.getHeight() - super.topPadSize - 30);
-        upHealth.addListener(new TooltipListener(new GradableTooltip(user.maxHealth, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
+        upHealth.addListener(new TooltipListener(new GradableTooltip(getStage(), user.maxHealth, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
         upHealth.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 if(user.deleteGold(user.maxHealth.getNextCost())) user.maxHealth.up();
@@ -55,7 +59,7 @@ public class Smith extends AbstractCampainScreen{
 
         upEnergy.setSize(120, 80);
         upEnergy.setPosition(40, upHealth.getY() - upHealth.getHeight() - 20);
-        upEnergy.addListener(new TooltipListener(new GradableTooltip(user.maxEnegry, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
+        upEnergy.addListener(new TooltipListener(new GradableTooltip(getStage(), user.maxEnegry, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
         upEnergy.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 if(user.deleteGold(user.maxEnegry.getNextCost())) user.maxEnegry.up();
@@ -89,7 +93,9 @@ public class Smith extends AbstractCampainScreen{
 
 
         stage.addActor(inventoryActor);
+        inventoryActor.init();
         stage.addActor(pn);
+        pn.addTooltips();
         stage.addActor(upHealth);
         stage.addActor(upEnergy);
         stage.addActor(new GoldPanel(1000, 500, 160, 100));

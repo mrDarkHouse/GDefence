@@ -176,7 +176,7 @@ public class CampainMap extends AbstractCampainScreen {
     @Override
     public void show() {
         super.show();
-        init();
+        //init();
         //loadFrames();
     }
 
@@ -266,9 +266,9 @@ public class CampainMap extends AbstractCampainScreen {
         //this.dispose();
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-        batch.dispose();
-    }
+//    @Override
+//    public void dispose() {
+//        super.dispose();
+//        //batch.dispose();
+//    }
 }

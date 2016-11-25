@@ -166,7 +166,7 @@ public class MainMenu extends AbstractMenuScreen{
 
 
 
-        Dialog d = new Dialog("", GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
+        Dialog d = new Dialog("", GDefence.getInstance().assetLoader.get("uiskin.json", Skin.class)){
 
             {
                 text("Are you sure exit?").padTop(250);
@@ -297,11 +297,12 @@ public class MainMenu extends AbstractMenuScreen{
         //this.dispose();
     }
 
-    @Override
-    public void dispose() {
-        batch.dispose();
-        //menuBg.dispose();
-        stage.dispose();
-
-    }
+//    @Override
+//    public void dispose() {
+//        super.dispose();
+//        batch.dispose();
+//        //menuBg.dispose();
+//        stage.dispose();
+//
+//    }
 }
