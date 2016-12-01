@@ -77,7 +77,7 @@ public enum ItemEnum {;
 				abilities.add(new Crit(0.2f, 2.5f));
 			}
 		},
-		Arrow("Arrow", AttackType.projectile, 20, 140, 10, 120, 0.5f){
+		Arrow("Arrow", AttackType.projectile, 20, 140, 15, 120, 0.8f){
 			@Override
 			public String getTextureRegion() {
 				return "arrow";

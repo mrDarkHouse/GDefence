@@ -262,9 +262,12 @@ public abstract class Mob extends GDSprite{
 //    }
 
     public void actEffects(float delta){
-        for (Debuff d:effects){//concurrent;
-            d.act(delta);
+        for (int i = 0; i < effects.size(); i++){
+            effects.get(i).act(delta);
         }
+//        for (Debuff d:effects){//concurrent;
+//            d.act(delta);
+//        }
     }
 
 

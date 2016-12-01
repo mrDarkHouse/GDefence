@@ -5,6 +5,8 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 
 public class PoisonArrow extends Ability{
+//    private Slow slow;
+
     public PoisonArrow() {
         super(UseType.onHit);
     }
