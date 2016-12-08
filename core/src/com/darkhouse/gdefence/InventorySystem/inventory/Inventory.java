@@ -64,7 +64,11 @@ public class Inventory {
 //		for(int i = 0; i < inventory.getSlots().size; i++){
 //			slots.get(i).add(inventory.slots.get(i).getAll());
 //		}
-		slots = new Array<Slot>(inventory.getSlots());
+//		slots = new Array<Slot>(inventory.getSlots());
+		for (int i = 0; i < slots.size; i++){
+			slots.get(i).copy(inventory.getSlots().get(i));
+		}
+
 	}
 
 
@@ -75,7 +79,10 @@ public class Inventory {
 //			//newInventory.slots.addAll(slots);
 //			newInventory.slots.get(i).add(slots.get(i).getPrototype(), slots.get(i).getAmount());
 //		}
-		newInventory.slots = new Array<Slot>(slots);
+//		newInventory.slots = new Array<Slot>(slots);
+		for (int i = 0; i < slots.size; i++){
+			newInventory.slots.get(i).copy(slots.get(i));
+		}
 		return newInventory;
 	}
 

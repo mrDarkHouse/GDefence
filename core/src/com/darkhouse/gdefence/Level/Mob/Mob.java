@@ -91,7 +91,8 @@ public abstract class Mob extends GDSprite{
             effects.add(d);
             d.apply();//start debuff
         }else {
-            d.updateDuration();
+            getEffect(d).updateDuration();
+            //effects.get(effects.indexOf(d)).updateDuration();
         }
     }
     public void deleteDebuff(Debuff d){
@@ -100,12 +101,21 @@ public abstract class Mob extends GDSprite{
         }
     }
     public boolean haveDebuff(Debuff d){
+//        for (Debuff db: effects){
+//            if(db.getClass() == d.getClass()){
+//                return true;
+//            }
+//        }
+//        return false;
+        return (getEffect(d) != null);
+    }
+    private Debuff getEffect(Debuff d){
         for (Debuff db: effects){
             if(db.getClass() == d.getClass()){
-                return true;
+                return db;
             }
         }
-        return false;
+        return null;
     }
 
     //protected int x;

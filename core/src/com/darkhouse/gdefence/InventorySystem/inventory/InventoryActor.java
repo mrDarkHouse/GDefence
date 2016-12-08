@@ -54,6 +54,9 @@ public class InventoryActor extends Window {
 	public Inventory getInventory() {
 		return inventory;
 	}
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
 
 	protected DragAndDrop dragAndDrop;
 	protected Skin skin;

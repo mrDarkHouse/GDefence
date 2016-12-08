@@ -217,6 +217,7 @@ public class Tower extends GameActor{
         }
         if(target != null) {//hotfix
             target.hit(dmg, this);
+            getTowerPrototype().addExp(dmg/10);
         }
     }
 

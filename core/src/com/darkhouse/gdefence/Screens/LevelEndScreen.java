@@ -64,7 +64,7 @@ public class LevelEndScreen implements Screen{
         //continueButton.setSize(200, 40);
         continueButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                GDefence.getInstance().setScreen(new CampainMap());
+                GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainMap());
                 return true;
             }
         });

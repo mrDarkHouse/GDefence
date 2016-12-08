@@ -27,12 +27,20 @@ public class Arsenal extends AbstractCampainScreen{
     @Override
     public void show() {
         super.show();
+        inventoryActor.remove();
+        inventoryActor = null;
+        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(),
+                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        stage.addActor(inventoryActor);
+        System.out.println(User.getInventory().getSlots());
+        //inventoryActor.setInventory(User.getInventory());
 //        init();
     }
 
     public void init(){
         //Skin skin = LibgdxUtils.assets.get("skins/uiskin.json", Skin.class);
-        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(),
+                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(inventoryActor);
         inventoryActor.init();
         towerMap = new TowerMap(GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));

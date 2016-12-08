@@ -187,6 +187,7 @@ public class User {
 
     public static void setInventory(Inventory inventory) {
         User.inventory = inventory;
+//        User.inventory = new Inventory(inventory);//
     }
 
     public enum RecipeType{

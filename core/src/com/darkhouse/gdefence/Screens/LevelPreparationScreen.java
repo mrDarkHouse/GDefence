@@ -32,6 +32,8 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         //saveInventory = User.getInventory().copy();
         //saveInventory.copy(User.getInventory());
         saveInventory = new Inventory(User.getInventory());
+
+
         load(level);
     }
 
@@ -63,7 +65,9 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
 
     @Override
     public void hide() {
-        User.setInventory(saveInventory);
+        System.out.println(User.getInventory().getSlots());
+        User.setInventory(saveInventory/*.copy()*/);
+        System.out.println(User.getInventory().getSlots());
         super.hide();
     }
 

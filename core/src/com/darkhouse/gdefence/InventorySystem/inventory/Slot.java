@@ -48,6 +48,11 @@ public class Slot {
 			//itemsArray.add(prototype);
 		}
 	}
+	public void copy(Slot s){
+//		itemsArray.clear();
+//		itemsArray = new Array<GameObject>(s.itemsArray);
+		itemsArray.addAll(s.itemsArray);
+	}
 
 	/**
 	 * Returns {@code true} in case this slot has the same prototype type and at
@@ -163,6 +168,16 @@ public class Slot {
 //	}
 	public GameObject getLast(){
 		return itemsArray.peek();
+	}
+	public Array<GameObject> get(int amount){
+		Array<GameObject> tmpArr = new Array<GameObject>();
+		if(getAmount() >= amount){
+			for (int i = 0; i < amount; i++){
+				tmpArr.add(itemsArray.get(itemsArray.size - 1 - i));
+				//itemsArray.removeValue(itemsArray.peek(), true);
+			}
+		}
+		return tmpArr;
 	}
 	public Array<GameObject> getAll(){
 		return itemsArray;

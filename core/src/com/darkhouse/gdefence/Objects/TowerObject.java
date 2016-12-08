@@ -14,8 +14,8 @@ public class TowerObject extends GameObject{
 
     private ItemEnum.Tower prototype;
     private int level;
-    private int totalExp;
-    private int currentExp;
+    private float totalExp;
+    private float currentExp;
 
     private int range;
     private int dmg;
@@ -60,7 +60,7 @@ public class TowerObject extends GameObject{
 
 
 
-    public void addExp(int value){
+    public void addExp(float value){
         totalExp += value;
         updateExp();
     }
@@ -72,10 +72,10 @@ public class TowerObject extends GameObject{
     public int getLevel() {
         return level;
     }
-    public int getTotalExp() {
+    public float getTotalExp() {
         return totalExp;
     }
-    public int getCurrentExp() {
+    public float getCurrentExp() {
         return currentExp;
     }
     public int[] getSimplyGemStat(){
@@ -118,7 +118,10 @@ public class TowerObject extends GameObject{
     public String getTooltip() {
         return "Dmg: " + getDmg() + System.getProperty("line.separator")
                 + "Range: " + getRange() + System.getProperty("line.separator")
-                + "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
+                + "Speed: " + getSpeedDelay() + System.getProperty("line.separator")
+                + "Cost: " + getCost() + System.getProperty("line.separator")
+                + "Level: " + getLevel() + System.getProperty("line.separator")
+                + "Exp:" + getCurrentExp();
     }
 
     public void updateGemStat(int gemType, int value){
