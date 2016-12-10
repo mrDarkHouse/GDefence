@@ -34,6 +34,11 @@ public class Slot {
 
 	private Item prototype;
 
+	public void setPrototype(Item newPrototype) {
+		if(prototype != newPrototype) prototype = newPrototype;
+		notifyListeners();
+	}
+
 	private Array <GameObject> itemsArray;
 
 	//private int amount;
@@ -50,8 +55,13 @@ public class Slot {
 	}
 	public void copy(Slot s){
 //		itemsArray.clear();
-//		itemsArray = new Array<GameObject>(s.itemsArray);
-		itemsArray.addAll(s.itemsArray);
+		itemsArray = new Array<GameObject>(s.itemsArray);
+		setPrototype(s.getPrototype());
+
+		//itemsArray.addAll(s.itemsArray);
+//		for (int i = 0; i < s.itemsArray.size; i++){
+//			itemsArray.add(s.itemsArray.get(i));
+//		}
 	}
 
 	/**
@@ -105,9 +115,10 @@ public class Slot {
 	public boolean add(Array<GameObject> o){//boolean not need now
 		if(isEqualPrototype(prototype, o.first()) || prototype == null) {
 			itemsArray.addAll(o);
-			if(prototype != o.peek().getPrototype()) prototype = o.peek().getPrototype();
-
-			notifyListeners();
+//			if(prototype != o.peek().getPrototype()) prototype = o.peek().getPrototype();
+//
+//			notifyListeners();
+			setPrototype(o.peek().getPrototype());
 			return true;
 		}
 		return false;
@@ -192,8 +203,9 @@ public class Slot {
 				itemsArray.removeValue(itemsArray.peek(), true);
 			}
 		}
-		if(getAmount() == 0) prototype = null;
-
+		if(getAmount() == 0) setPrototype(null);//notify listeners use twice
+//		prototype = null;
+//
 		notifyListeners();
 		return tmpArr;
 	}
@@ -201,9 +213,10 @@ public class Slot {
 	public Array<GameObject> takeAll(){
 		Array<GameObject> tmpArr = new Array<GameObject>(itemsArray);
 		itemsArray.clear();
-		prototype = null;
-
-		notifyListeners();
+//		prototype = null;
+//
+//		notifyListeners();
+		setPrototype(null);
 		return tmpArr;
 	}
 

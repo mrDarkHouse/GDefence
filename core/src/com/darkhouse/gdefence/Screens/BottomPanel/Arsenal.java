@@ -32,9 +32,10 @@ public class Arsenal extends AbstractCampainScreen{
         inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(),
                 GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(inventoryActor);
-        System.out.println(User.getInventory().getSlots());
-        //inventoryActor.setInventory(User.getInventory());
-//        init();
+        inventoryActor.init();
+
+//        inventoryActor.setInventory(User.getInventory());
+        //init();
     }
 
     public void init(){
