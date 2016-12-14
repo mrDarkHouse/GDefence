@@ -36,12 +36,23 @@ public class Smith extends AbstractCampainScreen{
     @Override
     public void show() {
         super.show();
-        inventoryActor.remove();//update
-        inventoryActor = null;
-        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(),
-                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
-        stage.addActor(inventoryActor);
-        inventoryActor.init();
+//        inventoryActor.setInventory(User.getInventory());//update
+//        inventoryActor.remove();
+////        inventoryActor = null;
+//        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
+//            @Override
+//            protected void setDefaults() {
+//                setPosition(100, 150);
+//                defaults().space(8);
+//                defaults().size(60, 60);
+//                row().fill().expandX();
+//                setRowNumber(5);
+//                setRows(3);
+//            }
+//        };
+//        stage.addActor(inventoryActor);
+//        inventoryActor.init();
+
 
 
 //        init();

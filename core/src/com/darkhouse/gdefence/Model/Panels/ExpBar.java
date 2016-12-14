@@ -22,6 +22,7 @@ public class ExpBar extends ProgressBar{
         //setPosition(x, y);
         //setPosition(Gdx.graphics.getWidth() - expBarSize[0], userlevelButton.getY() - expBarSize[1] - 4);
         setSize(expBarSize[0], expBarSize[1]);
+        getStyle().knob.setMinWidth(0.1f);
         // bar.setAnimateDuration(5);
 
         //setValue(7.8f);

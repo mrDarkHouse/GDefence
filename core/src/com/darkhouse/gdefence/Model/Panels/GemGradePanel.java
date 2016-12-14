@@ -1,14 +1,16 @@
 package com.darkhouse.gdefence.Model.Panels;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradeTooltip;
@@ -104,12 +106,51 @@ public class GemGradePanel extends Window{
         GameObject object = gradeTowerSlot.getSlot().getLast();
         if(object != null){
             if(object instanceof TowerObject){
-                if(GDefence.getInstance().user.spendGems(type, 1)) {
-                    ((TowerObject) object).addGems(type, 1);
+                TowerObject towerObject = (TowerObject) object;
+                if(towerObject.getLevel() > towerObject.getPrimaryGemsNumber()) {
+                    if(GDefence.getInstance().user.spendGems(type, 1)) {
+                        towerObject.addGems(type, 1);
+                    }
+                }else {
+                    tooltipShow();
                 }
             }
         }
     }
+
+    private void tooltipShow(){
+        //TextTooltip tt = new TextTooltip("Level must be greater then gems number", GDefence.getInstance().getSkin());
+        Dialog d = new Dialog("", GDefence.getInstance().assetLoader.get("uiskin.json", Skin.class)){
+            {
+                text("Level must be greater then gems number").padTop(250);
+                button("Ok", true);
+                //getButtonTable();//defaults().width(200);
+                Array<Cell> cells = getButtonTable().getCells();
+                Cell cell = cells.get(0);
+                cell.width(50).padBottom(360);
+                cell.height(40);
+                //cell.padBottom(Gdx.graphics.getHeight()/2);
+                //cell.center().top();
+//
+//                cell = cells.get(1);
+//                cell.width(50).padBottom(360);
+//                cell.height(40);
+                //cell.padBottom(Gdx.graphics.getHeight()/2);
+
+            }
+            @Override
+            protected void result(Object object) {
+                hide();
+            }
+        };
+        d.setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("MainMenuTranparent.png", Texture.class))));
+        d.getBackground().setMinWidth(Gdx.graphics.getWidth());
+        d.getBackground().setMinHeight(Gdx.graphics.getHeight());
+        d.show(getStage());
+
+    }
+
+
 
     protected void setDefaults(){
         setPosition(100, 250);

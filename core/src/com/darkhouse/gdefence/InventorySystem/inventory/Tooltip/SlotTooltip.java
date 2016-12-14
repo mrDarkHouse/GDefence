@@ -21,13 +21,19 @@
  */
 package com.darkhouse.gdefence.InventorySystem.inventory.Tooltip;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotListener;
+import com.darkhouse.gdefence.Objects.SpellObject;
+import com.darkhouse.gdefence.Objects.TowerObject;
 
 /**
  * @author Daniel Holderbaum
@@ -64,7 +70,26 @@ public class SlotTooltip extends Window implements SlotListener {
 		clear();
 		//Label label = //new Label("Super awesome description of " + slot.getPrototype(), skin);
 		Label label = new Label(slot.getLast().getTooltip(), skin);
-		add(label);
+		add(label).row();//row can bad
+		if (slot.getLast() instanceof TowerObject) {
+			TowerObject t = ((TowerObject) slot.getLast());
+
+            /*FontLoader.generateStyle(16, Color.WHITE)*/
+            Label level = new Label(t.getLevel() + "", skin);//allow FontLoader load skin fonts
+            add(level).align(Align.center).row();
+
+
+
+			ProgressBar expBar = new ProgressBar(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.2f, false,
+					GDefence.getInstance().assetLoader.getExpBarSkin());//add text inside
+			expBar.getStyle().background.setMinHeight(20);
+			expBar.getStyle().knob.setMinHeight(20);
+			expBar.getStyle().background.setMinWidth(50);
+			expBar.getStyle().knob.setMinWidth(0.1f);
+			expBar.setSize(50, 20);
+			expBar.setValue(t.getCurrentExp());
+			add(expBar);
+		}
 		pack();
 	}
 

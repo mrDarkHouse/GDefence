@@ -69,6 +69,10 @@ public class TowerObject extends GameObject{
         updateGemStat(type.ordinal(), value);
     }
 
+    public int getPrimaryGemsNumber(){
+        return gemsNumber[0] + gemsNumber[1] + gemsNumber[2];
+    }
+
     public int getLevel() {
         return level;
     }
@@ -119,9 +123,9 @@ public class TowerObject extends GameObject{
         return "Dmg: " + getDmg() + System.getProperty("line.separator")
                 + "Range: " + getRange() + System.getProperty("line.separator")
                 + "Speed: " + getSpeedDelay() + System.getProperty("line.separator")
-                + "Cost: " + getCost() + System.getProperty("line.separator")
-                + "Level: " + getLevel() + System.getProperty("line.separator")
-                + "Exp:" + getCurrentExp();
+                + "Cost: " + getCost();//+ System.getProperty("line.separator")
+//                + "Level: " + getLevel() + System.getProperty("line.separator")
+//                + "Exp:" + getCurrentExp();
     }
 
     public void updateGemStat(int gemType, int value){
