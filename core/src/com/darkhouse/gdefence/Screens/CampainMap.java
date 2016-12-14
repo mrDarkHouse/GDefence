@@ -103,7 +103,7 @@ public class CampainMap extends AbstractCampainScreen {
             if(hasPrevous()) prev.setVisible(true);
             else prev.setVisible(false);
 
-            for (Page p:pages){
+            for (Page p:pages){//
                 p.updateLockedLevels();
             }
         }
@@ -133,15 +133,17 @@ public class CampainMap extends AbstractCampainScreen {
 
             for (int i = 0; i < buttons; i++){
                 levels[i] = new LevelButton(firstButton + i);
-                if(!GDefence.getInstance().user.getLevelAvailable(firstButton + i)){
-                    levels[i].lock();
-                }
+
+//                if(!GDefence.getInstance().user.getLevelAvailable(firstButton + i)){
+//                    levels[i].lock();
+//                }
                 levels[i].setSize(levelButtonsSize[0], levelButtonsSize[1]);
                 levels[i].setPosition(borderSize + (levelButtonsSize[0] + sizeBetween)*i,
                         Gdx.graphics.getHeight()/2 - Gdx.graphics.getHeight()/8);
 
                 addActor(levels[i]);
             }
+            updateLockedLevels();
 
             updateLock();
         }
@@ -152,11 +154,11 @@ public class CampainMap extends AbstractCampainScreen {
         public void updateLockedLevels(){//calling 2 times
 //            updateLock();
             for (int i = 0; i < buttons; i++) {
-                levels[i] = new LevelButton(firstButtonInt + i);
-                if (!GDefence.getInstance().user.getLevelAvailable(firstButtonInt + i)) {
-                    levels[i].lock();
-                }else {
+                //levels[i] = new LevelButton(firstButtonInt + i);
+                if (GDefence.getInstance().user.getLevelAvailable(firstButtonInt + i)) {
                     levels[i].unLock();
+                }else {
+                    levels[i].lock();
                 }
             }
         }
@@ -195,7 +197,6 @@ public class CampainMap extends AbstractCampainScreen {
     public void show() {
         super.show();
         update();
-        System.out.println(pagedMap.pages[pagedMap.currentPage].levels[1].isLocked);
         //init();
         //loadFrames();
     }
