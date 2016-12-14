@@ -178,7 +178,11 @@ public class Slot {
 //		return o;
 //	}
 	public GameObject getLast(){
-		return itemsArray.peek();
+		if(itemsArray.size > 0) {
+			return itemsArray.peek();
+		}else {
+			return null;
+		}
 	}
 	public Array<GameObject> get(int amount){
 		Array<GameObject> tmpArr = new Array<GameObject>();

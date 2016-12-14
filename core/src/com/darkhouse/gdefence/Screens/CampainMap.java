@@ -102,6 +102,10 @@ public class CampainMap extends AbstractCampainScreen {
             else next.setVisible(false);
             if(hasPrevous()) prev.setVisible(true);
             else prev.setVisible(false);
+
+            for (Page p:pages){
+                p.updateLockedLevels();
+            }
         }
     }
     private class Page extends WidgetGroup{
@@ -145,6 +149,20 @@ public class CampainMap extends AbstractCampainScreen {
             isLocked = levels[0].isLocked;
         }
 
+        public void updateLockedLevels(){//calling 2 times
+//            updateLock();
+            for (int i = 0; i < buttons; i++) {
+                levels[i] = new LevelButton(firstButtonInt + i);
+                if (!GDefence.getInstance().user.getLevelAvailable(firstButtonInt + i)) {
+                    levels[i].lock();
+                }else {
+                    levels[i].unLock();
+                }
+            }
+        }
+
+
+
 
 
 
@@ -176,6 +194,8 @@ public class CampainMap extends AbstractCampainScreen {
     @Override
     public void show() {
         super.show();
+        update();
+        System.out.println(pagedMap.pages[pagedMap.currentPage].levels[1].isLocked);
         //init();
         //loadFrames();
     }
@@ -255,6 +275,9 @@ public class CampainMap extends AbstractCampainScreen {
     @Override
     public void resume() {
 
+    }
+    private void update(){
+        pagedMap.update();
     }
 
 

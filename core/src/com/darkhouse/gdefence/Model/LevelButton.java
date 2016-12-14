@@ -62,6 +62,9 @@ public class LevelButton extends TextButton {
         //getStyle().down = new TextureRegionDrawable(new TextureRegion(AssetLoader.levelLock));
         //getStyle().over = new TextureRegionDrawable(AssetLoader.getLevelLockTexture(number));
     }
+    public void unLock(){
+        isLocked = false;
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
