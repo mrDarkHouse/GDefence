@@ -6,8 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
-import com.darkhouse.gdefence.Screens.BottomPanel.Recipe;
+import com.darkhouse.gdefence.Objects.Recipe;
 
 public class RecipeTooltip extends Window{
     private Skin skin;
@@ -34,17 +33,17 @@ public class RecipeTooltip extends Window{
         getTitleLabel().setText("Buy " + recipe.getTower().getName() + " recipe");
         getTitleLabel().setAlignment(Align.center);
         //setText();
-        if(recipe.getComponents().size > 0) {
-            if(recipe.getComponents().size == 1) {
-                Label components = new Label(recipe.getComponents().get(0).getPrototype().getName() + " " + recipe.getComponents().get(0).getSimplyGemStatString(), skin);
-                add(components).row();
-            }else if(recipe.getComponents().size == 2) {
-                Label components = new Label(recipe.getComponents().get(0).getPrototype().getName() + " " + recipe.getComponents().get(0).getSimplyGemStatString() +
-                      " + " + System.getProperty("line.separator") + recipe.getComponents().get(1).getPrototype().getName() + " " +
-                      recipe.getComponents().get(1).getSimplyGemStatString(), skin);
-                add(components).row();
-            }
-        }
+//        if(recipe.getComponents().size > 0) {
+//            if(recipe.getComponents().size == 1) {
+//                Label components = new Label(recipe.getComponents().get(0).getPrototype().getName() + " " + recipe.getComponents().get(0).getSimplyGemStatString(), skin);
+//                add(components).row();
+//            }else if(recipe.getComponents().size == 2) {
+//                Label components = new Label(recipe.getComponents().get(0).getPrototype().getName() + " " + recipe.getComponents().get(0).getSimplyGemStatString() +
+//                      " + " + System.getProperty("line.separator") + recipe.getComponents().get(1).getPrototype().getName() + " " +
+//                      recipe.getComponents().get(1).getSimplyGemStatString(), skin);
+//                add(components).row();
+//            }
+//        }
         Label cost = new Label("500 gold", skin);
         add(cost);
         pack();

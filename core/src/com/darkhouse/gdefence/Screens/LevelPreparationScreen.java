@@ -3,12 +3,10 @@ package com.darkhouse.gdefence.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
 import com.darkhouse.gdefence.Model.PreparationTowerInventoryActor;
@@ -29,9 +27,9 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
     @Override
     public void show() {
         super.show();
-        //saveInventory = User.getInventory().copy();
-        //saveInventory.copy(User.getInventory());
-        saveInventory = new Inventory(User.getInventory());
+        //saveInventory = User.getTowerInventory().copy();
+        //saveInventory.copy(User.getTowerInventory());
+        saveInventory = new Inventory(User.getTowerInventory());
 
 
         load(level);
@@ -66,7 +64,7 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
 
     @Override
     public void hide() {
-        //User.setInventory(saveInventory/*.copy()*/);
+        //User.setTowerInventory(saveInventory/*.copy()*/);
         super.hide();
     }
 

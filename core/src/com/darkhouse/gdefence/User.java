@@ -6,10 +6,9 @@ package com.darkhouse.gdefence;
 import com.badlogic.gdx.Gdx;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
-import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Objects.Recipe;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -179,16 +178,29 @@ public class User {
 
     //public ArrayList <Item> items;
 
-    private static Inventory inventory;
+    private static Inventory towerInventory;//<Tower>
+    private static Inventory spellInventory;//<Spell>
+    private static Inventory detailInventory;//<Detail>
 
-    public static Inventory getInventory() {
-        return inventory;
+    public static Inventory getTowerInventory() {
+        return towerInventory;
     }
-
-    public static void setInventory(Inventory inventory) {
-        User.inventory = inventory;
-//        User.inventory = new Inventory(inventory);//
+    public static Inventory getSpellInventory() {
+        return spellInventory;
     }
+    public static Inventory getDetailInventory() {
+        return detailInventory;
+    }
+    //    public static void setTowerInventory(Inventory towerInventory) {
+//        User.towerInventory = towerInventory;
+////        User.towerInventory = new Inventory(towerInventory);//
+//    }
+//    public static void setSpellInventory(Inventory spellInventory) {
+//        User.spellInventory = spellInventory;
+//    }
+//    public static void setDetailInventory(Inventory detailInventory) {
+//        User.detailInventory = detailInventory;
+//    }
 
     public enum RecipeType{
         opened, canOpen, locked
@@ -354,10 +366,13 @@ public class User {
         //items.add(Item.CRYSTAL_GREEN);
         //items.add(Item.CRYSTAL_GREEN);
 
-        inventory = new Inventory();
-        inventory.store(ItemEnum.Tower.Basic, 1);
-        inventory.store(ItemEnum.Tower.Rock, 1);
-        inventory.store(ItemEnum.Tower.Arrow, 3);
+        towerInventory = new Inventory();
+        spellInventory = new Inventory();
+        detailInventory = new Inventory();
+        towerInventory.store(ItemEnum.Tower.Basic, 1);
+        towerInventory.store(ItemEnum.Tower.Rock, 1);
+        towerInventory.store(ItemEnum.Tower.Arrow, 3);
+        detailInventory.store(new Recipe(ItemEnum.Tower.Range));
 
         initOpenedTowers();
 

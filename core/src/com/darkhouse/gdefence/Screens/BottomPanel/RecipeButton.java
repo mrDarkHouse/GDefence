@@ -10,6 +10,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.RecipeTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.TooltipListener;
+import com.darkhouse.gdefence.Objects.Recipe;
 import com.darkhouse.gdefence.User;
 
 public class RecipeButton extends ImageButton{

@@ -28,7 +28,7 @@ public class Store extends AbstractCampainScreen{
 
     }
     public void init(){
-        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
+        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
             @Override
             protected void setDefaults() {
                 setPosition(100, 250);

@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 import com.darkhouse.gdefence.User;
@@ -29,18 +28,18 @@ public class Arsenal extends AbstractCampainScreen{
         super.show();
         inventoryActor.remove();
         inventoryActor = null;
-        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(),
+        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),
                 GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(inventoryActor);
         inventoryActor.init();
 
-//        inventoryActor.setInventory(User.getInventory());
+//        inventoryActor.setTowerInventory(User.getTowerInventory());
         //init();
     }
 
     public void init(){
         //Skin skin = LibgdxUtils.assets.get("skins/uiskin.json", Skin.class);
-        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(),
+        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),
                 GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(inventoryActor);
         inventoryActor.init();

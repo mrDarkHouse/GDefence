@@ -36,10 +36,10 @@ public class Smith extends AbstractCampainScreen{
     @Override
     public void show() {
         super.show();
-//        inventoryActor.setInventory(User.getInventory());//update
+//        inventoryActor.setTowerInventory(User.getTowerInventory());//update
 //        inventoryActor.remove();
 ////        inventoryActor = null;
-//        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
+//        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
 //            @Override
 //            protected void setDefaults() {
 //                setPosition(100, 150);
@@ -86,7 +86,7 @@ public class Smith extends AbstractCampainScreen{
                 return true;
             }
         });
-        inventoryActor = new InventoryActor(User.getInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
+        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
             @Override
             protected void setDefaults() {
                 setPosition(100, 150);

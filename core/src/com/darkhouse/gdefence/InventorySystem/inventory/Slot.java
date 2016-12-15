@@ -123,6 +123,18 @@ public class Slot {
 		}
 		return false;
 	}
+    public boolean add(GameObject o){//boolean not need now
+        if(isEqualPrototype(prototype, o) || prototype == null) {
+            itemsArray.add(o);
+//			if(prototype != o.peek().getPrototype()) prototype = o.peek().getPrototype();
+//
+//			notifyListeners();
+            setPrototype(o.getPrototype());
+            return true;
+        }
+        return false;
+    }
+
 
 
 	private boolean isEqualPrototype(Item prototype, GameObject object){

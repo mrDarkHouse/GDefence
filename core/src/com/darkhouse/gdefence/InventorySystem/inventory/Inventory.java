@@ -22,6 +22,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.Objects.GameObject;
 
 /**
  * @author Daniel Holderbaum
@@ -128,6 +129,23 @@ public class Inventory {
 		// no slot to add
 		return false;
 	}
+    public boolean store(GameObject object) {
+        Slot itemSlot = firstSlotWithItem(object.getPrototype());
+        if (itemSlot != null) {
+            itemSlot.add(object);
+            return true;
+        } else {
+            // now check for an available empty slot
+            Slot emptySlot = firstSlotWithItem(null);
+            if (emptySlot != null) {
+                emptySlot.add(object);
+                return true;
+            }
+        }
+
+
+        return false;
+    }
 
 	public Array<Slot> getSlots() {
 		return slots;

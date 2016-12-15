@@ -1,12 +1,13 @@
-package com.darkhouse.gdefence.Screens.BottomPanel;
+package com.darkhouse.gdefence.Objects;
 
 
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.User;
 
-public class Recipe {
+public class Recipe extends DetailObject{
     private ItemEnum.Tower tower;
 
     public ItemEnum.Tower getTower() {
@@ -20,6 +21,7 @@ public class Recipe {
     }
 
     public Recipe(ItemEnum.Tower tower) {
+        super(ItemEnum.Detail.Recipe);
         this.tower = tower;
         initComponents(tower);
     }
@@ -55,5 +57,24 @@ public class Recipe {
 
 
         }
+    }
+
+    @Override
+    public String getTooltip() {
+//        if(getComponents().size > 0) {
+//            if(getComponents().size == 1) {
+//                Label components = new Label(getComponents().get(0).getPrototype().getName() + " " + getComponents().get(0).getSimplyGemStatString(), skin);
+//                add(components).row();
+//            }else if(getComponents().size == 2) {
+//                Label components = new Label(getComponents().get(0).getPrototype().getName() + " " + getComponents().get(0).getSimplyGemStatString() +
+//                        " + " + System.getProperty("line.separator") +getComponents().get(1).getPrototype().getName() + " " +
+//                        getComponents().get(1).getSimplyGemStatString(), skin);
+//                add(components).row();
+//            }
+//        }
+
+
+    return null;
+
     }
 }

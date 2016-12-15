@@ -5,8 +5,10 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 
 public class DetailObject extends GameObject{
-    public DetailObject(ItemEnum.Detail prototype) {
+    private ItemEnum.Detail prototype;
 
+    public DetailObject(ItemEnum.Detail prototype) {
+        this.prototype = prototype;
     }
 
     @Override
