@@ -9,11 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
+import com.darkhouse.gdefence.InventorySystem.inventory.OverallInventory;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 import com.darkhouse.gdefence.User;
 
 public class Arsenal extends AbstractCampainScreen{
-    private InventoryActor inventoryActor;
+    private OverallInventory inventoryActor;
     private TowerMap towerMap;
 
 
@@ -26,12 +27,12 @@ public class Arsenal extends AbstractCampainScreen{
     @Override
     public void show() {
         super.show();
-        inventoryActor.remove();
-        inventoryActor = null;
-        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),
-                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
-        stage.addActor(inventoryActor);
-        inventoryActor.init();
+//        inventoryActor.remove();
+//        inventoryActor = null;
+//        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),
+//                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+//        stage.addActor(inventoryActor);
+//        inventoryActor.init();
 
 //        inventoryActor.setTowerInventory(User.getTowerInventory());
         //init();
@@ -39,8 +40,9 @@ public class Arsenal extends AbstractCampainScreen{
 
     public void init(){
         //Skin skin = LibgdxUtils.assets.get("skins/uiskin.json", Skin.class);
-        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),
-                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+//        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),
+//                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        inventoryActor = new OverallInventory();
         stage.addActor(inventoryActor);
         inventoryActor.init();
         towerMap = new TowerMap(GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));

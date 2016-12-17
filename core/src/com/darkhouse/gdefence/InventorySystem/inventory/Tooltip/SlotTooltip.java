@@ -27,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
@@ -81,12 +82,17 @@ public class SlotTooltip extends Window implements SlotListener {
 
 
 			ProgressBar expBar = new ProgressBar(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.2f, false,
-					GDefence.getInstance().assetLoader.getExpBarSkin());//add text inside
+					GDefence.getInstance().assetLoader.getExpBarSkin()){
+                @Override
+                public float getPrefWidth() {
+                    return 80;
+                }
+            };//add text inside
 			expBar.getStyle().background.setMinHeight(20);
 			expBar.getStyle().knob.setMinHeight(20);
 			expBar.getStyle().background.setMinWidth(50);
 			expBar.getStyle().knob.setMinWidth(0.1f);
-			expBar.setSize(50, 20);
+			expBar.setSize(80, 20);//dont work first argument
 			expBar.setValue(t.getCurrentExp());
 			add(expBar);
 		}
