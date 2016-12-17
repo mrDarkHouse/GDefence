@@ -217,7 +217,7 @@ public enum ItemEnum {;
 		Recipe{
 			@Override
 			public String getTextureRegion() {
-				return null;
+				return "recipe";
 			}
 
 			@Override

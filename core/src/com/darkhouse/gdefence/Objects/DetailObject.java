@@ -18,7 +18,7 @@ public class DetailObject extends GameObject{
 
     @Override
     public Item getPrototype() {
-        return null;
+        return prototype;
     }
 
     @Override

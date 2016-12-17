@@ -61,20 +61,22 @@ public class Recipe extends DetailObject{
 
     @Override
     public String getTooltip() {
-//        if(getComponents().size > 0) {
-//            if(getComponents().size == 1) {
-//                Label components = new Label(getComponents().get(0).getPrototype().getName() + " " + getComponents().get(0).getSimplyGemStatString(), skin);
-//                add(components).row();
-//            }else if(getComponents().size == 2) {
-//                Label components = new Label(getComponents().get(0).getPrototype().getName() + " " + getComponents().get(0).getSimplyGemStatString() +
-//                        " + " + System.getProperty("line.separator") +getComponents().get(1).getPrototype().getName() + " " +
-//                        getComponents().get(1).getSimplyGemStatString(), skin);
-//                add(components).row();
-//            }
-//        }
+        String s = new String();
+        if(getComponents().size > 0) {//
+            for (int i = 0; i < getComponents().size; i++){
+                s += getComponents().get(i).getPrototype().getName() + " " + getComponents().get(0).getSimplyGemStatString();
+                if(i + 1 < getComponents().size) {//
+                    s += System.getProperty("line.separator");
+                }
+            }
+        }
 
+        return s;
 
-    return null;
+    }
 
+    @Override
+    public String getName() {
+        return "Recipe: " + getTower().getName();
     }
 }
