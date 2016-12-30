@@ -97,7 +97,7 @@ public class SlotSource extends Source {
 	}
 	protected void ifSlotTarget(Target target){
 		Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-		if (targetSlot.getPrototype() == payloadSlot.getPrototype() || targetSlot.getPrototype() == null) {
+		if (targetSlot.matches(payloadSlot)|| targetSlot.getPrototype() == null) {
 			targetSlot.add(payloadSlot.takeAll());
 		} else {
 			//Item targetType = targetSlot.getPrototype();

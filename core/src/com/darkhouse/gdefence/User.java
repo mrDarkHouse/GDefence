@@ -223,6 +223,7 @@ public class User {
         return openedTowers.get(t);
     }
     public void buyTowerRecipe(ItemEnum.Tower t){
+        getDetailInventory().store(new Recipe(t));
         openedTowers.put(t, RecipeType.opened);
         openRecipes();
     }

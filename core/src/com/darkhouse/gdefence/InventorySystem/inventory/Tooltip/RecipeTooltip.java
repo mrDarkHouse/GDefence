@@ -30,8 +30,10 @@ public class RecipeTooltip extends Window{
 
 
     private void init(){
-        getTitleLabel().setText("Buy " + recipe.getTower().getName() + " recipe");
+        getTitleLabel().setText("Buy " + recipe.getName());
         getTitleLabel().setAlignment(Align.center);
+
+        add(new Label(recipe.getTooltip(), skin)).row();
         //setText();
 //        if(recipe.getComponents().size > 0) {
 //            if(recipe.getComponents().size == 1) {

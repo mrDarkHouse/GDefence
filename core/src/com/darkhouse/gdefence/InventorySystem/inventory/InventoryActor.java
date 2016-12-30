@@ -143,4 +143,18 @@ public class InventoryActor extends Window {
 		}
 	}
 
+    public void addAnotherTarget(SlotActor anotherSlot){//rework with this method
+        dragAndDrop.addTarget(new SlotTarget(anotherSlot));
+    }
+    public void addThisAsSource(DragAndDrop anotherDragAndDrop){//rework with this method
+        for(SlotActor s:getActorArray()){
+            anotherDragAndDrop.addSource(new SlotSource(s));
+        }
+    }
+    public void addThisAsTarget(DragAndDrop anotherDragAndDrop){
+        for(SlotActor s:getActorArray()){
+            anotherDragAndDrop.addTarget(new SlotTarget(s));
+        }
+    }
+
 }

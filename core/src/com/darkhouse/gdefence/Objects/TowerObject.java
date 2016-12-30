@@ -164,4 +164,9 @@ public class TowerObject extends GameObject{
             level++;
         }
     }
+
+    public boolean equals(TowerObject anotherTower){
+        return (getSimplyGemStat() == anotherTower.getSimplyGemStat());
+    }
+
 }

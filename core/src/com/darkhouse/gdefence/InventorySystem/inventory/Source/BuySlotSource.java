@@ -32,7 +32,7 @@ public class BuySlotSource extends SlotSource {
     @Override
     protected void ifSlotTarget(DragAndDrop.Target target) {
         Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-        if (targetSlot.getPrototype() == payloadSlot.getPrototype() || targetSlot.getPrototype() == null) {
+        if (targetSlot.matches(payloadSlot) || targetSlot.getPrototype() == null) {
             Item item = sourceSlot.getPrototype();
             if(GDefence.getInstance().user.deleteGold(item.getGlobalCost())){
                 targetSlot.add(payloadSlot.takeAll());

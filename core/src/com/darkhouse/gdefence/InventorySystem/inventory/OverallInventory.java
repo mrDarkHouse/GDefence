@@ -56,8 +56,10 @@ public class OverallInventory extends Window{
 
 
 
+        float size = actors[0].getHeight()/3;
 
         ImageButton changeTower = new ImageButton(GDefence.getInstance().assetLoader.getNextButtonSkin());
+        changeTower.setSize(size, size);//dont work
         changeTower.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 changeInventory(0);
@@ -65,6 +67,7 @@ public class OverallInventory extends Window{
             }
         });
         ImageButton changeSpell = new ImageButton(GDefence.getInstance().assetLoader.getNextButtonSkin());
+        changeSpell.setSize(size, size);
         changeSpell.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 changeInventory(1);
@@ -72,6 +75,7 @@ public class OverallInventory extends Window{
             }
         });
         ImageButton changeDetail = new ImageButton(GDefence.getInstance().assetLoader.getNextButtonSkin());
+        changeDetail.setSize(size, size);
         changeDetail.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 changeInventory(2);
@@ -119,6 +123,18 @@ public class OverallInventory extends Window{
             currentInventory = newInventory;
         }
         update();
+    }
+
+    public void addTarget(SlotActor a){
+        for (InventoryActor i:actors){
+            i.addAnotherTarget(a);
+        }
+    }
+    public void addSlotAsSourceTarget(DragAndDrop d){//split into 2 methods
+        for (InventoryActor i:actors){
+            i.addThisAsSource(d);
+            i.addThisAsTarget(d);
+        }
     }
 
 

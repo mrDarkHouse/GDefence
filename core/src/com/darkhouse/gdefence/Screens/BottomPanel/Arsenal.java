@@ -10,6 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
 import com.darkhouse.gdefence.InventorySystem.inventory.OverallInventory;
+import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
+import com.darkhouse.gdefence.Model.Panels.TowerCraftPanel;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 import com.darkhouse.gdefence.User;
 
@@ -47,7 +50,7 @@ public class Arsenal extends AbstractCampainScreen{
         inventoryActor.init();
         towerMap = new TowerMap(GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(towerMap);
-        final TextButton towerMapButton = new TextButton("Tower Map", GDefence.getInstance().assetLoader.getSkin());
+        final TextButton towerMapButton = new TextButton("Tower Map", GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         towerMapButton.setPosition(Gdx.graphics.getWidth() - 200, 500);
         towerMapButton.setSize(140, 40);
         towerMapButton.addListener(new InputListener() {
@@ -57,6 +60,13 @@ public class Arsenal extends AbstractCampainScreen{
             }
         });
         stage.addActor(towerMapButton);
+        TowerCraftPanel towerCraftPanel = new TowerCraftPanel(new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        stage.addActor(towerCraftPanel);
+
+        inventoryActor.addTarget(towerCraftPanel.getRecipeSlot());
+        inventoryActor.addSlotAsSourceTarget(towerCraftPanel.getDragAndDrop());
+
+
     }
 
     @Override

@@ -23,6 +23,7 @@ package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.Objects.Recipe;
 
 /**
  * @author Daniel Holderbaum
@@ -131,7 +132,7 @@ public class Inventory {
 	}
     public boolean store(GameObject object) {
         Slot itemSlot = firstSlotWithItem(object.getPrototype());
-        if (itemSlot != null) {
+        if (itemSlot != null && !(object instanceof Recipe)) {//
             itemSlot.add(object);
             return true;
         } else {

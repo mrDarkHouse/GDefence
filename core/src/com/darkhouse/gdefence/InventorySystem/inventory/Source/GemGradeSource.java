@@ -23,7 +23,7 @@ public class GemGradeSource extends SlotSource{
     @Override
     protected void ifSlotTarget(DragAndDrop.Target target) {
         Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-        if (targetSlot.getPrototype() == payloadSlot.getPrototype() || targetSlot.getPrototype() == null) {
+        if (targetSlot.matches(payloadSlot) || targetSlot.getPrototype() == null) {
             targetSlot.add(payloadSlot.takeAll());
         }
     }

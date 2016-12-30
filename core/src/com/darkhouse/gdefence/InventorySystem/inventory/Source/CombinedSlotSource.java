@@ -8,6 +8,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.GemGradeTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SellTarget;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.TowerCraftTarget;
 
 public class CombinedSlotSource extends SlotSource {
     public CombinedSlotSource(SlotActor actor) {
@@ -38,6 +39,8 @@ public class CombinedSlotSource extends SlotSource {
                     sourceSlot.add(payloadSlot.takeAll());//all remaining
                 }
             }
+        } else if(target instanceof TowerCraftTarget){
+            //
         }
     }
 

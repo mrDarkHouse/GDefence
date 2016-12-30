@@ -22,10 +22,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.utils.Array;
-import com.darkhouse.gdefence.Objects.DetailObject;
-import com.darkhouse.gdefence.Objects.GameObject;
-import com.darkhouse.gdefence.Objects.SpellObject;
-import com.darkhouse.gdefence.Objects.TowerObject;
+import com.darkhouse.gdefence.Objects.*;
 
 /**
  * @author Daniel Holderbaum
@@ -74,9 +71,13 @@ public class Slot {
 	 *         least the same amount of items as the given other slot.
 	 *         {@code False} otherwise.
 	 */
-//	public boolean matches(Slot other) {
-//		return this.prototype == other.prototype && this.amount >= other.amount;
-//	}
+	public boolean matches(Slot other) {
+        if(getPrototype() == ItemEnum.Detail.Recipe && other.getPrototype() == ItemEnum.Detail.Recipe) {
+            return (((Recipe) getLast()).getTower() == ((Recipe) other.getLast()).getTower());
+        }
+		return this.prototype == other.prototype;
+
+	}
 
 //	public boolean add(Item item, int amount) {
 //		if (this.prototype == item || this.prototype == null) {
