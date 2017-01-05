@@ -32,7 +32,7 @@ public class RecipeButton extends ImageButton{
         addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(type == User.RecipeType.canOpen){
-                    if(GDefence.getInstance().user.deleteGold(500)){
+                    if(GDefence.getInstance().user.deleteGold(towerRecipe.getGlobalCost())){
                         GDefence.getInstance().user.buyTowerRecipe(tower);
                     }
                 }

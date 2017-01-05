@@ -51,7 +51,7 @@ public class Arsenal extends AbstractCampainScreen{
         towerMap = new TowerMap(GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(towerMap);
         final TextButton towerMapButton = new TextButton("Tower Map", GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
-        towerMapButton.setPosition(Gdx.graphics.getWidth() - 200, 500);
+        towerMapButton.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight() - 100);
         towerMapButton.setSize(140, 40);
         towerMapButton.addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -60,11 +60,12 @@ public class Arsenal extends AbstractCampainScreen{
             }
         });
         stage.addActor(towerMapButton);
-        TowerCraftPanel towerCraftPanel = new TowerCraftPanel(new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        TowerCraftPanel towerCraftPanel = new TowerCraftPanel(new DragAndDrop(), inventoryActor, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(towerCraftPanel);
+        towerCraftPanel.init();
 
-        inventoryActor.addTarget(towerCraftPanel.getRecipeSlot());
-        inventoryActor.addSlotAsSourceTarget(towerCraftPanel.getDragAndDrop());
+//        inventoryActor.addTarget(towerCraftPanel.getRecipeSlot());
+//        inventoryActor.addSlotAsSourceTarget(towerCraftPanel.getDragAndDrop());
 
 
     }

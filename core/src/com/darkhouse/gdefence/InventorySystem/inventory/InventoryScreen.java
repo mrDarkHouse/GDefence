@@ -47,7 +47,7 @@ public class InventoryScreen implements Screen {
 //		Skin skin = LibgdxUtils.assets.get("skins/uiskin.json", Skin.class);
 		Skin skin = new Skin(Gdx.files.internal("skins/uiskin.json"));
 		DragAndDrop dragAndDrop = new DragAndDrop();
-		inventoryActor = new InventoryActor(new Inventory(), dragAndDrop, skin);
+//		inventoryActor = new InventoryActor(new Inventory(), dragAndDrop, skin);
 		stage.addActor(inventoryActor);
 		inventoryActor.init();
 	}

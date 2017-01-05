@@ -25,7 +25,7 @@ public class TowerMap extends Window{
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
 
-        setPosition(700, 250);
+        setPosition(700, 450);
         defaults().space(15);
         defaults().size(60, 60);
         row().fill().expandX();

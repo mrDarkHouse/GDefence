@@ -100,6 +100,7 @@ public class TowerObject extends GameObject{
 
 
     public TowerObject(ItemEnum.Tower prototype) {
+//        super(prototype);
         this.prototype = prototype;
         level = 1;
         totalExp = 0;
@@ -159,14 +160,14 @@ public class TowerObject extends GameObject{
 
     public void updateExp(){
         currentExp = getTotalExp();
-        for(int i = level - 1; currentExp >= exp2nextLvl[i]; i ++){
+        for(int i = level - 1; currentExp >= exp2nextLvl[i]; i ++){//if max lvl throws exeption
             currentExp -= exp2nextLvl[i];
             level++;
         }
     }
 
     public boolean equals(TowerObject anotherTower){
-        return (getSimplyGemStat() == anotherTower.getSimplyGemStat());
+        return (getPrototype() == anotherTower.getPrototype() && getSimplyGemStatString().equals(anotherTower.getSimplyGemStatString()));//String??Wtf
     }
 
 }

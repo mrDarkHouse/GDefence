@@ -130,9 +130,9 @@ public class OverallInventory extends Window{
             i.addAnotherTarget(a);
         }
     }
-    public void addSlotAsSourceTarget(DragAndDrop d){//split into 2 methods
+    public void addSlotAsTarget(DragAndDrop d){//split into 2 methods
         for (InventoryActor i:actors){
-            i.addThisAsSource(d);
+//            i.addThisAsSource(d);
             i.addThisAsTarget(d);
         }
     }

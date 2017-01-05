@@ -22,6 +22,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.darkhouse.gdefence.Objects.*;
 
 /**
@@ -29,21 +30,30 @@ import com.darkhouse.gdefence.Objects.*;
  */
 public class Slot {
 
+
 	private Item prototype;
+	private Class<? extends GameObject> type;
+
+	public Class<? extends GameObject> getType() {
+		return type;
+	}
 
 	public void setPrototype(Item newPrototype) {
 		if(prototype != newPrototype) prototype = newPrototype;
 		notifyListeners();
 	}
 
+
 	private Array <GameObject> itemsArray;
+
 
 	//private int amount;
 
 	private Array<SlotListener> slotListeners = new Array<SlotListener>();
 
-	public Slot(Item item, int amount) {
+	public Slot(Class<? extends GameObject> type, Item item, int amount) {
 		this.prototype = item;
+		this.type = type;
 		//this.amount = amount;
 		itemsArray = new Array<GameObject>();
 		for (int i = 0; i < amount; i++){
@@ -52,7 +62,7 @@ public class Slot {
 	}
 	public void copy(Slot s){
 //		itemsArray.clear();
-		itemsArray = new Array<GameObject>(s.itemsArray);
+		itemsArray = new Array<GameObject>(s.itemsArray);//
 		setPrototype(s.getPrototype());
 
 		//itemsArray.addAll(s.itemsArray);
@@ -61,17 +71,8 @@ public class Slot {
 //		}
 	}
 
-	/**
-	 * Returns {@code true} in case this slot has the same prototype type and at
-	 * least the same amount of items as the given other slot.
-	 *
-	 * @param //other
-	 *            The other slot to be checked.
-	 * @return {@code True} in case this slot has the same prototype type and at
-	 *         least the same amount of items as the given other slot.
-	 *         {@code False} otherwise.
-	 */
 	public boolean matches(Slot other) {
+//		if(getType() != other.getType()) return false;
         if(getPrototype() == ItemEnum.Detail.Recipe && other.getPrototype() == ItemEnum.Detail.Recipe) {
             return (((Recipe) getLast()).getTower() == ((Recipe) other.getLast()).getTower());
         }
@@ -99,21 +100,28 @@ public class Slot {
 //
 //		return false;
 //	}
-	public static Array<GameObject> genereateStartObjects(Item item, int amount){
-		Array<GameObject> tmp = new Array<GameObject>();
-		for (int i = 0; i < amount; i++){
-			if (item instanceof ItemEnum.Tower){					//it's can be a method
-				tmp.add(new TowerObject(((ItemEnum.Tower) item)));
-			}else if(item instanceof ItemEnum.Spell){
-				tmp.add(new SpellObject(((ItemEnum.Spell) item)));
-			}else if(item instanceof ItemEnum.Detail){
-				tmp.add(new DetailObject(((ItemEnum.Detail) item)));
-			}
-		}
-		return tmp;
-	}
+//	public T getInstance() throws InstantiationException, IllegalAccessException{
+//		return tClass.newInstance();
+//	}
+//
+//	public Array<T> genereateStartObjects(Class<T> type, int amount){
+//		Array<T> tmp = new Array<T>();
+//		try {
+//			for (int i = 0; i < amount; i++) {
+//				tmp.add(type.newInstance());
+//			}
+//		} catch (InstantiationException e) {
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return tmp;
+//	}
 
-	public boolean add(Array<GameObject> o){//boolean not need now
+
+
+	public boolean add(Array<? extends GameObject> o){//boolean not need now
 		if(isEqualPrototype(prototype, o.first()) || prototype == null) {
 			itemsArray.addAll(o);
 //			if(prototype != o.peek().getPrototype()) prototype = o.peek().getPrototype();
@@ -223,11 +231,11 @@ public class Slot {
 		if(getAmount() == 0) setPrototype(null);//notify listeners use twice
 //		prototype = null;
 //
-		notifyListeners();
+		else notifyListeners();//fixed(?)
 		return tmpArr;
 	}
 
-	public Array<GameObject> takeAll(){
+	public Array<? extends GameObject> takeAll(){
 		Array<GameObject> tmpArr = new Array<GameObject>(itemsArray);
 		itemsArray.clear();
 //		prototype = null;

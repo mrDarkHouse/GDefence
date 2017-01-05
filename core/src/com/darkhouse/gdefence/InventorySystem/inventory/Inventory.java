@@ -24,6 +24,7 @@ package com.darkhouse.gdefence.InventorySystem.inventory;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.Objects.GameObject;
 import com.darkhouse.gdefence.Objects.Recipe;
+import com.darkhouse.gdefence.Objects.TowerObject;
 
 /**
  * @author Daniel Holderbaum
@@ -31,9 +32,15 @@ import com.darkhouse.gdefence.Objects.Recipe;
 public class Inventory {
 
 	protected Array<Slot> slots;
+	private Class<? extends GameObject> type;
 
-	public Inventory() {
-		initSlots(35);
+	public Class<? extends GameObject> getType() {
+		return type;
+	}
+
+	public Inventory(Class<? extends GameObject> type, int slots) {
+		initSlots(type, slots);//35
+		this.type = type;
 
 		// create some random items
 		//for (Slot slot : slots) {
@@ -59,7 +66,7 @@ public class Inventory {
 	}
 
 	public Inventory(Inventory copyInventory){
-		this();
+		this(copyInventory.getType(), copyInventory.getSlots().size);
 		copy(copyInventory);
 	}
 	public void copy(Inventory inventory){
@@ -75,7 +82,7 @@ public class Inventory {
 
 
 	public Inventory copy(){
-		Inventory newInventory = new Inventory();
+		Inventory newInventory = new Inventory(type, slots.size);
 //		for(int i = 0; i < slots.size; i++){
 //			//newInventory.slots.clear();
 //			//newInventory.slots.addAll(slots);
@@ -92,10 +99,10 @@ public class Inventory {
 
 
 
-	protected void initSlots(int numberSlots){
+	protected void initSlots(Class<? extends GameObject> type, int numberSlots){
 		slots = new Array<Slot>(numberSlots);
 		for (int i = 0; i < numberSlots; i++) {
-			slots.add(new Slot(null, 0));
+			slots.add(new Slot(type, null, 0));
 		}
 	}
 
@@ -116,13 +123,13 @@ public class Inventory {
 		Slot itemSlot = firstSlotWithItem(item);
 		if (itemSlot != null) {
 //			itemSlot.add(item, amount);
-			itemSlot.add(Slot.genereateStartObjects(item, amount));
+			itemSlot.add(GameObject.generateStartObjects(item, amount));
 			return true;
 		} else {
 			// now check for an available empty slot
 			Slot emptySlot = firstSlotWithItem(null);
 			if (emptySlot != null) {
-				emptySlot.add(Slot.genereateStartObjects(item, amount));
+				emptySlot.add(GameObject.generateStartObjects(item, amount));
 				return true;
 			}
 		}
@@ -147,6 +154,14 @@ public class Inventory {
 
         return false;
     }
+	public boolean store(Array<GameObject> objects) {
+		for (GameObject o:objects){
+			if(!store(o)) return false;
+		}
+
+		return true;
+	}
+
 
 	public Array<Slot> getSlots() {
 		return slots;

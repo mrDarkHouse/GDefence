@@ -26,7 +26,7 @@ public class BuySlotSource extends SlotSource {
     @Override
     protected void takeSlot() {
         //dont take from shop
-        payloadSlot.add(Slot.genereateStartObjects(sourceSlot.getPrototype(), 1));
+        payloadSlot.add(GameObject.generateStartObjects(sourceSlot.getPrototype(), 1));
     }
 
     @Override

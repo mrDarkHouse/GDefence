@@ -58,7 +58,7 @@ public class SlotSource extends Source {
 
 		Payload payload = new Payload();
 //		Slot payloadSlot = new Slot(sourceSlot.getPrototype(), sourceSlot.getAmount());
-		payloadSlot = new Slot(sourceSlot.getPrototype(), 0);
+		payloadSlot = new Slot(sourceSlot.getType(), sourceSlot.getPrototype(), 0);
 		takeSlot();
 		payload.setObject(payloadSlot);
 
@@ -97,12 +97,15 @@ public class SlotSource extends Source {
 	}
 	protected void ifSlotTarget(Target target){
 		Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-		if (targetSlot.matches(payloadSlot)|| targetSlot.getPrototype() == null) {
+		if(targetSlot.getType() != payloadSlot.getType() && targetSlot.getType().getSuperclass() != payloadSlot.getType()
+				&& payloadSlot.getType().getSuperclass() != targetSlot.getType()) {//recipe extends detail
+			ifNullTarget();
+			return;
+		}//new engine lol
+		if (targetSlot.matches(payloadSlot)|| targetSlot.isEmpty()) {
 			targetSlot.add(payloadSlot.takeAll());
 		} else {
-			//Item targetType = targetSlot.getPrototype();
-			//int targetAmount = targetSlot.getAmount();
-			Array<GameObject> tmp = targetSlot.takeAll();
+			Array<? extends GameObject> tmp = targetSlot.takeAll();
 			targetSlot.add(payloadSlot.takeAll());
 			sourceSlot.add(tmp);
 		}

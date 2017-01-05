@@ -2,19 +2,22 @@ package com.darkhouse.gdefence.Model.Panels;
 
 
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
-import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
-import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
-import com.darkhouse.gdefence.InventorySystem.inventory.SlotListener;
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
+import com.darkhouse.gdefence.Objects.GameObject;
 import com.darkhouse.gdefence.Objects.Recipe;
 import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Objects.TowerObject;
+import com.darkhouse.gdefence.User;
 
 public class TowerCraftPanel extends Window{
     private DragAndDrop dragAndDrop;
@@ -26,8 +29,17 @@ public class TowerCraftPanel extends Window{
     private Skin skin;
     private boolean hasRecipe = false;
     private SlotActor recipeSlot;//<Recipe>
+    private RecipeListener recipeListener;
     private Array<SlotActor> componentSlots;//<TowerObject>
+    private Array<ComponentListener> componentListeners;
     private SlotActor resultSlot;
+    private ResultListener resultListener;
+
+    private OverallInventory sourceTargetInventory;
+
+    public void setSourceTargetInventory(OverallInventory sourceTargetInventory) {
+        this.sourceTargetInventory = sourceTargetInventory;
+    }
 
     public SlotActor getRecipeSlot() {
         return recipeSlot;
@@ -40,67 +52,136 @@ public class TowerCraftPanel extends Window{
     public SlotActor getResultSlot() {
         return resultSlot;
     }
-    private class setListener implements SlotListener{
+    private class RecipeListener implements SlotListener{
         @Override
         public void hasChanged(Slot slot) {
-            if(!slot.isEmpty()) {
-                if (!hasRecipe && slot.getPrototype() == ItemEnum.Detail.Recipe/*remove when complete <Recipe> slot*/) {//
-                    hasRecipe = true;
-                    addRecipe();
-                }
-            }else {
-                if(hasRecipe) {
-                    hasRecipe = false;
-                    removeRecipe();
-                }
+            recipeChanged(slot);
+        }
+    }
+    private class ComponentListener implements SlotListener{
+        @Override
+        public void hasChanged(Slot slot) {
+            addComponent();
+        }
+    }
+    private class ResultListener implements SlotListener{
+        @Override
+        public void hasChanged(Slot slot) {
+            if(slot.isEmpty()){
+                removeResult();
             }
         }
     }
 
-    public TowerCraftPanel(DragAndDrop dragAndDrop, Skin skin) {
+    public TowerCraftPanel(DragAndDrop dragAndDrop, OverallInventory overallInventory, Skin skin) {
         super("Grade Panel", skin);
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
         setDefaults();
+        setResizable(false);
         setSize(400, 400);
 
         this.dragAndDrop = dragAndDrop;
         this.skin = skin;
-        recipeSlot = new SlotActor(skin, new Slot(null, 0));
-        recipeSlot.getSlot().addListener(new setListener());
-        resultSlot = new SlotActor(skin, new Slot(null, 0));
-        add(recipeSlot).row();
-        recipeSlot.setRound(true);
-        recipeSlot.setClip(false);
+        setSourceTargetInventory(overallInventory);
+        recipeSlot = new SlotActor(skin, new Slot(Recipe.class, null, 0));
+        recipeListener = new RecipeListener();
+        recipeSlot.getSlot().addListener(recipeListener);
+        resultSlot = new SlotActor(skin, new Slot(TowerObject.class, null, 0));
+
+        add(recipeSlot).align(Align.center);
+        row();
+        add();//3 max component size
+//        add();
+//        add();
+        row();
+        add();
+
+        pack();
+
+//        recipeSlot.setRound(true);
+//        recipeSlot.setClip(false);
+        sourceTargetInventory.addTarget(recipeSlot);
         dragAndDrop.addSource(new SlotSource(recipeSlot));
+        sourceTargetInventory.addSlotAsTarget(dragAndDrop);
         componentSlots = new Array<SlotActor>();
+        componentListeners = new Array<ComponentListener>();
+    }
+    public void init(){
+        recipeSlot.addTooltip(getStage());
     }
 
     public void addRecipe(/*Recipe r*/){//no call with empty recipeSlot
         int components = ((Recipe) recipeSlot.getSlot().getLast()).getComponents().size;
+//        recipeSlot.hasChanged();
+
         for (int i = 0; i < components; i++){
-            componentSlots.add(new SlotActor(skin, new Slot(null, 0)));
+            componentSlots.add(new SlotActor(skin, new Slot(TowerObject.class, null, 0)));
         }
 
-        for (SlotActor a:componentSlots){
-            add(a);
+        for (int i = 0; i < componentSlots.size; i++){
+            componentListeners.add(new ComponentListener());
+            componentSlots.get(i).getSlot().addListener(componentListeners.get(i));
+            componentSlots.get(i).addTooltip(getStage());
+            if(i == 0) {
+                getCells().get(1).setActor(componentSlots.get(i));
+            }else {
+                addActorAt(1, componentSlots.get(i));
+            }
+            dragAndDrop.addSource(new SlotSource(componentSlots.get(i)));
+            sourceTargetInventory.addTarget(componentSlots.get(i));
         }
         row();
-        add(resultSlot);
+        resultListener = new ResultListener();
+        resultSlot.getSlot().addListener(resultListener);
+        resultSlot.addTooltip(getStage());
+        getCells().peek().setActor(resultSlot);
+        dragAndDrop.addSource(new SlotSource(resultSlot));
+
+        pack();
     }
     public void removeRecipe(){
-        for (SlotActor a:componentSlots){
-            removeActor(a);
+        for (SlotActor a:componentSlots){//#iterator cannot be used nested
+            User.getTowerInventory().store(a.getSlot().getAll());//saving items
+            a.remove();
         }
+        componentListeners.clear();
+        if(!resultSlot.getSlot().isEmpty()) {
+            resultSlot.getSlot().removeListener(resultListener);//kostil'
+            resultSlot.getSlot().takeAll();
+            resultSlot.getSlot().addListener(resultListener);//
+        }
+
+
+
         componentSlots.clear();
-        removeActor(resultSlot);
+        resultSlot.remove();
     }
+    private void recipeChanged(Slot slot){
+        if(!slot.isEmpty()) {
+            if (!hasRecipe && slot.getPrototype() == ItemEnum.Detail.Recipe/*remove when complete <Recipe> slot*/) {//
+                hasRecipe = true;
+                addRecipe();
+            }
+        }else {
+            if(hasRecipe) {
+                hasRecipe = false;
+                removeRecipe();
+            }
+        }
+    }
+
     public void addComponent(){//updating
         checkResult();
     }
     private void checkResult(){
+//        System.out.println(recipeSlot.getSlot().getLast());
         Recipe r = ((Recipe) recipeSlot.getSlot().getLast());
-        Array<TowerObject> needComponents = r.getComponents();
+//        if(r == null) {
+//            System.out.println("Null");
+//            return;
+//        }
+        Array<TowerObject> needComponents = r.getComponents();//nullPointer
         Array<TowerObject> currentComponents = new Array<TowerObject>();
 
         for (SlotActor a:componentSlots){
@@ -117,12 +198,34 @@ public class TowerCraftPanel extends Window{
             }
         }
         if(contains == needComponents.size){
-            resultSlot.getSlot().add(Slot.genereateStartObjects(r.getTower(), 1));//create new tower
-//            System.out.println("aa");
+            resultSlot.getSlot().add(GameObject.generateStartObjects(r.getTower(), 1));//create new tower
+        }else{
+            if(!resultSlot.getSlot().isEmpty()){
+                resultSlot.getSlot().removeListener(resultListener);//kostil'
+                resultSlot.getSlot().takeAll();
+                resultSlot.getSlot().addListener(resultListener);//
+            }
         }
 
 //
 //        if(currentComponents
+    }
+    private void removeResult(){
+//        componentSlots.clear();
+//        recipeSlot.getSlot().takeAll();
+//        System.out.println(recipeSlot.getSlot().getAll());
+//        System.out.println(recipeSlot.getStage());
+
+        for (int i = 0; i < componentSlots.size; i++){
+            componentSlots.get(i).getSlot().removeListener(componentListeners.get(i));
+            /*if(!a.getSlot().isEmpty())*/ componentSlots.get(i).getSlot().take(1);
+            //take(1) allows to contains and create a lot components
+            componentSlots.get(i).getSlot().addListener(componentListeners.get(i));
+        }
+        recipeSlot.getSlot().removeListener(recipeListener);//recipe always not null
+        recipeSlot.getSlot().take(1);
+        recipeSlot.getSlot().addListener(recipeListener);
+
     }
 
 
@@ -131,9 +234,9 @@ public class TowerCraftPanel extends Window{
 
 
     protected void setDefaults(){
-        setPosition(800, 250);
+        setPosition(1100, 370);
         defaults().space(8);
         defaults().size(60, 60);
-        row().fill().expandX();
+//        row().fill().expandX();
     }
 }

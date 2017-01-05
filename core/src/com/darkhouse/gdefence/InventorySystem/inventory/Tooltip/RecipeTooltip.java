@@ -46,7 +46,7 @@ public class RecipeTooltip extends Window{
 //                add(components).row();
 //            }
 //        }
-        Label cost = new Label("500 gold", skin);
+        Label cost = new Label(recipe.getGlobalCost() + " gold", skin);
         add(cost);
         pack();
     }

@@ -6,7 +6,10 @@ package com.darkhouse.gdefence;
 import com.badlogic.gdx.Gdx;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.Objects.DetailObject;
 import com.darkhouse.gdefence.Objects.Recipe;
+import com.darkhouse.gdefence.Objects.SpellObject;
+import com.darkhouse.gdefence.Objects.TowerObject;
 
 import java.io.*;
 import java.util.HashMap;
@@ -367,10 +370,13 @@ public class User {
         //items.add(Item.CRYSTAL_GREEN);
         //items.add(Item.CRYSTAL_GREEN);
 
-        towerInventory = new Inventory();
-        spellInventory = new Inventory();
-        detailInventory = new Inventory();
+        towerInventory = new Inventory(TowerObject.class, 35);
+        spellInventory = new Inventory(SpellObject.class, 35);
+        detailInventory = new Inventory(DetailObject.class, 35);
         towerInventory.store(ItemEnum.Tower.Basic, 1);
+        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.RED, 1);
+        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.YELLOW, 1);
+        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.BLUE, 3);
         towerInventory.store(ItemEnum.Tower.Rock, 1);
         towerInventory.store(ItemEnum.Tower.Arrow, 3);
         detailInventory.store(new Recipe(ItemEnum.Tower.Range));

@@ -39,7 +39,7 @@ public class GemGradePanel extends Window{
         setDefaults();
 
         this.dragAndDrop = dragAndDrop;
-        gradeTowerSlot = new SlotActor(skin, new Slot(null, 0));
+        gradeTowerSlot = new SlotActor(skin, new Slot(TowerObject.class, null, 0));
         add(gradeTowerSlot);
         gemGrades = new ImageButton[3];
         gemGrades[0] = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(GDefence.getInstance().assetLoader.get("Gems/redGem.png", Texture.class)));

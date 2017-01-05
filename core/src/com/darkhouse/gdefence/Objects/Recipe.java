@@ -15,6 +15,11 @@ public class Recipe extends DetailObject{
     }
 
     private Array <TowerObject> components;
+    private int globalCost;
+
+    public int getGlobalCost() {
+        return globalCost;
+    }
 
     public Array<TowerObject> getComponents() {
         return components;
@@ -39,6 +44,7 @@ public class Recipe extends DetailObject{
                 o.addGems(User.GEM_TYPE.YELLOW, 1);
                 o.addGems(User.GEM_TYPE.BLUE, 1);
                 components.add(o);//3 1 1
+                globalCost = 80;
                 break;
             case Arrow:
                 o = new TowerObject(ItemEnum.Tower.Basic);
@@ -46,6 +52,7 @@ public class Recipe extends DetailObject{
                 o.addGems(User.GEM_TYPE.YELLOW, 3);
                 o.addGems(User.GEM_TYPE.BLUE, 1);
                 components.add(o);//1 3 1
+                globalCost = 100;
                 break;
             case Range:
                 o = new TowerObject(ItemEnum.Tower.Basic);
@@ -53,6 +60,7 @@ public class Recipe extends DetailObject{
                 o.addGems(User.GEM_TYPE.YELLOW, 1);
                 o.addGems(User.GEM_TYPE.BLUE, 3);
                 components.add(o);//1 1 3
+                globalCost = 120;
                 break;
 
 
