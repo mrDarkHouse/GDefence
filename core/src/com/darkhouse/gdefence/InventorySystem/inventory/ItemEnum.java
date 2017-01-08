@@ -21,7 +21,9 @@
  */
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Ability;
 import com.darkhouse.gdefence.Level.Ability.Crit;
 import com.darkhouse.gdefence.Level.Ability.MultiShot;
@@ -44,16 +46,15 @@ public enum ItemEnum {;
 	public enum Tower implements Item {
 		Basic("Basic", AttackType.projectile, 10, 80, 10, 100, 1.2f){
 			@Override
+			protected void setTextures() {
+				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/basicTower.png", Texture.class));
+				setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/basic.png", Texture.class));
+			}
+
+			@Override
 			public String getTextureRegion() {
 				return "basic";
 			}
-
-//			@Override
-//			public String getTooltip() {
-//				return "Dmg: " + getDmg() + System.getProperty("line.separator")
-//						+ "Range: " + getRange() + System.getProperty("line.separator")
-//						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
-//			}
 
 			@Override
 			protected void addAbilities() {
@@ -62,15 +63,14 @@ public enum ItemEnum {;
 		},
 		Rock("Rock", AttackType.projectile, 20, 140, 25, 120, 1.0f){
 			@Override
+			protected void setTextures() {
+				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/rockTower.png", Texture.class));
+				setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/rock.png", Texture.class));
+			}
+			@Override
 			public String getTextureRegion() {
 				return "rock";
 			}
-//			@Override
-//			public String getTooltip() {
-//				return "Dmg: " + getDmg() + System.getProperty("line.separator")
-//						+ "Range: " + getRange() + System.getProperty("line.separator")
-//						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
-//			}
 
 			@Override
 			protected void addAbilities() {
@@ -79,15 +79,14 @@ public enum ItemEnum {;
 		},
 		Arrow("Arrow", AttackType.projectile, 20, 140, 15, 120, 0.8f){
 			@Override
+			protected void setTextures() {
+				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/arrowTower.png", Texture.class));
+				setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/arrow.png", Texture.class));
+			}
+			@Override
 			public String getTextureRegion() {
 				return "arrow";
 			}
-//			@Override
-//			public String getTooltip() {
-//				return "Dmg: " + getDmg() + System.getProperty("line.separator")
-//						+ "Range: " + getRange() + System.getProperty("line.separator")
-//						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
-//			}
 
 			@Override
 			protected void addAbilities() {
@@ -96,24 +95,44 @@ public enum ItemEnum {;
 		},
 		Range("Range", AttackType.projectile, 20, 180, 15, 160, 1.0f){
 			@Override
+			protected void setTextures() {
+				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/rangeTower.png", Texture.class));
+				setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/range.png", Texture.class));
+			}
+
+			@Override
 			public String getTextureRegion() {
 				return "range";
 			}
-//			@Override
-//			public String getTooltip() {
-//				return "Dmg: " + getDmg() + System.getProperty("line.separator")
-//						+ "Range: " + getRange() + System.getProperty("line.separator")
-//						+ "Speed: " + getSpeedDelay() + System.getProperty("line.separator") + "Cost: " + getCost();
-//			}
 
 			@Override
 			protected void addAbilities() {
 				abilities.add(new MultiShot(2));
 			}
+		},
+		Ballista("Ballista", AttackType.projectile, 25, 200, 20, 180, 0.8f){
+			@Override
+			protected void setTextures() {
+				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/ballista.png", Texture.class));
+				setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/ballista.png", Texture.class));
+			}
+
+			@Override
+			public String getTextureRegion() {
+				return "ballista";
+			}
+
+
+			@Override
+			protected void addAbilities() {
+				//
+			}
 		};
 
 
 		//protected TowerType ID;
+		private Texture towerTexture;
+		private Texture projectileTexture;
 		private String name;
 		private AttackType attackType;
 		private int range;
@@ -127,8 +146,22 @@ public enum ItemEnum {;
 		protected void addAbilities(){
 		}
 
+		protected void setTowerTexture(Texture towerTexture) {
+			this.towerTexture = towerTexture;
+		}
 
+		protected void setProjectileTexture(Texture projectileTexture) {
+			this.projectileTexture = projectileTexture;
+		}
 
+		protected abstract void setTextures();
+
+		public Texture getTowerTexture() {
+			return towerTexture;
+		}
+		public Texture getProjectileTexture() {
+			return projectileTexture;
+		}
 		public ArrayList<Ability> getAbilities() {
 			return abilities;
 		}
@@ -167,7 +200,15 @@ public enum ItemEnum {;
 
 			abilities = new ArrayList<Ability>();
 			addAbilities();
+//			setTextures();
 
+		}
+		public static void init(){
+			Basic.setTextures();
+			Rock.setTextures();
+			Arrow.setTextures();
+			Range.setTextures();
+			Ballista.setTextures();
 		}
 
 	}

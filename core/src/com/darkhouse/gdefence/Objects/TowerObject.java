@@ -166,8 +166,11 @@ public class TowerObject extends GameObject{
         }
     }
 
-    public boolean equals(TowerObject anotherTower){
-        return (getPrototype() == anotherTower.getPrototype() && getSimplyGemStatString().equals(anotherTower.getSimplyGemStatString()));//String??Wtf
+    public boolean equalsOrHigher(TowerObject anotherTower){
+        int[] first = getSimplyGemStat();
+        int[] second = anotherTower.getSimplyGemStat();
+        boolean b = second[0] >= first[0] && second[1] >= first[1] && second[2] >= first[2];
+        return (getPrototype() == anotherTower.getPrototype() && b);
     }
 
 }

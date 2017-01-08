@@ -182,6 +182,7 @@ public class AssetLoader extends AssetManager{
         load("Projectiles/rock.png", Texture.class);
         load("Projectiles/arrow.png", Texture.class);
         load("Projectiles/range.png", Texture.class);
+        load("Projectiles/ballista.png", Texture.class);
         load("coin.png", Texture.class);
         load("castle.png", Texture.class);
 
@@ -207,6 +208,7 @@ public class AssetLoader extends AssetManager{
         load("Tower/rockTower.png", Texture.class);
         load("Tower/arrowTower.png", Texture.class);
         load("Tower/rangeTower.png", Texture.class);
+        load("Tower/ballista.png", Texture.class);
         load("infoPanelFone.png", Texture.class);
         load("levelLooseBg.png", Texture.class);
         load("levelWinBg.png", Texture.class);
@@ -445,48 +447,48 @@ public class AssetLoader extends AssetManager{
         return FontLoader.generateStyle(36, Color.BLACK);
     }
 
-    public ImageButton.ImageButtonStyle getTowerCellSkin(ItemEnum.Tower tower){
-        switch (tower){
-            case Basic:
-                return generateImageButtonSkin(get("Tower/basicTower.png", Texture.class));
-            case Rock:
-                return generateImageButtonSkin(get("Tower/rockTower.png", Texture.class));
-            case Arrow:
-                return generateImageButtonSkin(get("Tower/arrowTower.png", Texture.class));
-            case Range:
-                return generateImageButtonSkin(get("Tower/rangeTower.png", Texture.class));
-            default:
-                throw new RuntimeException("No tower found with id: " + tower);
-        }
-    }
-    public Texture getTowerTexture(ItemEnum.Tower tower){
-        switch (tower){
-            case Basic:
-                return get("Tower/basicTower.png", Texture.class);
-            case Rock:
-                return get("Tower/rockTower.png", Texture.class);
-            case Arrow:
-                return get("Tower/arrowTower.png", Texture.class);
-            case Range:
-                return get("Tower/rangeTower.png", Texture.class);
-            default:
-                throw new RuntimeException("No tower found with id: " + tower);
-        }
-    }
-    public Texture getProjectileTexture(ItemEnum.Tower tower){
-        switch (tower){
-            case Basic:
-                return get("Projectiles/basic.png", Texture.class);
-            case Rock:
-                return get("Projectiles/rock.png", Texture.class);
-            case Arrow:
-                return get("Projectiles/arrow.png", Texture.class);
-            case Range:
-                return get("Projectiles/range.png", Texture.class);
-            default:
-                throw new RuntimeException("No tower found with id: " + tower);
-        }
-    }
+//    public ImageButton.ImageButtonStyle getTowerCellSkin(ItemEnum.Tower tower){//reworked
+//        switch (tower){
+//            case Basic:
+//                return generateImageButtonSkin(get("Tower/basicTower.png", Texture.class));
+//            case Rock:
+//                return generateImageButtonSkin(get("Tower/rockTower.png", Texture.class));
+//            case Arrow:
+//                return generateImageButtonSkin(get("Tower/arrowTower.png", Texture.class));
+//            case Range:
+//                return generateImageButtonSkin(get("Tower/rangeTower.png", Texture.class));
+//            default:
+//                throw new RuntimeException("No tower found with id: " + tower);
+//        }
+//    }
+//    public Texture getTowerTexture(ItemEnum.Tower tower){//reworked
+//        switch (tower){
+//            case Basic:
+//                return get("Tower/basicTower.png", Texture.class);
+//            case Rock:
+//                return get("Tower/rockTower.png", Texture.class);
+//            case Arrow:
+//                return get("Tower/arrowTower.png", Texture.class);
+//            case Range:
+//                return get("Tower/rangeTower.png", Texture.class);
+//            default:
+//                throw new RuntimeException("No tower found with id: " + tower);
+//        }
+//    }
+//    public Texture getProjectileTexture(ItemEnum.Tower tower){//reworked
+//        switch (tower){
+//            case Basic:
+//                return get("Projectiles/basic.png", Texture.class);
+//            case Rock:
+//                return get("Projectiles/rock.png", Texture.class);
+//            case Arrow:
+//                return get("Projectiles/arrow.png", Texture.class);
+//            case Range:
+//                return get("Projectiles/range.png", Texture.class);
+//            default:
+//                throw new RuntimeException("No tower found with id: " + tower);
+//        }
+//    }
 
 
     public ImageButton.ImageButtonStyle getStoreSellButtonStyle(){

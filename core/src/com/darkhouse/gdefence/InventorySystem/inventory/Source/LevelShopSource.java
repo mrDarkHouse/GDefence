@@ -32,7 +32,7 @@ public class LevelShopSource extends SlotSource {
 
         Image i = ((Image)payload.getValidDragActor());
         Image inv = ((Image)payload.getDragActor());
-        TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.getTowerTexture(tower.getPrototype())));
+        TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(tower.getPrototype().getTowerTexture()));
         i.setDrawable(t);
         inv.setDrawable(t);
         dragAndDrop.setDragActorPosition(-i.getWidth()/2, i.getHeight()/2);

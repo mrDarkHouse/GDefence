@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Screens.*;
 import com.darkhouse.gdefence.Screens.BottomPanel.Arsenal;
 import com.darkhouse.gdefence.Screens.BottomPanel.Smith;
@@ -74,14 +75,12 @@ public class GDefence extends Game {
 		mainClass = this;
 		//assets = new AssetManager();
 		Texture.setAssetManager(assetLoader);
-        assetLoader.loadOld();
+//        assetLoader.loadOld();
 
 
-		FontLoader.load();
 
 		user = new User();//
-		GDefence.getInstance().user.init();//
-		GDefence.getInstance().user.save();//
+
 		//setScreen(new StartingLoadScreen());
 		switchScreen(new StartingLoadScreen());
 		//initScreens();
@@ -109,6 +108,14 @@ public class GDefence extends Game {
         assetLoader.dispose();
 		FontLoader.dispose();
 	}
+	public void initAll(){
+		FontLoader.load();
+		ItemEnum.Tower.init();
+		GDefence.getInstance().user.init();
+		GDefence.getInstance().user.save();
+		initScreens();
+	}
+
 	public void initScreens(){
 		mainMenu = new MainMenu();
 		mainMenu.init();

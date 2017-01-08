@@ -29,7 +29,8 @@ public class Projectile extends GameActor{
         this.tower = tower;
         this.target = target;
         this.speed = 250;//custom
-        texture = GDefence.getInstance().assetLoader.getProjectileTexture(tower.getTowerPrototype().getPrototype());//WHAT THE FUCK IT??!!
+        texture = tower.getTowerPrototype().getPrototype().getProjectileTexture();//WHAT THE FUCK IT??!!
+        // (prototype.getPrototype().getPrototype().getAnotherPrototype.getTowerPrototype.getAnotherFuckingPrototype)
 
         //position.set(tower.getX(), tower.getY());
         setX(tower.getCenter().x);

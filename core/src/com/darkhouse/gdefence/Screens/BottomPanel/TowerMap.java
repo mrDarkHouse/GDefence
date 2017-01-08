@@ -50,6 +50,13 @@ public class TowerMap extends Window{
         buttons.add(new RecipeButton(ItemEnum.Tower.Rock));
         buttons.add(new RecipeButton(ItemEnum.Tower.Arrow));
         buttons.add(new RecipeButton(ItemEnum.Tower.Range));
+        buttons.add(new RecipeButton(ItemEnum.Tower.Ballista));
+
+
+        for(RecipeButton b:buttons){
+            b.setUpdateButtons(buttons);
+        }
+
         //buttons.get(0).setPosition(200, 200);
         //buttons.get(0).setSize(40, 40);
         //buttons.get(1).setPosition(40, 120);
@@ -62,11 +69,8 @@ public class TowerMap extends Window{
         add(buttons.get(0)).align(Align.center).colspan(3).row();
         add(buttons.get(1));
         add(buttons.get(2));
-        add(buttons.get(3));
-
-
-
-
+        add(buttons.get(3)).row();
+        add(buttons.get(4));
 
 
 

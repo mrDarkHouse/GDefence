@@ -125,7 +125,7 @@ public class Tower extends GameActor{
     public Tower(TowerObject towerPrototype, float x, float y, float width, float height) {
         setBounds(x, y, width, height);
         this.towerPrototype = towerPrototype;
-        setTexture(GDefence.getInstance().assetLoader.getTowerTexture(towerPrototype.getPrototype()));
+        setTexture(towerPrototype.getPrototype().getTowerTexture());
         initRange();
         for (Ability a:towerPrototype.getAbilities()) {
             a.setOwner(this);

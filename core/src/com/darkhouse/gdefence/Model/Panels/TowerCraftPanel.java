@@ -87,13 +87,14 @@ public class TowerCraftPanel extends Window{
         recipeSlot = new SlotActor(skin, new Slot(Recipe.class, null, 0));
         recipeListener = new RecipeListener();
         recipeSlot.getSlot().addListener(recipeListener);
+        resultListener = new ResultListener();
         resultSlot = new SlotActor(skin, new Slot(TowerObject.class, null, 0));
 
         add(recipeSlot).align(Align.center);
         row();
         add();//3 max component size
-//        add();
-//        add();
+        add().size(0, 0);
+        add().size(0, 0);
         row();
         add();
 
@@ -106,6 +107,7 @@ public class TowerCraftPanel extends Window{
         sourceTargetInventory.addSlotAsTarget(dragAndDrop);
         componentSlots = new Array<SlotActor>();
         componentListeners = new Array<ComponentListener>();
+
     }
     public void init(){
         recipeSlot.addTooltip(getStage());
@@ -123,16 +125,17 @@ public class TowerCraftPanel extends Window{
             componentListeners.add(new ComponentListener());
             componentSlots.get(i).getSlot().addListener(componentListeners.get(i));
             componentSlots.get(i).addTooltip(getStage());
-            if(i == 0) {
-                getCells().get(1).setActor(componentSlots.get(i));
-            }else {
-                addActorAt(1, componentSlots.get(i));
-            }
+
+            getCells().get(i + 1).size(defaults().getMinWidthValue(), defaults().getMinHeightValue());//60 60
+            getCells().get(i + 1).setActor(componentSlots.get(i));
+            getCells().get(0).colspan(componentSlots.size);
+            getCells().peek().colspan(componentSlots.size);
+            pack();
+
             dragAndDrop.addSource(new SlotSource(componentSlots.get(i)));
             sourceTargetInventory.addTarget(componentSlots.get(i));
         }
         row();
-        resultListener = new ResultListener();
         resultSlot.getSlot().addListener(resultListener);
         resultSlot.addTooltip(getStage());
         getCells().peek().setActor(resultSlot);
@@ -149,17 +152,16 @@ public class TowerCraftPanel extends Window{
         if(!resultSlot.getSlot().isEmpty()) {
             resultSlot.getSlot().removeListener(resultListener);//kostil'
             resultSlot.getSlot().takeAll();
-            resultSlot.getSlot().addListener(resultListener);//
+//            resultSlot.getSlot().addListener(resultListener);//
         }
 
-
-
         componentSlots.clear();
+        resultSlot.getSlot().removeListener(resultListener);
         resultSlot.remove();
     }
     private void recipeChanged(Slot slot){
         if(!slot.isEmpty()) {
-            if (!hasRecipe && slot.getPrototype() == ItemEnum.Detail.Recipe/*remove when complete <Recipe> slot*/) {//
+            if (!hasRecipe /*&& slot.getPrototype() == ItemEnum.Detail.Recipe*//*remove when complete <Recipe> slot*/) {//
                 hasRecipe = true;
                 addRecipe();
             }
@@ -192,7 +194,7 @@ public class TowerCraftPanel extends Window{
         int contains = 0;//
         for (TowerObject t:needComponents){
             for (TowerObject at:currentComponents){//
-                if(t.equals(at)){
+                if(t.equalsOrHigher(at)){
                     contains++;
                 }
             }
@@ -225,6 +227,23 @@ public class TowerCraftPanel extends Window{
         recipeSlot.getSlot().removeListener(recipeListener);//recipe always not null
         recipeSlot.getSlot().take(1);
         recipeSlot.getSlot().addListener(recipeListener);
+
+
+        for (int i = 0; i < componentSlots.size; i++){
+            if(!componentSlots.get(i).getSlot().isEmpty()) return;
+        }
+        if(recipeSlot.getSlot().isEmpty() && resultSlot.getSlot().isEmpty()){//
+            componentListeners.clear();
+            for (int i = 0; i < componentSlots.size; i++){
+                componentSlots.get(i).remove();
+            }
+            componentSlots.clear();
+            resultSlot.getSlot().removeListener(resultListener);
+//            getCells().peek().setActor(null);
+            resultSlot.remove();
+        }
+
+
 
     }
 

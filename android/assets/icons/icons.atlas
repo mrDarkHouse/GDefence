@@ -38,9 +38,16 @@ recipe
   orig: 48, 48
   offset: 0, 0
   index: 48
-nothing
+ballista
   rotate: false
   xy: 1, 51
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+nothing
+  rotate: false
+  xy: 201, 51
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

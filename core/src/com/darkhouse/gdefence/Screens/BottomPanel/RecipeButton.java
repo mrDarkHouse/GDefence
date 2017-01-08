@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.RecipeTooltip;
@@ -18,11 +19,14 @@ public class RecipeButton extends ImageButton{
     private ItemEnum.Tower tower;
     private Recipe towerRecipe;
     private RecipeTooltip tooltip;
+    private Array<RecipeButton> updateButtons;
 
-
+    public void setUpdateButtons(Array<RecipeButton> updateButtons) {
+        this.updateButtons = updateButtons;
+    }
 
     public RecipeButton(final ItemEnum.Tower tower) {
-        super(GDefence.getInstance().assetLoader.getTowerCellSkin(tower));
+        super(GDefence.getInstance().assetLoader.generateImageButtonSkin(tower.getTowerTexture()));
         this.tower = tower;
         towerRecipe = new Recipe(tower);
         tooltip = new RecipeTooltip(towerRecipe, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
@@ -31,9 +35,10 @@ public class RecipeButton extends ImageButton{
 
         addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if(type == User.RecipeType.canOpen){
+                if(type != User.RecipeType.locked){
                     if(GDefence.getInstance().user.deleteGold(towerRecipe.getGlobalCost())){
                         GDefence.getInstance().user.buyTowerRecipe(tower);
+                        updateButtons();
                     }
                 }
                 return true;
@@ -41,13 +46,18 @@ public class RecipeButton extends ImageButton{
         });
         addListener(new TooltipListener(tooltip, true));
     }
+    private void updateButtons(){
+        for(RecipeButton b:updateButtons){
+            b.updateType();
+        }
+    }
 
-    private void updateType(){
-        type = GDefence.getInstance().user.isOpenedTower(tower);
-        if(type == User.RecipeType.canOpen){
-            tooltip.setLocked(false);
+    public void updateType(){
+        type = GDefence.getInstance().user.getOpenType(tower);
+        if(type == User.RecipeType.locked || tower == ItemEnum.Tower.Basic){//basic havent recipe
+            tooltip.setLocked(true);
         }else {
-            tooltip.setLocked(true);//
+            tooltip.setLocked(false);//
         }
     }
 
