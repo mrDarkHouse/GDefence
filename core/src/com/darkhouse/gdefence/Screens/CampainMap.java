@@ -93,7 +93,7 @@ public class CampainMap extends AbstractCampainScreen {
             update();
         }
 
-        private void update(){
+        private void update(){//rework
             for (int i = 0; i < pages.length; i++){
                 if(i == currentPage) pages[i].setVisible(true);
                 else pages[i].setVisible(false);

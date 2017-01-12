@@ -48,8 +48,8 @@ public class CampainChoose extends AbstractMenuScreen{
         loadCamp.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 //mainClass.user = new User();
-                if(GDefence.getInstance().user.load()) {
-                    GDefence.getInstance().setScreen(new CampainMap());
+                if(/*GDefence.getInstance().user.load()*/GDefence.getInstance().user != null) {
+                    GDefence.getInstance().setScreen(GDefence.getInstance().getCampainMap());
                 }
                 return true;
             }
@@ -97,6 +97,10 @@ public class CampainChoose extends AbstractMenuScreen{
 //                    GDefence.getInstance().user = new User();
 //                    GDefence.getInstance().user.init();
 //                    GDefence.getInstance().user.save();
+//                    if(GDefence.getInstance().user != null) {///
+//                        GDefence.getInstance().user = null;
+//                    }
+//                    GDefence.getInstance().user = new User();
                     GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainMap());
                     //GDefence.getInstance().setScreen(new CampainMap());
                 }else{

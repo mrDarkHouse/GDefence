@@ -229,19 +229,19 @@ public class TowerCraftPanel extends Window{
         recipeSlot.getSlot().addListener(recipeListener);
 
 
-        for (int i = 0; i < componentSlots.size; i++){
-            if(!componentSlots.get(i).getSlot().isEmpty()) return;
-        }
-        if(recipeSlot.getSlot().isEmpty() && resultSlot.getSlot().isEmpty()){//
-            componentListeners.clear();
-            for (int i = 0; i < componentSlots.size; i++){
-                componentSlots.get(i).remove();
-            }
-            componentSlots.clear();
-            resultSlot.getSlot().removeListener(resultListener);
-//            getCells().peek().setActor(null);
-            resultSlot.remove();
-        }
+//        for (int i = 0; i < componentSlots.size; i++){
+//            if(!componentSlots.get(i).getSlot().isEmpty()) return;
+//        }
+//        if(recipeSlot.getSlot().isEmpty() && resultSlot.getSlot().isEmpty()){//
+//            componentListeners.clear();
+//            for (int i = 0; i < componentSlots.size; i++){
+//                componentSlots.get(i).remove();
+//            }
+//            componentSlots.clear();
+//            resultSlot.getSlot().removeListener(resultListener);
+////            getCells().peek().setActor(null);
+//            resultSlot.remove();
+//        }
 
 
 

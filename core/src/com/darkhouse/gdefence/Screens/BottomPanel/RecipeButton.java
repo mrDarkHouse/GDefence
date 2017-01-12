@@ -35,7 +35,7 @@ public class RecipeButton extends ImageButton{
 
         addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if(type != User.RecipeType.locked){
+                if(type != User.RecipeType.locked && tower != ItemEnum.Tower.Basic){
                     if(GDefence.getInstance().user.deleteGold(towerRecipe.getGlobalCost())){
                         GDefence.getInstance().user.buyTowerRecipe(tower);
                         updateButtons();
