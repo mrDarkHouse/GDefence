@@ -1,6 +1,8 @@
 package com.darkhouse.gdefence.Model.Panels;
 
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -33,7 +35,7 @@ public class TowerCraftPanel extends Window{
     private Array<SlotActor> componentSlots;//<TowerObject>
     private Array<ComponentListener> componentListeners;
     private SlotActor resultSlot;
-    private ResultListener resultListener;
+//    private ResultListener resultListener;
 
     private OverallInventory sourceTargetInventory;
 
@@ -64,14 +66,14 @@ public class TowerCraftPanel extends Window{
             addComponent();
         }
     }
-    private class ResultListener implements SlotListener{
-        @Override
-        public void hasChanged(Slot slot) {
-            if(slot.isEmpty()){
-                removeResult();
-            }
-        }
-    }
+//    private class ResultListener implements SlotListener{
+//        @Override
+//        public void hasChanged(Slot slot) {
+//            if(slot.isEmpty()){//&& dragAndDrop has slotActor
+//                removeResult();
+//            }
+//        }
+//    }
 
     public TowerCraftPanel(DragAndDrop dragAndDrop, OverallInventory overallInventory, Skin skin) {
         super("Grade Panel", skin);
@@ -87,7 +89,7 @@ public class TowerCraftPanel extends Window{
         recipeSlot = new SlotActor(skin, new Slot(Recipe.class, null, 0));
         recipeListener = new RecipeListener();
         recipeSlot.getSlot().addListener(recipeListener);
-        resultListener = new ResultListener();
+//        resultListener = new ResultListener();
         resultSlot = new SlotActor(skin, new Slot(TowerObject.class, null, 0));
 
         add(recipeSlot).align(Align.center);
@@ -136,10 +138,18 @@ public class TowerCraftPanel extends Window{
             sourceTargetInventory.addTarget(componentSlots.get(i));
         }
         row();
-        resultSlot.getSlot().addListener(resultListener);
+//        resultSlot.getSlot().addListener(resultListener);
         resultSlot.addTooltip(getStage());
         getCells().peek().setActor(resultSlot);
-        dragAndDrop.addSource(new SlotSource(resultSlot));
+//        dragAndDrop.addSource(new SlotSource(resultSlot));
+        resultSlot.addListener(new InputListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                if(!resultSlot.getSlot().isEmpty()) {
+                    removeResult();
+                }
+                return true;
+            }
+        });
 
         pack();
     }
@@ -150,13 +160,13 @@ public class TowerCraftPanel extends Window{
         }
         componentListeners.clear();
         if(!resultSlot.getSlot().isEmpty()) {
-            resultSlot.getSlot().removeListener(resultListener);//kostil'
+//            resultSlot.getSlot().removeListener(resultListener);//kostil'
             resultSlot.getSlot().takeAll();
 //            resultSlot.getSlot().addListener(resultListener);//
         }
 
         componentSlots.clear();
-        resultSlot.getSlot().removeListener(resultListener);
+//        resultSlot.getSlot().removeListener(resultListener);
         resultSlot.remove();
     }
     private void recipeChanged(Slot slot){
@@ -203,9 +213,9 @@ public class TowerCraftPanel extends Window{
             resultSlot.getSlot().add(GameObject.generateStartObjects(r.getTower(), 1));//create new tower
         }else{
             if(!resultSlot.getSlot().isEmpty()){
-                resultSlot.getSlot().removeListener(resultListener);//kostil'
+//                resultSlot.getSlot().removeListener(resultListener);//kostil'
                 resultSlot.getSlot().takeAll();
-                resultSlot.getSlot().addListener(resultListener);//
+//                resultSlot.getSlot().addListener(resultListener);//
             }
         }
 
@@ -228,20 +238,22 @@ public class TowerCraftPanel extends Window{
         recipeSlot.getSlot().take(1);
         recipeSlot.getSlot().addListener(recipeListener);
 
+        User.getTowerInventory().store(resultSlot.getSlot().take(1));
 
-//        for (int i = 0; i < componentSlots.size; i++){
-//            if(!componentSlots.get(i).getSlot().isEmpty()) return;
-//        }
-//        if(recipeSlot.getSlot().isEmpty() && resultSlot.getSlot().isEmpty()){//
-//            componentListeners.clear();
-//            for (int i = 0; i < componentSlots.size; i++){
-//                componentSlots.get(i).remove();
-//            }
-//            componentSlots.clear();
+
+        for (int i = 0; i < componentSlots.size; i++){
+            if(!componentSlots.get(i).getSlot().isEmpty()) return;
+        }
+        if(recipeSlot.getSlot().isEmpty() && resultSlot.getSlot().isEmpty()){//
+            componentListeners.clear();
+            for (int i = 0; i < componentSlots.size; i++){
+                componentSlots.get(i).remove();
+            }
+            componentSlots.clear();
 //            resultSlot.getSlot().removeListener(resultListener);
-////            getCells().peek().setActor(null);
-//            resultSlot.remove();
-//        }
+//            getCells().peek().setActor(null);
+            resultSlot.remove();
+        }
 
 
 
