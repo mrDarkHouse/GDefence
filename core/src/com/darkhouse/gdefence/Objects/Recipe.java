@@ -72,6 +72,18 @@ public class Recipe extends DetailObject{
                 o.addGems(User.GEM_TYPE.BLUE, 1);
                 components.add(o);//0 2 1
                 globalCost = 200;
+                break;
+            case Catapult:
+                o = new TowerObject(ItemEnum.Tower.Rock);
+                o.addGems(User.GEM_TYPE.RED, 2);
+                o.addGems(User.GEM_TYPE.BLUE, 1);
+                components.add(o);//2 0 1
+                o = new TowerObject(ItemEnum.Tower.Range);
+                o.addGems(User.GEM_TYPE.RED, 2);
+                o.addGems(User.GEM_TYPE.BLUE, 1);
+                components.add(o);//2 0 1
+                globalCost = 200;
+                break;
 
         }
     }

@@ -219,6 +219,7 @@ public class User {
         openedTowers.put(ItemEnum.Tower.Arrow, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Range, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Ballista, RecipeType.locked);
+        openedTowers.put(ItemEnum.Tower.Catapult, RecipeType.locked);
 
 
         openRecipes();
@@ -245,6 +246,9 @@ public class User {
         }
         if(isOpened(ItemEnum.Tower.Arrow) && isOpened(ItemEnum.Tower.Range)){
             unlockRecipe(ItemEnum.Tower.Ballista);
+        }
+        if(isOpened(ItemEnum.Tower.Rock) && isOpened(ItemEnum.Tower.Range)){
+            unlockRecipe(ItemEnum.Tower.Catapult);
         }
 
 
@@ -390,13 +394,15 @@ public class User {
         ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.YELLOW, 1);
         ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.BLUE, 3);
         towerInventory.store(ItemEnum.Tower.Rock, 1);
-
+        ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.RED, 2);
+        ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.BLUE, 1);
         towerInventory.store(ItemEnum.Tower.Arrow, 1);
         ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.YELLOW, 2);
         ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.BLUE, 2);
         towerInventory.store(ItemEnum.Tower.Range, 1);
+        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.RED, 2);
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.YELLOW, 2);
-        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 2);
+        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 1);
 //        detailInventory.store(new Recipe(ItemEnum.Tower.Range));
 
         initOpenedTowers();

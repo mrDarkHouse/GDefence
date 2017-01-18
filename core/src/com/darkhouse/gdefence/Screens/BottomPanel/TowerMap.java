@@ -50,6 +50,7 @@ public class TowerMap extends Window{
         buttons.add(new RecipeButton(ItemEnum.Tower.Rock));
         buttons.add(new RecipeButton(ItemEnum.Tower.Arrow));
         buttons.add(new RecipeButton(ItemEnum.Tower.Range));
+        buttons.add(new RecipeButton(ItemEnum.Tower.Catapult));
         buttons.add(new RecipeButton(ItemEnum.Tower.Ballista));
 
 
@@ -71,6 +72,7 @@ public class TowerMap extends Window{
         add(buttons.get(2));
         add(buttons.get(3)).row();
         add(buttons.get(4));
+        add(buttons.get(5));
 
 
 
