@@ -110,6 +110,24 @@ public enum ItemEnum {;
 				abilities.add(new MultiShot(2));
 			}
 		},
+        Catapult("Catapult", AttackType.projectile, 25, 200, 30, 180, 1.5f){
+            @Override
+            protected void setTextures() {
+                setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/catapult.png", Texture.class));
+                setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/catapult.png", Texture.class));
+            }
+
+            @Override
+            public String getTextureRegion() {
+                return "catapult";
+            }
+
+
+            @Override
+            protected void addAbilities() {
+                //
+            }
+        },
 		Ballista("Ballista", AttackType.projectile, 25, 200, 20, 180, 0.8f){
 			@Override
 			protected void setTextures() {
@@ -208,7 +226,12 @@ public enum ItemEnum {;
 			Rock.setTextures();
 			Arrow.setTextures();
 			Range.setTextures();
+            Catapult.setTextures();
 			Ballista.setTextures();
+            //for to last setTextures
+//            for (int i = 0; i < Tower.values().length; i++){
+//                Tower.values()[i].setTextures();
+//            }
 		}
 
 	}
