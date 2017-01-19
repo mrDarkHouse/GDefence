@@ -56,6 +56,11 @@ public enum ItemEnum {;
 				return "basic";
 			}
 
+            @Override
+            protected void setProjectileSpeed() {
+                setProjectileSpeed(200);
+            }
+
 			@Override
 			protected void addAbilities() {
 
@@ -72,6 +77,11 @@ public enum ItemEnum {;
 				return "rock";
 			}
 
+            @Override
+            protected void setProjectileSpeed() {
+                setProjectileSpeed(200);
+            }
+
 			@Override
 			protected void addAbilities() {
 				abilities.add(new Crit(0.2f, 2.5f));
@@ -87,6 +97,11 @@ public enum ItemEnum {;
 			public String getTextureRegion() {
 				return "arrow";
 			}
+
+            @Override
+            protected void setProjectileSpeed() {
+                setProjectileSpeed(200);
+            }
 
 			@Override
 			protected void addAbilities() {
@@ -105,11 +120,38 @@ public enum ItemEnum {;
 				return "range";
 			}
 
+            @Override
+            protected void setProjectileSpeed() {
+                setProjectileSpeed(200);
+            }
+
 			@Override
 			protected void addAbilities() {
 				abilities.add(new MultiShot(2));
 			}
 		},
+        Short("Short", AttackType.projectile, 25, 200, 30, 180, 1.2f){
+            @Override
+            protected void setTextures() {
+                setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/short.png", Texture.class));
+                setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/short.png", Texture.class));
+            }
+
+            @Override
+            public String getTextureRegion() {
+                return "short";
+            }
+
+            @Override
+            protected void setProjectileSpeed() {
+                setProjectileSpeed(200);
+            }
+
+            @Override
+            protected void addAbilities() {
+                //
+            }
+        },
         Catapult("Catapult", AttackType.projectile, 25, 200, 30, 180, 1.5f){
             @Override
             protected void setTextures() {
@@ -122,6 +164,10 @@ public enum ItemEnum {;
                 return "catapult";
             }
 
+            @Override
+            protected void setProjectileSpeed() {
+                setProjectileSpeed(200);
+            }
 
             @Override
             protected void addAbilities() {
@@ -140,6 +186,10 @@ public enum ItemEnum {;
 				return "ballista";
 			}
 
+            @Override
+            protected void setProjectileSpeed() {
+                setProjectileSpeed(200);
+            }
 
 			@Override
 			protected void addAbilities() {
@@ -153,6 +203,7 @@ public enum ItemEnum {;
 		private Texture projectileTexture;
 		private String name;
 		private AttackType attackType;
+        private int projectileSpeed;
 		private int range;
 		private int dmg;
 		//protected int speed;
@@ -174,7 +225,13 @@ public enum ItemEnum {;
 
 		protected abstract void setTextures();
 
-		public Texture getTowerTexture() {
+        protected void setProjectileSpeed(){};
+
+        protected void setProjectileSpeed(int projectileSpeed) {
+            this.projectileSpeed = projectileSpeed;
+        }
+
+        public Texture getTowerTexture() {
 			return towerTexture;
 		}
 		public Texture getProjectileTexture() {
@@ -215,6 +272,11 @@ public enum ItemEnum {;
 			this.range = range;
 			this.speedDelay = speedDelay;
 
+            if(attackType == AttackType.projectile){
+                setProjectileSpeed();
+            }
+
+
 
 			abilities = new ArrayList<Ability>();
 			addAbilities();
@@ -226,6 +288,7 @@ public enum ItemEnum {;
 			Rock.setTextures();
 			Arrow.setTextures();
 			Range.setTextures();
+            Short.setTextures();
             Catapult.setTextures();
 			Ballista.setTextures();
             //for to last setTextures
