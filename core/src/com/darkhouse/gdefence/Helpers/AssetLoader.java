@@ -183,6 +183,8 @@ public class AssetLoader extends AssetManager{
         load("Projectiles/arrow.png", Texture.class);
         load("Projectiles/range.png", Texture.class);
         load("Projectiles/short.png", Texture.class);
+        load("Projectiles/mountain.png", Texture.class);
+        load("Projectiles/steelArrow.png", Texture.class);
         load("Projectiles/ballista.png", Texture.class);
         load("Projectiles/catapult.png", Texture.class);
         load("coin.png", Texture.class);
@@ -211,6 +213,8 @@ public class AssetLoader extends AssetManager{
         load("Tower/arrowTower.png", Texture.class);
         load("Tower/rangeTower.png", Texture.class);
         load("Tower/short.png", Texture.class);
+        load("Tower/mountain.png", Texture.class);
+        load("Tower/steelArrow.png", Texture.class);
         load("Tower/ballista.png", Texture.class);
         load("Tower/catapult.png", Texture.class);
         load("infoPanelFone.png", Texture.class);

@@ -212,13 +212,15 @@ public class User {
     private HashMap <ItemEnum.Tower, RecipeType> openedTowers;
 
 
-    private void initOpenedTowers(){
+    private void initOpenedTowers(){//for each
         openedTowers = new HashMap<ItemEnum.Tower, RecipeType>();
         openedTowers.put(ItemEnum.Tower.Basic, RecipeType.opened);
         openedTowers.put(ItemEnum.Tower.Rock, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Arrow, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Range, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Short, RecipeType.locked);
+        openedTowers.put(ItemEnum.Tower.Mountain, RecipeType.locked);
+        openedTowers.put(ItemEnum.Tower.SteelArrow, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Ballista, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Catapult, RecipeType.locked);
 
@@ -248,6 +250,10 @@ public class User {
         }
         if(isOpened(ItemEnum.Tower.Rock)){
             unlockRecipe(ItemEnum.Tower.Short);
+            unlockRecipe(ItemEnum.Tower.Mountain);
+        }
+        if(isOpened(ItemEnum.Tower.Arrow)){
+            unlockRecipe(ItemEnum.Tower.SteelArrow);
         }
         if(isOpened(ItemEnum.Tower.Arrow) && isOpened(ItemEnum.Tower.Range)){
             unlockRecipe(ItemEnum.Tower.Ballista);
@@ -400,10 +406,11 @@ public class User {
         ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.YELLOW, 1);
         ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.BLUE, 3);
         towerInventory.store(ItemEnum.Tower.Rock, 1);
-        ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.RED, 2);
+        ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.RED, 4);
         ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.YELLOW, 1);
         ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.BLUE, 1);
         towerInventory.store(ItemEnum.Tower.Arrow, 1);
+        ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.RED, 2);
         ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.YELLOW, 2);
         ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.BLUE, 2);
         towerInventory.store(ItemEnum.Tower.Range, 1);

@@ -66,7 +66,7 @@ public enum ItemEnum {;
 
 			}
 		},
-		Rock("Rock", AttackType.projectile, 20, 140, 25, 120, 1.0f){
+		Rock("Rock", AttackType.projectile, 20, 140, 25, 120, 1.4f){
 			@Override
 			protected void setTextures() {
 				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/rockTower.png", Texture.class));
@@ -130,7 +130,7 @@ public enum ItemEnum {;
 				abilities.add(new MultiShot(2));
 			}
 		},
-        Short("Short", AttackType.projectile, 25, 200, 30, 180, 1.2f){
+        Short("Short", AttackType.projectile, 25, 180, 30, 180, 1.2f){
             @Override
             protected void setTextures() {
                 setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/short.png", Texture.class));
@@ -152,7 +152,51 @@ public enum ItemEnum {;
                 //
             }
         },
-        Catapult("Catapult", AttackType.projectile, 25, 200, 30, 180, 1.5f){
+        Mountain("Mountain", AttackType.projectile, 25, 180, 45, 130, 1.6f){
+            @Override
+            protected void setTextures() {
+                setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/mountain.png", Texture.class));
+                setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/mountain.png", Texture.class));
+            }
+
+            @Override
+            public String getTextureRegion() {
+                return "mountain";
+            }
+
+            @Override
+            protected void setProjectileSpeed() {
+                setProjectileSpeed(200);
+            }
+
+            @Override
+            protected void addAbilities() {
+                //
+            }
+        },
+        SteelArrow("Steel Arrow", AttackType.projectile, 25, 200, 20, 140, 1.0f){
+            @Override
+            protected void setTextures() {
+                setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/steelArrow.png", Texture.class));
+                setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/steelArrow.png", Texture.class));
+            }
+
+            @Override
+            public String getTextureRegion() {
+                return "steelArrow";
+            }
+
+            @Override
+            protected void setProjectileSpeed() {
+                setProjectileSpeed(200);
+            }
+
+            @Override
+            protected void addAbilities() {
+                //
+            }
+        },
+        Catapult("Catapult", AttackType.projectile, 25, 240, 30, 180, 1.5f){
             @Override
             protected void setTextures() {
                 setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/catapult.png", Texture.class));
@@ -174,7 +218,7 @@ public enum ItemEnum {;
                 //
             }
         },
-		Ballista("Ballista", AttackType.projectile, 25, 200, 20, 180, 0.8f){
+		Ballista("Ballista", AttackType.projectile, 25, 240, 20, 180, 0.8f){
 			@Override
 			protected void setTextures() {
 				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/ballista.png", Texture.class));
@@ -289,6 +333,8 @@ public enum ItemEnum {;
 			Arrow.setTextures();
 			Range.setTextures();
             Short.setTextures();
+            Mountain.setTextures();
+            SteelArrow.setTextures();
             Catapult.setTextures();
 			Ballista.setTextures();
             //for to last setTextures
