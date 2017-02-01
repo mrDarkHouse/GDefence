@@ -190,6 +190,10 @@ public class AssetLoader extends AssetManager{
         load("coin.png", Texture.class);
         load("castle.png", Texture.class);
 
+        load("lockedTower.png", Texture.class);
+        load("openedTower.png", Texture.class);
+        load("canOpenTower.png", Texture.class);
+
 
         load("skins/uiskin.json", Skin.class);
         load("uiskin.json", Skin.class);
