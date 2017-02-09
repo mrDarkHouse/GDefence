@@ -4,6 +4,7 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerType;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Objects.DetailObject;
@@ -13,6 +14,7 @@ import com.darkhouse.gdefence.Objects.TowerObject;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class User {
@@ -176,6 +178,10 @@ public class User {
 
     private int level = 1;// = exp - Value.needExp2Lvl[0];
 
+    public void addLevel() {
+        level++;
+        //WOW YOU LEVEL UP screen
+    }
     //public TowerObject[] towers;
     //public ArrayList <Tower> towers;
 
@@ -375,10 +381,19 @@ public class User {
 
 
     public User() {
-
+        towerInventory = new Inventory(TowerObject.class, 35);
+        spellInventory = new Inventory(SpellObject.class, 35);
+        detailInventory = new Inventory(DetailObject.class, 35);
+        initOpenedTowers();
     }
+//    public void init(){//
+//        File f = new File("Save/UserSave.properties");
+//        if(f.exists()) load();
+//        else initNewUser();
+//    }
 
-    public void init(){
+    public void initNewUser(){
+        System.out.println("New User");
         this.totalExp = 0;
         addGold(3000);
         currentMap = 1;
@@ -398,9 +413,9 @@ public class User {
         //items.add(Item.CRYSTAL_GREEN);
         //items.add(Item.CRYSTAL_GREEN);
 
-        towerInventory = new Inventory(TowerObject.class, 35);
-        spellInventory = new Inventory(SpellObject.class, 35);
-        detailInventory = new Inventory(DetailObject.class, 35);
+//        towerInventory = new Inventory(TowerObject.class, 35);
+//        spellInventory = new Inventory(SpellObject.class, 35);
+//        detailInventory = new Inventory(DetailObject.class, 35);
         towerInventory.store(ItemEnum.Tower.Basic, 1);
         ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.RED, 1);
         ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.YELLOW, 1);
@@ -419,7 +434,7 @@ public class User {
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 1);
 //        detailInventory.store(new Recipe(ItemEnum.Tower.Range));
 
-        initOpenedTowers();
+//        initOpenedTowers();
 
 //        towers.add(new TowerObject(TowerType.Basic));
 //        towers.add(new TowerObject(TowerType.Basic));
@@ -463,11 +478,30 @@ public class User {
     }
 
     public void update(){
-        currentExp = getTotalExp();
-        for(int i = level - 1; currentExp >= Value.needExp2Lvl[i] ; i ++){
-            currentExp -= Value.needExp2Lvl[i];
-            level++;
+//        currentExp = getTotalExp();
+//        for(int i = level - 1; currentExp >= Value.needExp2Lvl[i] ; i++){
+//            currentExp -= Value.needExp2Lvl[i];
+//            System.out.println(level + " " + currentExp);
+//            addLevel();
+//        }
+        int i = 0;
+        System.out.println(totalExp);
+        while (totalExp >= Value.needExp2Lvl[i]){
+            i++;
         }
+        int newLevel = 0;
+//        if(i != 0) {
+            currentExp = totalExp % Value.needExp2Lvl[i - 1];
+            newLevel = i + 1;
+//        }else {
+//            currentExp = totalExp;
+//        }
+        for (int j = 0; j <= newLevel - getLevel(); j++){
+            addLevel();
+        }
+        System.out.println(getLevel());
+
+
     }
 
 
@@ -521,22 +555,37 @@ public class User {
     }
 
     public boolean load(){
+        System.out.println("Loading");
         try {
             //InputStream in = Files.newInputStream(loadFile);
             //BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            File loadFile = new File("Save/UserSave");
+            File loadFile = new File("Save/UserSave.properties");
+//            Scanner sc = new Scanner(loadFile);
 
-            Scanner sc = new Scanner(loadFile);
-            gold = sc.nextInt();
-            totalExp = sc.nextInt();
-            //level = sc.nextInt();
-            setLevelsCompleted(sc.nextInt());
-            redGems = sc.nextInt();
-            yellowGems = sc.nextInt();
-            blueGems = sc.nextInt();
-            blackGems = sc.nextInt();
-            greenGems = sc.nextInt();
-            whiteGems = sc.nextInt();
+
+            Properties prop = new Properties();
+
+            FileInputStream fs = new FileInputStream(loadFile);
+            prop.load(fs);
+
+            gold = Integer.parseInt(prop.getProperty("gold"));
+            totalExp = Integer.parseInt(prop.getProperty("totalExp"));
+
+
+//            System.out.println(gold + " " + totalExp);
+
+
+
+//            gold = sc.nextInt();
+//            totalExp = sc.nextInt();
+//            //level = sc.nextInt();
+//            setLevelsCompleted(sc.nextInt());
+//            redGems = sc.nextInt();
+//            yellowGems = sc.nextInt();
+//            blueGems = sc.nextInt();
+//            blackGems = sc.nextInt();
+//            greenGems = sc.nextInt();
+//            whiteGems = sc.nextInt();
 
 
 

@@ -12,12 +12,14 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class UserPanel extends AbstractPanel {
+    private ImageTextButton userlevelButton;
+
     public UserPanel(int x, int y, int width, int height) {
         super(x, y, width, height);
 
 
 
-        ImageTextButton userlevelButton = new ImageTextButton("" + GDefence.getInstance().user.getLevel(), GDefence.getInstance().assetLoader.getUserLevelSkin());
+        userlevelButton = new ImageTextButton("" + GDefence.getInstance().user.getLevel(), GDefence.getInstance().assetLoader.getUserLevelSkin());
         //userlevelButton.getLabel().setFontScale(1.5f);
         int userLevelSize[] = {width/4, width/4};
         //userlevelButton.setSize(userLevelSize[0], userLevelSize[1]);
@@ -40,10 +42,22 @@ public class UserPanel extends AbstractPanel {
         //System.out.println(getY());
 
     }
+//    public void update(){
+//
+//    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        userlevelButton.setText("" + GDefence.getInstance().user.getLevel());
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         //debug();
     }
+
+
+
 }

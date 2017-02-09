@@ -109,9 +109,9 @@ public class GDefence extends Game {
 		FontLoader.dispose();
 	}
 	public void initAll(){
-		FontLoader.load();
+        FontLoader.load();
 		ItemEnum.Tower.init();
-		GDefence.getInstance().user.init();
+//		GDefence.getInstance().user.init();//it must be in campain loading
 		GDefence.getInstance().user.save();
 		initScreens();
 	}

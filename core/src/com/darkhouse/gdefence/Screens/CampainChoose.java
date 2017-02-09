@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -13,6 +14,8 @@ import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.User;
+
+import java.io.File;
 
 public class CampainChoose extends AbstractMenuScreen{
     //private GDefence mainclass;
@@ -45,12 +48,19 @@ public class CampainChoose extends AbstractMenuScreen{
         });
         //newCamp.setSize();
         TextButton loadCamp = new TextButton("Load Campain", GDefence.getInstance().getSkin());
+        File f = new File("Save/UserSave.properties");
+        if(!f.exists()) {
+            loadCamp.setTouchable(Touchable.disabled);
+            loadCamp.setColor(255, 255, 255, 100);
+        }
+
         loadCamp.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 //mainClass.user = new User();
-                if(/*GDefence.getInstance().user.load()*/GDefence.getInstance().user != null) {
-                    GDefence.getInstance().setScreen(GDefence.getInstance().getCampainMap());
-                }
+                //if(/*GDefence.getInstance().user.load()*//*GDefence.getInstance().user != null*/) {
+                GDefence.getInstance().user.load();
+                GDefence.getInstance().setScreen(GDefence.getInstance().getCampainMap());
+                //}
                 return true;
             }
         });
@@ -101,6 +111,7 @@ public class CampainChoose extends AbstractMenuScreen{
 //                        GDefence.getInstance().user = null;
 //                    }
 //                    GDefence.getInstance().user = new User();
+                    GDefence.getInstance().user.initNewUser();
                     GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainMap());
                     //GDefence.getInstance().setScreen(new CampainMap());
                 }else{
