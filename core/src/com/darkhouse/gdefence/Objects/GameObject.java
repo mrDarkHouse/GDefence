@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 
+import java.util.HashMap;
+
 public abstract class GameObject {
 
 
@@ -28,6 +30,9 @@ public abstract class GameObject {
 //    }
     public abstract Item getPrototype();
     public abstract String getTooltip();
+
+    public abstract String getSaveCode();
+//    public static GameObject loadSaveCode(String s){return null;}
 
 //    public void setPrototype(Item prototype) {
 //        this.prototype = prototype;

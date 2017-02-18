@@ -25,6 +25,35 @@ public class TowerObject extends GameObject{
     private int globalCost;
     protected ArrayList<Ability> abilities;
 
+    @Override
+    public String getSaveCode() {
+        String gemsCode = "";
+        for (int i = 0; i < gemsNumber.length; i++){
+            gemsCode+= gemsNumber[i];
+            if(i!= gemsNumber.length - 1){
+                gemsCode+= ";";
+            }
+        }
+        return prototype.getName() + "-" + totalExp + "-" + gemsCode;
+    }
+
+
+    public static TowerObject loadSaveCode(String save) {
+        String[] info = save.split("-");
+        String[] gemsString = info[2].split(";");
+
+        TowerObject t = new TowerObject(ItemEnum.Tower.getTower(info[0]));
+        t.addExp(Float.parseFloat(info[1]));
+        t.updateExp();//adding level
+
+        for (int i = 0; i < gemsString.length; i++){
+            t.addGems(User.GEM_TYPE.values()[i], Integer.parseInt(gemsString[i]));
+        }
+
+
+        return t;
+    }
+
     public ArrayList<Ability> getAbilities() {
         return abilities;
     }

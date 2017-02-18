@@ -17,6 +17,11 @@ public class Recipe extends DetailObject{
     private Array <TowerObject> components;
     private int globalCost;
 
+    public static Recipe loadSaveCode(String savecode){
+        System.out.println(savecode);
+        return new Recipe(ItemEnum.Tower.valueOf(savecode));
+    }
+
     public int getGlobalCost() {
         return globalCost;
     }
@@ -31,8 +36,10 @@ public class Recipe extends DetailObject{
         initComponents(tower);
     }
 
-
-
+    @Override
+    public String getSaveCode() {
+        return getClass().getSimpleName() + "-" + getTower().getName();
+    }
 
     private void initComponents(ItemEnum.Tower t){
         components = new Array<TowerObject>();

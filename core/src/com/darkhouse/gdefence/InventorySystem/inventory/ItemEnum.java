@@ -39,11 +39,13 @@ public enum ItemEnum {;
 
 
 
+
 	/*CRYSTAL_RED("redcrystal"), CRYSTAL_BLUE("bluecrystal"), CRYSTAL_GREEN("greencrystal"), CRYSTAL_YELLOW("yellowcrystal"), CRYSTAL_MAGENTA("magentacrystal"), CRYSTAL_CYAN(
 			"cyancrystal"), CRYSTAL_ORANGE("orangecrystal"), CRYSTAL_VIOLET("violetcrystal"), TITANIUM("titanium"), PALLADIUM("palladium"), IRIDIUM("iridium"), RHODIUM("rhodium"), HULL(
 			"hullbase"), CANNON("cannonbase"), RAY("raybase"), LAUNCHER("launcherbase"), DROID("droidbase"), MINE("dropperbase"), BATTERY("batterybase");
 */
 	public enum Tower implements Item {
+
 		Basic("Basic", AttackType.projectile, 10, 80, 10, 100, 1.2f){
 			@Override
 			protected void setTextures() {
@@ -240,6 +242,14 @@ public enum ItemEnum {;
 				//
 			}
 		};
+        public static Tower getTower(String name){
+            for (Tower t:values()){
+                if(t.getName().equals(name)){
+                    return t;
+                }
+            }
+            return null;
+        }
 
 
 		//protected TowerType ID;

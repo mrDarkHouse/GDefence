@@ -26,6 +26,8 @@ import com.darkhouse.gdefence.Objects.GameObject;
 import com.darkhouse.gdefence.Objects.Recipe;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
+import java.util.HashMap;
+
 /**
  * @author Daniel Holderbaum
  */
@@ -118,7 +120,7 @@ public class Inventory {
 		return amount;
 	}
 
-	public boolean store(Item item, int amount) {
+	public boolean storeNew(Item item, int amount) {
 		// first check for a slot with the same item type
 		Slot itemSlot = firstSlotWithItem(item);
 		if (itemSlot != null) {
@@ -137,13 +139,23 @@ public class Inventory {
 		// no slot to add
 		return false;
 	}
+    public boolean store(GameObject o, int slotNumber){//can rework for Array of GameObjects
+        if(slotNumber > slots.size || slotNumber < 0) throw new IllegalArgumentException("illegal slot");
+        Slot s = slots.get(slotNumber);
+        if(s.isEmpty() || s.getPrototype() == o.getPrototype()){
+//            for (GameObject o:objects){
+                if(!s.add(o))return false;
+//            }
+        }
+        return true;
+    }
     public boolean store(GameObject object) {
         Slot itemSlot = firstSlotWithItem(object.getPrototype());
         if (itemSlot != null && !(object instanceof Recipe)) {//
             itemSlot.add(object);
             return true;
         } else {
-            // now check for an available empty slot
+            //check for an available empty slot
             Slot emptySlot = firstSlotWithItem(null);
             if (emptySlot != null) {
                 emptySlot.add(object);
@@ -161,6 +173,28 @@ public class Inventory {
 
 		return true;
 	}
+    public void flush(){
+        for (Slot s:slots){
+            s.takeAll();
+//            for (GameObject o:s.getAll()){
+//
+//            }
+        }
+    }
+
+    public String getSave(){
+        String save = "";
+        for (int i = 0; i < slots.size; i++){
+            if(!slots.get(i).isEmpty()) {//
+                for (GameObject o : slots.get(i).getAll()) {
+//                map.put(i + "", o.getSaveCode());
+                    save += i + "-" + o.getSaveCode() + "/";
+                }
+//                save += System.getProperty("line.separator");
+            }
+        }
+        return save;
+    }
 
 
 	public Array<Slot> getSlots() {

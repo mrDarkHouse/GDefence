@@ -89,7 +89,7 @@ public class AssetLoader extends AssetManager{
 //        mainMenuButtonsAtlas = new Texture(Gdx.files.internal("MainMenuAtlas.png"));
 //        mainMenuButtons = TextureRegion.split(mainMenuButtonsAtlas, mainMenuButtonsAtlas.getWidth() / 2, mainMenuButtonsAtlas.getHeight() / 10);
 //        campainMap[0] = new Texture("arsenal.png");
-//        campainMap[1] = new Texture("store.png");
+//        campainMap[1] = new Texture("storeNew.png");
 //        campainMap[2] = new Texture("smith.png");
 //        campainLevelsAtlas = new Texture(Gdx.files.internal("levelsButtonsAtlas.png"));
 //        campainLevels = TextureRegion.split(campainLevelsAtlas, campainLevelsAtlas.getWidth() / 2, campainLevelsAtlas.getHeight() / 10);
@@ -411,9 +411,9 @@ public class AssetLoader extends AssetManager{
             case 2:
                 return generateImageButtonSkin(get("store.png", Texture.class));
 //                ImageButton.ImageButtonStyle storeButtonStyle = new ImageButton.ImageButtonStyle();
-//                storeButtonStyle.up = new TextureRegionDrawable(new TextureRegion(get("store.png", Texture.class)));
-//                storeButtonStyle.over = new TextureRegionDrawable(new TextureRegion(get("store.png", Texture.class)));
-//                storeButtonStyle.down = new TextureRegionDrawable(new TextureRegion(get("store.png", Texture.class)));
+//                storeButtonStyle.up = new TextureRegionDrawable(new TextureRegion(get("storeNew.png", Texture.class)));
+//                storeButtonStyle.over = new TextureRegionDrawable(new TextureRegion(get("storeNew.png", Texture.class)));
+//                storeButtonStyle.down = new TextureRegionDrawable(new TextureRegion(get("storeNew.png", Texture.class)));
 //                return storeButtonStyle;
             case 3:
                 return generateImageButtonSkin(get("smith.png", Texture.class));

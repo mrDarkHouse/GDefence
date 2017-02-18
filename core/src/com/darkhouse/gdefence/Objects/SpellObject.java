@@ -6,6 +6,12 @@ import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 
 public class SpellObject extends GameObject{
 
+
+    public static SpellObject loadSaveCode(String s) {
+        return null;
+    }
+
+
     public SpellObject(ItemEnum.Spell prototype) {
     }
 
@@ -23,4 +29,11 @@ public class SpellObject extends GameObject{
     public String getTooltip() {
         return null;
     }
+
+    @Override
+    public String getSaveCode() {
+        return null;
+    }
+
+
 }

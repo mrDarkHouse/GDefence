@@ -32,6 +32,7 @@ public class CampainChoose extends AbstractMenuScreen{
     @Override
     public void show() {
         super.show();
+
 //        loadButtons();
     }
 
@@ -59,6 +60,7 @@ public class CampainChoose extends AbstractMenuScreen{
                 //mainClass.user = new User();
                 //if(/*GDefence.getInstance().user.load()*//*GDefence.getInstance().user != null*/) {
                 GDefence.getInstance().user.load();
+//                GDefence.getInstance().initCampainMap();//do it
                 GDefence.getInstance().setScreen(GDefence.getInstance().getCampainMap());
                 //}
                 return true;

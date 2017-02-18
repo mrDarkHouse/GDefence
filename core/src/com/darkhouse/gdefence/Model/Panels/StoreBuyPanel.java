@@ -39,7 +39,7 @@ public class StoreBuyPanel extends InventoryActor{
     }
 
     public void store(Item item, int amount){
-        getInventory().store(item, amount);
+        getInventory().storeNew(item, amount);
         addCost();
     }
 

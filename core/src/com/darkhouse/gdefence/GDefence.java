@@ -31,7 +31,7 @@ public class GDefence extends Game {
 	private MainMenu mainMenu;
 	private CampainChoose campainChoose;
 	private OptionScreen optionScreen;
-	private CampainMap campainMap;
+	private CampainMap campainMap;//must be in campainChoose
 	private Arsenal arsenal;
 	private Store store;
 	private Smith smith;
@@ -112,17 +112,20 @@ public class GDefence extends Game {
         FontLoader.load();
 		ItemEnum.Tower.init();
 //		GDefence.getInstance().user.init();//it must be in campain loading
-		GDefence.getInstance().user.save();
+//		GDefence.getInstance().user.save();
 		initScreens();
 	}
+    public void initCampainMap(){
+        campainMap = new CampainMap();
+        campainMap.init();
+    }
 
 	public void initScreens(){
 		mainMenu = new MainMenu();
 		mainMenu.init();
 		campainChoose = new CampainChoose();
+        initCampainMap();
 		optionScreen = new OptionScreen();
-		campainMap = new CampainMap();
-		campainMap.init();
 		arsenal = new Arsenal();
 		arsenal.init();
 		store = new Store();
@@ -133,14 +136,17 @@ public class GDefence extends Game {
 	}
 
 	public void switchScreen(Screen screen){
-		setScreen(screen);
+        setScreen(screen);
+
 		//setInputProcessor
 	}
 
 
 	public Screen setPreviousScreen(){
 		Screen currentScreen = getScreen();
-		if(currentScreen instanceof CampainMap){
+		if(currentScreen instanceof CampainMap){//only in back button
+            GDefence.getInstance().user.save();
+            GDefence.getInstance().user.flush();//empty user info in main menu
 			setScreen(campainChoose);
 		}else if(currentScreen instanceof OptionScreen){
 			setScreen(mainMenu);
@@ -159,6 +165,9 @@ public class GDefence extends Game {
 
 
 	}
+    public void log(String s){
+        System.out.println("LOG: " + s);
+    }
 
 	public Skin getSkin(){
 		return new Skin(Gdx.files.internal("uiskin.json"));

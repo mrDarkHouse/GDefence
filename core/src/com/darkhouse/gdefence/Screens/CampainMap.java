@@ -282,10 +282,17 @@ public class CampainMap extends AbstractCampainScreen {
     }
 
 
+//    private void flush(){//set all parametres in default
+//
+//    }
+
+
 
     @Override
     public void hide() {
         super.hide();
+//        GDefence.getInstance().user.save();//saving on each switchScreen
+//        flush();
         //Gdx.input.setInputProcessor(null);
         //this.dispose();
     }

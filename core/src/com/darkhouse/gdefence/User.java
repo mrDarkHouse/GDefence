@@ -4,7 +4,6 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerType;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Objects.DetailObject;
@@ -15,7 +14,6 @@ import com.darkhouse.gdefence.Objects.TowerObject;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.Scanner;
 
 public class User {
     public int getTotalExp() {
@@ -393,7 +391,8 @@ public class User {
 //    }
 
     public void initNewUser(){
-        System.out.println("New User");
+        GDefence.getInstance().log("Init new User");
+        flush();
         this.totalExp = 0;
         addGold(3000);
         currentMap = 1;
@@ -416,23 +415,23 @@ public class User {
 //        towerInventory = new Inventory(TowerObject.class, 35);
 //        spellInventory = new Inventory(SpellObject.class, 35);
 //        detailInventory = new Inventory(DetailObject.class, 35);
-        towerInventory.store(ItemEnum.Tower.Basic, 1);
+        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
         ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.RED, 1);
         ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.YELLOW, 1);
         ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.BLUE, 3);
-        towerInventory.store(ItemEnum.Tower.Rock, 1);
+        towerInventory.storeNew(ItemEnum.Tower.Rock, 1);
         ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.RED, 4);
         ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.YELLOW, 1);
         ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.BLUE, 1);
-        towerInventory.store(ItemEnum.Tower.Arrow, 1);
+        towerInventory.storeNew(ItemEnum.Tower.Arrow, 1);
         ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.RED, 2);
         ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.YELLOW, 2);
         ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.BLUE, 2);
-        towerInventory.store(ItemEnum.Tower.Range, 1);
+        towerInventory.storeNew(ItemEnum.Tower.Range, 1);
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.RED, 2);
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.YELLOW, 2);
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 1);
-//        detailInventory.store(new Recipe(ItemEnum.Tower.Range));
+//        detailInventory.storeNew(new Recipe(ItemEnum.Tower.Range));
 
 //        initOpenedTowers();
 
@@ -470,6 +469,8 @@ public class User {
         for(int i = 1; i < 5; i++) {
             this.levelsAvailable[i] = false;
         }
+
+        GDefence.getInstance().log("New User created");
     }
 
 
@@ -477,7 +478,7 @@ public class User {
         this.saveFile = saveFile;
     }
 
-    public void update(){
+    public void update(){//rework
 //        currentExp = getTotalExp();
 //        for(int i = level - 1; currentExp >= Value.needExp2Lvl[i] ; i++){
 //            currentExp -= Value.needExp2Lvl[i];
@@ -485,21 +486,21 @@ public class User {
 //            addLevel();
 //        }
         int i = 0;
-        System.out.println(totalExp);
+//        System.out.println(totalExp);
         while (totalExp >= Value.needExp2Lvl[i]){
             i++;
         }
         int newLevel = 0;
-//        if(i != 0) {
+        if(i != 0) {
             currentExp = totalExp % Value.needExp2Lvl[i - 1];
             newLevel = i + 1;
-//        }else {
-//            currentExp = totalExp;
-//        }
+        }else {
+            currentExp = totalExp;
+        }
         for (int j = 0; j <= newLevel - getLevel(); j++){
             addLevel();
         }
-        System.out.println(getLevel());
+//        System.out.println(getLevel());
 
 
     }
@@ -532,30 +533,62 @@ public class User {
             return true;
         }else return false;
     }
+    public void flush(){
+        GDefence.getInstance().log("User flush");
+        gold = 0;
+        totalExp = 0;
+        currentExp = 0;
+        redGems = 0;
+        getTowerInventory().flush();
+        getSpellInventory().flush();
+        getDetailInventory().flush();
+        //etc
+
+
+    }
 
     public void save(){
+        GDefence.getInstance().log("Saving");
         //File saveFile = new File("UserSave");
         //
-        File f = new File("Save/UserSave");
+        File f = new File("Save/UserSave.properties");
         try {
+//            if(f.exists()) {
+//                f.delete();
+//            }
             f.createNewFile();
-            PrintWriter writer = new PrintWriter(f);
-            writer.println(getGold());
-            writer.println(getTotalExp());
-            //writer.print(getCurrentExp());
-            //writer.println(getLevel());
-            writer.println(getLevelsCompletedInt());
-            //writer.println(getLevelAvailable());
-            writer.print(redGems + " " + yellowGems + " " + blueGems + " " + blackGems + " " + greenGems + " " + whiteGems);
-            writer.close();
+            Properties prop = new Properties();
+
+            FileOutputStream fs = new FileOutputStream(f);
+
+            prop.put("gold", getGold() + "");
+            prop.put("totalExp", getTotalExp() + "");
+            prop.put("towerInventory", getTowerInventory().getSave());
+//            prop.put("spellInventory", getSpellInventory().getSave());
+            prop.put("detailInventory", getDetailInventory().getSave());
+
+
+            prop.store(fs, null);
+
+
+//            PrintWriter writer = new PrintWriter(f);
+//            writer.println(getGold());
+//            writer.println(getTotalExp());
+//            //writer.print(getCurrentExp());
+//            //writer.println(getLevel());
+//            writer.println(getLevelsCompletedInt());
+//            //writer.println(getLevelAvailable());
+//            writer.print(redGems + " " + yellowGems + " " + blueGems + " " + blackGems + " " + greenGems + " " + whiteGems);
+//            writer.close();
             //System.out.println(f.getCanonicalPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
+        GDefence.getInstance().log("Saved");
     }
 
     public boolean load(){
-        System.out.println("Loading");
+        GDefence.getInstance().log("Loading");
         try {
             //InputStream in = Files.newInputStream(loadFile);
             //BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -568,8 +601,24 @@ public class User {
             FileInputStream fs = new FileInputStream(loadFile);
             prop.load(fs);
 
+            flush();//delete current user info
+
             gold = Integer.parseInt(prop.getProperty("gold"));
             totalExp = Integer.parseInt(prop.getProperty("totalExp"));
+
+            String towerInvLoad = prop.getProperty("towerInventory");
+            String towers[] = towerInvLoad.split("/");
+            for (String t:towers){
+                String[] info = t.split("-", 2);//info[0] - numberSlot, info[1] - savecode
+                getTowerInventory().store(TowerObject.loadSaveCode(info[1]), Integer.parseInt(info[0]));
+            }
+
+            String detailInvLoad = prop.getProperty("detailInventory");
+            String details[] = detailInvLoad.split("/");
+            for (String t:details){
+                String[] info = t.split("-", 2);//info[0] - numberSlot, info[1] - savecode
+                getDetailInventory().store(DetailObject.loadSaveCode(info[1]), Integer.parseInt(info[0]));
+            }
 
 
 //            System.out.println(gold + " " + totalExp);
@@ -590,6 +639,7 @@ public class User {
 
 
             update();
+            GDefence.getInstance().log("User loaded");
 
             return true;//TODO
 

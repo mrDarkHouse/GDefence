@@ -7,6 +7,18 @@ import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 public class DetailObject extends GameObject{
     private ItemEnum.Detail prototype;
 
+    public static DetailObject loadSaveCode(String savecode) {
+        String[] info = savecode.split("-", 2);
+
+        if(info[0].equals("Recipe")){
+            return Recipe.loadSaveCode(info[1]);
+//        }else if(){
+//            //
+        }else {
+           throw new IllegalArgumentException("wrong detail className");
+        }
+    }
+
     public DetailObject(ItemEnum.Detail prototype) {
         this.prototype = prototype;
     }
@@ -25,4 +37,12 @@ public class DetailObject extends GameObject{
     public String getTooltip() {
         return null;
     }
+
+    @Override
+    public String getSaveCode() {
+        return null;
+    }
+
+
+
 }
