@@ -30,6 +30,7 @@ public class Arsenal extends AbstractCampainScreen{
     @Override
     public void show() {
         super.show();
+        towerMap.updateTypes();//
 //        inventoryActor.remove();
 //        inventoryActor = null;
 //        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),
@@ -39,6 +40,12 @@ public class Arsenal extends AbstractCampainScreen{
 
 //        inventoryActor.setTowerInventory(User.getTowerInventory());
         //init();
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+
     }
 
     public void init(){

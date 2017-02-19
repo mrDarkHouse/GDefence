@@ -30,11 +30,11 @@ public class TowerObject extends GameObject{
         String gemsCode = "";
         for (int i = 0; i < gemsNumber.length; i++){
             gemsCode+= gemsNumber[i];
-            if(i!= gemsNumber.length - 1){
+            if(i!= gemsNumber.length - 1){//may be unnecessary
                 gemsCode+= ";";
             }
         }
-        return prototype.getName() + "-" + totalExp + "-" + gemsCode;
+        return prototype.name() + "-" + totalExp + "-" + gemsCode;
     }
 
 

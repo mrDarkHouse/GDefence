@@ -13,7 +13,9 @@ import com.darkhouse.gdefence.Objects.TowerObject;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 public class User {
     public int getTotalExp() {
@@ -90,8 +92,36 @@ public class User {
 
     private String name;
     private int currentMap;
-    private boolean[] levelsCompleted = new boolean[100];
-    private boolean[] levelsAvailable = new boolean[100];
+    private boolean[] levelsCompleted = new boolean[30];////
+    private boolean[] levelsAvailable = new boolean[30];////
+
+    private String getLevelsCompletedSavecode(){
+        String s = "";
+        for (boolean b:levelsCompleted){
+            s+= b + "-";
+        }
+        return s;
+    }
+
+    private String getLevelAvailableSavecode(){
+        String s = "";
+        for (boolean b:levelsAvailable){
+            s+= b + "-";
+        }
+        return s;
+    }
+    private void loadLevelsCompleted(String savecode){
+        String[] s = savecode.split("-");
+        for (int i = 0; i < s.length; i++){
+            levelsCompleted[i] = Boolean.parseBoolean(s[i]);
+        }
+    }
+    private void loadLevelsAvailable(String savecode){
+        String[] s = savecode.split("-");
+        for (int i = 0; i < s.length; i++){
+            levelsAvailable[i] = Boolean.parseBoolean(s[i]);
+        }
+    }
 
     public void openLevel(int number) {
         levelsAvailable[number - 1] = true;//because array
@@ -216,8 +246,8 @@ public class User {
     private HashMap <ItemEnum.Tower, RecipeType> openedTowers;
 
 
-    private void initOpenedTowers(){//for each
-        openedTowers = new HashMap<ItemEnum.Tower, RecipeType>();
+    private void initOpenedTowers(){//default opened
+        openedTowers = new HashMap<ItemEnum.Tower, RecipeType>();//for each
         openedTowers.put(ItemEnum.Tower.Basic, RecipeType.opened);
         openedTowers.put(ItemEnum.Tower.Rock, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Arrow, RecipeType.locked);
@@ -228,10 +258,26 @@ public class User {
         openedTowers.put(ItemEnum.Tower.Ballista, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Catapult, RecipeType.locked);
 
-
-
         openRecipes();
     }
+
+    private void loadOpenedTowers(String savecode){//can work after initialized default openedTowers map
+        String[] towersTypes = savecode.split("/");
+        for (String type:towersTypes){
+            String[] s = type.split("-");//s[0] = key, s[1] = value
+            openedTowers.put(ItemEnum.Tower.valueOf(s[0]), RecipeType.valueOf(s[1]));
+        }
+    }
+
+    private String getOpenedTowersSavecode(){
+        String save = "";
+        for (Map.Entry<ItemEnum.Tower, RecipeType> entry: openedTowers.entrySet()){
+            save += entry.getKey().name() + "-" + entry.getValue().name() + "/";
+        }
+        return save;
+    }
+
+
     private void unlockRecipe(ItemEnum.Tower t){
         if(getOpenType(t) == RecipeType.locked) openedTowers.put(t, RecipeType.canOpen);
     }
@@ -290,9 +336,9 @@ public class User {
     }
     */
 
-    public int[] getGemsNumbers(){
-        return new int[]{redGems, yellowGems, blueGems, blackGems, greenGems, whiteGems};
-    }
+//    public int[] getGemsNumbers(){
+//        return new int[]{redGems, yellowGems, blueGems, blackGems, greenGems, whiteGems};
+//    }
 
     public enum GEM_TYPE{
         RED, YELLOW, BLUE, BLACK, GREEN, WHITE;
@@ -319,66 +365,79 @@ public class User {
     }
 
     public int getGemNumber(GEM_TYPE t){
-        switch (t){
-            case RED:
-                return redGems;
-            case YELLOW:
-                return yellowGems;
-            case BLUE:
-                return blueGems;
-            case BLACK:
-                return blackGems;
-            case GREEN:
-                return greenGems;
-            case WHITE:
-                return whiteGems;
-        }
-        return 0;
-    }
+        return gems[t.ordinal()];
 
-    public boolean spendGems(GEM_TYPE t, int number){
-        switch (t){
-            case RED:
-                if(redGems >= number){
-                    redGems -= number;
-                    return true;
-                }
-                break;
-            case YELLOW:
-                if(yellowGems >= number){
-                    yellowGems -= number;
-                    return true;
-                }
-                break;
-            case BLUE:
-                if(blueGems >= number){
-                    blueGems -= number;
-                    return true;
-                }
-                break;
+//        switch (t){
+//            case RED:
+//                return redGems;
+//            case YELLOW:
+//                return yellowGems;
+//            case BLUE:
+//                return blueGems;
 //            case BLACK:
 //                return blackGems;
 //            case GREEN:
 //                return greenGems;
 //            case WHITE:
 //                return whiteGems;
-        }
-        return false;
+//        }
+//        return 0;
     }
 
+    public boolean spendGems(GEM_TYPE t, int number){
+        if(getGemNumber(t) >= number){
+            gems[t.ordinal()] -= number;
+            return true;
+        }
+        return false;
 
+//        switch (t){
+//            case RED:
+//                if(redGems >= number){
+//                    redGems -= number;
+//                    return true;
+//                }
+//                break;
+//            case YELLOW:
+//                if(yellowGems >= number){
+//                    yellowGems -= number;
+//                    return true;
+//                }
+//                break;
+//            case BLUE:
+//                if(blueGems >= number){
+//                    blueGems -= number;
+//                    return true;
+//                }
+//                break;
+////            case BLACK:
+////                return blackGems;
+////            case GREEN:
+////                return greenGems;
+////            case WHITE:
+////                return whiteGems;
+//        }
+//        return false;
+    }
+    private int gems[];
 
-    private int redGems;
-    private int yellowGems;
-    private int blueGems;
-    private int blackGems;
-    private int greenGems;
-    private int whiteGems;
+    private String getGemsSavecode(){
+        String gemsSave = "";
+        for (int gem : gems) {
+            gemsSave += gem + "-";
+        }
+        return gemsSave;
+    }
 
-    private File saveFile;
-
+//    private int redGems;
+//    private int yellowGems;
+//    private int blueGems;
+//    private int blackGems;
+//    private int greenGems;
+//    private int whiteGems;
 
     public User() {
+        gems = new int[GEM_TYPE.values().length];//6
         towerInventory = new Inventory(TowerObject.class, 35);
         spellInventory = new Inventory(SpellObject.class, 35);
         detailInventory = new Inventory(DetailObject.class, 35);
@@ -396,22 +455,6 @@ public class User {
         this.totalExp = 0;
         addGold(3000);
         currentMap = 1;
-
-
-        //towers = new ArrayList<Tower>();
-
-
-
-
-        //towers.add(new ArrowTower());
-        //towers.add(new RockTower());
-        //towers.add(new BasicTower());
-        //items = new ArrayList<Item>();
-        //items.add(Item.BATTERY);
-        //items.add(Item.CANNON);
-        //items.add(Item.CRYSTAL_GREEN);
-        //items.add(Item.CRYSTAL_GREEN);
-
 //        towerInventory = new Inventory(TowerObject.class, 35);
 //        spellInventory = new Inventory(SpellObject.class, 35);
 //        detailInventory = new Inventory(DetailObject.class, 35);
@@ -435,48 +478,26 @@ public class User {
 
 //        initOpenedTowers();
 
-//        towers.add(new TowerObject(TowerType.Basic));
-//        towers.add(new TowerObject(TowerType.Basic));
-//        towers.add(new TowerObject(TowerType.Rocky));
-//        towers.add(new TowerObject(TowerType.Range));
-       /*
-        addTower(new TowerObject(TowerType.Basic, 1));
-        addTower(new TowerObject(TowerType.Basic, 1));
-        addTower(new TowerObject(TowerType.Rocky, 1));
-        addTower(new TowerObject(TowerType.Basic, 1));
-        addTower(new TowerObject(TowerType.Range, 1));
-        */
-
-//        towers[0] = new TowerObject("Basic", 2);
-//        towers[1] = new TowerObject("Rocky", 3);//rework
-//        towers[2] = new TowerObject("Arrow", 5);
-//        towers[4] = new TowerObject("Range", 4);
-
-        redGems = 3;
-        yellowGems = 2;
-        blueGems = 4;
-        blackGems = 1;
-        greenGems = 9;
-        whiteGems = 41;
-
-
+        gems[0] = 3;
+        gems[1] = 2;
+        gems[2] = 4;
+        gems[3] = 1;
+        gems[4] = 9;
+        gems[5] = 41;
 
         update();
 
-
-        //this.levelsCompletedInt = 0;
-        this.levelsAvailable[0] = true;
-        for(int i = 1; i < 5; i++) {
-            this.levelsAvailable[i] = false;
-        }
+//        this.levelsAvailable[0] = true;
+        openLevel(1);
+//        for(int i = 1; i < 5; i++) {//test this
+//            this.levelsAvailable[i] = false;
+//        }
 
         GDefence.getInstance().log("New User created");
     }
 
 
-    public User(File saveFile) {
-        this.saveFile = saveFile;
-    }
+
 
     public void update(){//rework
 //        currentExp = getTotalExp();
@@ -509,7 +530,6 @@ public class User {
     public int getExp2NextLvl(){
         return Value.needExp2Lvl[level - 1] - currentExp;
     }
-
     public int getMaxExpThisLvl(){
         int exp;
         if (level < 2){
@@ -520,13 +540,11 @@ public class User {
 
         return exp;
     }
-
     public void addExp(final int value){
         totalExp += value;
         update();
     }
     public void addGold(final int value) { gold += value; }
-
     public boolean deleteGold(final int value) {
         if (gold >= value) {
             gold -= value;
@@ -538,13 +556,21 @@ public class User {
         gold = 0;
         totalExp = 0;
         currentExp = 0;
-        redGems = 0;
+        for (int i = 0; i < gems.length; i++){
+            gems[i] = 0;
+        }
         getTowerInventory().flush();
         getSpellInventory().flush();
         getDetailInventory().flush();
+        initOpenedTowers();//default towers
+        for (int i = 0; i < levelsAvailable.length; i++){
+            levelsAvailable[i] = false;
+        }
+        for (int i = 0; i < levelsCompleted.length; i++){
+            levelsCompleted[i] = false;
+        }
+
         //etc
-
-
     }
 
     public void save(){
@@ -558,7 +584,6 @@ public class User {
 //            }
             f.createNewFile();
             Properties prop = new Properties();
-
             FileOutputStream fs = new FileOutputStream(f);
 
             prop.put("gold", getGold() + "");
@@ -566,21 +591,14 @@ public class User {
             prop.put("towerInventory", getTowerInventory().getSave());
 //            prop.put("spellInventory", getSpellInventory().getSave());
             prop.put("detailInventory", getDetailInventory().getSave());
+            prop.put("openedTowers", getOpenedTowersSavecode());
+            prop.put("gems", getGemsSavecode());
+            prop.put("levelsCompleted", getLevelsCompletedSavecode());
+            prop.put("levelAvailable", getLevelAvailableSavecode());
+
 
 
             prop.store(fs, null);
-
-
-//            PrintWriter writer = new PrintWriter(f);
-//            writer.println(getGold());
-//            writer.println(getTotalExp());
-//            //writer.print(getCurrentExp());
-//            //writer.println(getLevel());
-//            writer.println(getLevelsCompletedInt());
-//            //writer.println(getLevelAvailable());
-//            writer.print(redGems + " " + yellowGems + " " + blueGems + " " + blackGems + " " + greenGems + " " + whiteGems);
-//            writer.close();
-            //System.out.println(f.getCanonicalPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -595,31 +613,33 @@ public class User {
             File loadFile = new File("Save/UserSave.properties");
 //            Scanner sc = new Scanner(loadFile);
 
-
             Properties prop = new Properties();
-
             FileInputStream fs = new FileInputStream(loadFile);
             prop.load(fs);
-
             flush();//delete current user info
 
             gold = Integer.parseInt(prop.getProperty("gold"));
             totalExp = Integer.parseInt(prop.getProperty("totalExp"));
-
-            String towerInvLoad = prop.getProperty("towerInventory");
-            String towers[] = towerInvLoad.split("/");
+//            String towerInvLoad = prop.getProperty("towerInventory");
+            String towers[] = prop.getProperty("towerInventory").split("/");
             for (String t:towers){
                 String[] info = t.split("-", 2);//info[0] - numberSlot, info[1] - savecode
-                getTowerInventory().store(TowerObject.loadSaveCode(info[1]), Integer.parseInt(info[0]));
+                if(info.length > 1) getTowerInventory().store(TowerObject.loadSaveCode(info[1]), Integer.parseInt(info[0]));
             }
-
-            String detailInvLoad = prop.getProperty("detailInventory");
-            String details[] = detailInvLoad.split("/");
+//            String detailInvLoad = prop.getProperty("detailInventory");
+            String details[] = prop.getProperty("detailInventory").split("/");
             for (String t:details){
                 String[] info = t.split("-", 2);//info[0] - numberSlot, info[1] - savecode
-                getDetailInventory().store(DetailObject.loadSaveCode(info[1]), Integer.parseInt(info[0]));
-            }
+                if(info.length > 1) getDetailInventory().store(DetailObject.loadSaveCode(info[1]), Integer.parseInt(info[0]));
 
+            }
+            loadOpenedTowers(prop.getProperty("openedTowers"));
+            String[] gemsSave = prop.getProperty("gems").split("-");
+            for (int i = 0; i < gems.length; i++){
+                gems[i] = Integer.parseInt(gemsSave[i]);
+            }
+            loadLevelsCompleted(prop.getProperty("levelsCompleted"));
+            loadLevelsAvailable(prop.getProperty("levelAvailable"));
 
 //            System.out.println(gold + " " + totalExp);
 

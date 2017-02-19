@@ -22,11 +22,17 @@ public class RecipeButton extends ImageButton{
     private ItemEnum.Tower tower;
     private Recipe towerRecipe;
     private RecipeTooltip tooltip;
-    private Array<RecipeButton> updateButtons;
 
-    public void setUpdateButtons(Array<RecipeButton> updateButtons) {
-        this.updateButtons = updateButtons;
+    private TowerMap owner;
+
+    public void setOwner(TowerMap owner) {
+        this.owner = owner;
     }
+    //    private Array<RecipeButton> updateButtons;//kostil'
+
+//    public void setUpdateButtons(Array<RecipeButton> updateButtons) {
+//        this.updateButtons = updateButtons;
+//    }
 
     public RecipeButton(final ItemEnum.Tower tower) {
         super(GDefence.getInstance().assetLoader.generateImageButtonSkin(tower.getTowerTexture()));
@@ -41,7 +47,7 @@ public class RecipeButton extends ImageButton{
                 if(type != User.RecipeType.locked && tower != ItemEnum.Tower.Basic){
                     if(GDefence.getInstance().user.deleteGold(towerRecipe.getGlobalCost())){
                         GDefence.getInstance().user.buyTowerRecipe(tower);
-                        updateButtons();
+                        owner.updateTypes();//if owner != null
                     }
                 }
                 return true;
@@ -49,11 +55,7 @@ public class RecipeButton extends ImageButton{
         });
         addListener(new TooltipListener(tooltip, true));
     }
-    private void updateButtons(){
-        for(RecipeButton b:updateButtons){
-            b.updateType();
-        }
-    }
+
 
     public void updateType(){
         type = GDefence.getInstance().user.getOpenType(tower);

@@ -73,7 +73,7 @@ public class TowerMap extends Window{
 
 
         for(RecipeButton b:buttons){
-            b.setUpdateButtons(buttons);
+            b.setOwner(this);
         }
 
         //buttons.get(0).setPosition(200, 200);
@@ -97,6 +97,11 @@ public class TowerMap extends Window{
 
 
 
+    }
+    public void updateTypes(){
+        for (RecipeButton b:buttons){
+            b.updateType();
+        }
     }
 
     @Override
