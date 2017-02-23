@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.Ability.Debuff;
 import com.darkhouse.gdefence.Level.Level;
-import com.darkhouse.gdefence.Level.MapTile;
+import com.darkhouse.gdefence.Level.Path.*;
 import com.darkhouse.gdefence.Level.Tower.AttackLogic;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
@@ -17,7 +16,6 @@ import com.darkhouse.gdefence.Model.GDSprite;
 import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Mob extends GDSprite{
@@ -61,20 +59,17 @@ public abstract class Mob extends GDSprite{
 //
 //
 //    }
+    public enum MoveType{
+        ground, water, flying
+    }
 
-
-
-
-
-    //private Way way = Way.right;
-    private Texture texture;
-
+    //    private Texture texture;
 
     //public int healthSpace = 3, healthHeight = 5;
     protected String name;
     protected int health;
     protected int armor;
-    protected MapTile.TileType moveType;
+    protected MoveType moveType;
     protected float speed;
     protected int dmg;
     protected int ID;
@@ -123,7 +118,7 @@ public abstract class Mob extends GDSprite{
     //protected int width;
     //protected int height;
 
-    private Way way;// = Way.RIGHT;
+    private Way way;
 
     public Vector2 getCenter(){
         Vector2 v = new Vector2();
@@ -134,14 +129,16 @@ public abstract class Mob extends GDSprite{
 
     public Mob() {
         effects = new ArrayList<Debuff>();
+        setSize(45, 45);
+//        setRegion(texture);
     }
 
     //public Drawable getTexture() {
     //    return texture;
     //}
-    public void setTextureDrawable(Texture texture) {
-        this.texture = texture;
-    }
+//    public void setTextureDrawable(Texture texture) {
+//        this.texture = texture;
+//    }
     public String getName() {
         return name;
     }
@@ -161,10 +158,10 @@ public abstract class Mob extends GDSprite{
     public void setArmor(int armor) {
         this.armor = armor;
     }
-    public MapTile.TileType getMoveType() {
+    public MoveType getMoveType() {
         return moveType;
     }
-    public void setMoveType(MapTile.TileType moveType) {
+    public void setMoveType(MoveType moveType) {
         this.moveType = moveType;
     }
     public float getSpeed() {
@@ -256,7 +253,7 @@ public abstract class Mob extends GDSprite{
             case 4:
                 return new Boar();
             case 5:
-
+                return new Amphibia();
             default:
                 return null;
         }
@@ -291,12 +288,19 @@ public abstract class Mob extends GDSprite{
 
 
     private void step(float delta){
-        currentTile = Level.getMap().getTileContainMob(this);
-        //MapTile nextTile = Level.getMap().getNextTile(currentTile, way);
-        //if(nextTile!= null && nextTile.getType() != moveType){
-        checkTurn(currentTile);
-        //}
-        checkCastle(currentTile);
+//        currentTile = Level.getMap().getTileContainMob(this);
+
+        MapTile t = Level.getMap().getTileContainMob(this);
+        if(t!= null && t != currentTile) {
+            //MapTile nextTile = Level.getMap().getNextTile(currentTile, way);
+            //if(nextTile!= null && nextTile.getType() != moveType){
+            checkTurn(t);
+            //}
+            currentTile = t;
+        }
+        update();//
+
+        checkCastle(currentTile);//may be first
 
         switch (way){
             case RIGHT:
@@ -314,21 +318,25 @@ public abstract class Mob extends GDSprite{
         }
     }
     private void checkTurn(MapTile currentTile){
-        if(currentTile != null){
+//        if(currentTile != null){
             //System.out.println(currentTile.getLogic());
+            Walkable t = ((Walkable) currentTile);
 
-            Way w = Map.checkTurnWay(currentTile);
+//            Way w = Map.checkTurnWay(currentTile);
+            Way w = t.manipulatePath(this);//must call 1 time per block
+
+
             if(w!= null && way!= w){
                 way = w;
                 //System.out.println(way);
                 //System.out.println(currentTile.getLogic());
             }
 
-        }
+//        }
     }
     private void checkCastle(MapTile currentTile){
         if(currentTile != null){
-            if(currentTile.getLogic() == MapTile.TileLogic.castle){
+            if(currentTile instanceof Castle/* == MapTile.TileLogic.castle*/){
                 if(isInGame()) {
                     damage();
                 }
@@ -346,17 +354,20 @@ public abstract class Mob extends GDSprite{
 
 
     public void spawn(MapTile spawner){
-        way = Map.checkSpawnerWay(spawner);
+//        way = Map.checkSpawnerWay(spawner);
+        currentTile = spawner;
+        way = ((Spawn) spawner).manipulatePath(this);
         //System.out.println(way);
+        update();//some mobs must change texture in spawn block
 
-        setSize(45, 45);
+
         setPosition(spawner.getX(), spawner.getY());
         setRotation(0);
         //setDrawable(texture);
-        setRegion(texture);
+
 
     }
-
+    public abstract void update();
 
     public void render(SpriteBatch batch){
         //Image i = new Image(texture);

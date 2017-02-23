@@ -7,8 +7,11 @@ import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.Map;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class PropertiesLoader {
@@ -45,7 +48,7 @@ public class PropertiesLoader {
 
     public PropertiesLoader(int map) {
         try{
-            loadFile = new File("Maps/Map" + map + "SpawnProperty.gdp");
+            loadFile = new File("Maps/Map" + map + ".properties");
         }catch (Exception e){
             Gdx.app.log("Error", e.toString());
         }
@@ -57,25 +60,42 @@ public class PropertiesLoader {
             if(spawners == 0){//empty maps
                 return;
             }
+            Properties prop = new Properties();
+            FileInputStream fs = new FileInputStream(loadFile);
+            prop.load(fs);
 
-            Scanner loadScanner = new Scanner(loadFile);
+
+//            Scanner loadScanner = new Scanner(loadFile);
             waves = new ArrayList<Wave>();
 
-            expFromLvl = loadScanner.nextInt();
-            goldFromLvl = loadScanner.nextInt();
-            startEnergyPercent = loadScanner.nextFloat();
-            startHpPercent = loadScanner.nextFloat();
-            while (loadScanner.hasNext()){
-                for (int i = 0; i < spawners; i++) {
-                    waves.add(new Wave(loadScanner.nextInt(), loadScanner.nextInt(), loadScanner.nextFloat()));
-                    timeBetweenWaves[waves.size() - 1] = loadScanner.nextInt();
-                    if(forRealMap) {
-                        waves.get(waves.size() - 1).setSpawner(Level.getMap().getSpawner().get(i));
+//            expFromLvl = loadScanner.nextInt();
+//            goldFromLvl = loadScanner.nextInt();
+//            startEnergyPercent = loadScanner.nextFloat();
+//            startHpPercent = loadScanner.nextFloat();
+            expFromLvl = Integer.parseInt(prop.getProperty("expFromLvl"));
+            goldFromLvl = Integer.parseInt(prop.getProperty("goldFromLvl"));
+            startEnergyPercent = Float.parseFloat(prop.getProperty("startEnegryPercent"));
+            startHpPercent = Float.parseFloat(prop.getProperty("startHpPercent"));
+
+            String[] wavesCode = prop.getProperty("waves").split("/");
+
+//            while (loadScanner.hasNext()){
+            for (int i = 0; i < wavesCode.length/*/spawners*/; i++) {
+                String[] info = wavesCode[i].split(":");
+//                for (int j = 0; j < spawners; j++) {
+//                    String[] info2 = info[i].split("-");
+                    waves.add(new Wave(Integer.parseInt(info[0]), Integer.parseInt(info[1]), Float.parseFloat(info[2])));
+                    timeBetweenWaves[waves.size() - 1] = Integer.parseInt(info[3]);//float
+                    if (forRealMap) {
+                        waves.get(i/* + j*/).setSpawner(Level.getMap().getSpawner().get(/*j*/0));//invertion//i - spawners + j
                     }
-                }
+//                }
             }
+//            }
             numberWaves = waves.size();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

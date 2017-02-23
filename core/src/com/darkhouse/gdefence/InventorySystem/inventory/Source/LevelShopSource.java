@@ -6,11 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.TileTarget;
 import com.darkhouse.gdefence.Level.Level;
-import com.darkhouse.gdefence.Level.MapTile;
+import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Model.Level.MapTileActor;
 import com.darkhouse.gdefence.Objects.TowerObject;
 

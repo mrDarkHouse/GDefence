@@ -1,9 +1,8 @@
 package com.darkhouse.gdefence.Level;
 
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.darkhouse.gdefence.Level.Mob.Mob;
-import com.darkhouse.gdefence.Level.Mob.Slime;
+import com.darkhouse.gdefence.Level.Path.MapTile;
 
 import java.util.ArrayList;
 import java.util.List;

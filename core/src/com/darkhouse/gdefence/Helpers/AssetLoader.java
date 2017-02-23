@@ -188,7 +188,7 @@ public class AssetLoader extends AssetManager{
         load("Projectiles/ballista.png", Texture.class);
         load("Projectiles/catapult.png", Texture.class);
         load("coin.png", Texture.class);
-        load("castle.png", Texture.class);
+
 
         load("lockedTower.png", Texture.class);
         load("openedTower.png", Texture.class);
@@ -205,13 +205,44 @@ public class AssetLoader extends AssetManager{
     private void loadLevelMap(){
         //load("MainMenuBg.png", Texture.class);
 
-        load("grass.png", Texture.class);
-        load("ground.png", Texture.class);
+        load("Path/grass.png", Texture.class);
+        load("Path/castle.png", Texture.class);
+        load("Path/waterHorizontal.png", Texture.class);
+        load("Path/waterVertical.png", Texture.class);
+        load("Path/roadHorizontal.png", Texture.class);
+        load("Path/roadVertical.png", Texture.class);
+        load("Path/Turn/turnLU.png", Texture.class);
+        load("Path/Turn/turnLD.png", Texture.class);
+        load("Path/Turn/turnRU.png", Texture.class);
+        load("Path/Turn/turnRD.png", Texture.class);
+        load("Path/Bridge/bridgeLUD1.png", Texture.class);
+        load("Path/Bridge/bridgeLUD2.png", Texture.class);
+        load("Path/Bridge/bridgeRUD1.png", Texture.class);
+        load("Path/Bridge/bridgeRUD2.png", Texture.class);
+        load("Path/Bridge/bridgeULR1.png", Texture.class);
+        load("Path/Bridge/bridgeULR2.png", Texture.class);
+        load("Path/Bridge/bridgeDLR1.png", Texture.class);
+        load("Path/Bridge/bridgeDLR2.png", Texture.class);
+
+        load("Path/Bridge/bridgeUUL1.png", Texture.class);
+        load("Path/Bridge/bridgeUUL2.png", Texture.class);
+        load("Path/Bridge/bridgeUUR1.png", Texture.class);
+        load("Path/Bridge/bridgeUUR2.png", Texture.class);
+        load("Path/Bridge/bridgeDDL1.png", Texture.class);
+        load("Path/Bridge/bridgeDDL2.png", Texture.class);
+        load("Path/Bridge/bridgeDDR1.png", Texture.class);
+        load("Path/Bridge/bridgeDDR2.png", Texture.class);
+
+
+
+//        load("ground.png", Texture.class);
         load("Mobs/mob.png", Texture.class);
         load("Mobs/mob2.png", Texture.class);
         load("Mobs/mob3.png", Texture.class);
         load("Mobs/mob4.png", Texture.class);
         load("Mobs/mob5.png", Texture.class);
+        load("Mobs/mob6walk.png", Texture.class);
+        load("Mobs/mob6swim.png", Texture.class);
         load("Tower/basicTower.png", Texture.class);
         load("Tower/rockTower.png", Texture.class);
         load("Tower/arrowTower.png", Texture.class);

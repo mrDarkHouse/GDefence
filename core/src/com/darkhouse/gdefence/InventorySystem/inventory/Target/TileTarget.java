@@ -1,15 +1,9 @@
 package com.darkhouse.gdefence.InventorySystem.inventory.Target;
 
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
-import com.darkhouse.gdefence.Level.Level;
-import com.darkhouse.gdefence.Level.MapTile;
+import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Model.Level.MapTileActor;
 
 public class TileTarget extends DragAndDrop.Target{

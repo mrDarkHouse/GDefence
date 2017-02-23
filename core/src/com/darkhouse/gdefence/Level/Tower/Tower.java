@@ -3,7 +3,6 @@ package com.darkhouse.gdefence.Level.Tower;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -147,6 +146,7 @@ public class Tower extends GameActor{
         //pixmap.dispose();
 
         attackRangeTexture = GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class);
+        attackRangeTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     public void addKill(/*Class<? extends Mob>*/Mob killedMob){

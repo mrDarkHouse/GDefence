@@ -4,23 +4,19 @@ package com.darkhouse.gdefence.Model.Level;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
-import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
-import com.darkhouse.gdefence.Level.MapTile;
+import com.darkhouse.gdefence.Level.Path.Castle;
+import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
+import com.darkhouse.gdefence.Level.Path.Spawn;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -28,7 +24,7 @@ public class Map {
 
     private MapTile[][] tiles;
 
-    private Array<MapTile> path;
+//    private Array<MapTile> path;
 
     public MapTile[][] getTiles() {
         return tiles;
@@ -55,40 +51,40 @@ public class Map {
 
     public ArrayList<MapTile> getSpawner() {
         return spawner;
-    }
+    }//need only size
     public ArrayList<MapTile> getCastle() {
         return castle;
     }
 
-    public static Way checkSpawnerWay(MapTile spawner){
-        switch (spawner.getLogic()){
-            case spawnerR:
-                return Way.RIGHT;
-            case spawnerL:
-                return Way.LEFT;
-            case spawnerU:
-                return Way.UP;
-            case spawnerD:
-                return Way.DOWN;
-            default:
-                return null;
-        }
-    }
+//    public static Way checkSpawnerWay(MapTile spawner){
+//        switch (spawner.getLogic()){
+//            case spawnerR:
+//                return Way.RIGHT;
+//            case spawnerL:
+//                return Way.LEFT;
+//            case spawnerU:
+//                return Way.UP;
+//            case spawnerD:
+//                return Way.DOWN;
+//            default:
+//                return null;
+//        }
+//    }
 
-    public static Way checkTurnWay(MapTile tile){
-        switch (tile.getLogic()){
-            case turnR:
-                return Way.RIGHT;
-            case turnL:
-                return Way.LEFT;
-            case turnU:
-                return Way.UP;
-            case turnD:
-                return Way.DOWN;
-            default:
-                return null;
-        }
-    }
+//    public static Way checkTurnWay(MapTile tile){
+//        switch (tile.getLogic()){
+//            case turnR:
+//                return Way.RIGHT;
+//            case turnL:
+//                return Way.LEFT;
+//            case turnU:
+//                return Way.UP;
+//            case turnD:
+//                return Way.DOWN;
+//            default:
+//                return null;
+//        }
+//    }
 
     public MapTile getTileContainMob(Mob mob){
         for (int x = 0; x < tiles.length; x++){
@@ -162,6 +158,7 @@ public class Map {
         for (int i = 0; i < tiles.length; i++){
             for (int j = 0; j < tiles[0].length; j++){
                 tiles[i][j].setBounds(x + cellSize*i, y - cellSize - cellSize*j , cellSize, cellSize);
+//                tiles[i][j].initTexture();/////////
             }
         }
     }
@@ -178,21 +175,18 @@ public class Map {
         spawner = new ArrayList<MapTile>();
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles[0].length; y++){
-                if(tiles[x][y].getLogic() == MapTile.TileLogic.spawnerR ||
-                   tiles[x][y].getLogic() == MapTile.TileLogic.spawnerL ||
-                   tiles[x][y].getLogic() == MapTile.TileLogic.spawnerU ||
-                   tiles[x][y].getLogic() == MapTile.TileLogic.spawnerD){
-                        spawner.add(tiles[x][y]);
+                if(tiles[x][y] instanceof Spawn){
+                    spawner.add(tiles[x][y]);
                 }
             }
         }
     }
 
-    private void searchCastle(){
+    private void searchCastle(){//dont need yet
         castle = new ArrayList<MapTile>();
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles[0].length; y++){
-                if(tiles[x][y].getLogic() == MapTile.TileLogic.castle){
+                if(tiles[x][y] instanceof Castle){
                     castle.add(tiles[x][y]);
                 }
             }

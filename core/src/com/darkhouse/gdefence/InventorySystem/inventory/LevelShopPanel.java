@@ -7,7 +7,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.LevelShopSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.TileTarget;
-import com.darkhouse.gdefence.Level.MapTile;
+import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class LevelShopPanel extends InventoryActor {
