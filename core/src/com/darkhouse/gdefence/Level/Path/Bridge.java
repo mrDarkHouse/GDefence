@@ -14,12 +14,19 @@ public class Bridge extends MapTile implements Walkable{
     private Way endWay2;
     private Texture texture1;
     private Texture texture2;
+    private TargetType applyMobs;
+
+    @Override
+    public TargetType getApplyMobs() {
+        return applyMobs;
+    }
 
 
-    public Bridge(Way inputWay, Way endWay1, Way endWay2, int toAct) {
+    public Bridge(Way inputWay, Way endWay1, Way endWay2, TargetType applyMobs, int toAct) {
         this.inputWay = inputWay;
         this.endWay1 = endWay1;
         this.endWay2 = endWay2;
+        this.applyMobs = applyMobs;
         this.toAct = toAct;
         initTexture();
     }
@@ -102,7 +109,9 @@ public class Bridge extends MapTile implements Walkable{
         return false;
     }
 
-    public Way manipulatePath(Mob enterMob){
+
+
+    public Way manipulatePath(Mob.MoveType enterMobType){
         Way w = counter == toAct?endWay2:endWay1;//2:1 or 1:2 ???
 //        switch (inputWay){
 //            case LEFT:

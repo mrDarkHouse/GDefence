@@ -491,6 +491,7 @@ public class User {
         openLevel(1);
         openLevel(2);
         openLevel(3);
+        openLevel(4);
 //        for(int i = 1; i < 5; i++) {//test this
 //            this.levelsAvailable[i] = false;
 //        }

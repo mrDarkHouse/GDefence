@@ -2,23 +2,62 @@ package com.darkhouse.gdefence.Level.Loader;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.Level.Level;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Path.Spawn;
+import com.darkhouse.gdefence.Level.Wave;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 
 
 public class MapLoader {
-    private File loadFile;
-
     private int spawnersNumber;
 
     public int getSpawnersNumber() {
         return spawnersNumber;
+    }
+
+    private File loadFile;
+    private int expFromLvl;
+    private int goldFromLvl;
+    private float startEnergyPercent;
+    private float startHpPercent;
+    private int numberWaves;
+    private float[] timeBetweenWaves = new float[20];
+    private ArrayList<Wave> waves;
+    private Array<Mob.MoveType> moveTypesInLevel;
+
+    public int getExpFromLvl() {
+        return expFromLvl;
+    }
+    public int getGoldFromLvl() {
+        return goldFromLvl;
+    }
+    public float getStartEnergyPercent() {
+        return startEnergyPercent;
+    }
+    public float getStartHpPercent() {
+        return startHpPercent;
+    }
+    public int getNumberWaves() {
+        return numberWaves;
+    }
+    public float[] getTimeBetweenWaves() {
+        return timeBetweenWaves;
+    }
+    public ArrayList<Wave> getWaves() {
+        return waves;
+    }
+    public Array<Mob.MoveType> getMoveTypesInLevel() {
+        return moveTypesInLevel;
     }
 
     public MapLoader(int map) {
@@ -67,8 +106,6 @@ public class MapLoader {
                 }
             }
 
-
-
 //            int sizeX, sizeY;
 //            Scanner loadScanner = new Scanner(loadFile);
 //            sizeX = loadScanner.nextInt();
@@ -103,12 +140,56 @@ public class MapLoader {
 
 //            loadScanner.close();
             return mapTile;
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return null;
+    }
+    public void loadProperties(int spawners, boolean forRealMap){
+        try {
+            if(spawners == 0){//empty maps
+                return;
+            }
+            Properties prop = new Properties();
+            FileInputStream fs = new FileInputStream(loadFile);
+            prop.load(fs);
+
+
+//            Scanner loadScanner = new Scanner(loadFile);
+            waves = new ArrayList<Wave>();
+            moveTypesInLevel = new Array<Mob.MoveType>();
+
+//            expFromLvl = loadScanner.nextInt();
+//            goldFromLvl = loadScanner.nextInt();
+//            startEnergyPercent = loadScanner.nextFloat();
+//            startHpPercent = loadScanner.nextFloat();
+            expFromLvl = Integer.parseInt(prop.getProperty("expFromLvl"));
+            goldFromLvl = Integer.parseInt(prop.getProperty("goldFromLvl"));
+            startEnergyPercent = Float.parseFloat(prop.getProperty("startEnegryPercent"));
+            startHpPercent = Float.parseFloat(prop.getProperty("startHpPercent"));
+
+            String[] wavesCode = prop.getProperty("waves").split("/");
+
+//            while (loadScanner.hasNext()){
+            for (int i = 0; i < wavesCode.length/*/spawners*/; i++) {
+                String[] info = wavesCode[i].split(":");
+//                for (int j = 0; j < spawners; j++) {
+//                    String[] info2 = info[i].split("-");
+                waves.add(new Wave(Integer.parseInt(info[0]), Integer.parseInt(info[1]), Float.parseFloat(info[2])));
+                Mob.MoveType mt = Mob.getMobById(waves.get(waves.size() - 1).getMobID()).getMoveType();//
+                if(!moveTypesInLevel.contains(mt, true))moveTypesInLevel.add(mt);
+                timeBetweenWaves[waves.size() - 1] = Integer.parseInt(info[3]);//float
+                if (forRealMap) {
+                    waves.get(i/* + j*/).setSpawner(Level.getMap().getSpawner().get(/*j*/0));//invertion//i - spawners + j
+                }
+//                }
+            }
+//            }
+            numberWaves = waves.size();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

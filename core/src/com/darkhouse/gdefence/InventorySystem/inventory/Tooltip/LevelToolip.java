@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
-import com.darkhouse.gdefence.Level.Loader.PropertiesLoader;
 import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Model.LevelButton;
 
@@ -36,13 +35,12 @@ public class LevelToolip extends Window{
         clear();
         MapLoader ml = new MapLoader(levelButton.getNumber());
         ml.loadMap();
-        PropertiesLoader pl = new PropertiesLoader(levelButton.getNumber());
-        pl.loadProperties(ml.getSpawnersNumber(), false);
-        String waves = "Waves: " + pl.getNumberWaves();
-        String exp = "Exp: " + pl.getExpFromLvl();
-        String gold = "Gold: " + pl.getGoldFromLvl();
-        String hp = "Start health: " + (int)(pl.getStartHpPercent() * 100) + "%";
-        String en = "Start energy: " + (int)(pl.getStartEnergyPercent() * 100) + "%";
+        ml.loadProperties(ml.getSpawnersNumber(), false);
+        String waves = "Waves: " + ml.getNumberWaves();
+        String exp = "Exp: " + ml.getExpFromLvl();
+        String gold = "Gold: " + ml.getGoldFromLvl();
+        String hp = "Start health: " + (int)(ml.getStartHpPercent() * 100) + "%";
+        String en = "Start energy: " + (int)(ml.getStartEnergyPercent() * 100) + "%";
 
 
 

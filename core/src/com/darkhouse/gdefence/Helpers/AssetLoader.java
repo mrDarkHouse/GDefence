@@ -212,9 +212,17 @@ public class AssetLoader extends AssetManager{
         load("Path/roadHorizontal.png", Texture.class);
         load("Path/roadVertical.png", Texture.class);
         load("Path/Turn/turnLU.png", Texture.class);
+//        get("Path/Turn/turnLU.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         load("Path/Turn/turnLD.png", Texture.class);
+//        get("Path/Turn/turnLD.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         load("Path/Turn/turnRU.png", Texture.class);
+//        get("Path/Turn/turnRU.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         load("Path/Turn/turnRD.png", Texture.class);
+//        get("Path/Turn/turnRD.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        load("Path/Turn/turnWaterLU.png", Texture.class);
+        load("Path/Turn/turnWaterLD.png", Texture.class);
+        load("Path/Turn/turnWaterRU.png", Texture.class);
+        load("Path/Turn/turnWaterRD.png", Texture.class);
         load("Path/Bridge/bridgeLUD1.png", Texture.class);
         load("Path/Bridge/bridgeLUD2.png", Texture.class);
         load("Path/Bridge/bridgeRUD1.png", Texture.class);
@@ -232,6 +240,31 @@ public class AssetLoader extends AssetManager{
         load("Path/Bridge/bridgeDDL2.png", Texture.class);
         load("Path/Bridge/bridgeDDR1.png", Texture.class);
         load("Path/Bridge/bridgeDDR2.png", Texture.class);
+
+        load("Path/Turn/bridgeLnoArrows.png", Texture.class);
+        load("Path/Turn/bridgeRnoArrows.png", Texture.class);
+        load("Path/Turn/bridgeUnoArrows.png", Texture.class);
+        load("Path/Turn/bridgeDnoArrows.png", Texture.class);
+        load("Path/Turn/waterBridgeLnoArrows.png", Texture.class);
+        load("Path/Turn/waterBridgeRnoArrows.png", Texture.class);
+        load("Path/Turn/waterBridgeUnoArrows.png", Texture.class);
+        load("Path/Turn/waterBridgeDnoArrows.png", Texture.class);
+
+        load("Path/Turn/turnWaterGroundLDL.png", Texture.class);
+        load("Path/Turn/turnWaterGroundLDU.png", Texture.class);
+        load("Path/Turn/turnWaterGroundLDL.png", Texture.class);
+        load("Path/Turn/turnWaterGroundLUD.png", Texture.class);
+        load("Path/Turn/turnWaterGroundLUL.png", Texture.class);
+        load("Path/Turn/turnWaterGroundRDR.png", Texture.class);
+        load("Path/Turn/turnWaterGroundRDU.png", Texture.class);
+        load("Path/Turn/turnWaterGroundRUD.png", Texture.class);
+        load("Path/Turn/turnWaterGroundRUR.png", Texture.class);
+
+
+
+
+
+
 
 
 

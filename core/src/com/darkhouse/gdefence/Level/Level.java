@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.StatManager;
-import com.darkhouse.gdefence.Level.Loader.PropertiesLoader;
+import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Screens.LevelEndScreen;
@@ -144,15 +144,15 @@ public class Level {
     }
 
     private void loadProperies(int spawners){
-        PropertiesLoader pl = new PropertiesLoader(number);
-        pl.loadProperties(spawners, true);
-        expFromLvl = pl.getExpFromLvl();
-        goldFromLvl = pl.getGoldFromLvl();
-        startEnergy = (int)(GDefence.getInstance().user.maxEnegry.getCurrentValue() * pl.getStartEnergyPercent());
-        startHP = (int)(GDefence.getInstance().user.maxHealth.getCurrentValue() * pl.getStartHpPercent());
-        waves = pl.getWaves();
-        numberWaves = pl.getNumberWaves();
-        timeBetweenWaves = pl.getTimeBetweenWaves();
+        MapLoader ml = new MapLoader(number);
+        ml.loadProperties(spawners, true);
+        expFromLvl = ml.getExpFromLvl();
+        goldFromLvl = ml.getGoldFromLvl();
+        startEnergy = (int)(GDefence.getInstance().user.maxEnegry.getCurrentValue() * ml.getStartEnergyPercent());
+        startHP = (int)(GDefence.getInstance().user.maxHealth.getCurrentValue() * ml.getStartHpPercent());
+        waves = ml.getWaves();
+        numberWaves = ml.getNumberWaves();
+        timeBetweenWaves = ml.getTimeBetweenWaves();
 
         maxEnergy = GDefence.getInstance().user.maxEnegry.getCurrentValue();
         energyNumber = startEnergy;

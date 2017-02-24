@@ -36,10 +36,15 @@ public abstract class MapTile extends GDSprite{
 //    private TileType type;
 //    private TileLogic logic;
 
-    public int indexX;
-    public int indexY;
+    private int indexX;
+    private int indexY;
 
-
+    public int getIndexX() {
+        return indexX;
+    }
+    public int getIndexY() {
+        return indexY;
+    }
 
     public void setIndex(int indexX, int indexY) {
         this.indexX = indexX;
@@ -90,19 +95,19 @@ public abstract class MapTile extends GDSprite{
             case 0:
                 return new Grass();
             case 18:
-                return new Road(Way.values()[Integer.parseInt(info[1])]);
+                return new Road(Way.values()[Integer.parseInt(info[1])], TargetType.values()[Integer.parseInt(info[2])]);
             case 20:
                 return new Turn(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
                         TargetType.values()[Integer.parseInt(info[3])]);
             case 24:
                 return new Bridge(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
-                        Way.values()[Integer.parseInt(info[3])], Integer.parseInt(info[4]));
-            case 19:
-                return new WaterRoad(Way.values()[Integer.parseInt(info[1])]);
+                        Way.values()[Integer.parseInt(info[3])], TargetType.values()[Integer.parseInt(info[4])],Integer.parseInt(info[5]));
+//            case 19:
+//                return new WaterRoad(Way.values()[Integer.parseInt(info[1])]);
             case 50:
                 return new Decor(Integer.parseInt(info[1]));
             case 80:
-                return new Spawn(Way.values()[Integer.parseInt(info[1])]);
+                return new Spawn(Way.values()[Integer.parseInt(info[1])], TargetType.values()[Integer.parseInt(info[2])]);
             case 99:
                 return new Castle();
             default:

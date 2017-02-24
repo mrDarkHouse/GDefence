@@ -323,7 +323,7 @@ public abstract class Mob extends GDSprite{
             Walkable t = ((Walkable) currentTile);
 
 //            Way w = Map.checkTurnWay(currentTile);
-            Way w = t.manipulatePath(this);//must call 1 time per block
+            Way w = t.manipulatePath(this.getMoveType());//must call 1 time per block
 
 
             if(w!= null && way!= w){
@@ -356,7 +356,7 @@ public abstract class Mob extends GDSprite{
     public void spawn(MapTile spawner){
 //        way = Map.checkSpawnerWay(spawner);
         currentTile = spawner;
-        way = ((Spawn) spawner).manipulatePath(this);
+        way = ((Spawn) spawner).manipulatePath(this.getMoveType());
         //System.out.println(way);
         update();//some mobs must change texture in spawn block
 

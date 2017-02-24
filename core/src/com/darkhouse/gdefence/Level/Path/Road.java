@@ -8,16 +8,31 @@ import com.darkhouse.gdefence.Level.Mob.Way;
 
 public class Road extends MapTile implements Walkable{
     private Way startWay;
+    private TargetType applyMobs;
+//    public Way getStartWay() {
+//        return startWay;
+//    }
+    public TargetType getApplyMobs() {
+        return applyMobs;
+    }
 
-    public Road(Way startWay) {
+    public Road(Way startWay, TargetType applyMobs) {
         this.startWay = startWay;
+        this.applyMobs = applyMobs;
         initTexture();
     }
 
     @Override
     protected void initTexture() {
-        if (startWay == Way.LEFT || startWay == Way.RIGHT) setRegion(GDefence.getInstance().assetLoader.get("Path/roadHorizontal.png", Texture.class));
-        else setRegion(GDefence.getInstance().assetLoader.get("Path/roadVertical.png", Texture.class));
+        if (applyMobs.isConsist(Mob.MoveType.ground)) {
+            if (startWay == Way.LEFT || startWay == Way.RIGHT)
+                setRegion(GDefence.getInstance().assetLoader.get("Path/roadHorizontal.png", Texture.class));
+            else setRegion(GDefence.getInstance().assetLoader.get("Path/roadVertical.png", Texture.class));
+        }else if(applyMobs == TargetType.WATER_ONLY){
+            if (startWay == Way.LEFT || startWay == Way.RIGHT)
+                setRegion(GDefence.getInstance().assetLoader.get("Path/waterHorizontal.png", Texture.class));
+            else setRegion(GDefence.getInstance().assetLoader.get("Path/waterVertical.png", Texture.class));
+        }
     }
 
     @Override
@@ -27,11 +42,12 @@ public class Road extends MapTile implements Walkable{
 
     @Override
     public boolean isSwimmable() {
-        return false;
+        return applyMobs == TargetType.WATER_ONLY;
     }
 
     @Override
-    public Way manipulatePath(Mob enterMob) {
-        return startWay;//no manipulate
+    public Way manipulatePath(Mob.MoveType enterMobType) {
+        if(applyMobs.isConsist(enterMobType))return startWay;
+        else return null;//dont manipulate
     }
 }

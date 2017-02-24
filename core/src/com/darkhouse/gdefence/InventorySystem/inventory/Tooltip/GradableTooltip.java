@@ -5,10 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
-import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Level.Loader.PropertiesLoader;
-import com.darkhouse.gdefence.Model.LevelButton;
-import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 import com.darkhouse.gdefence.User;
 
 public class GradableTooltip extends Window {
