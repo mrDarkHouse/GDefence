@@ -318,14 +318,14 @@ public class Map {
                             if(road.isSwimmable()){
                                 String turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, rightTiles.get(0))),
                                         Way.getNearBlockWay(road, rightTiles.get(1)));//different names
-                                texture = GDefence.getInstance().assetLoader.get("Path/Turn/turnWater" +
-                                        turnCode + ".png", Texture.class);
+                                texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turnWater" +
+                                        turnCode + ".png");
                             }
                             if(!road.isSwimmable()){
                                 String turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, rightTiles.get(0))),
                                         Way.getNearBlockWay(road, rightTiles.get(1)));//different names
-                                texture = GDefence.getInstance().assetLoader.get("Path/Turn/turn" +
-                                        turnCode + ".png", Texture.class);
+                                texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turn" +
+                                        turnCode + ".png");
                             }
                             break;
                         case 3://tripleTurn
@@ -333,15 +333,15 @@ public class Map {
                             if(tile[0].isSwimmable() && tile[1].isSwimmable() && tile[2].isSwimmable() && road.isSwimmable()){
                                 String turnCode = Turn.getTripleTurnCode(Way.invertWay(Way.getNearBlockWay(road, tile[0])),//invert need to do same names
                                         Way.getNearBlockWay(road, tile[1]), Way.getNearBlockWay(road, tile[2]));
-                                texture = GDefence.getInstance().assetLoader.get("Path/Turn/waterBridge" +
-                                        turnCode + "noArrows.png", Texture.class);
+                                texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/waterBridge" +
+                                        turnCode + "noArrows.png");
                                 break;
                             }
                             if(!tile[0].isSwimmable() && !tile[1].isSwimmable() && !tile[2].isSwimmable() && !road.isSwimmable()){
                                 String turnCode = Turn.getTripleTurnCode(Way.invertWay(Way.getNearBlockWay(road, tile[0])),//invert need to do same names
                                         Way.getNearBlockWay(road, tile[1]), Way.getNearBlockWay(road, tile[2]));
-                                texture = GDefence.getInstance().assetLoader.get("Path/Turn/bridge" +
-                                        turnCode + "noArrows.png", Texture.class);
+                                texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/bridge" +
+                                        turnCode + "noArrows.png");
                                 break;
                             }
                             if(road.isSwimmable()){
@@ -372,23 +372,41 @@ public class Map {
 //                                        }
                                         break;
                                 }
-
-//                                if(tile[0].isSwimmable() && tile[1].isSwimmable() && !tile[2].isSwimmable()){
-//                                    turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, tile[0])),
-//                                            Way.getNearBlockWay(road, tile[1])) + Way.getNearBlockWay(road, tile[2]).getShortName();
-//                                }
-//                                if(tile[0].isSwimmable() && !tile[1].isSwimmable() && tile[2].isSwimmable()){
-//                                    turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, tile[0])),
-//                                            Way.getNearBlockWay(road, tile[2])) + Way.getNearBlockWay(road, tile[1]).getShortName();
-//                                }
-//                                if(!tile[0].isSwimmable() && tile[1].isSwimmable() && tile[2].isSwimmable()){
-//                                    turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, tile[1])),
-//                                            Way.getNearBlockWay(road, tile[2])) + Way.getNearBlockWay(road, tile[0]).getShortName();
-//                                }
-
-
                                 if(turnCode!= null) {
-                                    texture = GDefence.getInstance().assetLoader.get("Path/Turn/turnWaterGround" + turnCode + ".png", Texture.class);
+                                    texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turnWaterGround" + turnCode + ".png");
+                                    break;
+                                }
+                            }
+                            if(!road.isSwimmable()) {
+                                String turnCode = null;
+
+                                Array<MapTile> noSwimmable = new Array<MapTile>();
+                                Array<MapTile> swimmable = new Array<MapTile>();
+                                for (MapTile mt:tile){
+                                    if(mt.isSwimmable())swimmable.add(mt);
+                                    else noSwimmable.add(mt);
+                                }
+                                switch (noSwimmable.size){
+                                    case 2:
+                                        turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, noSwimmable.get(0))),
+                                                Way.getNearBlockWay(road, noSwimmable.get(1))) +
+                                                Way.getNearBlockWay(road, swimmable.get(0)).getShortName();
+                                        break;
+                                    case 1:
+                                        MapTile firstSwimmable = getFirstTile(swimmable.get(0), swimmable.get(1), Mob.MoveType.ground);
+                                        noSwimmable.removeValue(firstSwimmable, true);//or false
+                                        MapTile secondSwimmable = swimmable.get(0);
+                                        turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, firstSwimmable)),
+                                                Way.getNearBlockWay(road, noSwimmable.get(0))) + Way.getNearBlockWay(road, secondSwimmable).getShortName();
+//                                        for (int i = 0; i < noSwimmable.size; i++){
+//                                            if(Way.getNearBlockWay(road, noSwimmable.get(i)) != Way.invertWay(startWay)){
+//                                                turnCode += Way.getNearBlockWay(road, noSwimmable.get(i)).getShortName();
+//                                            }
+//                                        }
+                                        break;
+                                }
+                                if(turnCode!= null) {
+                                    texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turnGroundWater" + turnCode + ".png");
                                     break;
                                 }
                             }

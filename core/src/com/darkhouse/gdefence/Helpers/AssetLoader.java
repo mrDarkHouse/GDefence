@@ -312,6 +312,11 @@ public class AssetLoader extends AssetManager{
 
 
     }
+    public Texture getTurn(String texturePath){//
+        Texture t = get(texturePath, Texture.class);
+        t.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        return t;
+    }
 
 
 
