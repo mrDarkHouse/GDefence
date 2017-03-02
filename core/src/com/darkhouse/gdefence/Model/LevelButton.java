@@ -20,7 +20,10 @@ public class LevelButton extends TextButton {
         return number;
     }
 
-    public boolean isLocked = false;
+//    public boolean isLocked = false;
+    public boolean isLocked(){
+        return !GDefence.getInstance().user.getLevelAvailable(number);
+    }
 
     public LevelButton(int number) {
         super("" + number, GDefence.getInstance().assetLoader.getCampainLevelStyle());
@@ -38,7 +41,7 @@ public class LevelButton extends TextButton {
 
         addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (!isLocked) {
+                if (!isLocked()) {
                     GDefence.getInstance().setScreen(new LevelPreparationScreen(number));
 
                 }
@@ -55,21 +58,21 @@ public class LevelButton extends TextButton {
 
 
 
-    public void lock(){
-        isLocked = true;
+//    public void lock(){
+//        isLocked = true;
         //getStyle().up = new TextureRegionDrawable(new TextureRegion(AssetLoader.levelLock));
         //getStyle().over = new TextureRegionDrawable(new TextureRegion(AssetLoader.levelLock));
         //getStyle().down = new TextureRegionDrawable(new TextureRegion(AssetLoader.levelLock));
         //getStyle().over = new TextureRegionDrawable(AssetLoader.getLevelLockTexture(number));
-    }
-    public void unLock(){
-        isLocked = false;
-    }
+//    }
+//    public void unLock(){
+//        isLocked = false;
+//    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if(isLocked){
+        if(isLocked()){
             Texture t = GDefence.getInstance().assetLoader.get("levelLock.png", Texture.class);
             t.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             batch.draw(t, getX(), getY(), getWidth(), getHeight());

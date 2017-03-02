@@ -30,7 +30,7 @@ public class CampainMap extends AbstractCampainScreen {
 
         public boolean hasNext(){
             if(pages.length - 1 == currentPage) return false;
-            if(pages[currentPage + 1].isLocked) return false;
+            if(pages[currentPage + 1].isLocked()) return false;
             return true;
         }
 
@@ -38,7 +38,7 @@ public class CampainMap extends AbstractCampainScreen {
             currentPage = 0;
             pages = new Page[number];
             pages[0] = new Page(5, 1);
-            pages[1] = new Page(4, pages[0].getLastButtonsInt());
+            pages[1] = new Page(6, pages[0].getLastButtonsInt());
             pages[2] = new Page(5, pages[1].getLastButtonsInt());
             addActor(pages[0]);
             addActor(pages[1]);
@@ -104,12 +104,12 @@ public class CampainMap extends AbstractCampainScreen {
             else prev.setVisible(false);
 
             for (Page p:pages){//
-                p.updateLockedLevels();
+//                p.updateLockedLevels();
             }
         }
     }
     private class Page extends WidgetGroup{
-        private boolean isLocked;
+//        private boolean isLocked;
 
         private int buttons;
         private int firstButtonInt;
@@ -143,25 +143,24 @@ public class CampainMap extends AbstractCampainScreen {
 
                 addActor(levels[i]);
             }
-            updateLockedLevels();
+//            updateLockedLevels();
 
-            updateLock();
         }
-        public void updateLock(){
-            isLocked = levels[0].isLocked;
+        public boolean isLocked(){
+            return levels[0].isLocked();
         }
 
-        public void updateLockedLevels(){//calling 2 times
-//            updateLock();
-            for (int i = 0; i < buttons; i++) {
-                //levels[i] = new LevelButton(firstButtonInt + i);
-                if (GDefence.getInstance().user.getLevelAvailable(firstButtonInt + i)) {
-                    levels[i].unLock();
-                }else {
-                    levels[i].lock();
-                }
-            }
-        }
+//        public void updateLockedLevels(){//calling 2 times
+////            updateLock();
+//            for (int i = 0; i < buttons; i++) {
+//                //levels[i] = new LevelButton(firstButtonInt + i);
+//                if (GDefence.getInstance().user.getLevelAvailable(firstButtonInt + i)) {
+//                    levels[i].unLock();
+//                }else {
+//                    levels[i].lock();
+//                }
+//            }
+//        }
 
 
 

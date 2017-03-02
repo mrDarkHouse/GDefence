@@ -26,10 +26,10 @@ public class LevelToolip extends Window{
     }
 
     public void hasChanged() {
-        if (levelButton.isLocked) {
-            setVisible(false);
-            return;
-        }
+//        if (levelButton.isLocked()) {
+//            setVisible(false);
+//            return;
+//        }
         getTitleLabel().setText("Level " + levelButton.getNumber());
         getTitleLabel().setAlignment(Align.center);
         clear();
@@ -57,7 +57,7 @@ public class LevelToolip extends Window{
     @Override
     public void setVisible(boolean visible) {
         super.setVisible(visible);
-        if (levelButton.isLocked) {
+        if (levelButton.isLocked()) {
             super.setVisible(false);
         }
     }

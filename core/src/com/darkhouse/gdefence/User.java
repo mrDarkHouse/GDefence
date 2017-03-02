@@ -493,6 +493,12 @@ public class User {
         openLevel(3);
         openLevel(4);
         openLevel(5);
+        openLevel(6);
+//        levelsAvailable[5] = true;
+//        levelsAvailable[6] = true;
+//        levelsAvailable[4] = true;
+//        levelsCompleted[4] = true;
+//        setLevelCompleted(5);
 //        for(int i = 1; i < 5; i++) {//test this
 //            this.levelsAvailable[i] = false;
 //        }
