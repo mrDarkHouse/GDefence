@@ -171,6 +171,7 @@ public class MapLoader {
             String[] wavesCode = prop.getProperty("waves").split("/");
 
 //            while (loadScanner.hasNext()){
+            int j = 0;
             for (int i = 0; i < wavesCode.length/*/spawners*/; i++) {
                 String[] info = wavesCode[i].split(":");
 //                for (int j = 0; j < spawners; j++) {
@@ -180,8 +181,10 @@ public class MapLoader {
                 if(!moveTypesInLevel.contains(mt, true))moveTypesInLevel.add(mt);
                 timeBetweenWaves[waves.size() - 1] = Integer.parseInt(info[3]);//float
                 if (forRealMap) {
-                    waves.get(i/* + j*/).setSpawner(Level.getMap().getSpawner().get(/*j*/0));//invertion//i - spawners + j
+                    waves.get(i/* + j*/).setSpawner(Level.getMap().getSpawner().get(j/*0*/));//invertion//i - spawners + j
                 }
+                if(j + 1 == spawners)j = 0;
+                else j++;
 //                }
             }
 //            }

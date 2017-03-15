@@ -19,6 +19,10 @@ public class CampainMap extends AbstractCampainScreen {
         private Page[] pages;
         private int currentPage;
 
+        public Page getCurrentPage(){
+            return pages[currentPage];
+        }
+
         private ImageButton next;
         private ImageButton prev;
 
@@ -37,7 +41,7 @@ public class CampainMap extends AbstractCampainScreen {
         public PagedMap(int number) {
             currentPage = 0;
             pages = new Page[number];
-            pages[0] = new Page(5, 1);
+            pages[0] = new Page(6, 1);
             pages[1] = new Page(6, pages[0].getLastButtonsInt());
             pages[2] = new Page(5, pages[1].getLastButtonsInt());
             addActor(pages[0]);
@@ -60,27 +64,15 @@ public class CampainMap extends AbstractCampainScreen {
                     return true;
                 }
             });
-
             addActor(next);
             addActor(prev);
-
 //            next.setVisible(false);
 //            prev.setVisible(false);
 //
 //            pages[0].setVisible(false);
 //            pages[1].setVisible(false);
 //            pages[2].setVisible(false);
-
-
-
             update();
-
-
-
-
-
-
-
         }
         private void nextPage(){
             if(currentPage == pages.length - 1) return;
@@ -125,7 +117,7 @@ public class CampainMap extends AbstractCampainScreen {
             this.firstButtonInt = firstButton;
 
             levels = new LevelButton[buttons];
-            int borderSize = Gdx.graphics.getWidth()/4;
+            int borderSize = Gdx.graphics.getWidth()/8;
             int sizeBetween = Gdx.graphics.getWidth()/42;
             int levelButtonsSize[] = new int[2];
             levelButtonsSize[0] = (Gdx.graphics.getWidth() - (borderSize * 2 + sizeBetween * (buttons - 1))) / buttons;
@@ -161,12 +153,6 @@ public class CampainMap extends AbstractCampainScreen {
 //                }
 //            }
 //        }
-
-
-
-
-
-
     }
     private PagedMap pagedMap;
 
@@ -190,6 +176,7 @@ public class CampainMap extends AbstractCampainScreen {
 
     public void init(){
         loadButtons();
+        loadFrames();
     }
 
     @Override
@@ -221,18 +208,12 @@ public class CampainMap extends AbstractCampainScreen {
 
         stage.addActor(new BottomPanel());
 
-
-
-
-
-
     }
 
 
     private void loadFrames(){
-        //Gdx.gl.glLineWidth(2);
-        //ShapeRenderer r = new ShapeRenderer();
-        //r.line();
+        Gdx.gl.glLineWidth(2);
+        shape = new ShapeRenderer();
 
     }
 
@@ -240,6 +221,7 @@ public class CampainMap extends AbstractCampainScreen {
 
     @Override
     public void render(float delta) {
+        drawLines();
         super.render(delta);
 
         //drawLines();
@@ -256,7 +238,22 @@ public class CampainMap extends AbstractCampainScreen {
         shape.line(Gdx.graphics.getWidth()/5 * 3, Gdx.graphics.getHeight()/5 + lineWidth, Gdx.graphics.getWidth()/5 * 3, 0);
         shape.line(Gdx.graphics.getWidth() / 5 * 4, Gdx.graphics.getHeight() / 5 + lineWidth, Gdx.graphics.getWidth() / 5 * 4, 0);
 
+        linkLevels();
+
+
+
+
         shape.end();
+    }
+
+    private void linkLevels(){
+        for (int i = 0; i < pagedMap.getCurrentPage().levels.length; i++){
+            LevelButton l = pagedMap.getCurrentPage().levels[i];
+            if(l.getNumber() + 1 != pagedMap.getCurrentPage().getLastButtonsInt()){
+                shape.line(l.getX() + l.getWidth(), l.getY() + l.getHeight()/2, pagedMap.getCurrentPage().levels[i + 1].getX(),
+                        pagedMap.getCurrentPage().levels[i + 1].getY() + pagedMap.getCurrentPage().levels[i + 1].getWidth()/2);
+            }
+        }
     }
 
 

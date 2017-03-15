@@ -260,6 +260,19 @@ public class AssetLoader extends AssetManager{
         load("Path/Turn/turnWaterGroundRUD.png", Texture.class);
         load("Path/Turn/turnWaterGroundRUR.png", Texture.class);
 
+        load("Path/Signer/signLL.png", Texture.class);
+        load("Path/Signer/signRR.png", Texture.class);
+        load("Path/Signer/signUU.png", Texture.class);
+        load("Path/Signer/signDD.png", Texture.class);
+        load("Path/Signer/signLU.png", Texture.class);
+        load("Path/Signer/signLD.png", Texture.class);
+        load("Path/Signer/signRU.png", Texture.class);
+        load("Path/Signer/signRD.png", Texture.class);
+        load("Path/Signer/signUL.png", Texture.class);
+        load("Path/Signer/signUR.png", Texture.class);
+        load("Path/Signer/signDL.png", Texture.class);
+        load("Path/Signer/signDR.png", Texture.class);
+
 
 
 

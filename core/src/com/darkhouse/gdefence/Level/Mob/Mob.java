@@ -148,7 +148,7 @@ public abstract class Mob extends GDSprite{
     public int getHealth() {
         return health;
     }
-    public void setHealth(int health) {
+    protected void setHealth(int health) {
         this.health = health;
         hpBar = new ProgressBar(0, getHealth(), 1, false, GDefence.getInstance().assetLoader.getMobHpBarStyle());
     }

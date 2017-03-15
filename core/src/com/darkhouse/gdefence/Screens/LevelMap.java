@@ -20,6 +20,9 @@ public class LevelMap extends AbstractScreen {
     private int number;
     private Inventory inventory;
 
+    private NextWaveInfoPanel nWPanel;
+    private PathSigner pathSigner;
+
     private MapTileActor[][] tileActors;
 
     public MapTileActor[][] getTiles() {
@@ -66,7 +69,7 @@ public class LevelMap extends AbstractScreen {
         levelMap = this;
         Gdx.input.setInputProcessor(stage);
 
-        level = new Level(number);
+        level = new Level(number, this);
         initHpMpBar();
         initWavePanel();
         initMapTileActors();
@@ -106,11 +109,14 @@ public class LevelMap extends AbstractScreen {
         stage.addActor(new EnegryBar(55, Gdx.graphics.getHeight() - 55, 0, 0));
     }
     private void initWavePanel(){
-        NextWaveInfoPanel panel = new NextWaveInfoPanel();
-        panel.setPosition(Gdx.graphics.getWidth() - 280, 140);
-        stage.addActor(panel);
+        nWPanel = new NextWaveInfoPanel();
+        nWPanel.setPosition(Gdx.graphics.getWidth() - 280, 140);
+        stage.addActor(nWPanel);
 
-        CurrentWaveInfoPanel cpanel = new CurrentWaveInfoPanel(panel.getNextWaveTimer());
+        pathSigner = new PathSigner(nWPanel.getNextWaveTimer(), level.getMap().getPaths());//static
+        stage.addActor(pathSigner);
+
+        CurrentWaveInfoPanel cpanel = new CurrentWaveInfoPanel(nWPanel.getNextWaveTimer());
         cpanel.setPosition(Gdx.graphics.getWidth() - 280, 140);
         stage.addActor(cpanel);
 
@@ -122,6 +128,10 @@ public class LevelMap extends AbstractScreen {
         stage.addActor(shop);
         shop.init();
 
+    }
+    public void update(){//when new wave is started
+        nWPanel.hasChanged();
+        pathSigner.initTextures();
     }
 
     @Override

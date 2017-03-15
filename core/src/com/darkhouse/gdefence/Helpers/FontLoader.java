@@ -63,6 +63,14 @@ public class FontLoader {
         style.fontColor = fontColor;
         return style;
     }
+    public static String getOneColorButtonString(int size, int index, String s, Color first, Color other){
+//        BitmapFont b1 = generateFont(size);
+//        b1.getData().markupEnabled = true;
+//        Label.LabelStyle style = new Label.LabelStyle(b1, null);
+//        style.fontColor = other;
+        return ("[#" + other.toString() + "]" + s.substring(0, index) + "[#" + first.toString() + "]" +
+                s.substring(index, index + 1) + "[#" + other.toString() + "]" + s.substring(index + 1));
+    }
 
     public static BitmapFont generateFont(int size){
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));

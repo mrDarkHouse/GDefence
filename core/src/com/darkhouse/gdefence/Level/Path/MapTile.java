@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.GDSprite;
@@ -113,6 +114,21 @@ public abstract class MapTile extends GDSprite{
             default:
                 return null;
         }
+    }
+
+    public static String getSignerCode(MapTile prev, MapTile t, MapTile next){
+//        AssetLoader a = GDefence.getInstance().assetLoader;
+//        Way d = ((Walkable) t).manipulatePath(Mob.MoveType.ground);
+
+//      if(t.getTexture() == a.get("Path/Turn/turnLU.png", Texture.class))return d == Way.RIGHT?"DR":"LU";
+//        if(Way.getNearBlockWay(t, prev) == Way.LEFT && Way.getNearBlockWay(t, next) == Way.RIGHT) return "R";
+//        if(Way.getNearBlockWay(t, prev) == Way.RIGHT && Way.getNearBlockWay(t, next) == Way.LEFT) return "L";
+//        if(Way.getNearBlockWay(t, prev) == Way.UP && Way.getNearBlockWay(t, next) == Way.DOWN) return "D";
+//        if(Way.getNearBlockWay(t, prev) == Way.DOWN && Way.getNearBlockWay(t, next) == Way.UP) return "U";
+
+        if(prev == null) return Way.getNearBlockWay(t, next).getShortName() + Way.getNearBlockWay(t, next).getShortName();
+        if(next == null) return Way.invertWay(Way.getNearBlockWay(t, prev)).getShortName() + Way.invertWay(Way.getNearBlockWay(t, prev)).getShortName();
+        return Way.invertWay(Way.getNearBlockWay(t, prev)).getShortName() + Way.getNearBlockWay(t, next).getShortName();
     }
 
 //    public static TileLogic getLogicById(int id){

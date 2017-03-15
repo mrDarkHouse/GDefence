@@ -35,7 +35,16 @@ public class Map {
     public MapTile[][] getTiles() {
         return tiles;
     }
-    private HashMap<Mob.MoveType, Array<Array<MapTile>>> paths;//moveType, array of possible paths for this moveType(path is array of MapTiles)
+//    private HashMap<Mob.MoveType, Array<Array<Array<MapTile>>>> paths;//moveType, 1.Each spawn 2.Each possible path 3.Each maptile in path
+    private HashMap<Mob.MoveType, Array<Path>> paths; //array of possible paths
+
+    public HashMap<Mob.MoveType, Array<Path>> getPaths() {
+        return paths;
+    }
+
+    //    public HashMap<Mob.MoveType, Array<Array<Array<MapTile>>>> getPaths() {
+//        return paths;
+//    }
 
     public static List<Projectile> projectiles;
 
@@ -109,17 +118,21 @@ public class Map {
 
 //        for (Mob.MoveType mt:w1.getApplyMobs().getSame(w2.getApplyMobs())){
         int[] index = new int[2];
-            for (Array<MapTile> path:paths.get(prefType)){
-                if(path.contains(mapTile1, true)) index[0] = path.indexOf(mapTile1, true);
-                else index[0] = 99;//very very big
-                if(path.contains(mapTile2, true)) index[1] = path.indexOf(mapTile2, true);
-                else index[1] = 99;
+//            for (Array<Array<MapTile>> spawn:paths.get(prefType)){//can be shit//worked when was 2 dimension in paths hashmap
+//                for (Array<MapTile> path:spawn) {
+        for (Path path:paths.get(prefType)) {
+            if (path.contains(mapTile1, true)) index[0] = path.indexOf(mapTile1, true);
+            else index[0] = 99;//very very big
+            if (path.contains(mapTile2, true)) index[1] = path.indexOf(mapTile2, true);
+            else index[1] = 99;
 //                    if(path.indexOf(mapTile1, true) < path.indexOf(mapTile2, true)) return mapTile1;
 //                    else return mapTile2;//meaning that they different
-                if(index[0] == index[1]) throw new IllegalArgumentException("Tiles identy or dont exist on way");
-                return index[0] < index[1]?mapTile1:mapTile2;
-            }
+            if (index[0] == index[1]) throw new IllegalArgumentException("Tiles identy or dont exist on way");
+            return index[0] < index[1] ? mapTile1 : mapTile2;
+//                }
+//            }
 //        }
+        }
         throw new IllegalArgumentException("tiles dont cross");
     }
 
@@ -147,14 +160,20 @@ public class Map {
     }
     private void initPaths(Array<Mob.MoveType> types){
         GDefence.getInstance().log("Start init paths");
-        paths = new HashMap<Mob.MoveType, Array<Array<MapTile>>>();
+//        paths = new HashMap<Mob.MoveType, Array<Array<Array<MapTile>>>>();
+        paths = new HashMap<Mob.MoveType, Array<Path>>();
         for (Mob.MoveType moveType:types){
-            Array<Array<MapTile>> possiblePaths = new Array<Array<MapTile>>();
-            Array<MapTile> currentPath; //= new Array<MapTile>();
-            for (Spawn spawn:spawner){
+//            Array<Array<Array<MapTile>>> forSpawner = new Array<Array<Array<MapTile>>>();
+//            Array<Array<MapTile>> possiblePaths = new Array<Array<MapTile>>();
+//            Array<MapTile> currentPath; //= new Array<MapTile>();
+            Array<Path> possiblePaths = new Array<Path>();
+            Path currentPath;
+            for (int i = 0; i < spawner.size(); i++){
                 while (true) {//rework with deleting break and infinity loop
-                    currentPath = generatePath(spawn, moveType);
-                    if (!possiblePaths.contains(currentPath, false)) possiblePaths.add(currentPath);//override contains
+                    currentPath = new Path(generatePath(spawner.get(i), moveType), i);
+                    if (!possiblePaths.contains(currentPath, false)) {
+                        possiblePaths.add(currentPath);//override contains
+                    }
                     else break;
                 }
             }
@@ -231,53 +250,55 @@ public class Map {
 
 
     }
-    private void normalizeTextures(){
-        for (int y = 0; y < tiles[0].length; y++){
-            for (int x = 0; x < tiles.length; x++){
-                if(tiles[x][y] instanceof Turn){
-                    Texture texture = null;
-                    Turn turn = ((Turn) tiles[x][y]);
-                    Way startWay = turn.getStartWay();
-                    Way resultWay = turn.getResultWay();
-                    Way[] leastWays = Way.getLeastWays(new Way[]{Way.invertWay(startWay), resultWay});
-                    for (Way leastWay : leastWays) {
-                        int[] coord = Way.getCoordOffset(leastWay, x, y);
-                        if (coord[0] >= 0 && coord[0] < tiles.length && coord[1] >= 0 && coord[1] < tiles[0].length) {
-                            MapTile checkTile = tiles[coord[0]][coord[1]];
-                            if (checkTile != null && checkTile instanceof Walkable) {
-                                if (checkTile instanceof Road) {
-                                    if(turn.getApplyMobs() == TargetType.WATER_ONLY) {
-                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/turnWaterGround" +
-                                                Turn.getTurnCode(startWay, resultWay) + leastWay.getShortName() + ".png", Texture.class);
-//                                        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-                                        break;
-                                    }else if(turn.getApplyMobs() == TargetType.GROUND_ONLY || turn.getApplyMobs() == TargetType.GROUND_WATER){
-                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/bridge" +
-                                                Turn.getTripleTurnCode(startWay, resultWay, leastWay) + "noArrows.png", Texture.class);
-                                        break;
-                                    }
-                                } else /*if (checkTile instanceof WaterRoad)*/ {
-                                    if(turn.getApplyMobs() == TargetType.WATER_ONLY) {
-                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/waterBridge" +
-                                                Turn.getTripleTurnCode(startWay, resultWay, leastWay) + "noArrows.png", Texture.class);
-                                        break;
-                                    }else if(turn.getApplyMobs() == TargetType.GROUND_ONLY || turn.getApplyMobs() == TargetType.GROUND_WATER){
-                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/turnGroundWater" +
-                                                Turn.getTurnCode(startWay, resultWay) + leastWay.getShortName() + ".png", Texture.class);
-//                                        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-                                        break;
-                                    }
-                                }
 
-                            }
-                        }
-                    }
-                    if(texture!= null) turn.setRegion(texture);
+//    private void normalizeTextures(){
+//        for (int y = 0; y < tiles[0].length; y++){
+//            for (int x = 0; x < tiles.length; x++){
+//                if(tiles[x][y] instanceof Turn){
+//                    Texture texture = null;
+//                    Turn turn = ((Turn) tiles[x][y]);
+//                    Way startWay = turn.getStartWay();
+//                    Way resultWay = turn.getResultWay();
+//                    Way[] leastWays = Way.getLeastWays(new Way[]{Way.invertWay(startWay), resultWay});
+//                    for (Way leastWay : leastWays) {
+//                        int[] coord = Way.getCoordOffset(leastWay, x, y);
+//                        if (coord[0] >= 0 && coord[0] < tiles.length && coord[1] >= 0 && coord[1] < tiles[0].length) {
+//                            MapTile checkTile = tiles[coord[0]][coord[1]];
+//                            if (checkTile != null && checkTile instanceof Walkable) {
+//                                if (checkTile instanceof Road) {
+//                                    if(turn.getApplyMobs() == TargetType.WATER_ONLY) {
+//                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/turnWaterGround" +
+//                                                Turn.getTurnCode(startWay, resultWay) + leastWay.getShortName() + ".png", Texture.class);
+////                                        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//                                        break;
+//                                    }else if(turn.getApplyMobs() == TargetType.GROUND_ONLY || turn.getApplyMobs() == TargetType.GROUND_WATER){
+//                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/bridge" +
+//                                                Turn.getTripleTurnCode(startWay, resultWay, leastWay) + "noArrows.png", Texture.class);
+//                                        break;
+//                                    }
+//                                } else /*if (checkTile instanceof WaterRoad)*/ {
+//                                    if(turn.getApplyMobs() == TargetType.WATER_ONLY) {
+//                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/waterBridge" +
+//                                                Turn.getTripleTurnCode(startWay, resultWay, leastWay) + "noArrows.png", Texture.class);
+//                                        break;
+//                                    }else if(turn.getApplyMobs() == TargetType.GROUND_ONLY || turn.getApplyMobs() == TargetType.GROUND_WATER){
+//                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/turnGroundWater" +
+//                                                Turn.getTurnCode(startWay, resultWay) + leastWay.getShortName() + ".png", Texture.class);
+////                                        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//                                        break;
+//                                    }
+//                                }
+//
+//                            }
+//                        }
+//                    }
+//                    if(texture!= null) turn.setRegion(texture);
+//
+//                }
+//            }
+//        }
+//    }
 
-                }
-            }
-        }
-    }
     private void normalizeBlocks(){
         for (int y = 0; y < tiles[0].length; y++) {
             for (int x = 0; x < tiles.length; x++) {

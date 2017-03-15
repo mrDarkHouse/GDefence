@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Model.Level;
 
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Screens.LevelMap;
@@ -58,6 +60,8 @@ public class NextWaveInfoPanel extends Table{
         currentWave = new Label(currentWaveS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
         mobsNumber = new Label(mobsNumberS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
         mobName = new Label(mobNameS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
+        mobName = new Label(mobNameS, FontLoader.generateStyle(16, null));//without color
+        mobName.getStyle().font.getData().markupEnabled = true;
         mobHealth = new Label(mobHealthS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
         mobArmor = new Label(mobArmorS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
         mobSpeed = new Label(mobSpeedS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
@@ -82,33 +86,61 @@ public class NextWaveInfoPanel extends Table{
         //setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.infoPanelFone)));
     }
     private void initString(int spawners){
-        Level lvl = LevelMap.getLevel();
-        switch (spawners) {//it bad, but i dont know another way
-            case 1:
-                currentWaveS = "Prepare Wave: " + (lvl.currentWave + 1);
-                mobsNumberS = "Mobs number: " + lvl.getCurrentWave().getNumberMobs();
-                mobNameS = "Name: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getName();
-                mobHealthS = "Health: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getHealth();
-                mobArmorS = "Armor: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getArmor();
-                mobSpeedS = "Speed: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getSpeed();
-                mobDmgS = "Dmg: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getDmg();
-                mobBountyS = "Bounty: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getBounty();
-                break;
-            case 2:
-                currentWaveS = "Prepare Wave: " + (lvl.currentWave + 1) + " + " + (lvl.currentWave + 2);
-                mobsNumberS = "Mobs number: " + lvl.getCurrentWave().getNumberMobs() + " + " + lvl.getWave(lvl.currentWave + 2).getNumberMobs();
-                if(lvl.getCurrentWave().getMobID() == lvl.getWave(lvl.currentWave + 2).getMobID()) {
-                    mobNameS = "Name: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getName();
-                    mobHealthS = "Health: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getHealth();
-                    mobArmorS = "Armor: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getArmor();
-                    mobSpeedS = "Speed: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getSpeed();
-                    mobDmgS = "Dmg: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getDmg();
-                    mobBountyS = "Bounty: " + Mob.getMobById(lvl.getCurrentWave().getMobID()).getBounty();
+        Level lvl = LevelMap.getLevel();//
+//        Mob m = Mob.getMobById(lvl.getCurrentWave().getMobID());
+        currentWaveS = "Prepare Wave: ";
+        mobsNumberS = "Mobs number: ";
+        mobHealthS = "Health: " ;//+ m.getHealth();
+        mobArmorS = "Armor: " ;//+ m.getArmor();
+        mobSpeedS = "Speed: ";// + m.getSpeed();
+        mobDmgS = "Dmg: " ;//+ m.getDmg();
+        mobBountyS = "Bounty: " ;//+ m.getBounty();
+        mobNameS = "[#000000ff]Name: ";
+
+        int ground = 0;
+        int water = 0;
+
+        for (int i = 0; i < spawners; i++) {
+            currentWaveS += lvl.currentWave + 1 + i;
+            mobsNumberS += lvl.getWave(lvl.currentWave + 1 + i).getNumberMobs();
+
+            Mob m = Mob.getMobById(lvl.getWave(lvl.currentWave + 1 + i).getMobID());
+
+            if(m.getMoveType() == Mob.MoveType.ground){
+                if(ground == 0) mobNameS += FontLoader.getOneColorButtonString(16, 0, m.getName(), Color.FIREBRICK, Color.BLACK);
+                if(ground == 1) mobNameS += FontLoader.getOneColorButtonString(16, 0, m.getName(), Color.FOREST, Color.BLACK);
+                if(ground == 2) mobNameS += FontLoader.getOneColorButtonString(16, 0, m.getName(), Color.BROWN, Color.BLACK);
+                ground++;
+            }else if(m.getMoveType() == Mob.MoveType.water){
+                if(water == 0) mobNameS += FontLoader.getOneColorButtonString(16, 0, m.getName(), Color.BLUE, Color.BLACK);
+                if(water == 1) mobNameS += FontLoader.getOneColorButtonString(16, 0, m.getName(), Color.CYAN, Color.BLACK);
+                if(water == 2) mobNameS += FontLoader.getOneColorButtonString(16, 0, m.getName(), Color.CORAL, Color.BLACK);
+                water++;
+            }
+
+
+            if(/*i + 1 != spawners &&*/ Mob.getMobById(lvl.getWave(lvl.currentWave + 2 + i).getMobID()).getClass() != m.getClass()) {
+                mobHealthS += m.getHealth();
+                mobArmorS += m.getArmor();
+                mobSpeedS += m.getSpeed();
+                mobDmgS += m.getDmg();
+                mobBountyS += m.getBounty();
+                if(i + 1 != spawners){
+                    mobHealthS += " + ";
+                    mobArmorS += " + ";
+                    mobSpeedS += " + ";
+                    mobDmgS += " + ";
+                    mobBountyS += " + ";
                 }
-                break;
+            }
+            if(i + 1 != spawners) {
+                mobNameS += " + ";
+                currentWaveS += " + ";
+                mobsNumberS += " + ";
+            }
         }
     }
-    private void hasChanged(){
+    public void hasChanged(){
         initString(Level.getMap().getSpawner().size());
         currentWave.setText(currentWaveS);
         mobsNumber.setText(mobsNumberS);
@@ -132,8 +164,8 @@ public class NextWaveInfoPanel extends Table{
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(LevelMap.getLevel().getCurrentWave() != null) {//hotfix
-            hasChanged();
-        }
+//        if(LevelMap.getLevel().getCurrentWave() != null) {//hotfix
+//            hasChanged();
+//        }
     }
 }

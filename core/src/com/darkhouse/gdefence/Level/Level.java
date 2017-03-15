@@ -9,6 +9,7 @@ import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Screens.LevelEndScreen;
+import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +122,8 @@ public class Level {
 
     private float timeBeforeSwitchScreen = 2;
 
+    private LevelMap ownerScreen;
+
 
     private StatManager manager;
     public StatManager getStatManager() {
@@ -134,8 +137,8 @@ public class Level {
 
 
 
-    public Level(int number) {
-
+    public Level(int number, LevelMap ownerScreen) {
+        this.ownerScreen = ownerScreen;
         this.number = number;
         manager = new StatManager();
         map = new Map(number, 60, Gdx.graphics.getHeight() - 60, 45);
@@ -240,8 +243,8 @@ public class Level {
                 }
             }
             physicMobs(batch, delta);
-            drawTowers();
-            drawParticles();
+//            drawTowers();
+//            drawParticles();
 
 
 
@@ -249,6 +252,7 @@ public class Level {
                 if(currentWave + map.getSpawner().size() < waves.size()) {
                     currentWave += map.getSpawner().size();
                     inWave = false;
+                    waveEndEvent();
                     //System.out.println("new wave");
                 }else {
                     if(!isWin) {
@@ -272,6 +276,10 @@ public class Level {
 //            waves.get(currentWave + i).render(batch);
 //        }
 //    }
+    private void waveEndEvent(){
+        ownerScreen.update();
+    }
+
     private void physicMobs(SpriteBatch batch, float delta){
         List<Mob> tmpMobs = new CopyOnWriteArrayList<Mob>(Wave.mobs);
         for (Mob m: tmpMobs){
