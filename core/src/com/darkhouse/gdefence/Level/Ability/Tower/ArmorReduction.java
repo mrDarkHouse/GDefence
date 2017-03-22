@@ -1,7 +1,6 @@
-package com.darkhouse.gdefence.Level.Ability;
+package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
-import com.badlogic.gdx.utils.Timer;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
 public class ArmorReduction extends Debuff{

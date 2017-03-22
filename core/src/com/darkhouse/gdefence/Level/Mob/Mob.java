@@ -5,8 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Level.Ability.Debuff;
+import com.darkhouse.gdefence.Level.Ability.Mob.BlockDmg;
+import com.darkhouse.gdefence.Level.Ability.Tower.Debuff;
+import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
+import com.darkhouse.gdefence.Level.Ability.Mob.Swimmable;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Path.*;
 import com.darkhouse.gdefence.Level.Tower.AttackLogic;
@@ -18,12 +22,104 @@ import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.util.ArrayList;
 
-public abstract class Mob extends GDSprite{
+public class Mob extends GDSprite{
+
+    public enum Prototype{
+        //           name          texture     moveType       hp  arm spd dmg bounty       //i think it better than Builder
+        Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 3),
+        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 100, 2, 4, new BlockDmg(10, 2)),
+        Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 80,  2, 6),
+        JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 3),
+        Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7),
+        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable("Mobs/mob6swim.png"));// {
+//            @Override
+//            public void setAbilities() {
+////                abilities.add(new Swimmable(GDefence.getInstance().assetLoader.get(, Texture.class)));
+//            }
+//        };
+
+        Prototype(String name, String regionPath, MoveType moveType, int health, int armor,  float speed, int dmg, int bounty, MobAbility... abilities) {
+            this.texture = GDefence.getInstance().assetLoader.get("Mobs/" + regionPath + ".png", Texture.class);
+            this.name = name;
+            this.health = health;
+            this.armor = armor;
+            this.moveType = moveType;
+            this.speed = speed;
+            this.dmg = dmg;
+            this.bounty = bounty;
+            this.abilities = new Array<MobAbility>(abilities);
+        }
+
+        protected Texture texture;
+        protected String name;
+        protected int health;
+        protected int armor;
+        protected MoveType moveType;
+        protected float speed;
+        protected int dmg;
+        protected int bounty;
+        protected Array<MobAbility> abilities;
+
+        public String getName() {
+            return name;
+        }
+        public int getHealth() {
+            return health;
+        }
+        public int getArmor() {
+            return armor;
+        }
+        public MoveType getMoveType() {
+            return moveType;
+        }
+        public float getSpeed() {
+            return speed;
+        }
+        public int getDmg() {
+            return dmg;
+        }
+        public int getBounty() {
+            return bounty;
+        }
+        public Array<MobAbility> getAbilities() {
+            return abilities;
+        }
+        //        protected Prototype setName(String name) {
+//            this.name = name;
+//            return this;
+//        }
+//        protected Prototype setHealth(int health) {
+//            this.health = health;
+//            return this;
+//        }
+//        protected Prototype setArmor(int armor) {
+//            this.armor = armor;
+//            return this;
+//        }
+//        protected Prototype setMoveType(MoveType moveType) {
+//            this.moveType = moveType;
+//            return this;
+//        }
+//        protected Prototype setSpeed(float speed) {
+//            this.speed = speed;
+//            return this;
+//        }
+//        protected Prototype setDmg(int dmg) {
+//            this.dmg = dmg;
+//            return this;
+//        }
+//        protected Prototype setBounty(int bounty) {
+//            this.bounty = bounty;
+//            return this;
+//        }
+
+//        protected  /*abstract*/ void setAbilities(){};
+    }
+
 
     public static Mob getMobOnMap(AttackLogic logic, Tower tower){
         Map map = Level.getMap();
         Mob currentMob;
-
         switch (logic){
             case First:
                 currentMob = null;
@@ -53,17 +149,32 @@ public abstract class Mob extends GDSprite{
             }
         return null;
     }
+    public static Mob.Prototype getMobById(int ID){
+        return Prototype.values()[ID];
+//        switch (ID){
+//            case 0:
+//                return Prototype.Slime;
+//            case 1:
+//                return Prototype.Dog;
+//            case 2:
+//                return Prototype.Worm;
+//            case 3:
+//                return Prototype.JungleBat;
+//            case 4:
+//                return Prototype.Boar;
+//            case 5:
+//                return Prototype.Amphibia;
+//            default:
+//                throw new IllegalArgumentException("Mob with id " + ID + " not found");
+//        }
+    }
+    public static float getArmorReduction(int armor){
+        return (float) armor/10;
+    }
 
-//    public enum MoveType{
-//        ground, water
-//
-//
-//    }
     public enum MoveType{
         ground, water, flying
     }
-
-    //    private Texture texture;
 
     //public int healthSpace = 3, healthHeight = 5;
     protected String name;
@@ -72,7 +183,6 @@ public abstract class Mob extends GDSprite{
     protected MoveType moveType;
     protected float speed;
     protected int dmg;
-    protected int ID;
     protected int bounty;
     //private double pxlPerHealth;
     protected boolean inGame = true;
@@ -80,65 +190,36 @@ public abstract class Mob extends GDSprite{
     protected MapTile currentTile;
     private ProgressBar hpBar;
     private ArrayList <Debuff> effects;//Effect[]
-
-    public void addDebuff(Debuff d){
-        if(!haveDebuff(d)) {
-            effects.add(d);
-            d.apply();//start debuff
-        }else {
-            getEffect(d).updateDuration();
-            //effects.get(effects.indexOf(d)).updateDuration();
-        }
-    }
-    public void deleteDebuff(Debuff d){
-        if(haveDebuff(d)) {
-            effects.remove(d);
-        }
-    }
-    public boolean haveDebuff(Debuff d){
-//        for (Debuff db: effects){
-//            if(db.getClass() == d.getClass()){
-//                return true;
-//            }
-//        }
-//        return false;
-        return (getEffect(d) != null);
-    }
-    private Debuff getEffect(Debuff d){
-        for (Debuff db: effects){
-            if(db.getClass() == d.getClass()){
-                return db;
-            }
-        }
-        return null;
-    }
-
-    //protected int x;
-    //protected int y;
-    //protected int width;
-    //protected int height;
+    private Array<MobAbility> abilities;
 
     private Way way;
 
-    public Vector2 getCenter(){
-        Vector2 v = new Vector2();
-        v.x = getX() + getWidth()/2;
-        v.y = getY() + getHeight()/2;
-        return v;
+
+    public static Mob createMob(Prototype prototype){
+        Mob m = new Mob(prototype);
+        m.initAbilities();
+        return m;
     }
 
-    public Mob() {
+    public Mob(Prototype prototype) {
+        setName(prototype.name);
+        setRegion(prototype.texture);
+        setMoveType(prototype.moveType);
+        setHealth(prototype.health);
+        setArmor(prototype.armor);
+        setSpeed(prototype.speed);
+        setDmg(prototype.dmg);
+        setBounty(prototype.bounty);
+        setAbilities(prototype.abilities);
+
+
+
+
         effects = new ArrayList<Debuff>();
+
         setSize(45, 45);
 //        setRegion(texture);
     }
-
-    //public Drawable getTexture() {
-    //    return texture;
-    //}
-//    public void setTextureDrawable(Texture texture) {
-//        this.texture = texture;
-//    }
     public String getName() {
         return name;
     }
@@ -182,9 +263,85 @@ public abstract class Mob extends GDSprite{
     public void setBounty(int bounty) {
         this.bounty = bounty;
     }
+    public void setAbilities(Array<MobAbility> abilities) {
+        this.abilities = abilities;
+    }
+
     public boolean isInGame() {
         return inGame;
     }
+
+    public void addDebuff(Debuff d){
+        if(!haveDebuff(d)) {
+            effects.add(d);
+            d.apply();//start debuff
+        }else {
+            getEffect(d).updateDuration();
+            //effects.get(effects.indexOf(d)).updateDuration();
+        }
+    }
+    public void deleteDebuff(Debuff d){
+        if(haveDebuff(d)) {
+            effects.remove(d);
+        }
+    }
+    public boolean haveDebuff(Debuff d){
+//        for (Debuff db: effects){
+//            if(db.getClass() == d.getClass()){
+//                return true;
+//            }
+//        }
+//        return false;
+        return (getEffect(d) != null);
+    }
+    private Debuff getEffect(Debuff d){
+        for (Debuff db: effects){
+            if(db.getClass() == d.getClass()){
+                return db;
+            }
+        }
+        return null;
+    }
+
+    private void initAbilities(){
+        for (MobAbility a:abilities){
+            a.setOwner(this);
+        }
+    }
+    private void useMoveAbilities(){
+        for (MobAbility a:abilities){
+            if(a instanceof MobAbility.IMove){
+                ((MobAbility.IMove) a).move(currentTile);
+            }
+        }
+    }
+    private float useDefenceAbilities(Tower source, float dmg){
+//        int resistDmg = 0;
+        for (MobAbility a:abilities){
+            if(a instanceof MobAbility.IGetDmg){
+                return ((MobAbility.IGetDmg) a).getDmg(source, dmg);
+            }
+        }
+        return dmg;
+//         resistDmg;
+    }
+//    private void useAbility(Class<? extends MobAbility.IType> abilityType){
+//        for (MobAbility a:abilities){
+//            if(a.getClass() == abilityType){
+//                System.out.println("a");
+//            }
+//        }
+//
+//
+//    }
+
+    public Vector2 getCenter(){
+        Vector2 v = new Vector2();
+        v.x = getX() + getWidth()/2;
+        v.y = getY() + getHeight()/2;
+        return v;
+    }
+
     public void setDie(Tower source) {
         this.inGame = false;
         Wave.mobs.remove(this);//add "if contains this" if error
@@ -194,7 +351,8 @@ public abstract class Mob extends GDSprite{
     }
 
     public void hit(int dmg, Tower source){//tower ==> spell&tower
-        float resistDmg = dmg * (1 - getArmorReduction(getArmor()));
+        float resistDmg = useDefenceAbilities(source, dmg * (1 - getArmorReduction(getArmor())));
+
 
         if(resistDmg < getHealth()){
             health -= resistDmg;
@@ -213,61 +371,6 @@ public abstract class Mob extends GDSprite{
         }
     }
 
-
-//    public int getxC() {
-//        return xC;
-//    }
-//    public void setxC(int xC) {
-//        this.xC = xC;
-//    }
-//    public int getyC() {
-//        return yC;
-//    }
-//    public void setyC(int yC) {
-//        this.yC = yC;
-//    }
-//    public int getWidth() {
-//        return width;
-//    }
-//    public void setWidth(int width) {
-//        this.width = width;
-//    }
-//    public int getHeight() {
-//        return height;
-//    }
-//    public void setHeight(int height) {
-//        this.height = height;
-//    }
-
-
-    public static Mob getMobById(int ID){
-        switch (ID){
-            case 0:
-                return new Slime();
-            case 1:
-                return new Dog();
-            case 2:
-                return new Worm();
-            case 3:
-                return new JungleBat();
-            case 4:
-                return new Boar();
-            case 5:
-                return new Amphibia();
-            default:
-                return null;
-        }
-    }
-
-    public static float getArmorReduction(int armor){
-        return (float) armor/10;
-    }
-
-
-//    public Mob() {
-
-//    }
-
     public void actEffects(float delta){
         for (int i = 0; i < effects.size(); i++){
             effects.get(i).act(delta);
@@ -276,6 +379,7 @@ public abstract class Mob extends GDSprite{
 //            d.act(delta);
 //        }
     }
+
 
 
     public void move(float delta){
@@ -297,8 +401,12 @@ public abstract class Mob extends GDSprite{
             checkTurn(t);
             //}
             currentTile = t;
+
         }
-        update();//
+        useMoveAbilities();
+//        useAbility(MobAbility.IMove.class);
+
+//        update();//
 
         checkCastle(currentTile);//may be first
 
@@ -354,11 +462,13 @@ public abstract class Mob extends GDSprite{
 
 
     public void spawn(MapTile spawner){
+//        System.out.println("spawned " + this.getName());
 //        way = Map.checkSpawnerWay(spawner);
         currentTile = spawner;
         way = ((Spawn) spawner).manipulatePath(this.getMoveType());
-        //System.out.println(way);
-        update();//some mobs must change texture in spawn block
+
+
+//        update();//some mobs must change texture in spawn block
 
 
         setPosition(spawner.getX(), spawner.getY());
@@ -367,7 +477,7 @@ public abstract class Mob extends GDSprite{
 
 
     }
-    public abstract void update();
+//    public abstract void update();
 
     public void render(SpriteBatch batch){
         //Image i = new Image(texture);

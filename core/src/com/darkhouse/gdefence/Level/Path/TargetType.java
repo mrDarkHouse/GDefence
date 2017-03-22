@@ -56,7 +56,7 @@ public enum TargetType {
         for (Mob.MoveType type:getMoveTypes()){
             for (Mob.MoveType search:searchType.getMoveTypes())if(type == search) sameTypes.add(type);
         }
-        return sameTypes.toArray(new Mob.MoveType[]{});//can i use empty array?(in theory yes)
+        return sameTypes.toArray(new Mob.MoveType[]{});//can i getDmg empty array?(in theory yes)
     }
 
     public abstract Mob.MoveType[] getMoveTypes();

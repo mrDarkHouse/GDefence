@@ -1,4 +1,4 @@
-package com.darkhouse.gdefence.Level.Ability;
+package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
 import com.darkhouse.gdefence.Level.Level;

@@ -2,12 +2,10 @@ package com.darkhouse.gdefence.Objects;
 
 
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
-import com.darkhouse.gdefence.Level.Ability.Ability;
-import com.darkhouse.gdefence.Level.Tower.AttackType;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class TowerObject extends GameObject{
     public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};

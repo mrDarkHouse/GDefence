@@ -70,7 +70,7 @@ public class Wave {
 
     private void initMobsToSpawn(){
         for (int i = 0; i < numberMobs; i++) {
-            mobsToSpawn.add(Mob.getMobById(mobID));
+            mobsToSpawn.add(Mob.createMob(Mob.getMobById(mobID)));
         }
     }
 

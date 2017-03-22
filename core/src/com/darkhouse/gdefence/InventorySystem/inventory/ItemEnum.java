@@ -22,14 +22,12 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Level.Ability.Ability;
-import com.darkhouse.gdefence.Level.Ability.Crit;
-import com.darkhouse.gdefence.Level.Ability.MultiShot;
-import com.darkhouse.gdefence.Level.Ability.PoisonArrow;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
+import com.darkhouse.gdefence.Level.Ability.Tower.Crit;
+import com.darkhouse.gdefence.Level.Ability.Tower.MultiShot;
+import com.darkhouse.gdefence.Level.Ability.Tower.PoisonArrow;
 import com.darkhouse.gdefence.Level.Tower.AttackType;
-import com.darkhouse.gdefence.User;
 
 import java.util.ArrayList;
 

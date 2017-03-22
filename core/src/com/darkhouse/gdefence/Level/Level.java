@@ -43,6 +43,12 @@ public class Level {
         return inWave;
     }
 
+    private void setInWave(boolean inWave) {
+        this.inWave = inWave;
+        if(inWave)waveStartEvent();
+        else waveEndEvent();
+    }
+
     public int getHealthNumber() {
         return healthNumber;
     }
@@ -251,8 +257,9 @@ public class Level {
             if(waves.get(currentWave).isFinished()){
                 if(currentWave + map.getSpawner().size() < waves.size()) {
                     currentWave += map.getSpawner().size();
-                    inWave = false;
-                    waveEndEvent();
+//                    inWave = false;
+                    setInWave(false);
+//                    waveEndEvent();
                     //System.out.println("new wave");
                 }else {
                     if(!isWin) {
@@ -277,7 +284,10 @@ public class Level {
 //        }
 //    }
     private void waveEndEvent(){
-        ownerScreen.update();
+        ownerScreen.updateEnd();
+    }
+    private void waveStartEvent(){
+        ownerScreen.updateStart();
     }
 
     private void physicMobs(SpriteBatch batch, float delta){
@@ -307,8 +317,9 @@ public class Level {
                     waves.get(currentWave + i).spawn(/*map.getSpawner().get(0)*/);
                 }
             }
-            inWave = true;
-
+            setInWave(true);
+//            inWave = true;
+//            waveStartEvent();
         }
         //if (roundTimer > 0) {
         //    roundTimer -= delta;

@@ -228,7 +228,7 @@ public class Slot {
 				itemsArray.removeValue(itemsArray.peek(), true);
 			}
 		}
-		if(getAmount() == 0) setPrototype(null);//notify listeners use twice
+		if(getAmount() == 0) setPrototype(null);//notify listeners getDmg twice
 //		prototype = null;
 //
 		else notifyListeners();//fixed(?)

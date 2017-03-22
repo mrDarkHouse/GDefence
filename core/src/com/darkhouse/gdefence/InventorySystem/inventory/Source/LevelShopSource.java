@@ -29,7 +29,7 @@ public class LevelShopSource extends SlotSource {
         DragAndDrop.Payload payload = super.dragStart(event, x, y, pointer);
         Level.getMap().setBuild(true, tower, payload);   //start drawing build grid
 
-        Image i = ((Image)payload.getValidDragActor());
+        Image i = ((Image)payload.getValidDragActor());//nullPointer
         Image inv = ((Image)payload.getDragActor());
         TextureRegionDrawable t = new TextureRegionDrawable(new TextureRegion(tower.getPrototype().getTowerTexture()));
         i.setDrawable(t);

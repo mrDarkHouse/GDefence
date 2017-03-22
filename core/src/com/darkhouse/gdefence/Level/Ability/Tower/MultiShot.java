@@ -1,9 +1,8 @@
-package com.darkhouse.gdefence.Level.Ability;
+package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.Level.Mob.Mob;
-import com.darkhouse.gdefence.Level.Tower.AttackLogic;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.Map;
