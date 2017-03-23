@@ -137,13 +137,16 @@ public class NextWaveInfoPanel extends Table{
                 mobSpeedS += m.getSpeed();
                 mobDmgS += m.getDmg();
                 mobBountyS += m.getBounty();
-                if(m.getAbilities().size == 0)abilitiesS += "no abi";
-                else for (MobAbility ab:m.getAbilities()){
+
+                boolean empty = true;
+                for (MobAbility ab:m.getAbilities()){
                     if(!ab.isHidden()) {
                         abilitiesS += ab.getName();
                         abilities.addListener(new TooltipListener(new AbilityTooltip(this, ab, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
+                        empty = false;
                     }
                 }
+                if(empty)abilitiesS += "no abi";
                 if(i + 1 != spawners){
                     mobHealthS += " + ";
                     mobArmorS += " + ";
@@ -171,6 +174,7 @@ public class NextWaveInfoPanel extends Table{
         mobDmg.setText(mobDmgS);
         mobBounty.setText(mobBountyS);
         abilities.setText(abilitiesS);
+        abilities.getListeners().clear();
 
 //        if(nextWaveTimer.getTime() > 0){
 //            setVisible(true);

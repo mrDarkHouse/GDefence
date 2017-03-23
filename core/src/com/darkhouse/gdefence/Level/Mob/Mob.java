@@ -32,7 +32,7 @@ public class Mob extends GDSprite{
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 80,  2, 6),
         JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 3),
         Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7),
-        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable("Mobs/mob6swim.png"), new WaterFeel(20));// {
+        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable("Mobs/mob6swim.png")/*, new WaterFeel(20)*/);// {
 //            @Override
 //            public void setAbilities() {
 ////                abilities.add(new Swimmable(GDefence.getInstance().assetLoader.get(, Texture.class)));
@@ -218,6 +218,8 @@ public class Mob extends GDSprite{
 
         effects = new ArrayList<Debuff>();
 
+        System.out.println(abilities);
+
         setSize(45, 45);
 //        setRegion(texture);
     }
@@ -402,10 +404,15 @@ public class Mob extends GDSprite{
             //if(nextTile!= null && nextTile.getType() != moveType){
             checkTurn(t);
             //}
+
             currentTile = t;
+//            System.out.println(currentTile.isSwimmable());
+            useMoveAbilities();
 
         }
-        useMoveAbilities();
+        System.out.println(getTexture());
+
+
 //        useAbility(MobAbility.IMove.class);
 
 //        update();//

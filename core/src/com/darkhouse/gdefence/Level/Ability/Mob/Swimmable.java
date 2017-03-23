@@ -24,14 +24,15 @@ public class Swimmable extends MobAbility implements MobAbility.IMove{
 
     @Override
     public void move(MapTile currentTile) {
+//        System.out.println(owner.getTexture());
         if(currentTile.isSwimmable()){
 //            if(!isSwim) {
-                owner.setRegion(swimTexture);
+                owner.setTexture(swimTexture);
                 isSwim = true;//useless yet
 //            }
         }else {
 //            if(isSwim) {
-                owner.setRegion(walkTexture);
+                owner.setTexture(walkTexture);
                 isSwim = false;
 //            }
         }

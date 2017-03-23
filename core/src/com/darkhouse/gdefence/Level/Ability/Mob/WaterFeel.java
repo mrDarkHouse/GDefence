@@ -24,7 +24,9 @@ public class WaterFeel extends MobAbility implements MobAbility.IMove{
 
     @Override
     public void move(MapTile currentTile) {
-        if(currentTile.isSwimmable())owner.addDebuff(new SwimSpeed(owner, -1, speedPercent));
+        if(currentTile.isSwimmable()){
+            if(!owner.haveDebuff(SwimSpeed.class)) owner.addDebuff(new SwimSpeed(owner, -1, speedPercent));
+        }
         else owner.deleteDebuff(SwimSpeed.class);
     }
 }
