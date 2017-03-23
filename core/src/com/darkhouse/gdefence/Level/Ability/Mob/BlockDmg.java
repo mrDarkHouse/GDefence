@@ -22,8 +22,8 @@ public class BlockDmg extends MobAbility implements MobAbility.IGetDmg{
 
     @Override
     public String getTooltip() {
-        return "Block " + blockEmount + " dmg when attacked" + System.getProperty("line.separator") +
-                "cant block less than " + blockMinLimit + " dmg";
+        return "Block [#64A619ff]" + blockEmount + "[] dmg when attacked" + System.getProperty("line.separator") +
+                "cant block less than [#64A619ff]" + blockMinLimit + "[] dmg";
     }
 
     @Override

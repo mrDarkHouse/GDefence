@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Debuff.Slow;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
 public class PoisonArrow extends Ability{

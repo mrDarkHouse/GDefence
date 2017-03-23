@@ -139,8 +139,10 @@ public class NextWaveInfoPanel extends Table{
                 mobBountyS += m.getBounty();
                 if(m.getAbilities().size == 0)abilitiesS += "no abi";
                 else for (MobAbility ab:m.getAbilities()){
-                    abilitiesS += ab.getName();
-                    if(!ab.isHidden()) abilities.addListener(new TooltipListener(new AbilityTooltip(this, ab.getTooltip(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
+                    if(!ab.isHidden()) {
+                        abilitiesS += ab.getName();
+                        abilities.addListener(new TooltipListener(new AbilityTooltip(this, ab, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
+                    }
                 }
                 if(i + 1 != spawners){
                     mobHealthS += " + ";

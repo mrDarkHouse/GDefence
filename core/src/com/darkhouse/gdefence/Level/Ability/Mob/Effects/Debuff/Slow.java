@@ -1,6 +1,7 @@
-package com.darkhouse.gdefence.Level.Ability.Tower;
+package com.darkhouse.gdefence.Level.Ability.Mob.Effects.Debuff;
 
 
+import com.darkhouse.gdefence.Level.Ability.Tower.Debuff;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
 public class Slow extends Debuff {
@@ -20,6 +21,6 @@ public class Slow extends Debuff {
     @Override
     public void dispell() {
         owner.changeSpeed(changeSpeed);
-        owner.deleteDebuff(this);
+        owner.deleteDebuff(this.getClass());
     }
 }

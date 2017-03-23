@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 
 public class AbilityTooltip extends Window{
 
@@ -18,14 +19,14 @@ public class AbilityTooltip extends Window{
     private String text;
     private Table t;
 
-    public AbilityTooltip(Table t, String text, Skin skin) {
-        super("", skin);
+    public AbilityTooltip(Table t, MobAbility ab, Skin skin) {
+        super(ab.getName(), skin);
 //        getTitleLabel().clear();
 //        getTitleLabel().setVisible(false);
 //        getTitleTable().setVisible(false);
 
         this.skin = skin;
-        this.text = text;
+        this.text = ab.getTooltip();
         this.t = t;
         init();
         setVisible(false);
@@ -33,7 +34,7 @@ public class AbilityTooltip extends Window{
     }
     private void init(){
 //        skin.getFont().
-        label = new Label(text, FontLoader.generateStyle(15, Color.WHITE));
+        label = new Label(text, FontLoader.generateStyle(15, Color.LIGHT_GRAY));
         label.getStyle().font.getData().markupEnabled = true;
         add(label);
         pack();

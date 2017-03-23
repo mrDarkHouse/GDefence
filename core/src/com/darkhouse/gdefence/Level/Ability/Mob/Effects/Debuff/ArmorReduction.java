@@ -1,9 +1,10 @@
-package com.darkhouse.gdefence.Level.Ability.Tower;
+package com.darkhouse.gdefence.Level.Ability.Mob.Effects.Debuff;
 
 
+import com.darkhouse.gdefence.Level.Ability.Tower.Debuff;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
-public class ArmorReduction extends Debuff{
+public class ArmorReduction extends Debuff {
     private int armor;
 
     public ArmorReduction(Mob owner, int armor, float duration) {
@@ -19,6 +20,6 @@ public class ArmorReduction extends Debuff{
     @Override
     public void dispell() {
         owner.setArmor(owner.getArmor() + armor);
-        owner.deleteDebuff(this);
+        owner.deleteDebuff(this.getClass());
     }
 }

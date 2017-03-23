@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Mob.BlockDmg;
+import com.darkhouse.gdefence.Level.Ability.Mob.WaterFeel;
 import com.darkhouse.gdefence.Level.Ability.Tower.Debuff;
 import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 import com.darkhouse.gdefence.Level.Ability.Mob.Swimmable;
@@ -31,7 +32,7 @@ public class Mob extends GDSprite{
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 80,  2, 6),
         JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 3),
         Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7),
-        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable("Mobs/mob6swim.png"));// {
+        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable("Mobs/mob6swim.png"), new WaterFeel(20));// {
 //            @Override
 //            public void setAbilities() {
 ////                abilities.add(new Swimmable(GDefence.getInstance().assetLoader.get(, Texture.class)));
@@ -272,20 +273,21 @@ public class Mob extends GDSprite{
     }
 
     public void addDebuff(Debuff d){
-        if(!haveDebuff(d)) {
+        if(!haveDebuff(d.getClass())) {
             effects.add(d);
             d.apply();//start debuff
         }else {
-            getEffect(d).updateDuration();
+            getEffect(d.getClass()).updateDuration();
             //effects.get(effects.indexOf(d)).updateDuration();
         }
     }
-    public void deleteDebuff(Debuff d){
-        if(haveDebuff(d)) {
-            effects.remove(d);
+    public void deleteDebuff(Class d){
+        Debuff searched = getEffect(d);
+        if(searched != null) {
+            effects.remove(searched);
         }
     }
-    public boolean haveDebuff(Debuff d){
+    public boolean haveDebuff(Class d){
 //        for (Debuff db: effects){
 //            if(db.getClass() == d.getClass()){
 //                return true;
@@ -294,9 +296,9 @@ public class Mob extends GDSprite{
 //        return false;
         return (getEffect(d) != null);
     }
-    private Debuff getEffect(Debuff d){
+    private Debuff getEffect(Class d){
         for (Debuff db: effects){
-            if(db.getClass() == d.getClass()){
+            if(db.getClass() == d){
                 return db;
             }
         }

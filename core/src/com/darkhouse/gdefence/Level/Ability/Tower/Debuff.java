@@ -25,7 +25,7 @@ public abstract class Debuff {
         if(duration == -1){//infinity time
             return;
         }
-        if (owner.haveDebuff(this)) {
+        if (owner.haveDebuff(this.getClass())) {
             currentTime = duration;
         }
     }
