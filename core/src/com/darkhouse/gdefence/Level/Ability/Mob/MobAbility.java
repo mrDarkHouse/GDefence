@@ -39,6 +39,10 @@ public abstract class MobAbility {
 //    }
 
 
+    public Mob getOwner() {
+        return owner;
+    }
+
     protected Mob owner;
 
     public void setOwner(Mob owner) {

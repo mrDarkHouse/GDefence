@@ -127,8 +127,8 @@ public class Mob extends GDSprite{
                 int firstIndex = 99;
                 for (Mob m:Wave.mobs) {
                     if(tower.isInRange(m.getCenter())){
-                        if(Wave.mobs.indexOf(m) < firstIndex){
-                            firstIndex = Wave.mobs.indexOf(m);
+                        if(Wave.mobs.indexOf(m, true) < firstIndex){
+                            firstIndex = Wave.mobs.indexOf(m, true);
                             currentMob = m;
                         }
                     }
@@ -198,7 +198,7 @@ public class Mob extends GDSprite{
 
     public static Mob createMob(Prototype prototype){
         Mob m = new Mob(prototype);
-        m.initAbilities();
+//        m.initAbilities();
         return m;
     }
 
@@ -218,7 +218,7 @@ public class Mob extends GDSprite{
 
         effects = new ArrayList<Debuff>();
 
-        System.out.println(abilities);
+//        System.out.println(abilities);
 
         setSize(45, 45);
 //        setRegion(texture);
@@ -269,6 +269,9 @@ public class Mob extends GDSprite{
     public void setAbilities(Array<MobAbility> abilities) {
         this.abilities = abilities;
     }
+    public Array<MobAbility> getAbilities() {
+        return abilities;
+    }
 
     public boolean isInGame() {
         return inGame;
@@ -307,7 +310,7 @@ public class Mob extends GDSprite{
         return null;
     }
 
-    private void initAbilities(){
+    public void initAbilities(){
         for (MobAbility a:abilities){
             a.setOwner(this);
         }
@@ -348,7 +351,7 @@ public class Mob extends GDSprite{
 
     public void setDie(Tower source) {
         this.inGame = false;
-        Wave.mobs.remove(this);//add "if contains this" if error
+        Wave.mobs.removeValue(this, true);//add "if contains this" if error
         if(source!= null){
             source.addKill(this);
         }
@@ -410,10 +413,9 @@ public class Mob extends GDSprite{
             useMoveAbilities();
 
         }
-        System.out.println(getTexture());
+//        System.out.println(getTexture());
 
 
-//        useAbility(MobAbility.IMove.class);
 
 //        update();//
 

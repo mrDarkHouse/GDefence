@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Level;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 
@@ -22,11 +23,11 @@ public class Wave {
         return mobID;
     }
 
-    public static ArrayList<Mob> mobs = new ArrayList();
+    public static Array<Mob> mobs = new Array();
 
     //public ArrayList<Mob> mobs = new ArrayList();
 
-    private ArrayList<Mob> mobsToSpawn = new ArrayList<Mob>();
+    private Array<Mob> mobsToSpawn = new Array<Mob>();
 
 //    public ArrayList<Mob> getMobsToSpawn() {
 //        return mobsToSpawn;
@@ -71,7 +72,12 @@ public class Wave {
     private void initMobsToSpawn(){
         for (int i = 0; i < numberMobs; i++) {
             mobsToSpawn.add(Mob.createMob(Mob.getMobById(mobID)));
+            mobsToSpawn.peek().initAbilities();
+            System.out.println(mobsToSpawn.peek().getAbilities().get(0).getOwner());
+            System.out.println(mobsToSpawn.first().getAbilities().get(0).getOwner());
         }
+//        System.out.println(mobsToSpawn.get(0).getAbilities().get(0).getOwner());
+//        System.out.println(mobsToSpawn.get(1).getAbilities().get(0).getOwner());
     }
 
     public void update(float delta){
@@ -79,14 +85,14 @@ public class Wave {
         //moveMobs(delta);
     }
 
-    private void moveMobs(float delta){
-        List<Mob> tmpMobs = new CopyOnWriteArrayList<Mob>(mobs);
-        for (Mob m : tmpMobs){
-            if(tmpMobs.iterator().hasNext()) {
-                m.move(delta);
-            }
-        }
-    }
+//    private void moveMobs(float delta){
+//        List<Mob> tmpMobs = new CopyOnWriteArrayList<Mob>(mobs);
+//        for (Mob m : tmpMobs){
+//            if(tmpMobs.iterator().hasNext()) {
+//                m.move(delta);
+//            }
+//        }
+//    }
 
 
 
@@ -96,10 +102,13 @@ public class Wave {
     private void checkToSpawn(float delta){
         spawnDelay += delta;
 
-        if (spawnDelay >= timeSpawn && mobsToSpawn.size() > 0) {
-            mobs.add(mobsToSpawn.get(mobsToSpawn.size() - 1));
-            mobsToSpawn.remove(mobsToSpawn.get(mobsToSpawn.size() - 1));
-            mobs.get(mobs.size() - 1).spawn(spawner);
+
+        if (spawnDelay >= timeSpawn && mobsToSpawn.size > 0) {
+            mobs.add(mobsToSpawn.peek());
+//            System.out.println(mobs.peek().getAbilities().get(0).getOwner());
+            mobsToSpawn.removeValue(mobsToSpawn.peek(), true);
+//            System.out.println(mobs.get(mobs.size - 1).getAbilities().get(0).getOwner());
+            mobs.peek().spawn(spawner);
             //System.out.println("spawned " + timeSpawn);
 
             //System.out.println("spawned");
@@ -109,7 +118,7 @@ public class Wave {
 
         }
 
-        if(mobsToSpawn.size() == 0 && mobs.size() == 0){
+        if(mobsToSpawn.size == 0 && mobs.size == 0){
             isFinished = true;
         }
     }
