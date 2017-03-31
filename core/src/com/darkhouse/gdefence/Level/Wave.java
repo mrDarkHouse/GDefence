@@ -72,12 +72,7 @@ public class Wave {
     private void initMobsToSpawn(){
         for (int i = 0; i < numberMobs; i++) {
             mobsToSpawn.add(Mob.createMob(Mob.getMobById(mobID)));
-            mobsToSpawn.peek().initAbilities();
-            System.out.println(mobsToSpawn.peek().getAbilities().get(0).getOwner());
-            System.out.println(mobsToSpawn.first().getAbilities().get(0).getOwner());
         }
-//        System.out.println(mobsToSpawn.get(0).getAbilities().get(0).getOwner());
-//        System.out.println(mobsToSpawn.get(1).getAbilities().get(0).getOwner());
     }
 
     public void update(float delta){

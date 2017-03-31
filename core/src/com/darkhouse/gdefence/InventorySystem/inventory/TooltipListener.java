@@ -47,7 +47,12 @@ public class TooltipListener extends ClickListener {
 	private boolean followCursor;
 
 	private Vector2 position = new Vector2();
-	private Vector2 tmp = new Vector2();
+
+//    public Vector2 getPosition() {
+//        return position;
+//    }
+
+    private Vector2 tmp = new Vector2();
 	private Vector2 offset = new Vector2(10, 10);
 
 	public TooltipListener(Actor tooltip, boolean followCursor) {

@@ -19,5 +19,6 @@ public class SwimSpeed extends Debuff{
     @Override
     public void dispell() {
         owner.changeSpeed(-20);
+        owner.deleteDebuff(this.getClass());
     }
 }

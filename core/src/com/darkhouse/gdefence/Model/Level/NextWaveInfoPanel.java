@@ -15,6 +15,7 @@ import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.AbilityTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.TooltipListener;
 import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Screens.LevelMap;
@@ -142,11 +143,14 @@ public class NextWaveInfoPanel extends Table{
                 for (MobAbility ab:m.getAbilities()){
                     if(!ab.isHidden()) {
                         abilitiesS += ab.getName();
-                        abilities.addListener(new TooltipListener(new AbilityTooltip(this, ab, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
+                        AbilityTooltip aTooltip = new AbilityTooltip(this, ab, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+                        TooltipListener tListener = new TooltipListener(aTooltip, true);
+                        tListener.setOffset(-aTooltip.getWidth()/2, 15/*-20, 10*/);//center
+                        abilities.addListener(tListener);
                         empty = false;
                     }
                 }
-                if(empty)abilitiesS += "no abi";
+                if(empty)abilitiesS += "none";
                 if(i + 1 != spawners){
                     mobHealthS += " + ";
                     mobArmorS += " + ";
@@ -164,6 +168,7 @@ public class NextWaveInfoPanel extends Table{
         }
     }
     public void hasChanged(){
+        abilities.getListeners().clear();
         initString(Level.getMap().getSpawner().size());
         currentWave.setText(currentWaveS);
         mobsNumber.setText(mobsNumberS);
@@ -174,7 +179,6 @@ public class NextWaveInfoPanel extends Table{
         mobDmg.setText(mobDmgS);
         mobBounty.setText(mobBountyS);
         abilities.setText(abilitiesS);
-        abilities.getListeners().clear();
 
 //        if(nextWaveTimer.getTime() > 0){
 //            setVisible(true);

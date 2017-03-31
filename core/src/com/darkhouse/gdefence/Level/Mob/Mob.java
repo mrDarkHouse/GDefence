@@ -32,7 +32,7 @@ public class Mob extends GDSprite{
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 80,  2, 6),
         JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 3),
         Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7),
-        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable("Mobs/mob6swim.png")/*, new WaterFeel(20)*/);// {
+        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable("Mobs/mob6swim.png"), new WaterFeel(0.2f));// {
 //            @Override
 //            public void setAbilities() {
 ////                abilities.add(new Swimmable(GDefence.getInstance().assetLoader.get(, Texture.class)));
@@ -198,7 +198,7 @@ public class Mob extends GDSprite{
 
     public static Mob createMob(Prototype prototype){
         Mob m = new Mob(prototype);
-//        m.initAbilities();
+        m.initAbilities();
         return m;
     }
 
@@ -267,7 +267,11 @@ public class Mob extends GDSprite{
         this.bounty = bounty;
     }
     public void setAbilities(Array<MobAbility> abilities) {
-        this.abilities = abilities;
+        this.abilities = new Array<MobAbility>();
+        for (MobAbility a:abilities){
+            this.abilities.add(a.copy());
+        }
+//        this.abilities = new Array<MobAbility>(abilities);
     }
     public Array<MobAbility> getAbilities() {
         return abilities;
@@ -359,8 +363,6 @@ public class Mob extends GDSprite{
 
     public void hit(int dmg, Tower source){//tower ==> spell&tower
         float resistDmg = useDefenceAbilities(source, dmg * (1 - getArmorReduction(getArmor())));
-
-
         if(resistDmg < getHealth()){
             health -= resistDmg;
         }else if(isInGame()){
@@ -387,36 +389,24 @@ public class Mob extends GDSprite{
 //        }
     }
 
-
-
     public void move(float delta){
         for (int i = 0; i < speed; i++){
             step(delta);
         }
     }
 
-
-
-
     private void step(float delta){
 //        currentTile = Level.getMap().getTileContainMob(this);
-
         MapTile t = Level.getMap().getTileContainMob(this);
         if(t!= null && t != currentTile) {
             //MapTile nextTile = Level.getMap().getNextTile(currentTile, way);
             //if(nextTile!= null && nextTile.getType() != moveType){
             checkTurn(t);
             //}
-
             currentTile = t;
-//            System.out.println(currentTile.isSwimmable());
             useMoveAbilities();
-
+//            System.out.println(speed);
         }
-//        System.out.println(getTexture());
-
-
-
 //        update();//
 
         checkCastle(currentTile);//may be first
@@ -478,14 +468,10 @@ public class Mob extends GDSprite{
         currentTile = spawner;
         way = ((Spawn) spawner).manipulatePath(this.getMoveType());
 
-
 //        update();//some mobs must change texture in spawn block
-
-
         setPosition(spawner.getX(), spawner.getY());
         setRotation(0);
         //setDrawable(texture);
-
 
     }
 //    public abstract void update();

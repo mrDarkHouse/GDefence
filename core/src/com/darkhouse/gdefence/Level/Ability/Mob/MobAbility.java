@@ -5,7 +5,7 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 
-public abstract class MobAbility {
+public abstract class MobAbility implements Cloneable{
     protected String name;
     protected boolean isHidden = false;
 
@@ -15,6 +15,15 @@ public abstract class MobAbility {
 
     public String getName() {
         return name;
+    }
+
+    public MobAbility copy(){
+        try {
+            return (MobAbility) this.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        throw new NullPointerException("Cant clone ability");
     }
 
     public MobAbility(String name, boolean isHidden) {
