@@ -4,14 +4,16 @@ package com.darkhouse.gdefence.Level.Mob;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Level.Ability.Mob.BlockDmg;
-import com.darkhouse.gdefence.Level.Ability.Mob.WaterFeel;
-import com.darkhouse.gdefence.Level.Ability.Tower.Debuff;
-import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
-import com.darkhouse.gdefence.Level.Ability.Mob.Swimmable;
+import com.darkhouse.gdefence.Level.Ability.Mob.*;
+import com.darkhouse.gdefence.Level.Ability.Mob.Effects.EffectIcon;
+import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Effect;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Path.*;
 import com.darkhouse.gdefence.Level.Tower.AttackLogic;
@@ -32,7 +34,7 @@ public class Mob extends GDSprite{
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 80,  2, 6),
         JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 3),
         Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7),
-        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable("Mobs/mob6swim.png"), new WaterFeel(0.2f));// {
+        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable("Mobs/mob6swim.png"), new WaterFeel(0.2f), new WaterDefend(4));// {
 //            @Override
 //            public void setAbilities() {
 ////                abilities.add(new Swimmable(GDefence.getInstance().assetLoader.get(, Texture.class)));
@@ -190,10 +192,44 @@ public class Mob extends GDSprite{
     //protected int xC, yC;
     protected MapTile currentTile;
     private ProgressBar hpBar;
-    private ArrayList <Debuff> effects;//Effect[]
+    private EffectBar effectBar;
+    private ArrayList <Effect> effects;//Effect[]
     private Array<MobAbility> abilities;
 
     private Way way;
+
+    private class EffectBar extends Table{
+
+        public void addActor(EffectIcon actor) {
+            super.addActor(actor);
+        }
+
+//        @Override
+//        public void addActor(Actor actor) {
+//            //delete
+//        }
+
+//        @Override
+//        public SnapshotArray<Actor> getChildren() {
+//            //delete
+//            return null;
+//        }
+
+        public Array<EffectIcon> getChildrenArray() {
+//            return super.getChildren();
+            Array<EffectIcon> icons = new Array<EffectIcon>();
+            for (Actor a:super.getChildren()){
+                icons.add(((EffectIcon) a));
+            }
+            return icons;
+        }
+
+        public void removeIcon(Texture icon){
+            for (EffectIcon e:getChildrenArray()){
+                if(e.getIcon() == icon)removeActor(e);
+            }
+        }
+    }
 
 
     public static Mob createMob(Prototype prototype){
@@ -213,14 +249,16 @@ public class Mob extends GDSprite{
         setBounty(prototype.bounty);
         setAbilities(prototype.abilities);
 
+        setSize(45, 45);
 
-
-
-        effects = new ArrayList<Debuff>();
+        effects = new ArrayList<Effect>();
+        effectBar = new EffectBar();
+        effectBar.setSize(getWidth(), getHeight()/2);
+        effectBar.defaults().space(5);
+        effectBar.align(Align.center);
 
 //        System.out.println(abilities);
 
-        setSize(45, 45);
 //        setRegion(texture);
     }
     public String getName() {
@@ -281,21 +319,28 @@ public class Mob extends GDSprite{
         return inGame;
     }
 
-    public void addDebuff(Debuff d){
+    public void addDebuff(Effect d){
         if(!haveDebuff(d.getClass())) {
             effects.add(d);
             d.apply();//start debuff
+            EffectIcon ei = new EffectIcon(d);
+            ei.setSize(effectBar.getHeight(), effectBar.getHeight());
+            if(!d.isHidden()) {
+                effectBar.add(ei);
+            }
         }else {
             getEffect(d.getClass()).updateDuration();
             //effects.get(effects.indexOf(d)).updateDuration();
         }
     }
     public void deleteDebuff(Class d){
-        Debuff searched = getEffect(d);
+        Effect searched = getEffect(d);
         if(searched != null) {
             effects.remove(searched);
+            effectBar.removeIcon(searched.getIcon());
         }
     }
+
     public boolean haveDebuff(Class d){
 //        for (Debuff db: effects){
 //            if(db.getClass() == d.getClass()){
@@ -305,8 +350,8 @@ public class Mob extends GDSprite{
 //        return false;
         return (getEffect(d) != null);
     }
-    private Debuff getEffect(Class d){
-        for (Debuff db: effects){
+    private Effect getEffect(Class d){
+        for (Effect db: effects){
             if(db.getClass() == d){
                 return db;
             }
@@ -334,7 +379,6 @@ public class Mob extends GDSprite{
             }
         }
         return dmg;
-//         resistDmg;
     }
 //    private void useAbility(Class<? extends MobAbility.IType> abilityType){
 //        for (MobAbility a:abilities){
@@ -378,6 +422,9 @@ public class Mob extends GDSprite{
         }else {
             speed = 5;
         }
+    }
+    public void changeArmor(int value){
+        armor += value;
     }
 
     public void actEffects(float delta){
@@ -484,12 +531,17 @@ public class Mob extends GDSprite{
         if(isInGame()) {
             draw(batch);
             drawHpBar(batch);
+            drawEffects(batch);
         }
     }
     private void drawHpBar(SpriteBatch batch){
         hpBar.setBounds(getX(), getY() + getHeight() /* + 5 //too high */, getWidth(), getHeight()/5);
         hpBar.setValue(getHealth());
         hpBar.draw(batch, 1);
+    }
+    private void drawEffects(SpriteBatch batch){
+        effectBar.setPosition(getX(), getY() + getHeight() + 10);
+        effectBar.draw(batch, 1);
     }
 
 

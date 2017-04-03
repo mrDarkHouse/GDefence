@@ -273,6 +273,8 @@ public class AssetLoader extends AssetManager{
         load("Path/Signer/signDL.png", Texture.class);
         load("Path/Signer/signDR.png", Texture.class);
 
+        load("AbilityIcons/Effects/swimSpeed.png", Texture.class);
+
 
 
 

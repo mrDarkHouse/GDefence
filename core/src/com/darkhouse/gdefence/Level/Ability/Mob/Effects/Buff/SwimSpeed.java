@@ -1,14 +1,13 @@
 package com.darkhouse.gdefence.Level.Ability.Mob.Effects.Buff;
 
 
-import com.darkhouse.gdefence.Level.Ability.Tower.Debuff;
+import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
-public class SwimSpeed extends Debuff{
-
+public class SwimSpeed extends Effect {
 
     public SwimSpeed(Mob owner, float duration, float percent) {
-        super(owner, duration);
+        super(true, false, owner, duration, "swimSpeed");
     }
 
     @Override

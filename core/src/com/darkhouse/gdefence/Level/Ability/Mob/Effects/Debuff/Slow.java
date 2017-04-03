@@ -1,15 +1,15 @@
 package com.darkhouse.gdefence.Level.Ability.Mob.Effects.Debuff;
 
 
-import com.darkhouse.gdefence.Level.Ability.Tower.Debuff;
+import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
-public class Slow extends Debuff {
+public class Slow extends Effect {
     private float percent;
     private float changeSpeed;
 
     public Slow(Mob owner, float percent, float duration) {
-        super(owner, duration);
+        super(false, false, owner, duration, "slow");
         this.percent = percent;
     }
 

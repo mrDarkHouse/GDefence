@@ -1,14 +1,14 @@
 package com.darkhouse.gdefence.Level.Ability.Mob.Effects.Debuff;
 
 
-import com.darkhouse.gdefence.Level.Ability.Tower.Debuff;
+import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
-public class ArmorReduction extends Debuff {
+public class ArmorReduction extends Effect {
     private int armor;
 
     public ArmorReduction(Mob owner, int armor, float duration) {
-        super(owner, duration);
+        super(false, false, owner, duration, "armorReduction");
         this.armor = armor;
     }
 
