@@ -13,6 +13,8 @@ import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
+import java.math.BigDecimal;
+
 public class Tower extends GameActor{
 
 //    public static Tower createTower(ItemEnum.Tower tower){
@@ -30,6 +32,10 @@ public class Tower extends GameActor{
 //        }
 //    }
 
+    public static float getAttackSpeedDelay(int asValue){
+        return new BigDecimal(4/(1 + (float)asValue/10)).setScale(2, BigDecimal.ROUND_FLOOR).floatValue();
+    }
+
 
 
     protected boolean canAttack = true;
@@ -42,6 +48,10 @@ public class Tower extends GameActor{
     //private Texture texture;
     private Circle attackRange;
     private Texture attackRangeTexture;
+
+    private int dmg;
+    private int speed;
+//    private float speedDelay;
 
     private ShapeRenderer shape;
 
@@ -122,6 +132,9 @@ public class Tower extends GameActor{
         for (Ability a:towerPrototype.getAbilities()) {
             a.setOwner(this);
         }
+        this.dmg = towerPrototype.getDmg();
+        this.speed = towerPrototype.getSpeed();
+//        this.speedDelay = getAttackSpeedDelay(speed);
     }
 
     private void initRange(){
@@ -168,7 +181,7 @@ public class Tower extends GameActor{
             target = Mob.getMobOnMap(AttackLogic.First, this);
         }else {
             preShotTime += delta;
-            if(preShotTime >= towerPrototype.getSpeedDelay()){
+            if(preShotTime >= getAttackSpeedDelay(speed)){//
                 preShotTime = 0;
                 for (Ability a:towerPrototype.getAbilities()){
                     if(a.getUseType() == Ability.UseType.preattack){
@@ -201,7 +214,7 @@ public class Tower extends GameActor{
 
     }
     public void hitTarget(Mob target){
-        int dmg = getTowerPrototype().getDmg();
+        int dmg = this.dmg;
         for (Ability a:towerPrototype.getAbilities()){
             if(a.getUseType() == Ability.UseType.onHit){
                 a.use(target);//if main target//now work on mulitshot

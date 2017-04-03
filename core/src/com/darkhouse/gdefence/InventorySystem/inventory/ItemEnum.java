@@ -44,7 +44,7 @@ public enum ItemEnum {;
 */
 	public enum Tower implements Item {
 
-		Basic("Basic", AttackType.projectile, 10, 80, 10, 100, 1.2f){
+		Basic("Basic", AttackType.projectile, 10, 80, 10, 100, 23){//1.2
 			@Override
 			protected void setTextures() {
 				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/basicTower.png", Texture.class));
@@ -66,7 +66,7 @@ public enum ItemEnum {;
 
 			}
 		},
-		Rock("Rock", AttackType.projectile, 20, 140, 25, 120, 1.4f){
+		Rock("Rock", AttackType.projectile, 20, 140, 25, 120, 18){//1.4
 			@Override
 			protected void setTextures() {
 				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/rockTower.png", Texture.class));
@@ -87,7 +87,7 @@ public enum ItemEnum {;
 				abilities.add(new Crit(0.2f, 2.5f));
 			}
 		},
-		Arrow("Arrow", AttackType.projectile, 20, 140, 15, 120, 0.8f){
+		Arrow("Arrow", AttackType.projectile, 20, 140, 15, 120, 40){
 			@Override
 			protected void setTextures() {
 				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/arrowTower.png", Texture.class));
@@ -108,7 +108,7 @@ public enum ItemEnum {;
 				abilities.add(new PoisonArrow());
 			}
 		},
-		Range("Range", AttackType.projectile, 20, 180, 15, 160, 1.0f){
+		Range("Range", AttackType.projectile, 20, 180, 15, 160, 30){
 			@Override
 			protected void setTextures() {
 				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/rangeTower.png", Texture.class));
@@ -130,7 +130,7 @@ public enum ItemEnum {;
 				abilities.add(new MultiShot(2));
 			}
 		},
-        Short("Short", AttackType.projectile, 25, 180, 30, 180, 1.2f){
+        Short("Short", AttackType.projectile, 25, 180, 30, 180, 23){
             @Override
             protected void setTextures() {
                 setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/short.png", Texture.class));
@@ -152,7 +152,7 @@ public enum ItemEnum {;
                 //
             }
         },
-        Mountain("Mountain", AttackType.projectile, 25, 180, 45, 130, 1.6f){
+        Mountain("Mountain", AttackType.projectile, 25, 180, 45, 130, 15){
             @Override
             protected void setTextures() {
                 setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/mountain.png", Texture.class));
@@ -174,7 +174,7 @@ public enum ItemEnum {;
                 //
             }
         },
-        SteelArrow("Steel Arrow", AttackType.projectile, 25, 200, 20, 140, 1.0f){
+        SteelArrow("Steel Arrow", AttackType.projectile, 25, 200, 20, 140, 30){
             @Override
             protected void setTextures() {
                 setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/steelArrow.png", Texture.class));
@@ -196,7 +196,7 @@ public enum ItemEnum {;
                 //
             }
         },
-        Catapult("Catapult", AttackType.projectile, 25, 240, 30, 180, 1.5f){
+        Catapult("Catapult", AttackType.projectile, 25, 240, 30, 180, 10){
             @Override
             protected void setTextures() {
                 setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/catapult.png", Texture.class));
@@ -218,7 +218,7 @@ public enum ItemEnum {;
                 //
             }
         },
-		Ballista("Ballista", AttackType.projectile, 25, 240, 20, 180, 0.8f){
+		Ballista("Ballista", AttackType.projectile, 25, 240, 20, 180, 40){
 			@Override
 			protected void setTextures() {
 				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/ballista.png", Texture.class));
@@ -258,8 +258,8 @@ public enum ItemEnum {;
         private int projectileSpeed;
 		private int range;
 		private int dmg;
-		//protected int speed;
-		private float speedDelay;
+		private int speed;
+//		private float speedDelay;
 		private int cost;
 		private int globalCost;
 		protected ArrayList<Ability> abilities;
@@ -310,19 +310,19 @@ public enum ItemEnum {;
 		public String getName() {
 			return name;
 		}
-		public float getSpeedDelay() {
-			return speedDelay;
+		public int getSpeed() {
+			return speed;
 		}
 
 
-		Tower(String name, AttackType attackType, int cost, int globalCost, int dmg, int range, float speedDelay) {
+		Tower(String name, AttackType attackType, int cost, int globalCost, int dmg, int range, int speed) {
 			this.name = name;
 			this.globalCost = globalCost;
 			this.attackType = attackType;
 			this.cost = cost;
 			this.dmg = dmg;
 			this.range = range;
-			this.speedDelay = speedDelay;
+            this.speed = speed;
 
             if(attackType == AttackType.projectile){
                 setProjectileSpeed();

@@ -118,6 +118,11 @@ public class Mob extends GDSprite{
 
 //        protected  /*abstract*/ void setAbilities(){};
     }
+    public static float getArmorReduction(int armor){
+        return (float) (0.1 * armor / (1 + 0.1 * Math.abs(armor)));
+    }
+
+
 
 
     public static Mob getMobOnMap(AttackLogic logic, Tower tower){
@@ -171,9 +176,7 @@ public class Mob extends GDSprite{
 //                throw new IllegalArgumentException("Mob with id " + ID + " not found");
 //        }
     }
-    public static float getArmorReduction(int armor){
-        return (float) armor/10;
-    }
+
 
     public enum MoveType{
         ground, water, flying
@@ -406,6 +409,7 @@ public class Mob extends GDSprite{
     }
 
     public void hit(int dmg, Tower source){//tower ==> spell&tower
+        System.out.println(getArmor() + " " + getArmorReduction(getArmor()));
         float resistDmg = useDefenceAbilities(source, dmg * (1 - getArmorReduction(getArmor())));
         if(resistDmg < getHealth()){
             health -= resistDmg;

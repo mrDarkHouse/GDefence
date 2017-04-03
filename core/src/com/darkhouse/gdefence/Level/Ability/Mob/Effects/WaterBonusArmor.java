@@ -6,7 +6,7 @@ public class WaterBonusArmor extends Effect {
     private int bonusArmor;
 
     public WaterBonusArmor(Mob owner, float duration, int armor) {
-        super(false, false, owner, duration, "swimSpeed");
+        super(true, false, owner, duration, "swimSpeed");
         this.bonusArmor = armor;
     }
 

@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Objects;
 
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
+import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.User;
 
 import java.util.ArrayList;
@@ -17,11 +18,13 @@ public class TowerObject extends GameObject{
 
     private int range;
     private int dmg;
-    //protected int speed;
-    private float speedDelay;
+    private int speed;
     private int cost;
     private int globalCost;
     protected ArrayList<Ability> abilities;
+
+
+
 
     @Override
     public String getSaveCode() {
@@ -78,11 +81,11 @@ public class TowerObject extends GameObject{
     public String getName() {
         return prototype.getName() + " " + getSimplyGemStatString();
     }
-    public float getSpeedDelay() {
-        return speedDelay;
+    public int getSpeed() {
+        return speed;
     }
 
-//    private HashMap<User.GEM_TYPE, Integer> gemsNumber;
+    //    private HashMap<User.GEM_TYPE, Integer> gemsNumber;
     private int[] gemsNumber;
 
 
@@ -135,7 +138,7 @@ public class TowerObject extends GameObject{
 
         dmg = prototype.getDmg();
         range = prototype.getRange();
-        speedDelay = prototype.getSpeedDelay();
+        speed = prototype.getSpeed();
         cost = prototype.getCost();
         globalCost = prototype.getGlobalCost();
         abilities = new ArrayList<Ability>(prototype.getAbilities());
@@ -150,7 +153,7 @@ public class TowerObject extends GameObject{
     public String getTooltip() {
         return "Dmg: " + getDmg() + System.getProperty("line.separator")
                 + "Range: " + getRange() + System.getProperty("line.separator")
-                + "Speed: " + getSpeedDelay() + System.getProperty("line.separator")
+                + "Speed: " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
                 + "Cost: " + getCost();//+ System.getProperty("line.separator")
 //                + "Level: " + getLevel() + System.getProperty("line.separator")
 //                + "Exp:" + getCurrentExp();
@@ -165,7 +168,7 @@ public class TowerObject extends GameObject{
                 break;
             case 1:
                 for (int i = 0; i < value; i++){
-                    speedDelay -= 0.2f;
+                    speed += 10;
                 }
                 break;
             case 2:
