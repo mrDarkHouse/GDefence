@@ -52,9 +52,6 @@ public abstract class MobAbility implements Cloneable{
     public interface IDie extends IType{
         void die(Tower source);
     }
-    public interface ICooldown extends IType{
-
-    }
 
 //    public enum EventTypes implements Event{
 //        getDmg, move, attack, autoCast
