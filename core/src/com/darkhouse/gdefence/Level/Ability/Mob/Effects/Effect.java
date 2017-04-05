@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob.Effects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
@@ -18,6 +19,10 @@ public abstract class Effect {
     public boolean isHidden() {
         return isHidden;
     }
+    private boolean isDispellable;
+    public boolean isDispellable() {
+        return isDispellable;
+    }
     //    private Color color;// = Color.RED;
     protected float duration;
     protected float currentTime;
@@ -27,9 +32,17 @@ public abstract class Effect {
     }
     protected Mob owner;
 
-    public Effect(boolean positive, boolean isHidden, Mob owner, float duration, String effectIconPath/*32x32*/) {
+//    public interface IGetDmg extends MobAbility.IType {
+//        float getDmg(Tower source, float dmg);
+//    }
+//    public interface IMove extends MobAbility.IType {
+//        void move(MapTile currentTile);
+//    }
+
+    public Effect(boolean positive, boolean isHidden, boolean isDispellable, Mob owner, float duration, String effectIconPath/*32x32*/) {
         this.isBuff = positive;
         this.isHidden = isHidden;
+        this.isDispellable = isDispellable;
         this.owner = owner;
         this.duration = duration;
         currentTime = duration;

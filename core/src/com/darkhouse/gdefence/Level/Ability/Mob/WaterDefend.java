@@ -1,7 +1,7 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Effects.WaterBonusArmor;
+import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Buff.WaterBonusArmor;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 
 public class WaterDefend extends MobAbility implements MobAbility.IMove{

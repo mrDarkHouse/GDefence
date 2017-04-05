@@ -8,7 +8,7 @@ public class ArmorReduction extends Effect {
     private int armor;
 
     public ArmorReduction(Mob owner, int armor, float duration) {
-        super(false, false, owner, duration, "armorReduction");
+        super(false, false, false, owner, duration, "armorReduction");
         this.armor = armor;
     }
 

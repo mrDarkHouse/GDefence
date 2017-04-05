@@ -7,7 +7,7 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 public class SwimSpeed extends Effect {
 
     public SwimSpeed(Mob owner, float duration, float percent) {
-        super(true, false, owner, duration, "swimSpeed");
+        super(true, false, false, owner, duration, "swimSpeed");
     }
 
     @Override

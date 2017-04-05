@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Mob.*;
 import com.darkhouse.gdefence.Level.Ability.Mob.Effects.EffectIcon;
@@ -30,7 +29,7 @@ public class Mob extends GDSprite{
     public enum Prototype{
         //           name          texture     moveType       hp  arm spd dmg bounty       //i think it better than Builder
         Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 3),
-        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 100, 2, 4, new BlockDmg(10, 2)),
+        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 100, 2, 4, new StrongSkin(10, 2)),
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 80,  2, 6),
         JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 3),
         Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7),
@@ -375,14 +374,28 @@ public class Mob extends GDSprite{
         }
     }
     private float useDefenceAbilities(Tower source, float dmg){
-//        int resistDmg = 0;
+        float resistDmg = dmg;
         for (MobAbility a:abilities){
             if(a instanceof MobAbility.IGetDmg){
-                return ((MobAbility.IGetDmg) a).getDmg(source, dmg);
+                resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, resistDmg);
+            }
+        }
+        for (Effect e:effects){
+            if(e instanceof MobAbility.IGetDmg){
+                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, resistDmg);
             }
         }
         return dmg;
     }
+    private void useSpawnAbilities(){
+        for (MobAbility a:abilities){
+            if(a instanceof MobAbility.ISpawn){
+                ((MobAbility.ISpawn) a).spawned();
+            }
+        }
+    }
+
+
 //    private void useAbility(Class<? extends MobAbility.IType> abilityType){
 //        for (MobAbility a:abilities){
 //            if(a.getClass() == abilityType){
@@ -421,11 +434,8 @@ public class Mob extends GDSprite{
 
     public void changeSpeed(float value){
         //speed = speed*percent;
-        if(speed + value > 5) {//minimum speed const
-            speed += value;
-        }else {
-            speed = 5;
-        }
+        if(speed + value > 5) speed += value;//minimum speed const
+        else speed = 5;
     }
     public void changeArmor(int value){
         armor += value;
@@ -522,6 +532,7 @@ public class Mob extends GDSprite{
 //        update();//some mobs must change texture in spawn block
         setPosition(spawner.getX(), spawner.getY());
         setRotation(0);
+        useSpawnAbilities();
         //setDrawable(texture);
 
     }

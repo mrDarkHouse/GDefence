@@ -36,11 +36,24 @@ public abstract class MobAbility implements Cloneable{
     public interface IType{
     }
 
+//    public enum procType{
+//        onSpawn, getDmg, move, die
+//    }
+
     public interface IGetDmg extends IType {
         float getDmg(Tower source, float dmg);
     }
     public interface IMove extends IType{
         void move(MapTile currentTile);
+    }
+    public interface ISpawn extends IType{
+        void spawned();
+    }
+    public interface IDie extends IType{
+        void die(Tower source);
+    }
+    public interface ICooldown extends IType{
+
     }
 
 //    public enum EventTypes implements Event{

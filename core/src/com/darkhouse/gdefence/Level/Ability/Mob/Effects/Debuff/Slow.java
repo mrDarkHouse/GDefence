@@ -9,7 +9,7 @@ public class Slow extends Effect {
     private float changeSpeed;
 
     public Slow(Mob owner, float percent, float duration) {
-        super(false, false, owner, duration, "slow");
+        super(false, false, false, owner, duration, "slow");
         this.percent = percent;
     }
 
