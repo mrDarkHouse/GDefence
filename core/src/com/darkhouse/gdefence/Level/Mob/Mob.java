@@ -29,7 +29,7 @@ public class Mob extends GDSprite{
     public enum Prototype{
         //           name          texture     moveType       hp  arm spd dmg bounty       //i think it better than Builder
         Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 3),
-        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 100, 2, 4, new StrongSkin(10, 2)),
+        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 100, 2, 4, new GreatEvasion(2)),
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 80,  2, 6),
         JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 3),
         Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7),
@@ -202,9 +202,9 @@ public class Mob extends GDSprite{
 
     private class EffectBar extends Table{
 
-        public void addActor(EffectIcon actor) {
-            super.addActor(actor);
-        }
+//        public void addActor(EffectIcon actor) {
+//            super.addActor(actor);
+//        }
 
 //        @Override
 //        public void addActor(Actor actor) {
@@ -377,6 +377,7 @@ public class Mob extends GDSprite{
         float resistDmg = dmg;
         for (MobAbility a:abilities){
             if(a instanceof MobAbility.IGetDmg){
+                System.out.println(a.getName());
                 resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, resistDmg);
             }
         }
@@ -422,7 +423,7 @@ public class Mob extends GDSprite{
     }
 
     public void hit(int dmg, Tower source){//tower ==> spell&tower
-        System.out.println(getArmor() + " " + getArmorReduction(getArmor()));
+//        System.out.println(getArmor() + " " + getArmorReduction(getArmor()));
         float resistDmg = useDefenceAbilities(source, dmg * (1 - getArmorReduction(getArmor())));
         if(resistDmg < getHealth()){
             health -= resistDmg;

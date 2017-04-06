@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob.Effects;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -26,6 +27,7 @@ public abstract class Effect {
     //    private Color color;// = Color.RED;
     protected float duration;
     protected float currentTime;
+    private WidgetGroup group;
     private Texture icon;
     public Texture getIcon() {
         return icon;
@@ -48,6 +50,8 @@ public abstract class Effect {
         currentTime = duration;
         if(effectIconPath.equals(""))icon = GDefence.getInstance().assetLoader.get("", Texture.class);
         else icon = GDefence.getInstance().assetLoader.get("AbilityIcons/Effects/" + effectIconPath + ".png", Texture.class);
+        group = new WidgetGroup();
+        group.addActor(icon);
     }
 
     public abstract void apply();

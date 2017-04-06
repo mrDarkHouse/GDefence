@@ -39,6 +39,8 @@ public class EffectIcon extends Actor{
         sp.end();
         batch.begin();
         batch.draw(icon, getX() + borderSize, getY() + borderSize, getWidth() - borderSize*2, getHeight() - borderSize*2);
+
+        if(effect )
     }
 
 //    @Override
