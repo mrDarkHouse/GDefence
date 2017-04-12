@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Effect;
 
 public class EffectIcon extends Actor{
@@ -32,7 +33,10 @@ public class EffectIcon extends Actor{
         sp = new ShapeRenderer();
 
         if(effect.isCooldownable()){
-            other = new Label(((int) effect.getCooldownObject().getCooldown()) + "", GDefence.getInstance().assetLoader.getInfoPanelSkin());
+            other = new Label(((int) effect.getCooldownObject().getCooldown()) + "", FontLoader.generateStyle(14, Color.BLACK));
+        }
+        if(effect instanceof Stackable){
+            other = new Label(((Stackable) effect).getStacks() + "", FontLoader.generateStyle(14, Color.BLACK));
         }
     }
 
@@ -54,6 +58,12 @@ public class EffectIcon extends Actor{
             int cd = (int)  Math.ceil(effect.getCooldownObject().getCooldown());
             if(cd == 0)other.setText("");
             else other.setText(cd + "");
+            other.setBounds(getX() + borderSize, getY() + borderSize, getWidth() - borderSize*2, getHeight() - borderSize*2);
+            other.draw(batch, parentAlpha);
+        }
+        if(effect instanceof Stackable){
+            other.setAlignment(Align.center);
+            other.setText(((Stackable) effect).getStacks() + "");
             other.setBounds(getX() + borderSize, getY() + borderSize, getWidth() - borderSize*2, getHeight() - borderSize*2);
             other.draw(batch, parentAlpha);
         }

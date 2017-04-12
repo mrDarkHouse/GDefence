@@ -22,7 +22,6 @@ public class LayerArmorBuff extends Stackable implements MobAbility.IGetDmg{
 
     @Override
     public float getDmg(Tower source, float dmg) {
-        System.out.println(owner.getArmor());
         deleteStack();
 //        updateStack();
         return dmg;

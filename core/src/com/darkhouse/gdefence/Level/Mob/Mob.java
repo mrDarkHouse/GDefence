@@ -29,11 +29,11 @@ public class Mob extends GDSprite{
 
     public enum Prototype{
         //           name          texture     moveType       hp  arm spd dmg bounty       //i think it better than Builder
-        Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 3, new LayerArmor.P(10, 2)),
+        Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 3),
         Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 100, 2, 4, new GreatEvasion.P(3)),
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 80,  2, 6),
         JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 3),
-        Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7),
+        Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7, new LayerArmor.P(10, 2), new StrongSkin.P(15, 2)),
         Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable.P("Mobs/mob6swim.png"), new WaterFeel.P(0.2f), new WaterDefend.P(4));// {
 //            @Override
 //            public void setAbilities() {

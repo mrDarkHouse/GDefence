@@ -22,8 +22,8 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
 
         @Override
         public String getTooltip() {
-            return "Block any dmg when attacked" + System.getProperty("line.separator") +
-                    "every [#64A619ff]"  + "" + "[] seconds";
+            return "Have [#64A619ff]" + stacks + "[] stacks, each add [#64A619ff]" + armor + "[] armor" + System.getProperty("line.separator") +
+                    "after getting attack [#CD6600ff]1 []stack disappear";
         }
     }
 
