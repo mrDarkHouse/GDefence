@@ -17,7 +17,7 @@ public class Desolate extends Ability{
     @Override
     public void use(Mob target) {
         if(target != null) {
-            target.addDebuff(new ArmorReduction(target, armor, duration));
+            target.addEffect(new ArmorReduction(armor, duration).setOwner(target));
         }
     }
 }

@@ -5,32 +5,53 @@ import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Buff.SwimSpeed;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 
 public class WaterFeel extends MobAbility implements MobAbility.IMove{
-    private float speedPercent;
-    private SwimSpeed effect;
 
-    public WaterFeel(float speedPercent) {
-        super("Water Feel", false);
-        this.speedPercent = speedPercent;
+    public static class P extends AblityPrototype{
+        private float speedPercent;
+
+        public P(float speedPercent) {
+            super("Water Feel", false);
+            this.speedPercent = speedPercent;
+
+        }
+        public MobAbility getAbility(){
+            return new WaterFeel(this);
+        }
+
+        @Override
+        public String getTooltip() {
+            return "Add [#64A619ff]" + speedPercent * 100 + "%[] move speed" + System.getProperty("line.separator") +
+                    "when swimming";
+        }
     }
 
-    @Override
-    public String getTooltip() {
-        return "Add [#64A619ff]" + speedPercent * 100 + "%[] move speed" + System.getProperty("line.separator") +
-                "when swimming";
+
+//    private float speedPercent;
+    private SwimSpeed buff;
+
+//    public WaterFeel(float speedPercent) {
+//        super("Water Feel", false);
+//        this.speedPercent = speedPercent;
+//        buff = new SwimSpeed(-1, speedPercent);
+//    }
+
+
+    public WaterFeel(P prototype) {
+        buff = new SwimSpeed(-1, prototype.speedPercent);
     }
 
     @Override
     public void init() {
-        effect = new SwimSpeed(owner, -1, speedPercent);
+        buff.setOwner(owner);
     }
 
     @Override
     public void move(MapTile currentTile) {
         if(currentTile.isSwimmable()){
-            if(!owner.haveDebuff(SwimSpeed.class)) owner.addDebuff(effect);
+            if(!owner.haveEffect(SwimSpeed.class)) owner.addEffect(buff);
         } else {
-            if(owner.haveDebuff(SwimSpeed.class)) effect.dispell();
+            if(owner.haveEffect(SwimSpeed.class)) buff.dispell();
         }
-        //owner.deleteDebuff(SwimSpeed.class);
+        //owner.deleteEffect(SwimSpeed.class);
     }
 }

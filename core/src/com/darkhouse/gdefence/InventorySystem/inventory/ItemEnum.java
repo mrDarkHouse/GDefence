@@ -84,7 +84,7 @@ public enum ItemEnum {;
 
 			@Override
 			protected void addAbilities() {
-				abilities.add(new Crit(0.2f, 2.5f));
+//				abilities.add(new Crit(0.2f, 2.5f));
 			}
 		},
 		Arrow("Arrow", AttackType.projectile, 20, 140, 15, 120, 40){

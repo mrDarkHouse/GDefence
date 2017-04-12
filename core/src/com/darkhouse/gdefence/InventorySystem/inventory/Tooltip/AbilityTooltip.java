@@ -20,7 +20,7 @@ public class AbilityTooltip extends Window{
     private String text;
     private Table t;
 
-    public AbilityTooltip(Table t, MobAbility ab, Skin skin) {
+    public AbilityTooltip(Table t, MobAbility.AblityPrototype ab, Skin skin) {
         super(ab.getName(), skin);
         getTitleLabel().setAlignment(Align.center);
 //        getTitleLabel().clear();

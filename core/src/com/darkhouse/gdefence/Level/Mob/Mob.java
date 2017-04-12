@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Mob.*;
-import com.darkhouse.gdefence.Level.Ability.Mob.Effects.EffectIcon;
+import com.darkhouse.gdefence.Level.Ability.Mob.Tools.EffectIcon;
 import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Effect;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Path.*;
@@ -23,24 +23,25 @@ import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Mob extends GDSprite{
 
     public enum Prototype{
         //           name          texture     moveType       hp  arm spd dmg bounty       //i think it better than Builder
-        Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 3),
-        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 100, 2, 4, new GreatEvasion(2)),
+        Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 3, new LayerArmor.P(10, 2)),
+        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 100, 2, 4, new GreatEvasion.P(3)),
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 80,  2, 6),
         JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 3),
         Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7),
-        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable("Mobs/mob6swim.png"), new WaterFeel(0.2f), new WaterDefend(4));// {
+        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable.P("Mobs/mob6swim.png"), new WaterFeel.P(0.2f), new WaterDefend.P(4));// {
 //            @Override
 //            public void setAbilities() {
 ////                abilities.add(new Swimmable(GDefence.getInstance().assetLoader.get(, Texture.class)));
 //            }
 //        };
 
-        Prototype(String name, String regionPath, MoveType moveType, int health, int armor,  float speed, int dmg, int bounty, MobAbility... abilities) {
+        Prototype(String name, String regionPath, MoveType moveType, int health, int armor,  float speed, int dmg, int bounty, MobAbility.AblityPrototype... abilities) {
             this.texture = GDefence.getInstance().assetLoader.get("Mobs/" + regionPath + ".png", Texture.class);
             this.name = name;
             this.health = health;
@@ -49,7 +50,7 @@ public class Mob extends GDSprite{
             this.speed = speed;
             this.dmg = dmg;
             this.bounty = bounty;
-            this.abilities = new Array<MobAbility>(abilities);
+            this.abilities = new Array<MobAbility.AblityPrototype>(abilities);
         }
 
         protected Texture texture;
@@ -60,7 +61,7 @@ public class Mob extends GDSprite{
         protected float speed;
         protected int dmg;
         protected int bounty;
-        protected Array<MobAbility> abilities;
+        protected Array<MobAbility.AblityPrototype> abilities;
 
         public String getName() {
             return name;
@@ -83,7 +84,7 @@ public class Mob extends GDSprite{
         public int getBounty() {
             return bounty;
         }
-        public Array<MobAbility> getAbilities() {
+        public Array<MobAbility.AblityPrototype> getAbilities() {
             return abilities;
         }
         //        protected Prototype setName(String name) {
@@ -282,6 +283,10 @@ public class Mob extends GDSprite{
     public void setArmor(int armor) {
         this.armor = armor;
     }
+    public void changeArmor(int value){
+        armor += value;
+    }
+
     public MoveType getMoveType() {
         return moveType;
     }
@@ -306,10 +311,10 @@ public class Mob extends GDSprite{
     public void setBounty(int bounty) {
         this.bounty = bounty;
     }
-    public void setAbilities(Array<MobAbility> abilities) {
+    public void setAbilities(Array<MobAbility.AblityPrototype> abilities) {
         this.abilities = new Array<MobAbility>();
-        for (MobAbility a:abilities){
-            this.abilities.add(a.copy());
+        for (MobAbility.AblityPrototype a:abilities){
+            this.abilities.add(a.getAbility());
         }
 //        this.abilities = new Array<MobAbility>(abilities);
     }
@@ -321,8 +326,8 @@ public class Mob extends GDSprite{
         return inGame;
     }
 
-    public void addDebuff(Effect d){
-        if(!haveDebuff(d.getClass())) {
+    public void addEffect(Effect d){
+        if(!haveEffect(d.getClass())) {
             effects.add(d);
             d.apply();//start debuff
             EffectIcon ei = new EffectIcon(d);
@@ -335,7 +340,7 @@ public class Mob extends GDSprite{
             //effects.get(effects.indexOf(d)).updateDuration();
         }
     }
-    public void deleteDebuff(Class d){
+    public void deleteEffect(Class d){
         Effect searched = getEffect(d);
         if(searched != null) {
             effects.remove(searched);
@@ -343,7 +348,7 @@ public class Mob extends GDSprite{
         }
     }
 
-    public boolean haveDebuff(Class d){
+    public boolean haveEffect(Class d){
 //        for (Debuff db: effects){
 //            if(db.getClass() == d.getClass()){
 //                return true;
@@ -381,12 +386,13 @@ public class Mob extends GDSprite{
                 resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, resistDmg);
             }
         }
-        for (Effect e:effects){
+        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+        for (Effect e:tmp){
             if(e instanceof MobAbility.IGetDmg){
                 resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, resistDmg);
             }
         }
-        return dmg;
+        return resistDmg;
     }
     private void useSpawnAbilities(){
         for (MobAbility a:abilities){
@@ -438,9 +444,7 @@ public class Mob extends GDSprite{
         if(speed + value > 5) speed += value;//minimum speed const
         else speed = 5;
     }
-    public void changeArmor(int value){
-        armor += value;
-    }
+
 
     public void actEffects(float delta){
         for (int i = 0; i < effects.size(); i++){

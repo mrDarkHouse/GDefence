@@ -6,9 +6,10 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 
 public class SwimSpeed extends Effect {
 
-    public SwimSpeed(Mob owner, float duration, float percent) {
-        super(true, false, false, owner, duration, "swimSpeed");
+    public SwimSpeed(float duration, float percent) {
+        super(true, false, false, duration, "swimSpeed");
     }
+
 
     @Override
     public void apply() {
@@ -18,6 +19,6 @@ public class SwimSpeed extends Effect {
     @Override
     public void dispell() {
         owner.changeSpeed(-20);
-        owner.deleteDebuff(this.getClass());
+        owner.deleteEffect(this.getClass());
     }
 }

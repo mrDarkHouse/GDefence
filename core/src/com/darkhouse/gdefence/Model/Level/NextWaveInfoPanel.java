@@ -158,7 +158,7 @@ public class NextWaveInfoPanel extends Table{
                 mobBountyS += m.getBounty();
 
                 boolean empty = true;
-                for (MobAbility ab:m.getAbilities()){
+                for (MobAbility.AblityPrototype ab:m.getAbilities()){
                     if(!ab.isHidden()) {
 //                        if(!empty) row();
                         //abilitiesS += System.getProperty("line.separator");

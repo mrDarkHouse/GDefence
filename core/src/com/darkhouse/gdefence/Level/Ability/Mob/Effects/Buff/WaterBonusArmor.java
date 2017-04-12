@@ -6,8 +6,8 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 public class WaterBonusArmor extends Effect {
     private int bonusArmor;
 
-    public WaterBonusArmor(Mob owner, float duration, int armor) {
-        super(true, false, false, owner, duration, "waterBonusArmor");
+    public WaterBonusArmor(float duration, int armor) {
+        super(true, false, false, duration, "waterBonusArmor");
         this.bonusArmor = armor;
     }
 
@@ -19,6 +19,6 @@ public class WaterBonusArmor extends Effect {
     @Override
     public void dispell() {
         owner.changeArmor(-bonusArmor);
-        owner.deleteDebuff(this.getClass());
+        owner.deleteEffect(this.getClass());
     }
 }

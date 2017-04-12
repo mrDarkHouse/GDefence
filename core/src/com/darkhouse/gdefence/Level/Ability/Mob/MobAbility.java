@@ -5,9 +5,31 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 
-public abstract class MobAbility implements Cloneable{
+import java.io.*;
+
+public abstract class MobAbility{
     protected String name;
     protected boolean isHidden = false;
+
+    public abstract static class AblityPrototype{
+        protected String name;
+        protected boolean isHidden;
+
+        public String getName() {
+            return name;
+        }
+        public boolean isHidden() {
+            return isHidden;
+        }
+
+        public AblityPrototype(String name, boolean isHidden) {
+            this.name = name;
+            this.isHidden = isHidden;
+        }
+
+        abstract public MobAbility getAbility();
+        abstract public String getTooltip();
+    }
 
     public boolean isHidden() {
         return isHidden;
@@ -17,20 +39,32 @@ public abstract class MobAbility implements Cloneable{
         return name;
     }
 
-    public MobAbility copy(){
-        try {
-            return (MobAbility) this.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        throw new NullPointerException("Cant clone ability");
-    }
+//    public MobAbility copy(){
+//        try {
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            ObjectOutputStream ous = new ObjectOutputStream(baos);
+//            ous.writeObject(this);
+//            ous.close();
+//            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+//            ObjectInputStream ois = new ObjectInputStream(bais);
+//            return ((MobAbility) ois.readObject());
+//
+////            return (MobAbility) this.clone();
+////        } catch (CloneNotSupportedException e) {
+////            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        throw new NullPointerException("Cant clone ability");
+//    }
 
-    public MobAbility(String name, boolean isHidden) {
-        this.name = name;
-        this.isHidden = isHidden;
-    }
-    public abstract String getTooltip();
+//    public MobAbility(String name, boolean isHidden) {
+//        this.name = name;
+//        this.isHidden = isHidden;
+//    }
+//    public abstract String getTooltip();
     public abstract void init();
 
     public interface IType{

@@ -7,19 +7,19 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 public class ArmorReduction extends Effect {
     private int armor;
 
-    public ArmorReduction(Mob owner, int armor, float duration) {
-        super(false, false, false, owner, duration, "armorReduction");
+    public ArmorReduction(int armor, float duration) {
+        super(false, false, false, duration, "armorReduction");
         this.armor = armor;
     }
 
     @Override
     public void apply() {
-        owner.setArmor(owner.getArmor() - armor);
+        owner.changeArmor(-armor);
     }
 
     @Override
     public void dispell() {
-        owner.setArmor(owner.getArmor() + armor);
-        owner.deleteDebuff(this.getClass());
+        owner.changeArmor(armor);
+        owner.deleteEffect(this.getClass());
     }
 }

@@ -17,7 +17,9 @@ public class Evasion extends Modifier implements MobAbility.IGetDmg{
 
     @Override
     public float getDmg(Tower source, float dmg) {
-        if(r.nextFloat() > chance) return 0;
+        if(chance > r.nextFloat()) {
+            return 0;
+        }
         else return dmg;
     }
 }

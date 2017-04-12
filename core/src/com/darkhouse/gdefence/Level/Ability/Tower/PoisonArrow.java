@@ -14,7 +14,9 @@ public class PoisonArrow extends Ability{
     @Override
     public void use(Mob target) {
         if(target != null) {
-            target.addDebuff(new Slow(target, 0.3f, 3f));
+//            Slow w = new Slow(0.3f, 3f);
+//            w.setOwner(target);
+            target.addEffect(new Slow(0.3f, 3f).setOwner(target));
         }
     }
 }

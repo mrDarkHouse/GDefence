@@ -10,8 +10,8 @@ public class BlockDmg extends Effect implements MobAbility.IGetDmg{
     private int blockEmount;
     private int blockMinLimit;
 
-    public BlockDmg(Mob owner, float duration, int blockEmount, int blockMinLimit) {
-        super(true, true, true, owner, duration, "blockDmg");
+    public BlockDmg(float duration, int blockEmount, int blockMinLimit) {
+        super(true, true, true, duration, "blockDmg");
         this.blockEmount = blockEmount;
         this.blockMinLimit = blockMinLimit;
     }

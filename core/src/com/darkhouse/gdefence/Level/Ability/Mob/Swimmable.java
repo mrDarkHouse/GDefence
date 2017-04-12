@@ -12,11 +12,32 @@ public class Swimmable extends MobAbility implements MobAbility.IMove{
     private Texture walkTexture;
     private boolean isSwim;
 
-    public Swimmable(String pathTexture) {
-        super("Swimmable", true);
-        this.pathTexture = pathTexture;
+    public static class P extends AblityPrototype{
+        private String path;
 
+        public P(String path) {
+            super("Swimmable", true);
+            this.path = path;
+        }
+        public MobAbility getAbility(){
+            return new Swimmable(this);
+        }
+
+        @Override
+        public String getTooltip() {//tooltip hidden
+            return null;
+        }
     }
+
+    public Swimmable(P prototype) {
+        this.pathTexture = prototype.path;
+    }
+
+    //    public Swimmable(String pathTexture) {
+//        super("Swimmable", true);
+//        this.pathTexture = pathTexture;
+//
+//    }
     public void init(){
         this.swimTexture = GDefence.getInstance().assetLoader.get(pathTexture, Texture.class);
         walkTexture = owner.getTexture();
@@ -39,8 +60,5 @@ public class Swimmable extends MobAbility implements MobAbility.IMove{
         }
     }
 
-    @Override
-    public String getTooltip() {//tooltip hidden
-        return null;
-    }
+
 }

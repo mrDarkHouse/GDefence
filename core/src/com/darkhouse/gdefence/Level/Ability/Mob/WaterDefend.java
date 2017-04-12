@@ -6,31 +6,51 @@ import com.darkhouse.gdefence.Level.Path.MapTile;
 
 public class WaterDefend extends MobAbility implements MobAbility.IMove{
 
-    private int armor;
-    private WaterBonusArmor effect;
 
-    public WaterDefend(int armor) {
-        super("Water Defend", false);
-        this.armor = armor;
+    private WaterBonusArmor buff;
+
+    public static class P extends AblityPrototype{
+        private int armor;
+
+        public P(int armor) {
+            super("Water Defend", false);
+            this.armor = armor;
+
+        }
+        public MobAbility getAbility(){
+            return new WaterDefend(this);
+        }
+
+        @Override
+        public String getTooltip() {
+            return "Add [#64A619ff]" + armor + "[] armor" + System.getProperty("line.separator") +
+                    "when swimming";
+        }
     }
 
-    @Override
-    public String getTooltip() {
-        return "Add [#64A619ff]" + armor + "[] armor" + System.getProperty("line.separator") +
-                "when swimming";
+    public WaterDefend(P prototype) {
+        buff = new WaterBonusArmor(-1, prototype.armor);
     }
+
+    //    public WaterDefend(int armor) {
+//        super("Water Defend", false);
+//        this.armor = armor;
+//        buff = new WaterBonusArmor(-1, armor);
+//    }
+
+
 
     @Override
     public void init() {
-        effect = new WaterBonusArmor(owner, -1, armor);
+        buff.setOwner(owner);
     }
 
     @Override
     public void move(MapTile currentTile) {
         if(currentTile.isSwimmable()){
-            if(!owner.haveDebuff(WaterBonusArmor.class)) owner.addDebuff(effect);
+            if(!owner.haveEffect(WaterBonusArmor.class)) owner.addEffect(buff);
         } else {
-            if(owner.haveDebuff(WaterBonusArmor.class)) effect.dispell();
+            if(owner.haveEffect(WaterBonusArmor.class)) buff.dispell();
         }
     }
 }
