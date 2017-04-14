@@ -495,6 +495,7 @@ public class User {
         openLevel(5);
         openLevel(6);
         openLevel(7);
+        openLevel(8);
 //        levelsAvailable[5] = true;
 //        levelsAvailable[6] = true;
 //        levelsAvailable[4] = true;

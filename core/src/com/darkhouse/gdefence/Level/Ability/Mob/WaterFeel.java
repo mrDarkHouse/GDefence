@@ -1,17 +1,36 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Buff.SwimSpeed;
+import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 
 public class WaterFeel extends MobAbility implements MobAbility.IMove{
 
-    public static class P extends AblityPrototype{
-        private float speedPercent;
+    private class SwimSpeed extends Effect {
+        private int value;
 
-        public P(float speedPercent) {
+        public SwimSpeed(float duration, int value) {
+            super(true, false, duration, "swimSpeed");
+            this.value = value;
+        }
+
+        @Override
+        public void apply() {
+            owner.changeSpeed(value);
+        }
+
+        @Override
+        public void dispell() {
+            owner.changeSpeed(-value);
+            super.dispell();
+        }
+    }
+    public static class P extends AblityPrototype{
+        private int speedValue;
+
+        public P(int speedValue) {
             super("Water Feel", false);
-            this.speedPercent = speedPercent;
+            this.speedValue = speedValue;
 
         }
         public MobAbility getAbility(){
@@ -20,24 +39,24 @@ public class WaterFeel extends MobAbility implements MobAbility.IMove{
 
         @Override
         public String getTooltip() {
-            return "Add [#64A619ff]" + speedPercent * 100 + "%[] move speed" + System.getProperty("line.separator") +
+            return "Add [#64A619ff]" + speedValue + "[] move speed" + System.getProperty("line.separator") +
                     "when swimming";
         }
     }
 
 
-//    private float speedPercent;
+//    private float speedValue;
     private SwimSpeed buff;
 
-//    public WaterFeel(float speedPercent) {
+//    public WaterFeel(float speedValue) {
 //        super("Water Feel", false);
-//        this.speedPercent = speedPercent;
-//        buff = new SwimSpeed(-1, speedPercent);
+//        this.speedValue = speedValue;
+//        buff = new SwimSpeed(-1, speedValue);
 //    }
 
 
     public WaterFeel(P prototype) {
-        buff = new SwimSpeed(-1, prototype.speedPercent);
+        buff = new SwimSpeed(-1, prototype.speedValue);
     }
 
     @Override

@@ -15,7 +15,7 @@ import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 
 public class AbilityTooltip extends Window{
 
-    private Skin skin;
+//    private Skin skin;
     private Label label;
     private String text;
     private Table t;
@@ -27,7 +27,7 @@ public class AbilityTooltip extends Window{
 //        getTitleLabel().setVisible(false);
 //        getTitleTable().setVisible(false);
 
-        this.skin = skin;
+//        this.skin = skin;
         this.text = ab.getTooltip();
         this.t = t;
         init();

@@ -1,14 +1,30 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Buff.WaterBonusArmor;
+import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 
 public class WaterDefend extends MobAbility implements MobAbility.IMove{
 
+    private class WaterBonusArmor extends Effect {
+        private int bonusArmor;
 
-    private WaterBonusArmor buff;
+        public WaterBonusArmor(float duration, int armor) {
+            super(true, false, duration, "waterBonusArmor");
+            this.bonusArmor = armor;
+        }
 
+        @Override
+        public void apply() {
+            owner.changeArmor(bonusArmor);
+        }
+
+        @Override
+        public void dispell() {
+            owner.changeArmor(-bonusArmor);
+            super.dispell();
+        }
+    }
     public static class P extends AblityPrototype{
         private int armor;
 
@@ -28,17 +44,11 @@ public class WaterDefend extends MobAbility implements MobAbility.IMove{
         }
     }
 
+    private WaterBonusArmor buff;
+
     public WaterDefend(P prototype) {
         buff = new WaterBonusArmor(-1, prototype.armor);
     }
-
-    //    public WaterDefend(int armor) {
-//        super("Water Defend", false);
-//        this.armor = armor;
-//        buff = new WaterBonusArmor(-1, armor);
-//    }
-
-
 
     @Override
     public void init() {
@@ -53,4 +63,6 @@ public class WaterDefend extends MobAbility implements MobAbility.IMove{
             if(owner.haveEffect(WaterBonusArmor.class)) buff.dispell();
         }
     }
+
+
 }

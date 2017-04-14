@@ -23,10 +23,7 @@ package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
-import com.darkhouse.gdefence.Level.Ability.Tower.Crit;
-import com.darkhouse.gdefence.Level.Ability.Tower.MultiShot;
-import com.darkhouse.gdefence.Level.Ability.Tower.PoisonArrow;
+import com.darkhouse.gdefence.Level.Ability.Tower.*;
 import com.darkhouse.gdefence.Level.Tower.AttackType;
 
 import java.util.ArrayList;
@@ -85,6 +82,7 @@ public enum ItemEnum {;
 			@Override
 			protected void addAbilities() {
 //				abilities.add(new Crit(0.2f, 2.5f));
+				abilities.add(new Desolate(3, 5));
 			}
 		},
 		Arrow("Arrow", AttackType.projectile, 20, 140, 15, 120, 40){

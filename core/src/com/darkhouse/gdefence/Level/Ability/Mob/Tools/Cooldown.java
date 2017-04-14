@@ -1,11 +1,6 @@
 package com.darkhouse.gdefence.Level.Ability.Mob.Tools;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Effect;
-import com.darkhouse.gdefence.Level.Mob.Mob;
-
-import java.io.Serializable;
-
 public class Cooldown{
     private float cooldown;
     private float cdCap;

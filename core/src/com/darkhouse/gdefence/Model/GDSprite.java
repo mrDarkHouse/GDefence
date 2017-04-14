@@ -22,12 +22,7 @@ public class GDSprite extends Sprite{
     }
 
     public boolean contains(float x, float y){
-        boolean b = getBoundingRectangle().contains(new Vector2(x, y));
-        if(b) {
-            //System.out.println(y);
-            //System.out.println(this.getY() + this.getWidth());
-        }
-        return b;
+        return getBoundingRectangle().contains(new Vector2(x, y));
     }
 
     public boolean contains(Rectangle rectangle){

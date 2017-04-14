@@ -1,10 +1,32 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Debuff.Slow;
+import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
 public class PoisonArrow extends Ability{
+
+    private static class Slow extends Effect {
+        private float percent;
+        private float changeSpeed;
+
+        public Slow(float percent, float duration) {
+            super(false, true, duration, "slow");
+            this.percent = percent;
+        }
+
+        public void apply(){
+            changeSpeed = owner.getSpeed()*percent;
+            owner.changeSpeed(-changeSpeed);
+        }
+
+        @Override
+        public void dispell() {
+            owner.changeSpeed(changeSpeed);
+            super.dispell();
+        }
+    }
+
 //    private Slow slow;
 
     public PoisonArrow() {

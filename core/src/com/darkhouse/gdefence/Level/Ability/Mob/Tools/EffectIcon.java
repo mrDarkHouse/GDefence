@@ -8,9 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
-import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
-import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Effect;
 
 public class EffectIcon extends Actor{
 
@@ -35,8 +33,8 @@ public class EffectIcon extends Actor{
         if(effect.isCooldownable()){
             other = new Label(((int) effect.getCooldownObject().getCooldown()) + "", FontLoader.generateStyle(14, Color.BLACK));
         }
-        if(effect instanceof Stackable){
-            other = new Label(((Stackable) effect).getStacks() + "", FontLoader.generateStyle(14, Color.BLACK));
+        if(effect.isStackable()){
+            other = new Label(effect.getStackableObject().getStacks() + "", FontLoader.generateStyle(15, Color.BLACK));
         }
     }
 
@@ -53,7 +51,7 @@ public class EffectIcon extends Actor{
         batch.begin();
         batch.draw(icon, getX() + borderSize, getY() + borderSize, getWidth() - borderSize*2, getHeight() - borderSize*2);
 
-        if(effect.isCooldownable()){
+        if(effect.isCooldownable()){//if cooldownable and stackable in one time ability must declare own EffectIcon
             other.setAlignment(Align.center);
             int cd = (int)  Math.ceil(effect.getCooldownObject().getCooldown());
             if(cd == 0)other.setText("");
@@ -61,9 +59,11 @@ public class EffectIcon extends Actor{
             other.setBounds(getX() + borderSize, getY() + borderSize, getWidth() - borderSize*2, getHeight() - borderSize*2);
             other.draw(batch, parentAlpha);
         }
-        if(effect instanceof Stackable){
+        if(effect.isStackable()){
             other.setAlignment(Align.center);
-            other.setText(((Stackable) effect).getStacks() + "");
+            int stacks = effect.getStackableObject().getStacks();
+            if(stacks == 0)other.setText("");
+            else other.setText(stacks + "");
             other.setBounds(getX() + borderSize, getY() + borderSize, getWidth() - borderSize*2, getHeight() - borderSize*2);
             other.draw(batch, parentAlpha);
         }

@@ -84,7 +84,7 @@ public abstract class MobAbility{
         void spawned();
     }
     public interface IDie extends IType{
-        void die(Tower source);
+        boolean die(Tower source);
     }
 
 //    public enum EventTypes implements Event{

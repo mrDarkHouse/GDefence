@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Mob.*;
 import com.darkhouse.gdefence.Level.Ability.Mob.Tools.EffectIcon;
-import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Effect;
+import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Path.*;
 import com.darkhouse.gdefence.Level.Tower.AttackLogic;
@@ -29,12 +29,12 @@ public class Mob extends GDSprite{
 
     public enum Prototype{
         //           name          texture     moveType       hp  arm spd dmg bounty       //i think it better than Builder
-        Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 3),
-        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 100, 2, 4, new GreatEvasion.P(3)),
-        Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 80,  2, 6),
-        JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 3),
-        Boar       ("Boar",       "mob5",    MoveType.ground, 250, 4, 60,  3, 7, new LayerArmor.P(10, 2), new StrongSkin.P(15, 2)),
-        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable.P("Mobs/mob6swim.png"), new WaterFeel.P(0.2f), new WaterDefend.P(4));// {
+        Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 2),
+        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 70, 2, 3, new CommandFaith.P(100, 40, 1)),
+        Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 40,  2, 3, new Sprint.P(4, 2, 50)),
+        JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 4, new Sadist.P(3, 35)),
+        Boar       ("Boar",       "mob5",    MoveType.ground, 250, 0, 60,  3, 7, new LayerArmor.P(10, 2), new StrongSkin.P(15, 2)),
+        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable.P("Mobs/mob6swim.png"), new WaterFeel.P(20), new WaterDefend.P(4));// {
 //            @Override
 //            public void setAbilities() {
 ////                abilities.add(new Swimmable(GDefence.getInstance().assetLoader.get(, Texture.class)));
@@ -159,22 +159,6 @@ public class Mob extends GDSprite{
     }
     public static Mob.Prototype getMobById(int ID){
         return Prototype.values()[ID];
-//        switch (ID){
-//            case 0:
-//                return Prototype.Slime;
-//            case 1:
-//                return Prototype.Dog;
-//            case 2:
-//                return Prototype.Worm;
-//            case 3:
-//                return Prototype.JungleBat;
-//            case 4:
-//                return Prototype.Boar;
-//            case 5:
-//                return Prototype.Amphibia;
-//            default:
-//                throw new IllegalArgumentException("Mob with id " + ID + " not found");
-//        }
     }
 
 
@@ -185,6 +169,7 @@ public class Mob extends GDSprite{
     //public int healthSpace = 3, healthHeight = 5;
     protected String name;
     protected int health;
+    private int maxHealth;
     protected int armor;
     protected MoveType moveType;
     protected float speed;
@@ -257,7 +242,7 @@ public class Mob extends GDSprite{
         effects = new ArrayList<Effect>();
         effectBar = new EffectBar();
         effectBar.setSize(getWidth(), getHeight()/2);
-        effectBar.defaults().space(5);
+        effectBar.defaults().spaceLeft(5).spaceRight(5);
         effectBar.align(Align.center);
 
 //        System.out.println(abilities);
@@ -274,6 +259,7 @@ public class Mob extends GDSprite{
         return health;
     }
     protected void setHealth(int health) {
+        this.maxHealth = health;
         this.health = health;
         hpBar = new ProgressBar(0, getHealth(), 1, false, GDefence.getInstance().assetLoader.getMobHpBarStyle());
     }
@@ -283,9 +269,7 @@ public class Mob extends GDSprite{
     public void setArmor(int armor) {
         this.armor = armor;
     }
-    public void changeArmor(int value){
-        armor += value;
-    }
+
 
     public MoveType getMoveType() {
         return moveType;
@@ -329,10 +313,10 @@ public class Mob extends GDSprite{
     public void addEffect(Effect d){
         if(!haveEffect(d.getClass())) {
             effects.add(d);
-            d.apply();//start debuff
-            EffectIcon ei = new EffectIcon(d);
-            ei.setSize(effectBar.getHeight(), effectBar.getHeight());
+            d.apply();//start effect
             if(!d.isHidden()) {
+                EffectIcon ei = new EffectIcon(d);
+                ei.setSize(effectBar.getHeight(), effectBar.getHeight());
                 effectBar.add(ei);
             }
         }else {
@@ -401,6 +385,15 @@ public class Mob extends GDSprite{
             }
         }
     }
+    private boolean useDieAbilities(Tower source){
+        boolean isAlive = false;
+        for (MobAbility a:abilities){
+            if(a instanceof MobAbility.IDie){
+                if(((MobAbility.IDie) a).die(source)) isAlive = true;
+            }
+        }
+        return isAlive;
+    }
 
 
 //    private void useAbility(Class<? extends MobAbility.IType> abilityType){
@@ -434,8 +427,10 @@ public class Mob extends GDSprite{
         if(resistDmg < getHealth()){
             health -= resistDmg;
         }else if(isInGame()){
-            health = 0;
-            setDie(source);
+            if(!useDieAbilities(source)) {
+                health = 0;
+                setDie(source);
+            }
         }
     }
 
@@ -443,6 +438,25 @@ public class Mob extends GDSprite{
         //speed = speed*percent;
         if(speed + value > 5) speed += value;//minimum speed const
         else speed = 5;
+    }
+    public void changeArmor(int value){
+        armor += value;
+    }
+    public void heal(int value){
+        if(health + value < maxHealth) health+=value;
+        else health = maxHealth;
+    }
+    public void dispellDebuffs(){
+        CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
+        for (Effect e:tmpEffects){
+            if(!e.isBuff() && e.isDispellable()) e.dispell();
+        }
+    }
+    public void dispellBuffs(){
+        CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
+        for (Effect e:tmpEffects){
+            if(e.isBuff() && e.isDispellable()) e.dispell();
+        }
     }
 
 

@@ -1,17 +1,23 @@
 package com.darkhouse.gdefence.Level.Ability.Mob.Tools;
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Effects.Effect;
-import com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.Modifier;
 
-
-public abstract class Stackable extends Effect{
+public class Stackable{
     private int stacks;
     private int maxStacks;
 
-    public Stackable(boolean positive, boolean isHidden, boolean isDispellable, float duration, String effectIconPath, int maxStacks, Modifier startEffect) {
-        super(positive, isHidden, isDispellable, duration, effectIconPath);
+//    public Stackable(boolean positive, boolean isDispellable, float duration, String effectIconPath, int maxStacks) {
+//        super(positive, isDispellable, duration, effectIconPath);
+//        this.maxStacks = maxStacks;
+//    }
+//    public Stackable(boolean positive, boolean isDispellable, float duration, int maxStacks) {
+//        super(positive, isDispellable, duration);
+//        this.maxStacks = maxStacks;
+//    }
+
+    public Stackable(int maxStacks) {
         this.maxStacks = maxStacks;
     }
+
 
 //    protected abstract void updateStack();
 
@@ -21,8 +27,15 @@ public abstract class Stackable extends Effect{
     public void addStack(){
         stacks++;
     }
-    public void setStacks(int value){
+    public void setCurrentStacks(int value){
         stacks = value;
+    }
+
+    public boolean isZeroStacks(){
+        return stacks == 0;
+    }
+    public boolean isMaxStacks(){
+        return stacks == maxStacks;
     }
 
     public int getMaxStacks() {
@@ -31,9 +44,7 @@ public abstract class Stackable extends Effect{
 
     public void deleteStack(){
         stacks--;
-        if(stacks == 0){
-            dispell();
-        }
+//        if(stacks == 0) dispell();
     }
 
 
