@@ -1,14 +1,15 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.BonusArmor;
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Stackable;
+import com.darkhouse.gdefence.Level.Ability.Tools.Stackable;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 
 public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
 
-    private class LayerArmorBuff extends Effect implements IGetDmg{
+    private class LayerArmorBuff extends Effect<Mob> implements IGetDmg{
         private int armorPerStack;
         private BonusArmor modifier;
 

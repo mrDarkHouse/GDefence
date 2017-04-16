@@ -18,6 +18,8 @@ import com.darkhouse.gdefence.Screens.BottomPanel.Arsenal;
 import com.darkhouse.gdefence.Screens.BottomPanel.Smith;
 import com.darkhouse.gdefence.Screens.BottomPanel.Store;
 
+import java.util.Random;
+
 public class GDefence extends Game {
 	//SpriteBatch batch;
 	//Texture img;
@@ -172,4 +174,26 @@ public class GDefence extends Game {
 	public Skin getSkin(){
 		return new Skin(Gdx.files.internal("uiskin.json"));
 	}
+
+
+	private static String[] tips = {
+			"Every tower level up it can be grade by gem",
+
+			"Red gem up attack damage by " + User.GEM_TYPE.getBoost(User.GEM_TYPE.RED) + System.getProperty("line.separator") +
+			"Yellow up attack speed by " + User.GEM_TYPE.getBoost(User.GEM_TYPE.YELLOW) + System.getProperty("line.separator") +
+			"Blue up attack range by " + User.GEM_TYPE.getBoost(User.GEM_TYPE.BLUE),
+
+			"You can create new Tower if you had bought recipe and get all needed components" + System.getProperty("line.separator") +
+			"Created tower become available in shop",
+
+			"After grading similar gem 4 times other gems are down by 1 each" + System.getProperty("line.separator") +
+			"Example: 4 red gems up, -1 yellow, -1 blue",
+			"e",
+			"f",};
+
+	public static String getTip(){
+		Random r = new Random();
+		return tips[r.nextInt(tips.length)];
+	}
+
 }

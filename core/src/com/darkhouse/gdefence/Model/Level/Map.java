@@ -245,17 +245,23 @@ public class Map {
 
         initPaths(ml.getMoveTypesInLevel());
 //        normalizeTextures();
-        normalizeBlocks();
+//        normalizeBlocks();
 
 
 
+    }
+
+    public void initBaseTextures(){
+        for (MapTile[] ma:tiles){//can map.getTiles()
+            for (MapTile m: ma) m.initTexture();
+        }
     }
 
 //    private void normalizeTextures(){
 //        for (int y = 0; y < tiles[0].length; y++){
 //            for (int x = 0; x < tiles.length; x++){
 //                if(tiles[x][y] instanceof Turn){
-//                    Texture texture = null;
+//                    Texture texturePath = null;
 //                    Turn turn = ((Turn) tiles[x][y]);
 //                    Way startWay = turn.getStartWay();
 //                    Way resultWay = turn.getResultWay();
@@ -267,24 +273,24 @@ public class Map {
 //                            if (checkTile != null && checkTile instanceof Walkable) {
 //                                if (checkTile instanceof Road) {
 //                                    if(turn.getApplyMobs() == TargetType.WATER_ONLY) {
-//                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/turnWaterGround" +
+//                                        texturePath = GDefence.getInstance().assetLoader.get("Path/Turn/turnWaterGround" +
 //                                                Turn.getTurnCode(startWay, resultWay) + leastWay.getShortName() + ".png", Texture.class);
-////                                        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+////                                        texturePath.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 //                                        break;
 //                                    }else if(turn.getApplyMobs() == TargetType.GROUND_ONLY || turn.getApplyMobs() == TargetType.GROUND_WATER){
-//                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/bridge" +
+//                                        texturePath = GDefence.getInstance().assetLoader.get("Path/Turn/bridge" +
 //                                                Turn.getTripleTurnCode(startWay, resultWay, leastWay) + "noArrows.png", Texture.class);
 //                                        break;
 //                                    }
 //                                } else /*if (checkTile instanceof WaterRoad)*/ {
 //                                    if(turn.getApplyMobs() == TargetType.WATER_ONLY) {
-//                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/waterBridge" +
+//                                        texturePath = GDefence.getInstance().assetLoader.get("Path/Turn/waterBridge" +
 //                                                Turn.getTripleTurnCode(startWay, resultWay, leastWay) + "noArrows.png", Texture.class);
 //                                        break;
 //                                    }else if(turn.getApplyMobs() == TargetType.GROUND_ONLY || turn.getApplyMobs() == TargetType.GROUND_WATER){
-//                                        texture = GDefence.getInstance().assetLoader.get("Path/Turn/turnGroundWater" +
+//                                        texturePath = GDefence.getInstance().assetLoader.get("Path/Turn/turnGroundWater" +
 //                                                Turn.getTurnCode(startWay, resultWay) + leastWay.getShortName() + ".png", Texture.class);
-////                                        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+////                                        texturePath.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 //                                        break;
 //                                    }
 //                                }
@@ -292,14 +298,14 @@ public class Map {
 //                            }
 //                        }
 //                    }
-//                    if(texture!= null) turn.setRegion(texture);
+//                    if(texturePath!= null) turn.setRegion(texturePath);
 //
 //                }
 //            }
 //        }
 //    }
 
-    private void normalizeBlocks(){
+    public void normalizeBlocks(){
         for (int y = 0; y < tiles[0].length; y++) {
             for (int x = 0; x < tiles.length; x++) {
                 if(tiles[x][y] instanceof Road) {
@@ -325,14 +331,14 @@ public class Map {
 //                            if(rightTiles.get(0).isSwimmable() && rightTiles.get(1).isSwimmable() && road.isSwimmable()){
 //                                String turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, rightTiles.get(0))),
 //                                        Way.getNearBlockWay(road, rightTiles.get(1)));//different names
-//                                texture = GDefence.getInstance().assetLoader.get("Path/Turn/turnWater" +
+//                                texturePath = GDefence.getInstance().assetLoader.get("Path/Turn/turnWater" +
 //                                        turnCode + ".png", Texture.class);
 //                                break;
 //                            }
 //                            if(!rightTiles.get(0).isSwimmable() && !rightTiles.get(1).isSwimmable() && !road.isSwimmable()){
 //                                String turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, rightTiles.get(0))),
 //                                        Way.getNearBlockWay(road, rightTiles.get(1)));//different names
-//                                texture = GDefence.getInstance().assetLoader.get("Path/Turn/turn" +
+//                                texturePath = GDefence.getInstance().assetLoader.get("Path/Turn/turn" +
 //                                        turnCode + ".png", Texture.class);
 //                                break;
 //                            }

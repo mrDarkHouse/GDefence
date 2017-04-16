@@ -1,14 +1,10 @@
-package com.darkhouse.gdefence.Level.Ability.Mob.Tools;
+package com.darkhouse.gdefence.Level.Ability.Tools;
 
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
-import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Level.Mob.Mob;
+import com.darkhouse.gdefence.Model.Effectable;
 
-import java.io.Serializable;
-
-public abstract class Effect implements Serializable{
+public abstract class Effect<T extends Effectable>{
     private boolean isBuff;
     public boolean isBuff() {
         return isBuff;
@@ -25,14 +21,14 @@ public abstract class Effect implements Serializable{
     protected float duration;
     protected float currentTime;
     private WidgetGroup group;
-    private Texture icon;
-    public Texture getIcon() {
-        return icon;
+    private String iconPath;
+    public String getIconPath() {
+        return iconPath;
     }
-    protected Mob owner;
+    protected T owner;
 
 
-    public Effect setOwner(Mob owner) {
+    public Effect setOwner(T owner) {
         this.owner = owner;
         return this;
     }
@@ -88,10 +84,11 @@ public abstract class Effect implements Serializable{
 //        this.owner = owner;
         this.duration = duration;
         currentTime = duration;
-        if(effectIconPath.equals(""))icon = GDefence.getInstance().assetLoader.get("", Texture.class);
-        else icon = GDefence.getInstance().assetLoader.get("AbilityIcons/Effects/" + effectIconPath + ".png", Texture.class);
+        this.iconPath = effectIconPath;
+//        if(effectIconPath.equals("")) iconPath = GDefence.getInstance().assetLoader.get("", Texture.class);
+//        else iconPath = GDefence.getInstance().assetLoader.get("AbilityIcons/Effects/" + effectIconPath + ".png", Texture.class);
 //        group = new WidgetGroup();
-//        group.addActor(icon);
+//        group.addActor(iconPath);
     }
     public Effect(boolean positive, boolean isDispellable, float duration){
         this.isHidden = true;

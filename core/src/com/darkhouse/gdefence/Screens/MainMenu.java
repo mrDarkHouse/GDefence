@@ -38,7 +38,7 @@ public class MainMenu extends AbstractMenuScreen{
 
     //private SpriteBatch batch;
    // private Texture menuBg;
-    //private Texture texture;
+    //private Texture texturePath;
 //    private ImageButton campainButton;
 //    public Map<String, TextureRegion> textureRegions = new HashMap<String, TextureRegion>();
    // private Stage stage;
@@ -78,7 +78,7 @@ public class MainMenu extends AbstractMenuScreen{
     private void loadButtons(){
 
         //Gdx.input.setInputProcessor(stage);//change
-        //texture  = new Texture(Gdx.files.internal("MainMenuAtlas.png"));
+        //texturePath  = new Texture(Gdx.files.internal("MainMenuAtlas.png"));
         //TextureAtlas mainMenuAtlas = new TextureAtlas("MainMenuAtlas.png");
 //        Skin buttonsSkin = new Skin(mainMenuAtlas);
 //        ImageButton.ImageButtonStyle connectToHost = new ImageButton.ImageButtonStyle();
@@ -88,7 +88,7 @@ public class MainMenu extends AbstractMenuScreen{
         int buttonsSize[] = {200, 100};
         int startBorder = Gdx.graphics.getHeight()/16;
         int sizeBetween = Gdx.graphics.getHeight()/24;
-        //TextureRegion tmp[][] = TextureRegion.split(texture, texture.getWidth() / 2, texture.getHeight() / 10);
+        //TextureRegion tmp[][] = TextureRegion.split(texturePath, texturePath.getWidth() / 2, texturePath.getHeight() / 10);
 //        textureRegions.put("campain", AssetLoader.mainMenuButtons[0][0]);
 //        textureRegions.put("campainPressed", AssetLoader.mainMenuButtons[0][1]);
 //        textureRegions.put("options", AssetLoader.mainMenuButtons[1][0]);

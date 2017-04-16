@@ -8,11 +8,11 @@ import com.darkhouse.gdefence.Level.Mob.Way;
 
 public class Castle extends MapTile implements Walkable{
     public Castle() {
-        initTexture();
+//        initTexture();
     }
 
     @Override
-    protected void initTexture() {
+    public void initTexture() {
         setRegion(GDefence.getInstance().assetLoader.get("Path/castle.png", Texture.class));
     }
 

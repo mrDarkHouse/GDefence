@@ -14,7 +14,7 @@ import com.darkhouse.gdefence.Model.Level.Map;
 
 public class Projectile extends GameActor{
 
-    private Texture texture;
+//    private Texture texture;
     private Tower tower;
     private Mob target;
     private float speed;
@@ -26,10 +26,11 @@ public class Projectile extends GameActor{
     private Vector2 dir = new Vector2();
 
     public Projectile(Tower tower, Mob target) {
+        super(tower.getTowerPrototype().getPrototype().getProjectileTexture());
         this.tower = tower;
         this.target = target;
         this.speed = 250;//custom
-        texture = tower.getTowerPrototype().getPrototype().getProjectileTexture();//WHAT THE FUCK IT??!!
+//        texture = tower.getTowerPrototype().getPrototype().getProjectileTexture();//WHAT THE FUCK IT??!!
         // (prototype.getPrototype().getPrototype().getAnotherPrototype.getTowerPrototype.getAnotherFuckingPrototype)
 
         //position.set(tower.getX(), tower.getY());
@@ -72,10 +73,8 @@ public class Projectile extends GameActor{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-//        super.draw(batch, parentAlpha);
-        Image f = new Image(texture);
-        //f.setSize(12, 8);
         f.setPosition(getX(), getY());
+//        f.setSize(12, 8);//default texture size sets without it
         f.setRotation(getRotation());
         f.draw(batch, 1);
     }

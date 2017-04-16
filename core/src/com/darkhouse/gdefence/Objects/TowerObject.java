@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Objects;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Tower.Tower;
@@ -21,7 +22,7 @@ public class TowerObject extends GameObject{
     private int speed;
     private int cost;
     private int globalCost;
-    protected ArrayList<Ability> abilities;
+    protected Array<Ability.AblityPrototype> abilities;
 
 
 
@@ -55,7 +56,7 @@ public class TowerObject extends GameObject{
         return t;
     }
 
-    public ArrayList<Ability> getAbilities() {
+    public Array<Ability.AblityPrototype> getAbilities() {
         return abilities;
     }
 //    public AttackType getAttackType() {
@@ -141,13 +142,14 @@ public class TowerObject extends GameObject{
         speed = prototype.getSpeed();
         cost = prototype.getCost();
         globalCost = prototype.getGlobalCost();
-        abilities = new ArrayList<Ability>(prototype.getAbilities());
+        abilities = new Array<Ability.AblityPrototype>(prototype.getAbilities());
 
 
         gemsNumber = new int[]{0, 0, 0, 0, 0, 0};
 //        gemsNumber = new HashMap<User.GEM_TYPE, Integer>();
 //        gemsNumber.put(User.GEM_TYPE.RED, 0);
     }
+
 
     @Override
     public String getTooltip() {
@@ -162,19 +164,13 @@ public class TowerObject extends GameObject{
     public void updateGemStat(int gemType, int value){
         switch (gemType){
             case 0:
-                for (int i = 0; i < value; i++){
-                    dmg += 5;
-                }
+                for (int i = 0; i < value; i++)dmg += User.GEM_TYPE.getBoost(User.GEM_TYPE.RED);
                 break;
             case 1:
-                for (int i = 0; i < value; i++){
-                    speed += 10;
-                }
+                for (int i = 0; i < value; i++)speed += User.GEM_TYPE.getBoost(User.GEM_TYPE.YELLOW);
                 break;
             case 2:
-                for (int i = 0; i < value; i++){
-                    range += 20;
-                }
+                for (int i = 0; i < value; i++)range += User.GEM_TYPE.getBoost(User.GEM_TYPE.BLUE);
                 break;
             case 3:
 

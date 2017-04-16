@@ -28,10 +28,10 @@ public class Turn extends MapTile implements Walkable{
         this.startWay = startWay;
         this.resultWay = resultWay;
         this.applyMobs = applyMobs;
-        initTexture();
+//        initTexture();
     }
     @Override
-    protected void initTexture() {
+    public void initTexture() {
         Texture texture;
 //        if(startWay == Way.LEFT && resultWay == Way.UP || startWay == Way.DOWN && resultWay == Way.RIGHT)
 //            texture = GDefence.getInstance().assetLoader.get("Path/Turn/turnLU.png", Texture.class);

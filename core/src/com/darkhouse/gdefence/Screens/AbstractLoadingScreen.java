@@ -9,8 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Stage.LoadingStage;
 
-public class AbstractLoadingScreen extends AbstractScreen {
-
+public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     protected int progress;
     protected LoadingStage stage;
@@ -22,7 +21,7 @@ public class AbstractLoadingScreen extends AbstractScreen {
     @Override
     public void show() {
         stage = new LoadingStage();
-        GDefence.getInstance().assetLoader.loadAll();
+//        GDefence.getInstance().assetLoader.loadAll();
 
 
         //super.show();
@@ -47,9 +46,7 @@ public class AbstractLoadingScreen extends AbstractScreen {
         stage.draw();
     }
 
-    protected void onLoad(){
-        //
-    }
+    protected abstract void onLoad();
 
     @Override
     public void resize(int width, int height) {

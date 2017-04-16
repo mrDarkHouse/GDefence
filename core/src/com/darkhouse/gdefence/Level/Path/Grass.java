@@ -8,11 +8,11 @@ import com.darkhouse.gdefence.Level.Mob.Way;
 public class Grass extends MapTile{
 
     public Grass() {
-        initTexture();
+//        initTexture();
     }
 
     @Override
-    protected void initTexture() {
+    public void initTexture() {
         setRegion(GDefence.getInstance().assetLoader.get("Path/grass.png", Texture.class));
     }
 

@@ -1,12 +1,13 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 
 public class WaterFeel extends MobAbility implements MobAbility.IMove{
 
-    private class SwimSpeed extends Effect {
+    private class SwimSpeed extends Effect<Mob> {
         private int value;
 
         public SwimSpeed(float duration, int value) {

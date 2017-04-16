@@ -1,7 +1,7 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 
 public class StrongSkin extends MobAbility implements MobAbility.ISpawn{

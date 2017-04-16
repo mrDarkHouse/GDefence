@@ -1,12 +1,13 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
-public class PoisonArrow extends Ability{
+public class PoisonArrow extends Ability implements Ability.IOnHit {
 
-    private static class Slow extends Effect {
+
+    private static class Slow extends Effect<Mob> {
         private float percent;
         private float changeSpeed;
 
@@ -26,19 +27,57 @@ public class PoisonArrow extends Ability{
             super.dispell();
         }
     }
+    public static class P extends Ability.AblityPrototype{
+        private float percent;
+        private float duration;
+
+        public P(float percent, float duration) {
+            super("Poison Arrow");
+            this.percent = percent;
+            this.duration = duration;
+        }
+
+        @Override
+        public Ability getAbility() {
+            return new PoisonArrow(this);
+        }
+
+        @Override
+        public String getTooltip() {
+            return "Slow enemies by" + percent*100 + " % for" + duration + " seconds";
+        }
+    }
 
 //    private Slow slow;
 
-    public PoisonArrow() {
-        super(UseType.onHit);
+    private float percent;
+    private float duration;
+
+    public PoisonArrow(P prototype) {
+        this.percent = prototype.percent;
+        this.duration = prototype.duration;
+    }
+
+//    @Override
+//    public void use(Mob target) {
+//        if(target != null) {
+////            Slow w = new Slow(0.3f, 3f);
+////            w.setOwner(target);
+//            target.addEffect(new Slow(0.3f, 3f).setOwner(target));
+//        }
+//    }
+
+    @Override
+    public int getDmg(Mob target, int startDmg) {
+        if(target != null) {
+            target.addEffect(new Slow(percent, duration).setOwner(target));
+        }
+        return startDmg;
     }
 
     @Override
-    public void use(Mob target) {
-        if(target != null) {
-//            Slow w = new Slow(0.3f, 3f);
-//            w.setOwner(target);
-            target.addEffect(new Slow(0.3f, 3f).setOwner(target));
-        }
+    protected void init() {
+
     }
+
 }

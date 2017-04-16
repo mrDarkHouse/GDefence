@@ -1,14 +1,15 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.Evasion;
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Cooldown;
+import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 
 public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
 
-    private static class GreatEvasionBuff extends Effect implements IGetDmg{
+    private static class GreatEvasionBuff extends Effect<Mob> implements IGetDmg{
         private Evasion evasion;
 
         public GreatEvasionBuff(float cdCap) {

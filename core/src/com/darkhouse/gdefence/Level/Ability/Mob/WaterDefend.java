@@ -1,12 +1,13 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 
 public class WaterDefend extends MobAbility implements MobAbility.IMove{
 
-    private class WaterBonusArmor extends Effect {
+    private class WaterBonusArmor extends Effect<Mob> {
         private int bonusArmor;
 
         public WaterBonusArmor(float duration, int armor) {

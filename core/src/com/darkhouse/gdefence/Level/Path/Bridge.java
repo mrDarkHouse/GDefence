@@ -28,7 +28,7 @@ public class Bridge extends MapTile implements Walkable{
         this.endWay2 = endWay2;
         this.applyMobs = applyMobs;
         this.toAct = toAct;
-        initTexture();
+//        initTexture();
     }
 
     private void updateTexture(){
@@ -37,8 +37,8 @@ public class Bridge extends MapTile implements Walkable{
     }
 
     @Override
-    protected void initTexture() {
-//        Texture texture;
+    public void initTexture() {
+//        Texture texturePath;
         try {
             texture1 = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + inputWay.getShortName() +
                     endWay1.getShortName() + endWay2.getShortName() + "1.png", Texture.class);
@@ -52,47 +52,47 @@ public class Bridge extends MapTile implements Walkable{
 //        switch (inputWay){
 //            case LEFT:
 //                if(endWay1 == Way.UP && endWay2 == Way.DOWN){
-//                    texture = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeLUD" + getActNumber() + ".png", Texture.class);
+//                    texturePath = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeLUD" + getActNumber() + ".png", Texture.class);
 //                    break;
 //                }
 //                break;
 //            case RIGHT:
 //                if(endWay1 == Way.UP && endWay2 == Way.DOWN){
-//                    texture = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeRUD" + getActNumber() + ".png", Texture.class);
+//                    texturePath = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeRUD" + getActNumber() + ".png", Texture.class);
 //                    break;
 //                }
 //                break;
 //            case UP:
 //                if(endWay1 == Way.LEFT && endWay2 == Way.RIGHT){
-//                    texture = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeULR" + getActNumber() + ".png", Texture.class);
+//                    texturePath = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeULR" + getActNumber() + ".png", Texture.class);
 //                    break;
 //                }
 //                if(endWay1 == Way.UP && endWay2 == Way.LEFT){
-//                    texture = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeUUL" + getActNumber() + ".png", Texture.class);
+//                    texturePath = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeUUL" + getActNumber() + ".png", Texture.class);
 //                    break;
 //                }
 //                if(endWay1 == Way.UP && endWay2 == Way.RIGHT){
-//                    texture = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeUUR" + getActNumber() + ".png", Texture.class);
+//                    texturePath = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeUUR" + getActNumber() + ".png", Texture.class);
 //                    break;
 //                }
 //                break;
 //            case DOWN:
 //                if(endWay1 == Way.LEFT && endWay2 == Way.RIGHT){
-//                    texture = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeDLR" + getActNumber() + ".png", Texture.class);
+//                    texturePath = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeDLR" + getActNumber() + ".png", Texture.class);
 //                    break;
 //                }
 //                if(endWay1 == Way.DOWN && endWay2 == Way.LEFT){
-//                    texture = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeDDL" + getActNumber() + ".png", Texture.class);
+//                    texturePath = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeDDL" + getActNumber() + ".png", Texture.class);
 //                    break;
 //                }
 //                if(endWay1 == Way.DOWN && endWay2 == Way.RIGHT){
-//                    texture = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeDDR" + getActNumber() + ".png", Texture.class);
+//                    texturePath = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeDDR" + getActNumber() + ".png", Texture.class);
 //                    break;
 //                }
 //                break;
 //            default: throw new IllegalArgumentException("inputWay cannot be " + inputWay);
 //        }
-//        setRegion(texture);
+//        setRegion(texturePath);
     }
 //    private int getActNumber(){
 //        if(counter == toAct)return 2;

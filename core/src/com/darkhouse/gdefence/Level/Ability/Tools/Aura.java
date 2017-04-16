@@ -1,4 +1,4 @@
-package com.darkhouse.gdefence.Level.Ability.Mob.Tools;
+package com.darkhouse.gdefence.Level.Ability.Tools;
 
 
 import com.badlogic.gdx.math.Circle;

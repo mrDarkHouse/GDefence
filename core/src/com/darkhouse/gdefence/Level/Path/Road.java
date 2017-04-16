@@ -19,11 +19,11 @@ public class Road extends MapTile implements Walkable{
     public Road(Way startWay, TargetType applyMobs) {
         this.startWay = startWay;
         this.applyMobs = applyMobs;
-        initTexture();
+//        initTexture();
     }
 
     @Override
-    protected void initTexture() {
+    public void initTexture() {
         if (applyMobs.isConsist(Mob.MoveType.ground)) {
             if (startWay == Way.LEFT || startWay == Way.RIGHT)
                 setRegion(GDefence.getInstance().assetLoader.get("Path/roadHorizontal.png", Texture.class));

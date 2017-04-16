@@ -33,7 +33,7 @@ public abstract class MapTile extends GDSprite{
 //        none, spawnerR, spawnerL, spawnerU, spawnerD, turnR, turnL, turnU, turnD, bridgeL, bridgeR, bridgeU, bridgeD, castle
 //    }
 
-    //private TextureRegionDrawable texture;
+    //private TextureRegionDrawable texturePath;
 //    private TileType type;
 //    private TileLogic logic;
 
@@ -54,10 +54,10 @@ public abstract class MapTile extends GDSprite{
 
 
     //public TextureRegionDrawable getTexture() {
-    //    return texture;
+    //    return texturePath;
     //}
-    //public void setTexture(TextureRegionDrawable texture) {
-    //    this.texture = texture;
+    //public void setTexture(TextureRegionDrawable texturePath) {
+    //    this.texturePath = texturePath;
     //}
 
 //    public TileType getType() {
@@ -218,7 +218,7 @@ public abstract class MapTile extends GDSprite{
 
 
 
-    protected abstract void initTexture();
+    public abstract void initTexture();
 //        switch (type){
 //            case ground:
 //                setRegion(GDefence.getInstance().assetLoader.get("ground.png", Texture.class));
@@ -238,7 +238,10 @@ public abstract class MapTile extends GDSprite{
 
     public boolean build(TowerObject tower){
         if(isBuildable() && buildedTower == null && LevelMap.getLevel().removeEnergy(tower.getCost())) {//tooltip "no enought enegry", "cannot build there"
-            this.buildedTower = new Tower(tower, getX(), getY(), getWidth(), getHeight());
+            Tower t = new Tower(tower, getX(), getY(), getWidth(), getHeight());
+            t.init();
+            t.procBuildAbilities(this);
+            this.buildedTower = t;
             LevelMap.getLevel().getStatManager().energySpendAdd(tower.getCost());
             return true;
         }else return false;

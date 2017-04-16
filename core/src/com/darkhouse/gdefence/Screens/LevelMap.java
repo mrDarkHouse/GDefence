@@ -41,7 +41,27 @@ public class LevelMap extends AbstractScreen {
     public LevelMap(int number, Inventory inventory) {
         this.number = number;
         this.inventory = inventory;
+
+        batch = new SpriteBatch();
+        stage = new Stage();
+        levelMap = this;
+        level = new Level(number, this);
+        initHpMpBar();
+        initWavePanel();
+        initMapTileActors();
+        initTextures();//after loading textures
+        initShop(inventory);
     }
+
+    private void initTextures(){
+        Level.getMap().initBaseTextures();
+        Level.getMap().normalizeBlocks();
+    }
+
+//    public void init(int number, Inventory inventory){
+//        this.number = number;
+//        this.inventory = inventory;
+//    }
 
     @Override
     public void resize(int width, int height) {
@@ -65,16 +85,17 @@ public class LevelMap extends AbstractScreen {
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
-        stage = new Stage();
-        levelMap = this;
+//        batch = new SpriteBatch();
+//        stage = new Stage();
+//        levelMap = this;
         Gdx.input.setInputProcessor(stage);
+//        initTextures();
 
-        level = new Level(number, this);
-        initHpMpBar();
-        initWavePanel();
-        initMapTileActors();
-        initShop(inventory);
+//        level = new Level(number, this);
+//        initHpMpBar();
+//        initWavePanel();
+//        initMapTileActors();
+//        initShop(inventory);
 
 
 

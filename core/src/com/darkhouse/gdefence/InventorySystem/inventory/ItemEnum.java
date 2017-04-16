@@ -22,6 +22,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Tower.*;
 import com.darkhouse.gdefence.Level.Tower.AttackType;
@@ -30,214 +31,20 @@ import java.util.ArrayList;
 
 
 public enum ItemEnum {;
-	//public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
-
-
-
-
-	/*CRYSTAL_RED("redcrystal"), CRYSTAL_BLUE("bluecrystal"), CRYSTAL_GREEN("greencrystal"), CRYSTAL_YELLOW("yellowcrystal"), CRYSTAL_MAGENTA("magentacrystal"), CRYSTAL_CYAN(
-			"cyancrystal"), CRYSTAL_ORANGE("orangecrystal"), CRYSTAL_VIOLET("violetcrystal"), TITANIUM("titanium"), PALLADIUM("palladium"), IRIDIUM("iridium"), RHODIUM("rhodium"), HULL(
-			"hullbase"), CANNON("cannonbase"), RAY("raybase"), LAUNCHER("launcherbase"), DROID("droidbase"), MINE("dropperbase"), BATTERY("batterybase");
-*/
 	public enum Tower implements Item {
 
-		Basic("Basic", AttackType.projectile, 10, 80, 10, 100, 23){//1.2
-			@Override
-			protected void setTextures() {
-				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/basicTower.png", Texture.class));
-				setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/basic.png", Texture.class));
-			}
+		//	        name        textures         attackType        projSp cost glCost dmg range speed abilities
+		Basic(    "Basic",       "basic",      AttackType.projectile, 200, 10,  80,    10, 100, 23),//1.2
+		Rock(     "Rock",        "rock",       AttackType.projectile, 200, 20,  140,   25, 120, 18, new HunterSpeed.P(3, 40, 10)),//1.4,
+		Arrow(    "Arrow",       "arrow",      AttackType.projectile, 200, 20,  140,   15, 120, 40, new PoisonArrow.P(0.3f, 3)),
+		Range(    "Range",       "range",      AttackType.projectile, 200, 20,  180,   15, 160, 30, new MultiShot.P(2)),
+        Short(    "Short",       "short",      AttackType.projectile, 200, 25,  180,   30, 180, 23),
+        Mountain(  "Mountain",   "mountain",   AttackType.projectile, 200, 25,  180,   45, 130, 15, new Bash.P(0.2f, 1f, 20)),
+        SteelArrow("Steel Arrow","steelArrow", AttackType.projectile, 200, 25,  200,   20, 140, 30),
+        Catapult(  "Catapult",   "catapult",   AttackType.projectile, 200, 25,  240,   30, 180, 10, new Crit.P(0.2f, 2.5f)),
+		Ballista(  "Ballista",   "ballista",   AttackType.projectile, 200, 25,  240,   20, 180, 40);
 
-			@Override
-			public String getTextureRegion() {
-				return "basic";
-			}
 
-            @Override
-            protected void setProjectileSpeed() {
-                setProjectileSpeed(200);
-            }
-
-			@Override
-			protected void addAbilities() {
-
-			}
-		},
-		Rock("Rock", AttackType.projectile, 20, 140, 25, 120, 18){//1.4
-			@Override
-			protected void setTextures() {
-				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/rockTower.png", Texture.class));
-				setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/rock.png", Texture.class));
-			}
-			@Override
-			public String getTextureRegion() {
-				return "rock";
-			}
-
-            @Override
-            protected void setProjectileSpeed() {
-                setProjectileSpeed(200);
-            }
-
-			@Override
-			protected void addAbilities() {
-//				abilities.add(new Crit(0.2f, 2.5f));
-				abilities.add(new Desolate(3, 5));
-			}
-		},
-		Arrow("Arrow", AttackType.projectile, 20, 140, 15, 120, 40){
-			@Override
-			protected void setTextures() {
-				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/arrowTower.png", Texture.class));
-				setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/arrow.png", Texture.class));
-			}
-			@Override
-			public String getTextureRegion() {
-				return "arrow";
-			}
-
-            @Override
-            protected void setProjectileSpeed() {
-                setProjectileSpeed(200);
-            }
-
-			@Override
-			protected void addAbilities() {
-				abilities.add(new PoisonArrow());
-			}
-		},
-		Range("Range", AttackType.projectile, 20, 180, 15, 160, 30){
-			@Override
-			protected void setTextures() {
-				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/rangeTower.png", Texture.class));
-				setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/range.png", Texture.class));
-			}
-
-			@Override
-			public String getTextureRegion() {
-				return "range";
-			}
-
-            @Override
-            protected void setProjectileSpeed() {
-                setProjectileSpeed(200);
-            }
-
-			@Override
-			protected void addAbilities() {
-				abilities.add(new MultiShot(2));
-			}
-		},
-        Short("Short", AttackType.projectile, 25, 180, 30, 180, 23){
-            @Override
-            protected void setTextures() {
-                setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/short.png", Texture.class));
-                setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/short.png", Texture.class));
-            }
-
-            @Override
-            public String getTextureRegion() {
-                return "short";
-            }
-
-            @Override
-            protected void setProjectileSpeed() {
-                setProjectileSpeed(200);
-            }
-
-            @Override
-            protected void addAbilities() {
-                //
-            }
-        },
-        Mountain("Mountain", AttackType.projectile, 25, 180, 45, 130, 15){
-            @Override
-            protected void setTextures() {
-                setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/mountain.png", Texture.class));
-                setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/mountain.png", Texture.class));
-            }
-
-            @Override
-            public String getTextureRegion() {
-                return "mountain";
-            }
-
-            @Override
-            protected void setProjectileSpeed() {
-                setProjectileSpeed(200);
-            }
-
-            @Override
-            protected void addAbilities() {
-                //
-            }
-        },
-        SteelArrow("Steel Arrow", AttackType.projectile, 25, 200, 20, 140, 30){
-            @Override
-            protected void setTextures() {
-                setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/steelArrow.png", Texture.class));
-                setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/steelArrow.png", Texture.class));
-            }
-
-            @Override
-            public String getTextureRegion() {
-                return "steelArrow";
-            }
-
-            @Override
-            protected void setProjectileSpeed() {
-                setProjectileSpeed(200);
-            }
-
-            @Override
-            protected void addAbilities() {
-                //
-            }
-        },
-        Catapult("Catapult", AttackType.projectile, 25, 240, 30, 180, 10){
-            @Override
-            protected void setTextures() {
-                setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/catapult.png", Texture.class));
-                setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/catapult.png", Texture.class));
-            }
-
-            @Override
-            public String getTextureRegion() {
-                return "catapult";
-            }
-
-            @Override
-            protected void setProjectileSpeed() {
-                setProjectileSpeed(200);
-            }
-
-            @Override
-            protected void addAbilities() {
-                //
-            }
-        },
-		Ballista("Ballista", AttackType.projectile, 25, 240, 20, 180, 40){
-			@Override
-			protected void setTextures() {
-				setTowerTexture(GDefence.getInstance().assetLoader.get("Tower/ballista.png", Texture.class));
-				setProjectileTexture(GDefence.getInstance().assetLoader.get("Projectiles/ballista.png", Texture.class));
-			}
-
-			@Override
-			public String getTextureRegion() {
-				return "ballista";
-			}
-
-            @Override
-            protected void setProjectileSpeed() {
-                setProjectileSpeed(200);
-            }
-
-			@Override
-			protected void addAbilities() {
-				//
-			}
-		};
         public static Tower getTower(String name){
             for (Tower t:values()){
                 if(t.getName().equals(name)){
@@ -246,8 +53,6 @@ public enum ItemEnum {;
             }
             return null;
         }
-
-
 		//protected TowerType ID;
 		private Texture towerTexture;
 		private Texture projectileTexture;
@@ -260,26 +65,21 @@ public enum ItemEnum {;
 //		private float speedDelay;
 		private int cost;
 		private int globalCost;
-		protected ArrayList<Ability> abilities;
+		protected Array<Ability.AblityPrototype> abilities;
 
-		protected void addAbilities(){
+		public void setTextures(){
+			towerTexture = GDefence.getInstance().assetLoader.get("Tower/" + textureName + ".png", Texture.class);
+			projectileTexture = GDefence.getInstance().assetLoader.get("Projectiles/" + textureName + ".png", Texture.class);
 		}
 
-		protected void setTowerTexture(Texture towerTexture) {
-			this.towerTexture = towerTexture;
-		}
+//		protected abstract void setTextures();
 
-		protected void setProjectileTexture(Texture projectileTexture) {
-			this.projectileTexture = projectileTexture;
-		}
+//        protected void setProjectileSpeed(){}
 
-		protected abstract void setTextures();
-
-        protected void setProjectileSpeed(){};
-
-        protected void setProjectileSpeed(int projectileSpeed) {
-            this.projectileSpeed = projectileSpeed;
-        }
+//        protected void setProjectileSpeed(int projectileSpeed) {
+//            this.projectileSpeed = projectileSpeed;
+//        }
+		private String textureName;
 
         public Texture getTowerTexture() {
 			return towerTexture;
@@ -287,7 +87,7 @@ public enum ItemEnum {;
 		public Texture getProjectileTexture() {
 			return projectileTexture;
 		}
-		public ArrayList<Ability> getAbilities() {
+		public Array<Ability.AblityPrototype> getAbilities() {
 			return abilities;
 		}
 		public AttackType getAttackType() {
@@ -299,6 +99,12 @@ public enum ItemEnum {;
 		public int getCost() {
 			return cost;
 		}
+
+		@Override
+		public String getTextureRegion() {
+			return textureName;
+		}
+
 		public int getGlobalCost() {
 			return globalCost;
 		}
@@ -313,40 +119,46 @@ public enum ItemEnum {;
 		}
 
 
-		Tower(String name, AttackType attackType, int cost, int globalCost, int dmg, int range, int speed) {
+
+
+		Tower(String name, String textureName, AttackType attackType, int projectileSpeed, int cost, int globalCost,
+			  int dmg, int range, int speed, Ability.AblityPrototype... abilities) {
 			this.name = name;
+			this.textureName = textureName;
 			this.globalCost = globalCost;
 			this.attackType = attackType;
+			this.projectileSpeed = projectileSpeed;
 			this.cost = cost;
 			this.dmg = dmg;
 			this.range = range;
             this.speed = speed;
+			this.abilities = new Array<Ability.AblityPrototype>(abilities);
 
-            if(attackType == AttackType.projectile){
-                setProjectileSpeed();
-            }
+//            if(attackType == AttackType.projectile){
+//                setProjectileSpeed();
+//            }
 
 
 
-			abilities = new ArrayList<Ability>();
-			addAbilities();
+//			abilities = new ArrayList<Ability>();
+//			addAbilities();
 //			setTextures();
 
 		}
 		public static void init(){
-			Basic.setTextures();
-			Rock.setTextures();
-			Arrow.setTextures();
-			Range.setTextures();
-            Short.setTextures();
-            Mountain.setTextures();
-            SteelArrow.setTextures();
-            Catapult.setTextures();
-			Ballista.setTextures();
+//			Basic.setTextures();
+//			Rock.setTextures();
+//			Arrow.setTextures();
+//			Range.setTextures();
+//            Short.setTextures();
+//            Mountain.setTextures();
+//            SteelArrow.setTextures();
+//            Catapult.setTextures();
+//			Ballista.setTextures();
             //for to last setTextures
-//            for (int i = 0; i < Tower.values().length; i++){
-//                Tower.values()[i].setTextures();
-//            }
+            for (int i = 0; i < Tower.values().length; i++){
+                Tower.values()[i].setTextures();
+            }
 		}
 
 	}

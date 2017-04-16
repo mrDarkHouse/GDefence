@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Level {
+    private boolean isPaused = true;
+
     private int expFromLvl;
     private int goldFromLvl;
     private int startEnergy;
@@ -150,6 +152,7 @@ public class Level {
         map = new Map(number, 60, Gdx.graphics.getHeight() - 60, 45);
         //this.map = map;
         loadProperies(map.getSpawner().size());
+        init();
     }
 
     private void loadProperies(int spawners){
@@ -170,8 +173,16 @@ public class Level {
 
 
     }
+    public void init(){
+        for (Wave w:waves){
+            w.init();
+        }
+    }
+
 
     public void start(){
+        isPaused = false;
+
 //        for(int i = 0; i < numberWaves; i++){
 //            currentWave = i;
 //            //try {
@@ -199,9 +210,6 @@ public class Level {
 //        }
         //waves.get(currentWave).spawn(map.getSpawner().get(0));
         //inWave = true;                //insta spawn
-
-
-
     }
 
 
@@ -242,6 +250,7 @@ public class Level {
 
     public void render(float delta, SpriteBatch batch){
         map.draw(delta, batch);
+        if(isPaused) return;
         if(inWave){
             for (int i = 0; i < map.getSpawner().size(); i++) {
                 if(currentWave + i < waves.size()) {//hotfix

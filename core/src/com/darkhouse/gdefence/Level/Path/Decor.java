@@ -12,7 +12,7 @@ public class Decor extends MapTile{
     }
 
     @Override
-    protected void initTexture() {
+    public void initTexture() {
         setRegion(GDefence.getInstance().assetLoader.get("decor" + decorId + ".png", Texture.class));
     }
 

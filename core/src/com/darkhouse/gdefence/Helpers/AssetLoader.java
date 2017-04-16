@@ -79,6 +79,7 @@ public class AssetLoader extends AssetManager{
         loadShop();
         loadSmith();
     }
+
     public void loadOld(){
         loadMainMenu();
     }
@@ -150,7 +151,8 @@ public class AssetLoader extends AssetManager{
 
 
     }
-    private void loadTextures(){
+
+    public void loadTextures(){
         load("MainMenuAtlas.png", Texture.class);
 
         load("MainMenuBg.png", Texture.class);
@@ -198,13 +200,26 @@ public class AssetLoader extends AssetManager{
         load("skins/uiskin.json", Skin.class);
         load("uiskin.json", Skin.class);
 
+        load("Tower/basic.png", Texture.class);
+        load("Tower/rock.png", Texture.class);
+        load("Tower/arrow.png", Texture.class);
+        load("Tower/range.png", Texture.class);
+        load("Tower/short.png", Texture.class);
+        load("Tower/mountain.png", Texture.class);
+        load("Tower/steelArrow.png", Texture.class);
+        load("Tower/ballista.png", Texture.class);
+        load("Tower/catapult.png", Texture.class);
+
+
+
 
 
 
     }
-    private void loadLevelMap(){
+    public void loadLevelMap(){
         //load("MainMenuBg.png", Texture.class);
 
+//        load("ground.png", Texture.class);
         load("Path/grass.png", Texture.class);
         load("Path/castle.png", Texture.class);
         load("Path/waterHorizontal.png", Texture.class);
@@ -288,7 +303,7 @@ public class AssetLoader extends AssetManager{
 
 
 
-//        load("ground.png", Texture.class);
+
         load("Mobs/mob.png", Texture.class);
         load("Mobs/mob2.png", Texture.class);
         load("Mobs/mob3.png", Texture.class);
@@ -296,15 +311,7 @@ public class AssetLoader extends AssetManager{
         load("Mobs/mob5.png", Texture.class);
         load("Mobs/mob6walk.png", Texture.class);
         load("Mobs/mob6swim.png", Texture.class);
-        load("Tower/basicTower.png", Texture.class);
-        load("Tower/rockTower.png", Texture.class);
-        load("Tower/arrowTower.png", Texture.class);
-        load("Tower/rangeTower.png", Texture.class);
-        load("Tower/short.png", Texture.class);
-        load("Tower/mountain.png", Texture.class);
-        load("Tower/steelArrow.png", Texture.class);
-        load("Tower/ballista.png", Texture.class);
-        load("Tower/catapult.png", Texture.class);
+
         load("infoPanelFone.png", Texture.class);
         load("levelLooseBg.png", Texture.class);
         load("levelWinBg.png", Texture.class);
@@ -316,13 +323,13 @@ public class AssetLoader extends AssetManager{
 
 
     }
-    private void loadShop(){
+    public void loadShop(){
         load("sellButton.png", Texture.class);
 
 
 
     }
-    private void loadSmith(){
+    public void loadSmith(){
         load("maxHpGrade.png", Texture.class);
         load("maxEnergyGrade.png", Texture.class);
         load("prevButton.png", Texture.class);
@@ -332,6 +339,16 @@ public class AssetLoader extends AssetManager{
 
 
     }
+
+    public Texture getEffectIcon(String effectIconPath){
+        return get("AbilityIcons/Effects/" + effectIconPath + ".png", Texture.class);
+    }
+
+    public Texture getMobTexture(String path){
+        return get("Mobs/" + path + ".png", Texture.class);
+    }
+
+
     public Texture getTurn(String texturePath){//
         Texture t = get(texturePath, Texture.class);
         t.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);

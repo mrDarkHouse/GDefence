@@ -1,15 +1,15 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Aura;
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Cooldown;
+import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tools.Aura;
+import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Wave;
 
 public class HealingAura extends MobAbility implements MobAbility.ISpawn{
 
-    private class HealingAuraBuff extends Effect{
+    private class HealingAuraBuff extends Effect<Mob>{
         private int range;
         private int healEmount;
 
@@ -56,7 +56,7 @@ public class HealingAura extends MobAbility implements MobAbility.ISpawn{
 //            getAuraObject().init(owner, range);//may work in this place
         }
     }
-    private class HealingAuraHeal extends Effect{
+    private class HealingAuraHeal extends Effect<Mob>{
         private Aura centerAura;
 
 
@@ -94,7 +94,7 @@ public class HealingAura extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             return "Heals [#64A619ff]" + healEmount + "[] hp to all Mobs in [#64A619ff]" + range + "[] range"
-                    +  System.getProperty("line.separator") + "every [#64A619ff]" + healDelay + "[] seconds";
+                    + System.getProperty("line.separator") + "every [#64A619ff]" + healDelay + "[] seconds";
         }
     }
 

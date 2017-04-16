@@ -1,11 +1,12 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Cooldown;
+import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 
 public class Sprint extends MobAbility implements MobAbility.ISpawn{
-    private class SprintBuff extends Effect{
+    private class SprintBuff extends Effect<Mob>{
         private int value;
 
         public SprintBuff(float cdCap, float duration, int value) {
@@ -34,7 +35,7 @@ public class Sprint extends MobAbility implements MobAbility.ISpawn{
 //            owner.deleteEffect(this.getClass());
         }
     }
-    private class SprintSpeed extends Effect{
+    private class SprintSpeed extends Effect<Mob>{
         private int value;
 
         public SprintSpeed(float duration, int value) {

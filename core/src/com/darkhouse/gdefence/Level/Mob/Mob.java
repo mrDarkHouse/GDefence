@@ -1,34 +1,28 @@
 package com.darkhouse.gdefence.Level.Mob;
 
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Mob.*;
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.EffectIcon;
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Path.*;
 import com.darkhouse.gdefence.Level.Tower.AttackLogic;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
-import com.darkhouse.gdefence.Model.GDSprite;
+import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Mob extends GDSprite{
+public class Mob extends Effectable{
 
     public enum Prototype{
-        //           name          texture     moveType       hp  arm spd dmg bounty       //i think it better than Builder
+        //           name          texturePath     moveType       hp  arm spd dmg bounty       //i think it better than Builder
         Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 2),
         Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 70, 2, 3, new CommandFaith.P(100, 40, 1)),
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 40,  2, 3, new Sprint.P(4, 2, 50)),
@@ -42,7 +36,7 @@ public class Mob extends GDSprite{
 //        };
 
         Prototype(String name, String regionPath, MoveType moveType, int health, int armor,  float speed, int dmg, int bounty, MobAbility.AblityPrototype... abilities) {
-            this.texture = GDefence.getInstance().assetLoader.get("Mobs/" + regionPath + ".png", Texture.class);
+            this.texturePath = regionPath;
             this.name = name;
             this.health = health;
             this.armor = armor;
@@ -53,7 +47,7 @@ public class Mob extends GDSprite{
             this.abilities = new Array<MobAbility.AblityPrototype>(abilities);
         }
 
-        protected Texture texture;
+        protected String texturePath;
         protected String name;
         protected int health;
         protected int armor;
@@ -179,45 +173,47 @@ public class Mob extends GDSprite{
     protected boolean inGame = true;
     //protected int xC, yC;
     protected MapTile currentTile;
+
+    private String texturePath;
     private ProgressBar hpBar;
-    private EffectBar effectBar;
-    private ArrayList <Effect> effects;//Effect[]
+//    private EffectBar effectBar;
+//    private ArrayList <Effect> effects;//Effect[]
     private Array<MobAbility> abilities;
 
     private Way way;
 
-    private class EffectBar extends Table{
-
-//        public void addActor(EffectIcon actor) {
-//            super.addActor(actor);
+//    private class EffectBar extends Table{
+//
+////        public void addActor(EffectIcon actor) {
+////            super.addActor(actor);
+////        }
+//
+////        @Override
+////        public void addActor(Actor actor) {
+////            //delete
+////        }
+//
+////        @Override
+////        public SnapshotArray<Actor> getChildren() {
+////            //delete
+////            return null;
+////        }
+//
+//        public Array<EffectIcon> getChildrenArray() {
+////            return super.getChildren();
+//            Array<EffectIcon> icons = new Array<EffectIcon>();
+//            for (Actor a:super.getChildren()){
+//                icons.add(((EffectIcon) a));
+//            }
+//            return icons;
 //        }
-
-//        @Override
-//        public void addActor(Actor actor) {
-//            //delete
+//
+//        public void removeIcon(Texture icon){
+//            for (EffectIcon e:getChildrenArray()){
+//                if(e.getIcon() == icon)removeActor(e);
+//            }
 //        }
-
-//        @Override
-//        public SnapshotArray<Actor> getChildren() {
-//            //delete
-//            return null;
-//        }
-
-        public Array<EffectIcon> getChildrenArray() {
-//            return super.getChildren();
-            Array<EffectIcon> icons = new Array<EffectIcon>();
-            for (Actor a:super.getChildren()){
-                icons.add(((EffectIcon) a));
-            }
-            return icons;
-        }
-
-        public void removeIcon(Texture icon){
-            for (EffectIcon e:getChildrenArray()){
-                if(e.getIcon() == icon)removeActor(e);
-            }
-        }
-    }
+//    }
 
 
     public static Mob createMob(Prototype prototype){
@@ -227,8 +223,10 @@ public class Mob extends GDSprite{
     }
 
     public Mob(Prototype prototype) {
+        super();
         setName(prototype.name);
-        setRegion(prototype.texture);
+//        setRegion(prototype.texturePath);
+        texturePath = prototype.texturePath;
         setMoveType(prototype.moveType);
         setHealth(prototype.health);
         setArmor(prototype.armor);
@@ -236,19 +234,23 @@ public class Mob extends GDSprite{
         setDmg(prototype.dmg);
         setBounty(prototype.bounty);
         setAbilities(prototype.abilities);
+//        initAbilities();
 
         setSize(45, 45);
+        initEffectable();
 
-        effects = new ArrayList<Effect>();
-        effectBar = new EffectBar();
-        effectBar.setSize(getWidth(), getHeight()/2);
-        effectBar.defaults().spaceLeft(5).spaceRight(5);
-        effectBar.align(Align.center);
+//        effects = new ArrayList<Effect>();
+//        effectBar = new EffectBar();
+//        effectBar.setSize(getWidth(), getHeight()/2);
+//        effectBar.defaults().spaceLeft(5).spaceRight(5);
+//        effectBar.align(Align.center);
 
 //        System.out.println(abilities);
 
-//        setRegion(texture);
+//        setRegion(texturePath);
     }
+
+
     public String getName() {
         return name;
     }
@@ -310,45 +312,45 @@ public class Mob extends GDSprite{
         return inGame;
     }
 
-    public void addEffect(Effect d){
-        if(!haveEffect(d.getClass())) {
-            effects.add(d);
-            d.apply();//start effect
-            if(!d.isHidden()) {
-                EffectIcon ei = new EffectIcon(d);
-                ei.setSize(effectBar.getHeight(), effectBar.getHeight());
-                effectBar.add(ei);
-            }
-        }else {
-            getEffect(d.getClass()).updateDuration();
-            //effects.get(effects.indexOf(d)).updateDuration();
-        }
-    }
-    public void deleteEffect(Class d){
-        Effect searched = getEffect(d);
-        if(searched != null) {
-            effects.remove(searched);
-            effectBar.removeIcon(searched.getIcon());
-        }
-    }
-
-    public boolean haveEffect(Class d){
-//        for (Debuff db: effects){
-//            if(db.getClass() == d.getClass()){
-//                return true;
+//    public void addEffect(Effect d){
+//        if(!haveEffect(d.getClass())) {
+//            effects.add(d);
+//            d.apply();//start effect
+//            if(!d.isHidden()) {
+//                EffectIcon ei = new EffectIcon(d);
+//                ei.setSize(effectBar.getHeight(), effectBar.getHeight());
+//                effectBar.add(ei);
+//            }
+//        }else {
+//            getEffect(d.getClass()).updateDuration();
+//            //effects.get(effects.indexOf(d)).updateDuration();
+//        }
+//    }
+//    public void deleteEffect(Class d){
+//        Effect searched = getEffect(d);
+//        if(searched != null) {
+//            effects.remove(searched);
+//            effectBar.removeIcon(GDefence.getInstance().assetLoader.getEffectIcon(searched.getIconPath()));
+//        }
+//    }
+//
+//    public boolean haveEffect(Class d){
+////        for (Debuff db: effects){
+////            if(db.getClass() == d.getClass()){
+////                return true;
+////            }
+////        }
+////        return false;
+//        return (getEffect(d) != null);
+//    }
+//    private Effect getEffect(Class d){
+//        for (Effect db: effects){
+//            if(db.getClass() == d){
+//                return db;
 //            }
 //        }
-//        return false;
-        return (getEffect(d) != null);
-    }
-    private Effect getEffect(Class d){
-        for (Effect db: effects){
-            if(db.getClass() == d){
-                return db;
-            }
-        }
-        return null;
-    }
+//        return null;
+//    }
 
     public void initAbilities(){
         for (MobAbility a:abilities){
@@ -545,20 +547,22 @@ public class Mob extends GDSprite{
     public void spawn(MapTile spawner){
 //        System.out.println("spawned " + this.getName());
 //        way = Map.checkSpawnerWay(spawner);
+        setRegion(GDefence.getInstance().assetLoader.getMobTexture(texturePath));
+
         currentTile = spawner;
         way = ((Spawn) spawner).manipulatePath(this.getMoveType());
 
-//        update();//some mobs must change texture in spawn block
+//        update();//some mobs must change texturePath in spawn block
         setPosition(spawner.getX(), spawner.getY());
         setRotation(0);
         useSpawnAbilities();
-        //setDrawable(texture);
+        //setDrawable(texturePath);
 
     }
 //    public abstract void update();
 
     public void render(SpriteBatch batch){
-        //Image i = new Image(texture);
+        //Image i = new Image(texturePath);
         //i.setSize(width, height);
         //i.setPosition(x, y);
 

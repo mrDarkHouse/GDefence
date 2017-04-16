@@ -56,15 +56,20 @@ public class Wave {
     private float spawnDelay;
 
 
+    private boolean isPaused = true;
+
     public Wave(int mobID, int numberMobs, float timeSpawn) {
         this.numberMobs = numberMobs;
         this.timeSpawn = timeSpawn;
         this.mobID = mobID;
     }
+    public void init(){
+        initMobsToSpawn();
+    }
 
     public void spawn(/*MapTile spawner*/){
-
-        initMobsToSpawn();
+        isPaused = false;
+//        initMobsToSpawn();
         //setSpawner(spawner);
 
     }
@@ -76,7 +81,7 @@ public class Wave {
     }
 
     public void update(float delta){
-        checkToSpawn(delta);
+        if(!isPaused) checkToSpawn(delta);
         //moveMobs(delta);
     }
 

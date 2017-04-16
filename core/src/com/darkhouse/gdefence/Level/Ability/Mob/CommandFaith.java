@@ -2,14 +2,14 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
 import com.badlogic.gdx.math.Circle;
-import com.darkhouse.gdefence.Level.Ability.Mob.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
 
 public class CommandFaith extends MobAbility implements MobAbility.IDie{
 
-    private class CommandFaithBuff extends Effect{
+    private class CommandFaithBuff extends Effect<Mob>{
         private int echoRange;
         private int speedBoost;
 

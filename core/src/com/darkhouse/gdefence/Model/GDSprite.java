@@ -12,6 +12,9 @@ import java.awt.Point;
 public class GDSprite extends Sprite{
 
 
+    public Vector2 getCenter(){
+        return new Vector2(getX() + getWidth()/2, getY() + getHeight()/2);
+    }
 
     public Vector2 getPosition(){
         return new Vector2((int)getX(), (int)getY());
