@@ -57,7 +57,7 @@ public class MultiShot extends Ability implements Ability.IPreAttack{
 
     private void shot(){
         for (Mob m: targets){
-            Map.projectiles.add(new Projectile(owner, m));
+            Map.projectiles.add(new Projectile(owner, owner.getCenter(), m));
         }
     }
     private void dispose(){

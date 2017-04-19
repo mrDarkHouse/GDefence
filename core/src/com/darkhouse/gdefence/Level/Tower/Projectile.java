@@ -25,7 +25,7 @@ public class Projectile extends GameActor{
     private Vector2 targetV = new Vector2();
     private Vector2 dir = new Vector2();
 
-    public Projectile(Tower tower, Mob target) {
+    public Projectile(Tower tower, Vector2 startLocation, Mob target) {
         super(tower.getTowerPrototype().getPrototype().getProjectileTexture());
         this.tower = tower;
         this.target = target;
@@ -34,8 +34,11 @@ public class Projectile extends GameActor{
         // (prototype.getPrototype().getPrototype().getAnotherPrototype.getTowerPrototype.getAnotherFuckingPrototype)
 
         //position.set(tower.getX(), tower.getY());
-        setX(tower.getCenter().x);
-        setY(tower.getCenter().y);
+//        setX(tower.getCenter().x);
+//        setY(tower.getCenter().y);
+        setX(startLocation.x);
+        setY(startLocation.y);
+
 
     }
 

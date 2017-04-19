@@ -37,7 +37,7 @@ public enum ItemEnum {;
 		Basic(    "Basic",       "basic",      AttackType.projectile, 200, 10,  80,    10, 100, 23),//1.2
 		Rock(     "Rock",        "rock",       AttackType.projectile, 200, 20,  140,   25, 120, 18, new HunterSpeed.P(3, 40, 10)),//1.4,
 		Arrow(    "Arrow",       "arrow",      AttackType.projectile, 200, 20,  140,   15, 120, 40, new PoisonArrow.P(0.3f, 3)),
-		Range(    "Range",       "range",      AttackType.projectile, 200, 20,  180,   15, 160, 30, new MultiShot.P(2)),
+		Range(    "Range",       "range",      AttackType.projectile, 200, 20,  180,   15, 160, 30, new Glaive.P(2, 1, 300)),
         Short(    "Short",       "short",      AttackType.projectile, 200, 25,  180,   30, 180, 23),
         Mountain(  "Mountain",   "mountain",   AttackType.projectile, 200, 25,  180,   45, 130, 15, new Bash.P(0.2f, 1f, 20)),
         SteelArrow("Steel Arrow","steelArrow", AttackType.projectile, 200, 25,  200,   20, 140, 30),

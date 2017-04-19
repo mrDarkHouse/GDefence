@@ -269,7 +269,7 @@ public class Tower extends Effectable{
 //    }
     private void shot(Mob target){
         //target.hit(towerPrototype.getDmg());
-        Map.projectiles.add(new Projectile(this, target));
+        Map.projectiles.add(new Projectile(this, this.getCenter(), target));
 
 
     }

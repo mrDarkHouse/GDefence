@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Model.Level;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
@@ -12,6 +13,7 @@ import com.darkhouse.gdefence.Level.Path.*;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
+import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
 import java.util.ArrayList;
@@ -90,6 +92,19 @@ public class Map {
 //                return null;
 //        }
 //    }
+    public static Mob getNearestMob(Vector2 startSearch, int range){
+        float currentF = 99999;//infinity
+        Mob currentMob = null;
+        for (Mob m: Wave.mobs) {
+            float dst = m.getCenter().dst(startSearch);
+            if(dst < range && dst < currentF){
+                currentF = dst;
+                currentMob = m;
+            }
+        }
+        return currentMob;
+    }
+
 
     public MapTile getTileContainMob(Mob mob){
         for (int x = 0; x < tiles.length; x++){
