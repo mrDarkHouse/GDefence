@@ -105,6 +105,17 @@ public class Map {
         return currentMob;
     }
 
+    public static Array<Mob> getMobsInRange(Mob searchMob, int range){
+        Array<Mob> found = new Array<Mob>();
+        for (Mob m: Wave.mobs) {
+            float dst = m.getCenter().dst(searchMob.getCenter());
+            if(dst <= range){
+                found.add(m);
+            }
+        }
+        return found;
+    }
+
 
     public MapTile getTileContainMob(Mob mob){
         for (int x = 0; x < tiles.length; x++){
