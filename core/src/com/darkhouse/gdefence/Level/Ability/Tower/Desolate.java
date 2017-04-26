@@ -52,6 +52,7 @@ public class Desolate extends Ability implements Ability.IOnHit {
     public Desolate(P prototype) {
         armor = prototype.armor;
         duration = prototype.duration;
+        setWorkOnAdditionalProjectiles();
     }
 
     //    public Desolate(int armor, float duration) {

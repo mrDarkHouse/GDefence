@@ -49,8 +49,23 @@ public class EffectIcon extends Actor{
         Gdx.gl.glLineWidth(borderSize + 1);
         sp.rect(getX(), getY(), getWidth(), getHeight());
         sp.end();
+
+
+
+//        super.draw(batch, parentAlpha);
+
+
+
+
         batch.begin();
+//        batch.setColor(this.getColor());
+//        batch.getColor().a *= 0.4f;
+        Color tmp = batch.getColor();
+        batch.setColor(tmp.r, tmp.g, tmp.b, tmp.a *= 0.8);
         batch.draw(icon, getX() + borderSize, getY() + borderSize, getWidth() - borderSize*2, getHeight() - borderSize*2);
+
+
+        batch.setColor(tmp);
 
         if(effect.isCooldownable()){//if cooldownable and stackable in one time ability must declare own EffectIcon
             other.setAlignment(Align.center);

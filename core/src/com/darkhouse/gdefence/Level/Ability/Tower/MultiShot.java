@@ -57,7 +57,9 @@ public class MultiShot extends Ability implements Ability.IPreAttack{
 
     private void shot(){
         for (Mob m: targets){
-            Map.projectiles.add(new Projectile(owner, owner.getCenter(), m));
+            Projectile p = new Projectile(owner, owner.getCenter(), m, false);
+            p.setDmgMultiplayer(0.8f);
+            Map.projectiles.add(p);
         }
     }
     private void dispose(){

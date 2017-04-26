@@ -1,11 +1,15 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.Level.Mob.Mob;
+import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.Map;
 
-public class Splash extends Ability implements Ability.IOnHit{
+public class Splash extends Ability implements Ability.IAfterHit{
+
+
     public static class P extends Ability.AblityPrototype{
         private float aoeDmg;
         private int aoe;
@@ -36,12 +40,13 @@ public class Splash extends Ability implements Ability.IOnHit{
     }
 
     @Override
-    public int getDmg(Mob target, int startDmg) {
-        for (Mob m: Wave.mobs){
-//            if(Map)
+    public void hit(Mob target, int dmg, Projectile hittingProjectile) {
+//        for (Mob m: Wave.mobs){
+//
+//        }
+        for (Mob m:Map.getMobsInRange(target, aoe)){
+            owner.hitTarget(m, (int) (dmg*aoeDmg));
         }
-
-        return 0;
     }
 
     @Override

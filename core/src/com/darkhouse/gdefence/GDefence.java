@@ -188,8 +188,8 @@ public class GDefence extends Game {
 
 			"After grading similar gem 4 times other gems are down by 1 each" + System.getProperty("line.separator") +
 			"Example: 4 red gems up, -1 yellow, -1 blue",
-			"e",
-			"f",};
+			/*"e",
+			"f",*/};
 
 	public static String getTip(){
 		Random r = new Random();

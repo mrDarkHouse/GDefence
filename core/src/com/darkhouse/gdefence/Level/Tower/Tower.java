@@ -225,10 +225,17 @@ public class Tower extends Effectable{
     }
 
     public void physic(float delta){
+        actEffects(delta);
         if(canAttack){
             attack(delta);
 
 
+        }
+    }
+
+    public void actEffects(float delta){
+        for (int i = 0; i < effects.size(); i++){
+            effects.get(i).act(delta);
         }
     }
 
@@ -269,26 +276,58 @@ public class Tower extends Effectable{
 //    }
     private void shot(Mob target){
         //target.hit(towerPrototype.getDmg());
-        Map.projectiles.add(new Projectile(this, this.getCenter(), target));
-
+        Projectile p = new Projectile(this, this.getCenter(), target, true);
+        for (Ability a:abilities){
+            if(a instanceof Ability.IAfterHit){
+                p.addAbilities(((Ability.IAfterHit) a));
+            }
+        }
+        Map.projectiles.add(p);
 
     }
-    public void hitTarget(Mob target){
+
+//    public void hitTarget(Mob target, boolean isMain){
+//        int dmg = this.dmg;
+//        for (Ability a:abilities){
+////            if(a.getUseType() == Ability.UseType.onHit){
+////                a.use(target);//if main target//now work on mulitshot
+////                dmg = a.getDmg(dmg);
+////            }
+//            if(a instanceof Ability.IOnHit && (isMain || a.isWorkOnAdditionalProjectiles())){
+//                dmg = ((Ability.IOnHit) a).getDmg(target, dmg);
+//            }
+//        }
+//        if(target != null) {//hotfix
+//            target.hit(dmg, this);
+//            getTowerPrototype().addExp(dmg/10);
+//
+//            procAfterHitAbilities(target, dmg);
+//        }
+//    }
+
+    public int getDmg(Mob target, boolean isMain){
         int dmg = this.dmg;
         for (Ability a:abilities){
-//            if(a.getUseType() == Ability.UseType.onHit){
-//                a.use(target);//if main target//now work on mulitshot
-//                dmg = a.getDmg(dmg);
-//            }
-            if(a instanceof Ability.IOnHit){
+            if(a instanceof Ability.IOnHit && (isMain || a.isWorkOnAdditionalProjectiles())){
                 dmg = ((Ability.IOnHit) a).getDmg(target, dmg);
             }
         }
+        return dmg;
+    }
+    public void hitTarget(Mob target, int dmg){
         if(target != null) {//hotfix
             target.hit(dmg, this);
-            getTowerPrototype().addExp(dmg/10);
+            getTowerPrototype().addExp(dmg / 10);
+//            procAfterHitAbilities(target, dmg);
         }
     }
+//    private void procAfterHitAbilities(Mob target, int dmg){
+//        for (Ability a:abilities){
+//            if(a instanceof Ability.IAfterHit){
+//                ((Ability.IAfterHit) a).hit(target, dmg);//this.dmg if need not buff by abilities
+//            }
+//        }
+//    }
 
 //    public void draw(SpriteBatch batch, float delta){//draw from levelMap instead MapTile
 //        super.draw(batch, delta);

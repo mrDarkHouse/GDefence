@@ -14,7 +14,7 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
         private float duration;
 
         public HunterSpeedBuff(int kills, int speedUp, float duration) {
-            super(true, true, -1, "swimSpeed");
+            super(true, true, -1, "bonusArmor");
             this.speedUp = speedUp;
             this.duration = duration;
             setStackable(new Stackable(kills));
@@ -23,6 +23,11 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
         @Override
         public void apply() {
 
+        }
+
+        @Override
+        public void dispell() {
+            super.dispell();
         }
 
         @Override

@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
+import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 
 public abstract class Ability {
@@ -34,6 +35,9 @@ public abstract class Ability {
     public interface IOnHit {
         int getDmg(Mob target, int startDmg);
     }
+    public interface IAfterHit {
+        void hit(Mob target, int dmg, Projectile hittingProjectile);
+    }
     public interface IOnBuild {
         void builded(MapTile tile);
     }
@@ -63,6 +67,14 @@ public abstract class Ability {
 
 
     protected Tower owner;
+    private boolean workOnAdditionalProjectiles;
+
+    public boolean isWorkOnAdditionalProjectiles() {
+        return workOnAdditionalProjectiles;
+    }
+    protected void setWorkOnAdditionalProjectiles() {
+        this.workOnAdditionalProjectiles = true;
+    }
 
     public void setOwner(Tower owner) {
         this.owner = owner;

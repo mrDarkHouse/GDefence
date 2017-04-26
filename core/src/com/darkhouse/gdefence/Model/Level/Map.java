@@ -92,12 +92,12 @@ public class Map {
 //                return null;
 //        }
 //    }
-    public static Mob getNearestMob(Vector2 startSearch, int range){
+    public static Mob getNearestMob(Mob startSearch, int range){
         float currentF = 99999;//infinity
         Mob currentMob = null;
         for (Mob m: Wave.mobs) {
-            float dst = m.getCenter().dst(startSearch);
-            if(dst < range && dst < currentF){
+            float dst = m.getCenter().dst(startSearch.getCenter());
+            if(startSearch != m && dst < range && dst < currentF){
                 currentF = dst;
                 currentMob = m;
             }
