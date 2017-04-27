@@ -30,9 +30,9 @@ public class HealingAura extends MobAbility implements MobAbility.ISpawn{
 
         @Override
         public void act(float delta) {
-//            super.act(delta);
+            super.act(delta);
             getAuraObject().update();
-            getCooldownObject().act(delta);
+//            getCooldownObject().act(delta);
 //            CopyOnWriteArrayList<Mob> tmpMobs = new CopyOnWriteArrayList<Mob>((Collection) Wave.mobs);
             for (int i = 0; i < Wave.mobs.size; i++){
                 Mob m = Wave.mobs.get(i);

@@ -9,7 +9,6 @@ import com.darkhouse.gdefence.Model.Level.Map;
 
 public class Splash extends Ability implements Ability.IAfterHit{
 
-
     public static class P extends Ability.AblityPrototype{
         private float aoeDmg;
         private int aoe;

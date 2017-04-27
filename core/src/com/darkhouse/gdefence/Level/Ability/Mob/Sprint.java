@@ -22,7 +22,7 @@ public class Sprint extends MobAbility implements MobAbility.ISpawn{
         }
 
         public void act(float delta){
-            getCooldownObject().act(delta);
+            super.act(delta);
             if(getCooldownObject().isReady()){
                 owner.addEffect(new SprintSpeed(duration, value).setOwner(owner));
                 getCooldownObject().resetCooldown();

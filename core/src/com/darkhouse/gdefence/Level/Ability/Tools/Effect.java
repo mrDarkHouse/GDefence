@@ -67,6 +67,15 @@ public abstract class Effect<T extends Effectable>{
     }
 
 
+    private boolean workOnAdditionalProjectiles;
+
+    public boolean isWorkOnAdditionalProjectiles() {
+        return workOnAdditionalProjectiles;
+    }
+    protected void setWorkOnAdditionalProjectiles() {
+        this.workOnAdditionalProjectiles = true;
+    }
+
 
 
 
@@ -115,6 +124,10 @@ public abstract class Effect<T extends Effectable>{
     }
 
     public void act(float delta){
+        if(isCooldownable()){
+            getCooldownObject().act(delta);
+        }
+
         if(duration == -1){//infinity time
             return;
         }

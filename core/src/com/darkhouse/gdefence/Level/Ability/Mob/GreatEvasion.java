@@ -31,11 +31,11 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
             }else return dmg;
         }
 
-        @Override
-        public void act(float delta) {
-            //super.act(delta);
-            getCooldownObject().act(delta);
-        }
+//        @Override
+//        public void act(float delta) {
+//            //super.act(delta);
+//            getCooldownObject().act(delta);
+//        }
     }
     public static class P extends AblityPrototype{
         private float cdCap;

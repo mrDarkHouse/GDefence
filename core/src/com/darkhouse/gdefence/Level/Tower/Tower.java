@@ -312,6 +312,11 @@ public class Tower extends Effectable{
                 dmg = ((Ability.IOnHit) a).getDmg(target, dmg);
             }
         }
+        for (Effect e:effects){
+            if(e instanceof Ability.IOnHit && (isMain || e.isWorkOnAdditionalProjectiles())){
+                dmg = ((Ability.IOnHit) e).getDmg(target, dmg);
+            }
+        }
         return dmg;
     }
     public void hitTarget(Mob target, int dmg){

@@ -34,7 +34,6 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
                     "Max targets " + maxTargets;
         }
     }
-
     private class SteelProjectile extends Projectile{
         private Vector2 endLocation;
 
@@ -83,7 +82,6 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
 
         }
     }
-
     private class targetChecher extends Ability implements IAfterHit{
         private Projectile owner;
         private int maxTargets;
