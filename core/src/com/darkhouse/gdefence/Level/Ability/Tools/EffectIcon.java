@@ -67,7 +67,7 @@ public class EffectIcon extends Actor{
 //
 //        batch.setColor(tmp);
 
-        if(effect.isCooldownable()){//if cooldownable and stackable in one time ability must declare own EffectIcon
+        if(effect.isCooldownable() && !effect.getCooldownObject().isHidden()){//if cooldownable and stackable in one time ability must declare own EffectIcon
             other.setAlignment(Align.center);
             int cd = (int)  Math.ceil(effect.getCooldownObject().getCooldown());
             if(cd == 0)other.setText("");

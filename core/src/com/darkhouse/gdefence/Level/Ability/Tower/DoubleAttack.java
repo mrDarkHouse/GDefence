@@ -29,8 +29,8 @@ public class DoubleAttack extends Ability implements Ability.IOnBuild{
             return "Shot second projectile every " + cdCap + " seconds";
         }
     }
-    private class DoubleAttackEffect extends Effect<Tower> implements IOnHit{
-        private float delay = 0.1f;
+    private class DoubleAttackEffect extends Effect<Tower> implements IPreAttack{
+        private float delay = 0.2f;
         private float currentDelayTime = -1;
 
         private Mob target;
@@ -70,14 +70,21 @@ public class DoubleAttack extends Ability implements Ability.IOnBuild{
 //            }
 //        }
 
+//        @Override
+//        public int getDmg(Mob target, int startDmg) {
+//            if (getCooldownObject().isReady()) {
+//                this.target = target;
+//                currentDelayTime = 0;
+//            }
+//            return startDmg;
+//        }
+
         @Override
-        public int getDmg(Mob target, int startDmg) {
+        public void use(Mob target) {//if before attack (must implement IPreAttack)
             if (getCooldownObject().isReady()) {
                 this.target = target;
                 currentDelayTime = 0;
-//                getCooldownObject().resetCooldown();
             }
-            return startDmg;
         }
     }
 

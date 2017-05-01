@@ -61,7 +61,7 @@ public class HealingAura extends MobAbility implements MobAbility.ISpawn{
 
 
         public HealingAuraHeal(Aura aura) {
-            super(true, false, -1, "swimSpeed");
+            super(true, false, -1, "heal");
             this.centerAura = aura;
         }
 

@@ -33,16 +33,30 @@ import java.util.ArrayList;
 public enum ItemEnum {;
 	public enum Tower implements Item {
 
-		//	        name        textures         attackType        projSp cost glCost dmg range speed abilities
-		Basic(    "Basic",       "basic",      AttackType.projectile, 250, 10,  80,    10, 100, 23),//1.2
-		Rock(     "Rock",        "rock",       AttackType.projectile, 250, 20,  140,   25, 120, 10, new DoubleAttack.P(3f)),//1.4,
-		Arrow(    "Arrow",       "arrow",      AttackType.projectile, 250, 20,  140,   15, 120, 40, new Splash.P(150, 0.8f)),
-		Range(    "Range",       "range",      AttackType.projectile, 350, 20,  180,   15, 160, 30, new SteelArrow.P(3, 200)),
-        Short(    "Short",       "short",      AttackType.projectile, 250, 25,  180,   30, 180, 23),
-        Mountain(  "Mountain",   "mountain",   AttackType.projectile, 250, 25,  180,   45, 130, 15, new Bash.P(0.2f, 1f, 20)),
-        SteelArrow("Steel Arrow","steelArrow", AttackType.projectile, 250, 25,  200,   20, 140, 30),
-        Catapult(  "Catapult",   "catapult",   AttackType.projectile, 250, 25,  240,   30, 180, 10, new Crit.P(0.2f, 2.5f)),
-		Ballista(  "Ballista",   "ballista",   AttackType.projectile, 250, 25,  240,   20, 180, 40);
+		//	        name        textures              attackType         projSp cost glCost dmg range speed abilities
+		Basic(    "Basic",          "basic",         AttackType.projectile, 250, 10,  80,    10, 100, 23),//1.2
+		Rock(     "Rock",           "rock",          AttackType.projectile, 250, 20,  140,   25, 120, 10, new DoubleAttack.P(3f)),//1.4,
+		Arrow(    "Arrow",          "arrow",         AttackType.projectile, 250, 20,  140,   15, 120, 40, new Bash.P(0.2f, 1f, 5)),
+		Range(    "Range",          "range",         AttackType.projectile, 350, 20,  180,   15, 160, 30, new SteelArrow.P(3, 200)),
+        Short(    "Short",          "short",         AttackType.projectile, 250, 25,  180,   30, 180, 23),
+        Mountain( "Mountain",       "mountain",      AttackType.projectile, 250, 25,  180,   45, 130, 15, new Bash.P(0.2f, 1f, 20)),
+//        SteelArrow("Steel Arrow","steelArrow", AttackType.projectile, 250, 25,  200,   20, 140, 30),
+        Catapult(  "Catapult",      "range",      AttackType.projectile, 250, 25,  240,   30, 180, 10, new Crit.P(0.2f, 2.5f)),
+		Ballista(  "Ballista",      "range",      AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        Spear(     "Spear",         "range",         AttackType.projectile, 250, 25, 240, 20, 180, 40),
+        CrossBow(  "CrossBow",      "range",      AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        Gun(       "Gun",           "range",           AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        Rifle(     "Rifle",         "range",         AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        Sniper(    "Sniper",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        Shotgun(   "Shotgun",       "range",       AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        DoubleBarrel("Double Barrel","range", AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        Cannon(    "Cannon",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        Rocket(    "Rocket",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        Missle(    "Missle",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        Glaive(    "Glaive",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        MultiShot( "MultiShot",     "range",     AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        SteamMachine("Steam Machine","range", AttackType.projectile, 250, 25,  240,   20, 180, 40);
+
 
 
         public static Tower getTower(String name){

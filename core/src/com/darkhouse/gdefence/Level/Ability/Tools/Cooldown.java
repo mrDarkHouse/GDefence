@@ -5,6 +5,14 @@ public class Cooldown{
     private float cooldown;
     private float cdCap;
 
+    private boolean isHidden;
+    public void setHidden() {
+        isHidden = true;
+    }
+    public boolean isHidden() {
+        return isHidden;
+    }
+
     public float getCdCap() {
         return cdCap;
     }

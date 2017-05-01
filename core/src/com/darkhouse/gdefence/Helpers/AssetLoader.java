@@ -294,6 +294,9 @@ public class AssetLoader extends AssetManager{
         load("AbilityIcons/Effects/slow.png", Texture.class);
         load("AbilityIcons/Effects/armorReduction.png", Texture.class);
         load("AbilityIcons/Effects/bonusArmor.png", Texture.class);
+        load("AbilityIcons/Effects/fireArrow.png", Texture.class);
+        load("AbilityIcons/Effects/bash.png", Texture.class);
+        load("AbilityIcons/Effects/heal.png", Texture.class);
 
 
 

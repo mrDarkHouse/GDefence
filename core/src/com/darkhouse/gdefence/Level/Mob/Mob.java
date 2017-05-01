@@ -24,7 +24,7 @@ public class Mob extends Effectable{
     public enum Prototype{
         //           name          texturePath     moveType       hp  arm spd dmg bounty       //i think it better than Builder
         Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 2),
-        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 70, 2, 3, new CommandFaith.P(100, 40, 1)),
+        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 70, 2, 3, new HealingAura.P(250, 1, 5)),
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 40,  2, 3, new Sprint.P(4, 2, 50)),
         JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 4, new Sadist.P(3, 35)),
         Boar       ("Boar",       "mob5",    MoveType.ground, 250, 0, 60,  3, 7, new LayerArmor.P(10, 2), new StrongSkin.P(15, 2)),
@@ -182,6 +182,18 @@ public class Mob extends Effectable{
 
     private Way way;
 
+    public enum State{
+        normal, stunned
+    }
+
+    private State state;
+    public State getState() {
+        return state;
+    }
+    public void setState(State state) {
+        this.state = state;
+    }
+
 //    private class EffectBar extends Table{
 //
 ////        public void addActor(EffectIcon actor) {
@@ -238,6 +250,8 @@ public class Mob extends Effectable{
 
         setSize(45, 45);
         initEffectable();
+
+        setState(State.normal);
 
 //        effects = new ArrayList<Effect>();
 //        effectBar = new EffectBar();
@@ -493,19 +507,22 @@ public class Mob extends Effectable{
 
         checkCastle(currentTile);//may be first
 
-        switch (way){
-            case RIGHT:
-                setX(getX() + delta);//bug when delta > time when check turn
-                break;
-            case LEFT:
-                setX(getX() - delta);
-                break;
-            case UP:
-                setY(getY() + delta);
-                break;
-            case DOWN:
-                setY(getY() - delta);
-                break;
+        if(getState() == State.normal) {
+
+            switch (way) {
+                case RIGHT:
+                    setX(getX() + delta);//bug when delta > time when check turn
+                    break;
+                case LEFT:
+                    setX(getX() - delta);
+                    break;
+                case UP:
+                    setY(getY() + delta);
+                    break;
+                case DOWN:
+                    setY(getY() - delta);
+                    break;
+            }
         }
     }
     private void checkTurn(MapTile currentTile){

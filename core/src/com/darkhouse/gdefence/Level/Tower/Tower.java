@@ -170,6 +170,8 @@ public class Tower extends Effectable{
 
         this.dmg = towerPrototype.getDmg();
         this.speed = towerPrototype.getSpeed();
+
+        preShotTime = getAttackSpeedDelay(speed);//for momental shot
 //        this.speedDelay = getAttackSpeedDelay(speed);
     }
     public void init(){
@@ -253,6 +255,11 @@ public class Tower extends Effectable{
 //                    }
                     if(a instanceof Ability.IPreAttack){
                         ((Ability.IPreAttack) a).use(target);
+                    }
+                }
+                for (Effect e:effects){
+                    if(e instanceof Ability.IPreAttack){
+                        ((Ability.IPreAttack) e).use(target);
                     }
                 }
                 shot(target);

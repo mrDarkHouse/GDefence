@@ -62,7 +62,9 @@ public class Effectable extends GDSprite{
         Effect searched = getEffect(d);
         if(searched != null) {
             effects.remove(searched);
-            effectBar.removeIcon(GDefence.getInstance().assetLoader.getEffectIcon(searched.getIconPath()));
+            if(searched.getIconPath() != null) {
+                effectBar.removeIcon(GDefence.getInstance().assetLoader.getEffectIcon(searched.getIconPath()));
+            }
         }
     }
 

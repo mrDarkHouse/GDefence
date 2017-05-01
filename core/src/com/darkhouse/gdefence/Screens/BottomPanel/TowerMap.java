@@ -21,6 +21,9 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.HidingClickListener;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.User;
+import com.darkhouse.gdefence.Value;
+
+import java.util.HashMap;
 
 public class TowerMap extends Window{
     private Array <RecipeButton> buttons;
@@ -49,10 +52,12 @@ public class TowerMap extends Window{
 
         TextButton closeButton = new TextButton("X", skin);
         closeButton.addListener(new HidingClickListener(this));
-        add(closeButton).height(getPadTop());//
+//        add(closeButton).height(getPadTop());//
         getTitleTable().add(closeButton).height(getPadTop());
 
         pack();
+
+//        debug();
 
         setVisible(false);
     }
@@ -61,15 +66,19 @@ public class TowerMap extends Window{
 
     private void initButtons(){
         buttons = new Array<RecipeButton>();
-        buttons.add(new RecipeButton(ItemEnum.Tower.Basic));
-        buttons.add(new RecipeButton(ItemEnum.Tower.Rock));
-        buttons.add(new RecipeButton(ItemEnum.Tower.Arrow));
-        buttons.add(new RecipeButton(ItemEnum.Tower.Range));
-        buttons.add(new RecipeButton(ItemEnum.Tower.Short));
-        buttons.add(new RecipeButton(ItemEnum.Tower.Mountain));
-        buttons.add(new RecipeButton(ItemEnum.Tower.SteelArrow));
-        buttons.add(new RecipeButton(ItemEnum.Tower.Catapult));
-        buttons.add(new RecipeButton(ItemEnum.Tower.Ballista));
+        /*0*/buttons.add(new RecipeButton(ItemEnum.Tower.Basic));
+        /*1*/buttons.add(new RecipeButton(ItemEnum.Tower.Rock));
+        /*2*/buttons.add(new RecipeButton(ItemEnum.Tower.Arrow));
+        /*3*/buttons.add(new RecipeButton(ItemEnum.Tower.Range));
+        /*4*/buttons.add(new RecipeButton(ItemEnum.Tower.Short));
+        /*5*/buttons.add(new RecipeButton(ItemEnum.Tower.Spear));
+        /*6*/buttons.add(new RecipeButton(ItemEnum.Tower.Mountain));
+        /*7*/buttons.add(new RecipeButton(ItemEnum.Tower.CrossBow));
+//        buttons.add(new RecipeButton(ItemEnum.Tower.SteelArrow));
+        /*8*/buttons.add(new RecipeButton(ItemEnum.Tower.Gun));
+        /*9*/buttons.add(new RecipeButton(ItemEnum.Tower.Rifle));
+        /*10*/buttons.add(new RecipeButton(ItemEnum.Tower.Catapult));
+        /*11*/buttons.add(new RecipeButton(ItemEnum.Tower.Ballista));
 
 
         for(RecipeButton b:buttons){
@@ -85,15 +94,23 @@ public class TowerMap extends Window{
 //        for (RecipeButton b:buttons){
 //            add(b);
 //        }
-        add(buttons.get(0)).align(Align.center).colspan(5).row();
-        add(buttons.get(1)).colspan(2);
-        add(buttons.get(2));
+//        defaults().align(Align.center);
+
+        add(buttons.get(0))/*.align(Align.center)*/.colspan(6).row();
+        add(buttons.get(1));//.colspan(2);
+        add(buttons.get(2));//.colspan(2);
         add(buttons.get(3)).colspan(2).row();
-        add(buttons.get(4));
-        add(buttons.get(5));
-        add(buttons.get(6));
-        add(buttons.get(7));
-        add(buttons.get(8));
+        add(buttons.get(4)).colspan(1);
+        add(buttons.get(5)).colspan(1);
+        add(buttons.get(6)).colspan(1);
+        add(buttons.get(7)).colspan(1).row();
+        add(buttons.get(8)).colspan(2).row();
+        add(buttons.get(9));
+        add(buttons.get(10)).colspan(2);
+        add(buttons.get(11)).colspan(2);
+
+
+//        add(buttons.get(8));
 
 
 
@@ -118,12 +135,32 @@ public class TowerMap extends Window{
             linkTowers(sr, buttons.get(0), buttons.get(i));
         }
         linkTowers(sr, buttons.get(1), buttons.get(4));
-        linkTowers(sr, buttons.get(1), buttons.get(5));
-        linkTowers(sr, buttons.get(1), buttons.get(7));
-        linkTowers(sr, buttons.get(2), buttons.get(6));
-        linkTowers(sr, buttons.get(2), buttons.get(8));
+//        linkTowers(sr, buttons.get(1), buttons.get(5));
+        linkTowers(sr, buttons.get(2), buttons.get(5));
+
+        linkTowers(sr, buttons.get(1), buttons.get(6));
+        linkTowers(sr, buttons.get(3), buttons.get(6));
+
+        linkTowers(sr, buttons.get(2), buttons.get(7));
         linkTowers(sr, buttons.get(3), buttons.get(7));
-        linkTowers(sr, buttons.get(3), buttons.get(8));
+
+        linkTowers(sr, buttons.get(4), buttons.get(8));
+        linkTowers(sr, buttons.get(5), buttons.get(8));
+//
+        linkTowers(sr, buttons.get(6), buttons.get(10));
+//
+        linkTowers(sr, buttons.get(7), buttons.get(11));
+
+        linkTowers(sr, buttons.get(8), buttons.get(9));
+
+
+
+
+//        linkTowers(sr, buttons.get(1), buttons.get(7));
+//        linkTowers(sr, buttons.get(2), buttons.get(6));
+//        linkTowers(sr, buttons.get(2), buttons.get(8));
+//        linkTowers(sr, buttons.get(3), buttons.get(7));
+//        linkTowers(sr, buttons.get(3), buttons.get(8));
 
         sr.end();
         batch.begin();

@@ -254,7 +254,7 @@ public class User {
         openedTowers.put(ItemEnum.Tower.Range, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Short, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Mountain, RecipeType.locked);
-        openedTowers.put(ItemEnum.Tower.SteelArrow, RecipeType.locked);
+//        openedTowers.put(ItemEnum.Tower.SteelArrow, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Ballista, RecipeType.locked);
         openedTowers.put(ItemEnum.Tower.Catapult, RecipeType.locked);
 
@@ -302,9 +302,9 @@ public class User {
             unlockRecipe(ItemEnum.Tower.Short);
             unlockRecipe(ItemEnum.Tower.Mountain);
         }
-        if(isOpened(ItemEnum.Tower.Arrow)){
-            unlockRecipe(ItemEnum.Tower.SteelArrow);
-        }
+//        if(isOpened(ItemEnum.Tower.Arrow)){
+//            unlockRecipe(ItemEnum.Tower.SteelArrow);
+//        }
         if(isOpened(ItemEnum.Tower.Arrow) && isOpened(ItemEnum.Tower.Range)){
             unlockRecipe(ItemEnum.Tower.Ballista);
         }

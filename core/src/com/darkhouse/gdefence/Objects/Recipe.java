@@ -83,13 +83,13 @@ public class Recipe extends DetailObject{
                 components.add(o);//4 0 0
                 globalCost = 200;
                 break;
-            case SteelArrow:
-                o = new TowerObject(ItemEnum.Tower.Arrow);
-                o.addGems(User.GEM_TYPE.RED, 2);
-                o.addGems(User.GEM_TYPE.YELLOW, 2);
-                components.add(o);//2 2 0
-                globalCost = 200;
-                break;
+//            case SteelArrow:
+//                o = new TowerObject(ItemEnum.Tower.Arrow);
+//                o.addGems(User.GEM_TYPE.RED, 2);
+//                o.addGems(User.GEM_TYPE.YELLOW, 2);
+//                components.add(o);//2 2 0
+//                globalCost = 200;
+//                break;
             case Ballista:
                 o = new TowerObject(ItemEnum.Tower.Arrow);
                 o.addGems(User.GEM_TYPE.YELLOW, 2);

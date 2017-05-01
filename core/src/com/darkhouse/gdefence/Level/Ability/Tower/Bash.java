@@ -8,21 +8,23 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 public class Bash extends Ability implements Ability.IOnHit{
 
     private class BashEffect extends Effect<Mob>{
-        private float startSpeed;
+//        private float startSpeed;
 
         public BashEffect(float duration) {
-            super(false, true, duration, "swimSpeed");
+            super(false, true, duration, "bash");
         }
 
         @Override
         public void apply() {
-            startSpeed = owner.getSpeed();//bad idea
-            owner.changeSpeed(0);
+//            startSpeed = owner.getSpeed();//bad idea
+//            owner.changeSpeed(0);
+            owner.setState(Mob.State.stunned);
         }
 
         @Override
         public void dispell() {
-            owner.changeSpeed(startSpeed);
+//            owner.changeSpeed(startSpeed);
+            if(owner.getState() == Mob.State.stunned) owner.setState(Mob.State.normal); //dont dispell other effects, but dispell stuns
             super.dispell();
         }
     }
