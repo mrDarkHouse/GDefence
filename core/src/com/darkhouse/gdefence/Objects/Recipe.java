@@ -40,56 +40,27 @@ public class Recipe extends DetailObject{
         return getClass().getSimpleName() + "-" + getTower().name();
     }
 
-    private void initComponents(ItemEnum.Tower t){
+    private void initComponents(ItemEnum.Tower t){//
         components = new Array<TowerObject>();
+        globalCost = t.getGlobalCost();
         TowerObject o;//
         switch (t){
             case Rock:
-                o = new TowerObject(ItemEnum.Tower.Basic);
-                o.addGems(User.GEM_TYPE.RED, 3);
-                o.addGems(User.GEM_TYPE.YELLOW, 1);
-                o.addGems(User.GEM_TYPE.BLUE, 1);
-                components.add(o);//3 1 1
-                globalCost = 80;
+                components.add(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
                 break;
             case Arrow:
-                o = new TowerObject(ItemEnum.Tower.Basic);
-                o.addGems(User.GEM_TYPE.RED, 1);
-                o.addGems(User.GEM_TYPE.YELLOW, 3);
-                o.addGems(User.GEM_TYPE.BLUE, 1);
-                components.add(o);//1 3 1
-                globalCost = 100;
+                components.add(new TowerObject(ItemEnum.Tower.Basic, 1, 3, 1));
                 break;
             case Range:
-                o = new TowerObject(ItemEnum.Tower.Basic);
-                o.addGems(User.GEM_TYPE.RED, 1);
-                o.addGems(User.GEM_TYPE.YELLOW, 1);
-                o.addGems(User.GEM_TYPE.BLUE, 3);
-                components.add(o);//1 1 3
-                globalCost = 120;
+                components.add(new TowerObject(ItemEnum.Tower.Basic, 1, 1, 3));
                 break;
             case Short:
-                o = new TowerObject(ItemEnum.Tower.Rock);
-                o.addGems(User.GEM_TYPE.RED, 2);
-                o.addGems(User.GEM_TYPE.YELLOW, 1);
-                o.addGems(User.GEM_TYPE.BLUE, 1);
-                components.add(o);//2 1 1
+                components.add(new TowerObject(ItemEnum.Tower.Rock, 2, 1, 1));
                 //+powder
-                globalCost = 200;
                 break;
             case Mountain:
-                o = new TowerObject(ItemEnum.Tower.Rock);
-                o.addGems(User.GEM_TYPE.RED, 4);
-                components.add(o);//4 0 0
-                globalCost = 200;
+                components.add(new TowerObject(ItemEnum.Tower.Rock, 4, 0, 0));
                 break;
-//            case SteelArrow:
-//                o = new TowerObject(ItemEnum.Tower.Arrow);
-//                o.addGems(User.GEM_TYPE.RED, 2);
-//                o.addGems(User.GEM_TYPE.YELLOW, 2);
-//                components.add(o);//2 2 0
-//                globalCost = 200;
-//                break;
             case Ballista:
                 o = new TowerObject(ItemEnum.Tower.Arrow);
                 o.addGems(User.GEM_TYPE.YELLOW, 2);
@@ -99,7 +70,6 @@ public class Recipe extends DetailObject{
                 o.addGems(User.GEM_TYPE.YELLOW, 2);
                 o.addGems(User.GEM_TYPE.BLUE, 1);
                 components.add(o);//0 2 1
-                globalCost = 200;
                 break;
             case Catapult:
                 o = new TowerObject(ItemEnum.Tower.Rock);
@@ -110,7 +80,6 @@ public class Recipe extends DetailObject{
                 o.addGems(User.GEM_TYPE.RED, 2);
                 o.addGems(User.GEM_TYPE.BLUE, 1);
                 components.add(o);//2 0 1
-                globalCost = 200;
                 break;
 
         }

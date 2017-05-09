@@ -47,6 +47,7 @@ public enum ItemEnum {;
         CrossBow(  "CrossBow",      "range",      AttackType.projectile, 250, 25,  240,   20, 180, 40),
         Gun(       "Gun",           "range",           AttackType.projectile, 250, 25,  240,   20, 180, 40),
         Rifle(     "Rifle",         "range",         AttackType.projectile, 250, 25,  240,   20, 180, 40),
+        MachineGun("Machine Gun",   "range",         AttackType.projectile, 250, 25,  240,   20, 180, 40),
         Sniper(    "Sniper",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40),
         Shotgun(   "Shotgun",       "range",       AttackType.projectile, 250, 25,  240,   20, 180, 40),
         DoubleBarrel("Double Barrel","range", AttackType.projectile, 250, 25,  240,   20, 180, 40),

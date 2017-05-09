@@ -150,6 +150,16 @@ public class TowerObject extends GameObject{
 //        gemsNumber.put(User.GEM_TYPE.RED, 0);
     }
 
+    public TowerObject(ItemEnum.Tower prototype, int red, int yellow, int blue) {
+        this(prototype);
+        addGems(User.GEM_TYPE.RED, red);
+        addGems(User.GEM_TYPE.YELLOW, yellow);
+        addGems(User.GEM_TYPE.BLUE, blue);
+
+    }
+
+
+
 
     @Override
     public String getTooltip() {
