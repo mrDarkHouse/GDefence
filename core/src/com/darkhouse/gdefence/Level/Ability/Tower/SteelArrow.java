@@ -34,7 +34,7 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
                     "Max targets " + maxTargets;
         }
     }
-    private class SteelProjectile extends Projectile{
+    public static class SteelProjectile extends Projectile{
         private Vector2 endLocation;
 
         private Array<Mob> hittedMobs;
@@ -82,7 +82,7 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
 
         }
     }
-    private class targetChecher extends Ability implements IAfterHit{
+    public static class targetChecher extends Ability implements IAfterHit{
         private Projectile owner;
         private int maxTargets;
         private int currentTargets;

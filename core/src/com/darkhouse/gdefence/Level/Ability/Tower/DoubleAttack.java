@@ -80,11 +80,12 @@ public class DoubleAttack extends Ability implements Ability.IOnBuild{
 //        }
 
         @Override
-        public void use(Mob target) {//if before attack (must implement IPreAttack)
+        public boolean use(Mob target, float delta) {//if before attack (must implement IPreAttack)
             if (getCooldownObject().isReady()) {
                 this.target = target;
                 currentDelayTime = 0;
             }
+            return true;
         }
     }
 

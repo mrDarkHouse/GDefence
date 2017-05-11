@@ -248,21 +248,26 @@ public class Tower extends Effectable{
         }else {
             preShotTime += delta;
             if(preShotTime >= getAttackSpeedDelay(speed)){//
-                preShotTime = 0;
+//                preShotTime = 0;
+
+                boolean canAttack = true;
                 for (Ability a:abilities){
 //                    if(a.getUseType() == Ability.UseType.preattack){
 //                        a.use(target);
 //                    }
                     if(a instanceof Ability.IPreAttack){
-                        ((Ability.IPreAttack) a).use(target);
+                        if(!((Ability.IPreAttack) a).use(target, delta)) canAttack = false;
                     }
                 }
                 for (Effect e:effects){
                     if(e instanceof Ability.IPreAttack){
-                        ((Ability.IPreAttack) e).use(target);
+                        if(!((Ability.IPreAttack) e).use(target, delta)) canAttack = false;
                     }
                 }
-                shot(target);
+                if(canAttack) {
+                    preShotTime = 0;
+                    shot(target);
+                }
             }
 
         }

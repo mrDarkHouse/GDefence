@@ -37,7 +37,7 @@ public class MultiShot extends Ability implements Ability.IPreAttack{
     }
 
     @Override
-    public void use(Mob target) {
+    public boolean use(Mob target, float delta) {
         for (int i = 0; i < bonusTarget; i++){
 //            adding:
             for (Mob m: Wave.mobs){
@@ -53,6 +53,7 @@ public class MultiShot extends Ability implements Ability.IPreAttack{
         }
         shot();
         dispose();
+        return true;
     }
 
     private void shot(){

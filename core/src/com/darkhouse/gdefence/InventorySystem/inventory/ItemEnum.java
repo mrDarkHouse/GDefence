@@ -35,7 +35,7 @@ public enum ItemEnum {;
 
 		//	        name        textures              attackType         projSp cost glCost dmg range speed abilities
 		Basic(    "Basic",          "basic",         AttackType.projectile, 250, 10,  80,    10, 100, 23),//1.2
-		Rock(     "Rock",           "rock",          AttackType.projectile, 250, 20,  140,   25, 120, 10, new DoubleAttack.P(3f)),//1.4,
+		Rock(     "Rock",           "rock",          AttackType.projectile, 250, 20,  140,   25, 120, 10, new Shotgun.P(4, 0.1f, 5)),//1.4,
 		Arrow(    "Arrow",          "arrow",         AttackType.projectile, 250, 20,  140,   15, 120, 40, new Bash.P(0.2f, 1f, 5)),
 		Range(    "Range",          "range",         AttackType.projectile, 350, 20,  180,   15, 160, 30, new SteelArrow.P(3, 200)),
         Short(    "Short",          "short",         AttackType.projectile, 250, 25,  180,   30, 180, 23),

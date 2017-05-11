@@ -30,7 +30,7 @@ public abstract class Ability {
     }
 
     public interface IPreAttack{
-        void use(Mob target);
+        boolean use(Mob target, float delta);
     }
     public interface IOnHit {
         int getDmg(Mob target, int startDmg);
