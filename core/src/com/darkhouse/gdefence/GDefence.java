@@ -113,6 +113,7 @@ public class GDefence extends Game {
 	public void initAll(){
         FontLoader.load();
 		ItemEnum.Tower.init();
+        assetLoader.init();
 //		GDefence.getInstance().user.init();//it must be in campain loading
 //		GDefence.getInstance().user.save();
 		initScreens();

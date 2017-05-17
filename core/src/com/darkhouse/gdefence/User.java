@@ -4,6 +4,7 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerType;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Objects.DetailObject;
@@ -239,27 +240,7 @@ public class User {
 //        User.detailInventory = detailInventory;
 //    }
 
-    public enum RecipeType{
-        opened, canOpen, locked
-    }
 
-    private HashMap <ItemEnum.Tower, RecipeType> openedTowers;
-
-
-    private void initOpenedTowers(){//default opened
-        openedTowers = new HashMap<ItemEnum.Tower, RecipeType>();//for each
-        openedTowers.put(ItemEnum.Tower.Basic, RecipeType.opened);
-        openedTowers.put(ItemEnum.Tower.Rock, RecipeType.locked);
-        openedTowers.put(ItemEnum.Tower.Arrow, RecipeType.locked);
-        openedTowers.put(ItemEnum.Tower.Range, RecipeType.locked);
-        openedTowers.put(ItemEnum.Tower.Short, RecipeType.locked);
-        openedTowers.put(ItemEnum.Tower.Mountain, RecipeType.locked);
-//        openedTowers.put(ItemEnum.Tower.SteelArrow, RecipeType.locked);
-        openedTowers.put(ItemEnum.Tower.Ballista, RecipeType.locked);
-        openedTowers.put(ItemEnum.Tower.Catapult, RecipeType.locked);
-
-        openRecipes();
-    }
 
     private void loadOpenedTowers(String savecode){//can work after initialized default openedTowers map
         String[] towersTypes = savecode.split("/");
@@ -277,6 +258,65 @@ public class User {
         return save;
     }
 
+    public enum Research{
+        Powder("powder", "Complete 1 map" + System.getProperty("line.separator") + "to open this research"),
+        Steam("steam", "Beat boss on second map" + System.getProperty("line.separator") +  "to open this research");
+
+
+        private String tooltip;
+        private String texturePath;
+
+        public String getTooltip() {
+            return tooltip;
+        }
+
+        public String getTexturePath() {
+            return texturePath;
+        }
+
+        Research(String texturePath, String tooltip) {
+            this.texturePath = texturePath;
+            this.tooltip = tooltip;
+        }
+    }
+
+    private HashMap <Research, Boolean> researches;
+
+    private void initResearches(){
+        researches = new HashMap<Research, Boolean>();
+
+        for (Research r: Research.values()){
+            researches.put(r, false);
+        }
+        openResearch(Research.Powder);
+
+//        openRecipes();
+    }
+
+    public boolean isResearchOpened(Research r){
+        return researches.get(r);
+    }
+    public void openResearch(Research r){
+        researches.put(r, true);
+    }
+
+
+    public enum RecipeType{
+        opened, canOpen, locked;
+    }
+
+    private HashMap <ItemEnum.Tower, RecipeType> openedTowers;
+
+    private void initOpenedTowers(){//default opened
+        openedTowers = new HashMap<ItemEnum.Tower, RecipeType>();
+
+        for (ItemEnum.Tower t: ItemEnum.Tower.values()){
+            openedTowers.put(t, RecipeType.locked);
+        }
+        openedTowers.put(ItemEnum.Tower.Basic, RecipeType.opened);
+
+        openRecipes();
+    }
 
     private void unlockRecipe(ItemEnum.Tower t){
         if(getOpenType(t) == RecipeType.locked) openedTowers.put(t, RecipeType.canOpen);
@@ -292,29 +332,17 @@ public class User {
         openedTowers.put(t, RecipeType.opened);
         openRecipes();
     }
-    private void openRecipes(){//rework with getComponents
-        if(isOpened(ItemEnum.Tower.Basic)){
-            unlockRecipe(ItemEnum.Tower.Rock);
-            unlockRecipe(ItemEnum.Tower.Arrow);
-            unlockRecipe(ItemEnum.Tower.Range);
+    private void openRecipes(){
+        for (ItemEnum.Tower t: ItemEnum.Tower.values()){
+            boolean open = true;
+            for (TowerObject o : t.getComponents()) {
+                if (!isOpened(o.getPrototype())) open = false;
+            }
+            for (Research r: t.getResearchNeed()){
+                if(!isResearchOpened(r)) open = false;
+            }
+            if(open) unlockRecipe(t);
         }
-        if(isOpened(ItemEnum.Tower.Rock)){
-            unlockRecipe(ItemEnum.Tower.Short);
-            unlockRecipe(ItemEnum.Tower.Mountain);
-        }
-//        if(isOpened(ItemEnum.Tower.Arrow)){
-//            unlockRecipe(ItemEnum.Tower.SteelArrow);
-//        }
-        if(isOpened(ItemEnum.Tower.Arrow) && isOpened(ItemEnum.Tower.Range)){
-            unlockRecipe(ItemEnum.Tower.Ballista);
-        }
-        if(isOpened(ItemEnum.Tower.Rock) && isOpened(ItemEnum.Tower.Range)){
-            unlockRecipe(ItemEnum.Tower.Catapult);
-        }
-
-
-
-        //if() etc
     }
 
     /*
@@ -441,6 +469,7 @@ public class User {
         towerInventory = new Inventory(TowerObject.class, 35);
         spellInventory = new Inventory(SpellObject.class, 35);
         detailInventory = new Inventory(DetailObject.class, 35);
+        initResearches();
         initOpenedTowers();
     }
 //    public void init(){//

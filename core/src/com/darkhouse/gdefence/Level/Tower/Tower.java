@@ -2,13 +2,11 @@ package com.darkhouse.gdefence.Level.Tower;
 
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -45,6 +43,14 @@ public class Tower extends Effectable{
 
 
     protected boolean canAttack = true;
+
+    public void setCanAttack(boolean canAttack) {
+        this.canAttack = canAttack;
+    }
+    public boolean isCanAttack() {
+        return canAttack;
+    }
+
     protected TowerObject towerPrototype;
     public TowerObject getTowerPrototype() {
         return towerPrototype;
@@ -228,11 +234,11 @@ public class Tower extends Effectable{
 
     public void physic(float delta){
         actEffects(delta);
-        if(canAttack){
+//        if(canAttack){//if stunned
             attack(delta);
 
 
-        }
+//        }
     }
 
     public void actEffects(float delta){
@@ -242,38 +248,65 @@ public class Tower extends Effectable{
     }
 
     private void attack(float delta){
-        target = Mob.getMobOnMap(AttackLogic.First, this);//if !shot one target
+//        target = Mob.getMobOnMap(AttackLogic.First, this);//if !shot one target
         if(target == null || !isInRange(target.getCenter()) || !target.isInGame()) {
             target = Mob.getMobOnMap(AttackLogic.First, this);
         }else {
-            preShotTime += delta;
+//            preShotTime += delta;
             if(preShotTime >= getAttackSpeedDelay(speed)){//
-//                preShotTime = 0;
-
-                boolean canAttack = true;
-                for (Ability a:abilities){
-//                    if(a.getUseType() == Ability.UseType.preattack){
-//                        a.use(target);
-//                    }
-                    if(a instanceof Ability.IPreAttack){
-                        if(!((Ability.IPreAttack) a).use(target, delta)) canAttack = false;
+                boolean canShotNow = true;
+                for (Ability a : abilities) {
+                    if (a instanceof Ability.IPreAttack) {
+                        if(!((Ability.IPreAttack) a).use(delta)) canShotNow = false;
                     }
                 }
-                for (Effect e:effects){
-                    if(e instanceof Ability.IPreAttack){
-                        if(!((Ability.IPreAttack) e).use(target, delta)) canAttack = false;
+                for (Effect e : effects) {
+                    if (e instanceof Ability.IPreAttack) {
+                        if(!((Ability.IPreAttack) e).use(delta)) canShotNow = false;
                     }
                 }
-                if(canAttack) {
-                    preShotTime = 0;
-                    shot(target);
+                if(canShotNow) {
+                    shotProjectile(target, true);
+                    for (Ability a : abilities) {
+                        if (a instanceof Ability.IPostAttack) {
+                            ((Ability.IPostAttack) a).use(target);
+                        }
+                    }
+                    CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+                    for (Effect e : tmp) {//concurrent
+                        if (e instanceof Ability.IPostAttack) {
+                            ((Ability.IPostAttack) e).use(target);
+                        }
+                    }
                 }
-            }
-
+            }else preShotTime += delta;
         }
 
 
     }
+    public void shotProjectile(Mob target, boolean followMainShots){
+        boolean shotMainProjectile = true;
+        if(canAttack) {
+//                preShotTime = 0;
+            for (Ability a : abilities) {
+                if (a instanceof Ability.IPreShot) {
+                    if (!((Ability.IPreShot) a).use(target)) shotMainProjectile = false;
+                }
+            }
+            for (Effect e : effects) {
+                if (e instanceof Ability.IPreShot) {
+                    if (!((Ability.IPreShot) e).use(target)) shotMainProjectile = false;
+                }
+            }
+            if (shotMainProjectile) {
+                shot(target);
+            }
+            if(followMainShots) preShotTime = 0;//if true, timer to next attack dont go before shot fired
+        }
+
+    }
+
+
 //    private void procAbility(Ability.UseType type){
 //        switch (type){
 //            case preattack:

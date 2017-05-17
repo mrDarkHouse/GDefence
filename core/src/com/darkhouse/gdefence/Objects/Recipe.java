@@ -15,6 +15,7 @@ public class Recipe extends DetailObject{
     }
 
     private Array <TowerObject> components;
+    private Array <User.Research> researches;
     private int globalCost;
 
     public static Recipe loadSaveCode(String savecode){
@@ -27,6 +28,9 @@ public class Recipe extends DetailObject{
 
     public Array<TowerObject> getComponents() {
         return components;
+    }
+    public Array<User.Research> getResearches() {
+        return researches;
     }
 
     public Recipe(ItemEnum.Tower tower) {
@@ -41,61 +45,71 @@ public class Recipe extends DetailObject{
     }
 
     private void initComponents(ItemEnum.Tower t){//
-        components = new Array<TowerObject>();
+        components = t.getComponents();
         globalCost = t.getGlobalCost();
-        TowerObject o;//
-        switch (t){
-            case Rock:
-                components.add(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
-                break;
-            case Arrow:
-                components.add(new TowerObject(ItemEnum.Tower.Basic, 1, 3, 1));
-                break;
-            case Range:
-                components.add(new TowerObject(ItemEnum.Tower.Basic, 1, 1, 3));
-                break;
-            case Short:
-                components.add(new TowerObject(ItemEnum.Tower.Rock, 2, 1, 1));
-                //+powder
-                break;
-            case Mountain:
-                components.add(new TowerObject(ItemEnum.Tower.Rock, 4, 0, 0));
-                break;
-            case Ballista:
-                o = new TowerObject(ItemEnum.Tower.Arrow);
-                o.addGems(User.GEM_TYPE.YELLOW, 2);
-                o.addGems(User.GEM_TYPE.BLUE, 1);
-                components.add(o);//0 2 1
-                o = new TowerObject(ItemEnum.Tower.Range);
-                o.addGems(User.GEM_TYPE.YELLOW, 2);
-                o.addGems(User.GEM_TYPE.BLUE, 1);
-                components.add(o);//0 2 1
-                break;
-            case Catapult:
-                o = new TowerObject(ItemEnum.Tower.Rock);
-                o.addGems(User.GEM_TYPE.RED, 2);
-                o.addGems(User.GEM_TYPE.BLUE, 1);
-                components.add(o);//2 0 1
-                o = new TowerObject(ItemEnum.Tower.Range);
-                o.addGems(User.GEM_TYPE.RED, 2);
-                o.addGems(User.GEM_TYPE.BLUE, 1);
-                components.add(o);//2 0 1
-                break;
+        researches = t.getResearchNeed();
 
-        }
+//        TowerObject o;//
+//        switch (t){
+//            case Rock:
+//                components.add(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
+//                break;
+//            case Arrow:
+//                components.add(new TowerObject(ItemEnum.Tower.Basic, 1, 3, 1));
+//                break;
+//            case Range:
+//                components.add(new TowerObject(ItemEnum.Tower.Basic, 1, 1, 3));
+//                break;
+//            case Short:
+//                components.add(new TowerObject(ItemEnum.Tower.Rock, 2, 1, 1));
+//                //+powder
+//                break;
+//            case Mountain:
+//                components.add(new TowerObject(ItemEnum.Tower.Rock, 4, 0, 0));
+//                break;
+//            case Ballista:
+//                o = new TowerObject(ItemEnum.Tower.Arrow);
+//                o.addGems(User.GEM_TYPE.YELLOW, 2);
+//                o.addGems(User.GEM_TYPE.BLUE, 1);
+//                components.add(o);//0 2 1
+//                o = new TowerObject(ItemEnum.Tower.Range);
+//                o.addGems(User.GEM_TYPE.YELLOW, 2);
+//                o.addGems(User.GEM_TYPE.BLUE, 1);
+//                components.add(o);//0 2 1
+//                break;
+//            case Catapult:
+//                o = new TowerObject(ItemEnum.Tower.Rock);
+//                o.addGems(User.GEM_TYPE.RED, 2);
+//                o.addGems(User.GEM_TYPE.BLUE, 1);
+//                components.add(o);//2 0 1
+//                o = new TowerObject(ItemEnum.Tower.Range);
+//                o.addGems(User.GEM_TYPE.RED, 2);
+//                o.addGems(User.GEM_TYPE.BLUE, 1);
+//                components.add(o);//2 0 1
+//                break;
+//
+//        }
     }
 
     @Override
     public String getTooltip() {
         String s = new String();
-        if(getComponents().size > 0) {//
-            for (int i = 0; i < getComponents().size; i++){
-                s += getComponents().get(i).getPrototype().getName() + " " + getComponents().get(0).getSimplyGemStatString();
-                if(i + 1 < getComponents().size) {//
-                    s += System.getProperty("line.separator");
-                }
+//        if(getComponents().size > 0) {//
+        for (int i = 0; i < getComponents().size; i++){
+            s += getComponents().get(i).getPrototype().getName() + " " + getComponents().get(0).getSimplyGemStatString();
+            if(i + 1 < getComponents().size) {//
+                s += System.getProperty("line.separator");
             }
         }
+        if(getResearches().size > 0 && getComponents().size > 0) s += System.getProperty("line.separator");
+        for (int i = 0; i < getResearches().size; i++){
+            s += researches.get(i).name() + " (Research)";
+            if(i + 1 < getResearches().size) {
+                s += System.getProperty("line.separator");
+            }
+        }
+
+//        }
 
         return s;
 

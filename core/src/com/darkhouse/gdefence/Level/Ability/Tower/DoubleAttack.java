@@ -13,10 +13,12 @@ public class DoubleAttack extends Ability implements Ability.IOnBuild{
 
     public static class P extends Ability.AblityPrototype{
         private float cdCap;
+        private int shots;
 
-        public P(float cdCap) {
-            super("Double Attack");
+        public P(float cdCap, int bonusAttacks) {
+            super("Spread Attack");
             this.cdCap = cdCap;
+            this.shots = bonusAttacks;
         }
 
         @Override
@@ -29,15 +31,17 @@ public class DoubleAttack extends Ability implements Ability.IOnBuild{
             return "Shot second projectile every " + cdCap + " seconds";
         }
     }
-    private class DoubleAttackEffect extends Effect<Tower> implements IPreAttack{
-        private float delay = 0.2f;
-        private float currentDelayTime = -1;
+    private class DoubleShotEffect extends Effect<Tower> implements IPostAttack {
+//        private float delay = 0.2f;
+//        private float currentDelayTime = -1;
+        private int shots;
 
-        private Mob target;
+//        private Mob target;
 
-        public DoubleAttackEffect(float cdCap) {
+        public DoubleShotEffect(float cdCap, int shots) {
             super(true, false, -1, "bonusArmor");
             setCooldownable(new Cooldown(cdCap));
+            this.shots = shots;
         }
 
         @Override
@@ -48,16 +52,23 @@ public class DoubleAttack extends Ability implements Ability.IOnBuild{
         @Override
         public void act(float delta) {
             super.act(delta);
-            if(currentDelayTime == -1) return;
-            else if(currentDelayTime < delay) currentDelayTime += delta;
-            else if(currentDelayTime > delay) currentDelayTime = delay;
+//            if(currentDelayTime == -1) return;
+//            else if(currentDelayTime < delay) currentDelayTime += delta;
+//            else if(currentDelayTime > delay) currentDelayTime = delay;
+//
+//            if(currentDelayTime == delay){
+//                Projectile p = new Projectile(owner, owner.getCenter(), target, false);//may be true
+//                Map.projectiles.add(p);
+//                owner.shotProjectile();
+//                lessShots--;
+//                if(lessShots == 0) {
+//                    currentDelayTime = -1;
+//                    getCooldownObject().resetCooldown();
+//                }else currentDelayTime = 0;
 
-            if(currentDelayTime == delay){
-                Projectile p = new Projectile(owner, owner.getCenter(), target, false);//may be true
-                Map.projectiles.add(p);
-                currentDelayTime = -1;
-                getCooldownObject().resetCooldown();
-            }
+
+
+//            }
         }
 
 //        @Override
@@ -80,20 +91,55 @@ public class DoubleAttack extends Ability implements Ability.IOnBuild{
 //        }
 
         @Override
-        public boolean use(Mob target, float delta) {//if before attack (must implement IPreAttack)
+        public void use(Mob target) {//if before attack (must implement IPreAttack)
             if (getCooldownObject().isReady()) {
-                this.target = target;
+                owner.addEffect(new TargetShooter(target, shots).setOwner(owner));
+//                this.target = target;
+//                currentDelayTime = 0;
+            }
+        }
+    }
+    private class TargetShooter extends Effect<Tower>{//this need to work for each target
+        private float delay = 0.2f;
+        private float currentDelayTime = 0;
+
+        private Mob target;
+        private int lessShots;
+
+        public TargetShooter(Mob target, int shots) {
+            super(true, false, -1, "swimSpeed");
+            this.target = target;
+            lessShots = shots;
+        }
+
+        @Override
+        public void act(float delta) {
+//            super.act(delta);
+
+//            if(currentDelayTime == -1) return;
+            if(currentDelayTime < delay) currentDelayTime += delta;
+            else if(currentDelayTime > delay) currentDelayTime = delay;
+
+            if(currentDelayTime == delay) {
+                owner.shotProjectile(target, false);
+                lessShots--;
+                if(lessShots == 0)dispell();
                 currentDelayTime = 0;
             }
-            return true;
+        }
+
+        @Override
+        public void apply() {
+
         }
     }
 
 
-    private DoubleAttackEffect buff;
+
+    private DoubleShotEffect buff;
 
     public DoubleAttack(P prototype) {
-        buff = new DoubleAttackEffect(prototype.cdCap);
+        buff = new DoubleShotEffect(prototype.cdCap, prototype.shots);
     }
 
     @Override

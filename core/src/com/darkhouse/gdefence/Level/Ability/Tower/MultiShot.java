@@ -7,7 +7,7 @@ import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.Map;
 
-public class MultiShot extends Ability implements Ability.IPreAttack{
+public class MultiShot extends Ability implements Ability.IPreShot {
 
     public static class P extends Ability.AblityPrototype{
         private int bonusTarget;
@@ -37,7 +37,7 @@ public class MultiShot extends Ability implements Ability.IPreAttack{
     }
 
     @Override
-    public boolean use(Mob target, float delta) {
+    public boolean use(Mob target) {
         for (int i = 0; i < bonusTarget; i++){
 //            adding:
             for (Mob m: Wave.mobs){

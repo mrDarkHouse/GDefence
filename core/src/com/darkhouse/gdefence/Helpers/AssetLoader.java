@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.User;
 
 import static com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum.Tower.*;
 
@@ -72,6 +74,17 @@ public class AssetLoader extends AssetManager{
 //    public static Texture maxHpGrade;
 //    public static Texture maxEnergyGrade;
 
+
+    private Sprite openedTower;
+    private Sprite canOpenTower;
+    private Sprite lockedTower;
+
+
+    public void init(){
+        openedTower = new Sprite(get("openedTower.png", Texture.class));
+        canOpenTower = new Sprite(get("canOpenTower.png", Texture.class));
+        lockedTower = new Sprite(get("lockedTower.png", Texture.class));
+    }
 
     public void loadAll() {
         loadTextures();
@@ -210,6 +223,10 @@ public class AssetLoader extends AssetManager{
         load("Tower/ballista.png", Texture.class);
         load("Tower/catapult.png", Texture.class);
 
+        load("Researches/powder.png", Texture.class);
+        load("Researches/steam.png", Texture.class);
+
+
 
 
 
@@ -307,6 +324,8 @@ public class AssetLoader extends AssetManager{
 
 
 
+
+
         load("Mobs/mob.png", Texture.class);
         load("Mobs/mob2.png", Texture.class);
         load("Mobs/mob3.png", Texture.class);
@@ -369,6 +388,29 @@ public class AssetLoader extends AssetManager{
         return s;
 
     }
+
+    public ImageButton.ImageButtonStyle generateResearchButtonSkin(String path){
+        Texture t = get("Researches/" + path + ".png");
+
+        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
+        s.up = new TextureRegionDrawable(new TextureRegion(t));
+        s.over = new TextureRegionDrawable(new TextureRegion(t));
+        s.down = new TextureRegionDrawable(new TextureRegion(t));
+
+        return s;
+
+    }
+    public Sprite getLockedTowerSprite(User.RecipeType t){
+        switch (t){
+            case opened: return openedTower;
+            case canOpen: return canOpenTower;
+            case locked: return lockedTower;
+            default: return null;
+        }
+    }
+
+
+
     public ImageButton.ImageButtonStyle getMainMenuButtons(int number){
         ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
         Texture mainMenuButtonsAtlas = get("MainMenuAtlas.png", Texture.class);

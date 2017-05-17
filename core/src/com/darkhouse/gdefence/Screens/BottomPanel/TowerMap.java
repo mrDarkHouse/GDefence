@@ -36,13 +36,13 @@ public class TowerMap extends Window{
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
         setResizable(false);
-//        setModal(true);
+        setModal(true);
 //        setTransform(false);
 
         table = new Table();
 //        setClip(true);
 
-//        setKeepWithinStage(false);
+//        setKeepWithinStage(true);
 
 
         sr = new ShapeRenderer();
@@ -53,24 +53,33 @@ public class TowerMap extends Window{
 
 
         setPosition(700, 50);
-
-        table.defaults().space(50);
-        table.defaults().spaceBottom(10);
-//        table.defaults().spaceRight(0);
-        table.padLeft(50);
-        table.padRight(50);
-        table.defaults().size(60, 60);
-        table.row().fill().expandX();
-
-        initButtons();
-        add(table);
-
-        table.debug();
+        setHeight(630);
 
         TextButton closeButton = new TextButton("X", skin);
         closeButton.addListener(new HidingClickListener(this));
 //        add(closeButton).height(getPadTop());//
         getTitleTable().add(closeButton).height(getPadTop());
+
+//        setRound(false);
+//        setTransform(false);
+//        setClip(false);
+//        table.setClip(false);
+
+        table.defaults().space(50);
+//        table.defaults().spaceBottom(10);
+        table.defaults().spaceRight(0);
+//        table.padLeft(50);
+//        table.padRight(50);
+//        table.padBottom(50);
+        table.pad(50);
+        table.defaults().size(60, 60);
+//        table.row().fill().expandX();
+
+        initButtons();
+        add(table).align(Align.bottom);
+
+//        table.debug();
+
 
 
 //        table.setTransform(true);
@@ -79,11 +88,13 @@ public class TowerMap extends Window{
 
 //        table.pack();
 
-        pack();
+        setSize(table.getPrefWidth(), 630);
+        table.setPosition(20, -600);
 
+//        table.setY(-200);
+//        pack();
 
-
-        setHeight(630);
+//        setHeight(630);
 //        table.setPosition(20, -500);
 //        table.setY(getY() + getHeight() - table.getHeight() - 20);
 
@@ -198,12 +209,6 @@ public class TowerMap extends Window{
         table.add(buttons.get(18)).colspan(1);
         table.add(buttons.get(19)).colspan(1);
         table.add(buttons.get(20)).colspan(1);
-
-
-
-
-//        add(buttons.get(8));
-
 
 
     }

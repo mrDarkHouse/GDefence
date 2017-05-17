@@ -29,8 +29,14 @@ public abstract class Ability {
         abstract public String getTooltip();
     }
 
+    public interface IPreShot {
+        boolean use(Mob target);
+    }
     public interface IPreAttack{
-        boolean use(Mob target, float delta);
+        boolean use(float delta);
+    }
+    public interface IPostAttack{
+        void use(Mob target);
     }
     public interface IOnHit {
         int getDmg(Mob target, int startDmg);

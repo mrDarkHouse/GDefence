@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Screens.BottomPanel;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Gdx2DPixmap;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -19,11 +20,14 @@ import com.darkhouse.gdefence.User;
 
 public class RecipeButton extends ImageButton{
     private User.RecipeType type;
-    private ItemEnum.Tower tower;
+//    private ItemEnum.Tower tower;
     private Recipe towerRecipe;
     private RecipeTooltip tooltip;
 
     private TowerMap owner;
+
+    private Sprite s;// = new Sprite(GDefence.getInstance().assetLoader.get("openedTower.png", Texture.class));
+
 
     public void setOwner(TowerMap owner) {
         this.owner = owner;
@@ -36,7 +40,7 @@ public class RecipeButton extends ImageButton{
 
     public RecipeButton(final ItemEnum.Tower tower) {
         super(GDefence.getInstance().assetLoader.generateImageButtonSkin(tower.getTowerTexture()));
-        this.tower = tower;
+//        this.tower = tower;
         towerRecipe = new Recipe(tower);
         tooltip = new RecipeTooltip(towerRecipe, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         tooltip.setLocked(true);
@@ -58,31 +62,30 @@ public class RecipeButton extends ImageButton{
 
 
     public void updateType(){
-        type = GDefence.getInstance().user.getOpenType(tower);
-        if(type == User.RecipeType.locked || tower == ItemEnum.Tower.Basic){//basic havent recipe
+        type = GDefence.getInstance().user.getOpenType(towerRecipe.getTower());
+        if(type == User.RecipeType.locked || towerRecipe.getTower() == ItemEnum.Tower.Basic){//basic havent recipe
             tooltip.setLocked(true);
         }else {
             tooltip.setLocked(false);//
         }
+        s = GDefence.getInstance().assetLoader.getLockedTowerSprite(type);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {//rework
-        Sprite s;
+//        Sprite s;
+        s.setBounds(getX(), getY(), getWidth(), getHeight());
         if(type == User.RecipeType.opened) {
-            s = new Sprite(GDefence.getInstance().assetLoader.get("openedTower.png", Texture.class));
-            s.setBounds(getX(), getY(), getWidth(), getHeight());
+//            s = new Sprite(GDefence.getInstance().assetLoader.get("openedTower.png", Texture.class));
             s.draw(batch, 0.2f);
             super.draw(batch, parentAlpha);
         }else if(type == User.RecipeType.canOpen){
-             s = new Sprite(GDefence.getInstance().assetLoader.get("canOpenTower.png", Texture.class));
-            s.setBounds(getX(), getY(), getWidth(), getHeight());
+//            s = new Sprite(GDefence.getInstance().assetLoader.get("canOpenTower.png", Texture.class));
             s.draw(batch);
             super.draw(batch, parentAlpha);//
         }else {
-            s = new Sprite(GDefence.getInstance().assetLoader.get("lockedTower.png", Texture.class));
+//            s = new Sprite(GDefence.getInstance().assetLoader.get("lockedTower.png", Texture.class));
             //super.draw(batch, parentAlpha);//batch.draw();//black box
-            s.setBounds(getX(), getY(), getWidth(), getHeight());
             s.draw(batch);
         }
     }

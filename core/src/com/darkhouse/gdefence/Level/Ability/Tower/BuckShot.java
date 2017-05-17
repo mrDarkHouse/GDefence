@@ -3,10 +3,9 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 
 import com.badlogic.gdx.math.Vector2;
 import com.darkhouse.gdefence.Level.Mob.Mob;
-import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Model.Level.Map;
 
-public class Shotgun extends Ability implements Ability.IPreAttack{
+public class BuckShot extends Ability implements Ability.IPreShot {
 
     public static class P extends Ability.AblityPrototype{
         private int maxTargets;
@@ -24,7 +23,7 @@ public class Shotgun extends Ability implements Ability.IPreAttack{
 
         @Override
         public Ability getAbility() {
-            return new Shotgun(this);
+            return new BuckShot(this);
         }
 
         @Override
@@ -41,32 +40,35 @@ public class Shotgun extends Ability implements Ability.IPreAttack{
     private float angle;
 
 
-    public Shotgun(P prototype) {
+    public BuckShot(P prototype) {
         this.projectiles = prototype.projectiles;
-        this. angle = prototype.angle;
+        this.angle = prototype.angle;
         this.maxTargets = prototype.maxTargets;
 //        this.range = prototype.range;
     }
 
     @Override
-    public boolean use(Mob target, float delta) {
-        float startDegree = 0;
+    public boolean use(Mob target) {
+        double startDegree = Math.toDegrees(Math.atan2(target.getY() - owner.getY(), target.getX() - owner.getX()));
+
+        if(projectiles%2 == 0) startDegree -= angle*(projectiles/2 - 1) + angle/2;
+        else startDegree -= angle*((projectiles - 1)/2);
 
         for (int i = 0; i < projectiles; i++) {
             Vector2 endPosition = new Vector2();
             endPosition.x = owner.getCenter().x;
             endPosition.y = owner.getCenter().y;
-            endPosition.y += owner.getTowerPrototype().getRange()*Math.sin(Math.toRadians(angle));//
-            endPosition.x += owner.getTowerPrototype().getRange()*Math.cos(Math.toRadians(angle));
+            endPosition.y += owner.getTowerPrototype().getRange()*Math.sin(Math.toRadians(startDegree + angle*i));//
+            endPosition.x += owner.getTowerPrototype().getRange()*Math.cos(Math.toRadians(startDegree + angle*i));
 
             SteelArrow.SteelProjectile throwingProj = new SteelArrow.SteelProjectile(owner, owner.getCenter(), endPosition, false);
             throwingProj.addAbilities(new SteelArrow.targetChecher(throwingProj, maxTargets));
             Map.projectiles.add(throwingProj);
 
-            startDegree += angle;
+//            startDegree += angle;
         }
 
-        return true;
+        return false;//disable main target projectile
     }
 
     @Override
