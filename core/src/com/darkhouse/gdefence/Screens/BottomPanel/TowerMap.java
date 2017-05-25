@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -27,7 +28,7 @@ import com.darkhouse.gdefence.Value;
 import java.util.HashMap;
 
 public class TowerMap extends Window{
-    private Array <RecipeButton> buttons;
+    private Array <TowerMapObject> buttons;
     private ShapeRenderer sr;
     private Table table;
 
@@ -80,16 +81,35 @@ public class TowerMap extends Window{
 
 //        table.debug();
 
+//        table.setClip(false);
+//        table.setTransform(true);
+//        table.setCullingArea(new Rectangle(getX(), getY(), getWidth(), getHeight()));
+
 
 
 //        table.setTransform(true);
 //        table.setY(-600);
 
+        table.setFillParent(true);
 
-//        table.pack();
+
+
+
+//        table.setY(-200);
+//        table.setOriginY(-200);
+
+        table.pack();
+        pack();
 
         setSize(table.getPrefWidth(), 630);
-        table.setPosition(20, -600);
+
+        table.pack();
+//        pack();
+
+//        System.out.println(getX() + " " + getY() + " " + getWidth() + " " + getHeight());
+//        System.out.println(table.getX() + " " + table.getY() + " " + table.getWidth() + " " + table.getHeight());
+
+//        debug();
 
 //        table.setY(-200);
 //        pack();
@@ -114,10 +134,14 @@ public class TowerMap extends Window{
         addListener(new DragListener(){
             private float offsetX;
             private float offsetY;
+            private Rectangle maxBounds = new Rectangle(table.getX() - 100, table.getY() - 100, table.getWidth() + 200, table.getHeight() + 200);
 
             @Override
             public void drag(InputEvent event, float x, float y, int pointer) {
                 super.drag(event, x, y, pointer);
+//                System.out.println(maxBounds.getX() + " " + maxBounds.getY() + " " + maxBounds.getWidth() + " " + maxBounds.getHeight());
+//                System.out.println(table.getX() + " " + table.getY() + " " + table.getWidth() + " " + table.getHeight());
+//                if(maxBounds.contains(new Rectangle(table.getX(), table.getY(), table.getWidth(), table.getHeight())))
                 table.setPosition(offsetX + x, offsetY + y);
             }
 
@@ -127,6 +151,7 @@ public class TowerMap extends Window{
                 super.dragStart(event, x, y, pointer);
                 offsetX = table.getX() - x;
                 offsetY = table.getY() - y;
+//                maxBounds = new Rectangle(table.getX() - 100, table.getY() - 100, table.getWidth() + 200, table.getHeight() + 200);
 //                System.out.println(offsetX + " " + offsetY);
             }
 
@@ -146,7 +171,7 @@ public class TowerMap extends Window{
 
 
     private void initButtons(){
-        buttons = new Array<RecipeButton>();
+        buttons = new Array<TowerMapObject>();
         /*0*/buttons.add(new RecipeButton(ItemEnum.Tower.Basic));
         /*1*/buttons.add(new RecipeButton(ItemEnum.Tower.Rock));
         /*2*/buttons.add(new RecipeButton(ItemEnum.Tower.Arrow));
@@ -169,9 +194,11 @@ public class TowerMap extends Window{
         /*18*/buttons.add(new RecipeButton(ItemEnum.Tower.Sniper));
         /*19*/buttons.add(new RecipeButton(ItemEnum.Tower.Shotgun));
         /*20*/buttons.add(new RecipeButton(ItemEnum.Tower.Missle));
+        /*21*/buttons.add(new ResearchButton(User.Research.Powder));
+        /*22*/buttons.add(new ResearchButton(User.Research.Steam));
 
 
-        for(RecipeButton b:buttons){
+        for(TowerMapObject b:buttons){
             b.setOwner(this);
         }
 
@@ -188,13 +215,15 @@ public class TowerMap extends Window{
 
         table.add(buttons.get(0))/*.align(Align.center)*/.colspan(6).row();
 //        add(new Actor()).prefWidth(defaults().getPrefWidth()/2);
+        table.add(buttons.get(21));
         table.add(buttons.get(1));//.colspan(2);
         table.add(buttons.get(2));//.colspan(2);
-        table.add(buttons.get(3)).colspan(2).row();
+        table.add(buttons.get(3)).colspan(1).row();
         table.add(buttons.get(4)).colspan(1);
         table.add(buttons.get(5)).colspan(1);
         table.add(buttons.get(6)).colspan(1);
-        table.add(buttons.get(7)).colspan(1).row();
+        table.add(buttons.get(7)).colspan(1);//.row();
+        table.add(buttons.get(22)).colspan(1).row();
         table.add(buttons.get(8)).colspan(2);
         table.add(buttons.get(12)).colspan(2).row();
         table.add(buttons.get(9));
@@ -213,7 +242,7 @@ public class TowerMap extends Window{
 
     }
     public void updateTypes(){
-        for (RecipeButton b:buttons){
+        for (TowerMapObject b:buttons){
             b.updateType();
         }
     }
@@ -282,6 +311,11 @@ public class TowerMap extends Window{
 
         linkTowers(sr, buttons.get(16), buttons.get(20));
 
+        linkTowers(sr, buttons.get(21), buttons.get(4));
+
+        linkTowers(sr, buttons.get(1), buttons.get(12));
+        linkTowers(sr, buttons.get(22), buttons.get(12));
+
 
 
 
@@ -298,7 +332,7 @@ public class TowerMap extends Window{
         batch.begin();
     }
 
-    private void linkTowers(ShapeRenderer sh, RecipeButton r1, RecipeButton r2){
+    private void linkTowers(ShapeRenderer sh, ImageButton r1, ImageButton r2){
         sh.rectLine(getX() + table.getX() + r1.getX() + r1.getWidth()/2, getY() + table.getY() + r1.getY(),
                 getX() + table.getX() + r2.getX() + r2.getWidth()/2, getY() + table.getY() + r2.getY() + r2.getHeight(), 3);
     }

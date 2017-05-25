@@ -15,8 +15,8 @@ public class ResultPanel extends AbstractPanel{
     private StatManager manager;
 
 
-    public ResultPanel(boolean isWin) {
-        manager = LevelMap.getLevel().getStatManager();
+    public ResultPanel(boolean isWin, StatManager statManager) {
+        this.manager = statManager;// = LevelMap.getLevel().getStatManager();
 
         init();
     }

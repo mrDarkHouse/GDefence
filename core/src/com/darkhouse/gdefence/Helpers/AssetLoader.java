@@ -75,17 +75,6 @@ public class AssetLoader extends AssetManager{
 //    public static Texture maxEnergyGrade;
 
 
-    private Sprite openedTower;
-    private Sprite canOpenTower;
-    private Sprite lockedTower;
-
-
-    public void init(){
-        openedTower = new Sprite(get("openedTower.png", Texture.class));
-        canOpenTower = new Sprite(get("canOpenTower.png", Texture.class));
-        lockedTower = new Sprite(get("lockedTower.png", Texture.class));
-    }
-
     public void loadAll() {
         loadTextures();
         loadLevelMap();
@@ -400,11 +389,11 @@ public class AssetLoader extends AssetManager{
         return s;
 
     }
-    public Sprite getLockedTowerSprite(User.RecipeType t){
+    public Texture getLockedTowerTexture(User.RecipeType t){
         switch (t){
-            case opened: return openedTower;
-            case canOpen: return canOpenTower;
-            case locked: return lockedTower;
+            case opened: return get("openedTower.png", Texture.class);
+            case canOpen: return get("canOpenTower.png", Texture.class);
+            case locked: return get("lockedTower.png", Texture.class);
             default: return null;
         }
     }

@@ -21,6 +21,11 @@ public class FontLoader {
     public static BitmapFont impact36;
 
 
+    public static String firstCapitalLetter(String s){
+        return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();
+    }
+
+
 
 
 

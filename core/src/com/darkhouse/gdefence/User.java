@@ -4,7 +4,6 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerType;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Objects.DetailObject;
@@ -16,7 +15,6 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 public class User {
     public int getTotalExp() {
@@ -288,7 +286,7 @@ public class User {
         for (Research r: Research.values()){
             researches.put(r, false);
         }
-        openResearch(Research.Powder);
+//        openResearch(Research.Powder);
 
 //        openRecipes();
     }
@@ -321,13 +319,15 @@ public class User {
     private void unlockRecipe(ItemEnum.Tower t){
         if(getOpenType(t) == RecipeType.locked) openedTowers.put(t, RecipeType.canOpen);
     }
-    public RecipeType getOpenType(ItemEnum.Tower t){//name
+    public RecipeType getOpenType(ItemEnum.Tower t){//texturePath
         return openedTowers.get(t);
     }
     private boolean isOpened(ItemEnum.Tower t){
         return getOpenType(t) == RecipeType.opened;
     }
     public void buyTowerRecipe(ItemEnum.Tower t){
+        if(t == ItemEnum.Tower.Range) openResearch(Research.Steam);
+        if(t == ItemEnum.Tower.Arrow) openResearch(Research.Powder);
         getDetailInventory().store(new Recipe(t));
         openedTowers.put(t, RecipeType.opened);
         openRecipes();
@@ -369,8 +369,17 @@ public class User {
 //    }
 
     public enum GEM_TYPE{
-        RED, YELLOW, BLUE, BLACK, GREEN, WHITE;
+        RED("redGem"), YELLOW("yellowGem"), BLUE("blueGem"), BLACK("blackGem"), GREEN("greenGem"), WHITE("whiteGem");
 
+        private final String texturePath;
+
+        public String getTexturePath() {
+            return texturePath;
+        }
+
+        GEM_TYPE(String texturePath) {
+            this.texturePath = texturePath;
+        }
 
         public static int getBoost(GEM_TYPE type){
             switch (type){
@@ -394,22 +403,6 @@ public class User {
 
     public int getGemNumber(GEM_TYPE t){
         return gems[t.ordinal()];
-
-//        switch (t){
-//            case RED:
-//                return redGems;
-//            case YELLOW:
-//                return yellowGems;
-//            case BLUE:
-//                return blueGems;
-//            case BLACK:
-//                return blackGems;
-//            case GREEN:
-//                return greenGems;
-//            case WHITE:
-//                return whiteGems;
-//        }
-//        return 0;
     }
 
     public boolean spendGems(GEM_TYPE t, int number){
@@ -418,36 +411,14 @@ public class User {
             return true;
         }
         return false;
-
-//        switch (t){
-//            case RED:
-//                if(redGems >= number){
-//                    redGems -= number;
-//                    return true;
-//                }
-//                break;
-//            case YELLOW:
-//                if(yellowGems >= number){
-//                    yellowGems -= number;
-//                    return true;
-//                }
-//                break;
-//            case BLUE:
-//                if(blueGems >= number){
-//                    blueGems -= number;
-//                    return true;
-//                }
-//                break;
-////            case BLACK:
-////                return blackGems;
-////            case GREEN:
-////                return greenGems;
-////            case WHITE:
-////                return whiteGems;
-//        }
-//        return false;
     }
+    public void addGems(GEM_TYPE t, int number){
+        gems[t.ordinal()] += number;
+    }
+
     private int gems[];
+
+
 
     private String getGemsSavecode(){
         String gemsSave = "";
@@ -507,12 +478,12 @@ public class User {
 
 //        initOpenedTowers();
 
-        gems[0] = 3;
-        gems[1] = 2;
-        gems[2] = 4;
-        gems[3] = 1;
-        gems[4] = 9;
-        gems[5] = 41;
+//        gems[0] = 3;
+//        gems[1] = 2;
+//        gems[2] = 4;
+//        gems[3] = 1;
+//        gems[4] = 9;
+//        gems[5] = 41;
 
         update();
 

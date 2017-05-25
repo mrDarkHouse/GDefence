@@ -60,8 +60,8 @@ public abstract class MobAbility{
 //        throw new NullPointerException("Cant clone ability");
 //    }
 
-//    public MobAbility(String name, boolean isHidden) {
-//        this.name = name;
+//    public MobAbility(String texturePath, boolean isHidden) {
+//        this.texturePath = texturePath;
 //        this.isHidden = isHidden;
 //    }
 //    public abstract String getTooltip();

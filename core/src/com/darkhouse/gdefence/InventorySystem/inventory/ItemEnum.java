@@ -24,6 +24,7 @@ package com.darkhouse.gdefence.InventorySystem.inventory;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tower.*;
 import com.darkhouse.gdefence.Level.Tower.AttackType;
 import com.darkhouse.gdefence.Objects.TowerObject;
@@ -36,9 +37,57 @@ import static com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum.Tower.se
 
 
 public enum ItemEnum {;
+
+    public static void addItemById(int id, int count, User user){//bad way, but it for few time
+
+
+
+//        (id > 1 && id < 5) ? System.out.println("1 to 5"):System.out.println("1 to 5");
+//                : System.out.println("testing case 1 to 5") (id > 5 && id < 7)  ? System.out.println("testing case 1 to 5")
+//                : (id > 7 && id < 8)  ? System.out.println("testing case 1 to 5")
+//                : (id > 8 && id < 9)  ? System.out.println("testing case 1 to 5")
+
+
+        switch (id){
+            case 1:case 2:case 3:case 4:case 5:case 6:{
+                user.addGems(User.GEM_TYPE.values()[id - 1], count);
+                break;
+            }case 120:case 121:
+                user.openResearch(User.Research.values()[id - 120]);
+                break;
+
+        }
+    }
+    public static String getItemNameById(int id){
+        switch (id){
+            case 1:case 2:case 3:case 4:case 5:case 6: return FontLoader.firstCapitalLetter(User.GEM_TYPE.values()[id - 1].name() + " gem");
+            case 120:case 121: return "" + FontLoader.firstCapitalLetter(User.Research.values()[id - 120].name());
+
+
+            default:return "Some shit id";
+        }
+
+
+
+    }
+    public static String getItemTextureById(int id){
+        switch (id){
+            case 1:case 2:case 3:case 4:case 5:case 6: return User.GEM_TYPE.values()[id - 1].getTexturePath();
+            case 120:case 121: return "" + FontLoader.firstCapitalLetter(User.Research.values()[id - 120].getTexturePath());
+
+
+            default:return "Some shit id";
+        }
+
+
+
+    }
+
+
+
 	public enum Tower implements Item {
 
-		//	        name        textures              attackType         projSp cost glCost dmg range speed abilities
+		//	        texturePath        textures              attackType         projSp cost glCost dmg range speed abilities
 		Basic(    "Basic",          "basic",         AttackType.projectile, 250, 10,  80,    10, 100, 23),//1.2
 		Rock(     "Rock",           "rock",          AttackType.projectile, 400, 20,  140,   1, 120, 30, new DoubleAttack.P(3f, 2)),//1.4,
 		Arrow(    "Arrow",          "arrow",         AttackType.projectile, 250, 20,  140,   15, 120, 40),
@@ -95,6 +144,7 @@ public enum ItemEnum {;
             Sniper.components.add(new TowerObject(MachineGun, 4, 0, 2));//
             DoubleBarrel.components.add(new TowerObject(Shotgun, 0, 0, 0));
             DoubleBarrel.components.add(new TowerObject(Rifle, 0, 0, 0));
+            SteamMachine.components.add(new TowerObject(Rock, 0, 0, 0));
 
 
             Short.researchNeed.add(User.Research.Powder);
@@ -103,7 +153,6 @@ public enum ItemEnum {;
 
 
         }
-
 
 
         public static Tower getTower(String name){

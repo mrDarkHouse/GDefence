@@ -113,7 +113,7 @@ public class GDefence extends Game {
 	public void initAll(){
         FontLoader.load();
 		ItemEnum.Tower.init();
-        assetLoader.init();
+//        assetLoader.init();
 //		GDefence.getInstance().user.init();//it must be in campain loading
 //		GDefence.getInstance().user.save();
 		initScreens();
@@ -189,8 +189,11 @@ public class GDefence extends Game {
 
 			"After grading similar gem 4 times other gems are down by 1 each" + System.getProperty("line.separator") +
 			"Example: 4 red gems up, -1 yellow, -1 blue",
-			/*"e",
-			"f",*/};
+
+			"If you complete level in second time " + System.getProperty("line.separator") +
+            "You receive only 1/4 of gold and exp" + System.getProperty("line.separator") +
+            "Drop also became less quality and count",
+			/*"f",*/};
 
 	public static String getTip(){
 		Random r = new Random();

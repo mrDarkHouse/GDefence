@@ -18,20 +18,20 @@ import com.darkhouse.gdefence.InventorySystem.inventory.TooltipListener;
 import com.darkhouse.gdefence.Objects.Recipe;
 import com.darkhouse.gdefence.User;
 
-public class RecipeButton extends ImageButton{
+public class RecipeButton extends TowerMapObject{
     private User.RecipeType type;
 //    private ItemEnum.Tower tower;
     private Recipe towerRecipe;
     private RecipeTooltip tooltip;
 
-    private TowerMap owner;
+//    private TowerMap owner;
 
     private Sprite s;// = new Sprite(GDefence.getInstance().assetLoader.get("openedTower.png", Texture.class));
 
 
-    public void setOwner(TowerMap owner) {
-        this.owner = owner;
-    }
+//    public void setOwner(TowerMap owner) {
+//        this.owner = owner;
+//    }
     //    private Array<RecipeButton> updateButtons;//kostil'
 
 //    public void setUpdateButtons(Array<RecipeButton> updateButtons) {
@@ -44,6 +44,7 @@ public class RecipeButton extends ImageButton{
         towerRecipe = new Recipe(tower);
         tooltip = new RecipeTooltip(towerRecipe, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         tooltip.setLocked(true);
+//        tooltip.setVisible(false);
         updateType();
 
         addListener(new InputListener() {
@@ -60,15 +61,23 @@ public class RecipeButton extends ImageButton{
         addListener(new TooltipListener(tooltip, true));
     }
 
+//    @Override ne optimizirovanno
+//    public void act(float delta) {
+//        super.act(delta);
+//        updateType();
+//    }
 
     public void updateType(){
         type = GDefence.getInstance().user.getOpenType(towerRecipe.getTower());
         if(type == User.RecipeType.locked || towerRecipe.getTower() == ItemEnum.Tower.Basic){//basic havent recipe
             tooltip.setLocked(true);
+//            tooltip.setVisible(false);
         }else {
+//            tooltip.setVisible(true);
             tooltip.setLocked(false);//
         }
-        s = GDefence.getInstance().assetLoader.getLockedTowerSprite(type);
+//        s = GDefence.getInstance().assetLoader.getLockedTowerSprite(type);
+        s = new Sprite(GDefence.getInstance().assetLoader.getLockedTowerTexture(type));
     }
 
     @Override

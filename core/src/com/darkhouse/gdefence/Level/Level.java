@@ -3,16 +3,19 @@ package com.darkhouse.gdefence.Level;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.StatManager;
+import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.Objects.IDroppable;
 import com.darkhouse.gdefence.Screens.LevelEndScreen;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Level {
@@ -24,6 +27,9 @@ public class Level {
     private int maxEnergy;
     private int startHP;
     private int maxHP;
+    private String dropList;
+    private String penaltyDropList;
+
 
     public int getMaxEnergy() {
         return maxEnergy;
@@ -165,6 +171,8 @@ public class Level {
         waves = ml.getWaves();
         numberWaves = ml.getNumberWaves();
         timeBetweenWaves = ml.getTimeBetweenWaves();
+        dropList = ml.getDropList();
+        penaltyDropList = ml.getPenaltyDropList();
 
         maxEnergy = GDefence.getInstance().user.maxEnegry.getCurrentValue();
         energyNumber = startEnergy;
@@ -222,9 +230,11 @@ public class Level {
         if(!GDefence.getInstance().user.getLevelCompleted(number)) {
             GDefence.getInstance().user.addGold(goldFromLvl);
             GDefence.getInstance().user.addExp(expFromLvl);
+            addDrop(dropList);
         }else {
             GDefence.getInstance().user.addGold(goldFromLvl/4);//recomplete penalty
             GDefence.getInstance().user.addExp(expFromLvl/4);
+            addDrop(penaltyDropList);
         }
 
 
@@ -232,7 +242,7 @@ public class Level {
         GDefence.getInstance().user.openLevel(number + 1);
 
 
-        GDefence.getInstance().setScreen(new LevelEndScreen(true));
+        GDefence.getInstance().setScreen(new LevelEndScreen(true, getStatManager()));
 
 
         //GDefence.getInstance().setScreen(new MainMenu(GDefence.getInstance()));
@@ -240,9 +250,45 @@ public class Level {
 
     private void looseLevel(){
         //System.out.println("loose");
-        GDefence.getInstance().setScreen(new LevelEndScreen(false));
+        GDefence.getInstance().setScreen(new LevelEndScreen(false, getStatManager()));
 
 
+    }
+    private class Drop{
+        private IDroppable drop;
+        private int count;
+
+        public Drop(IDroppable drop, int count) {
+            this.drop = drop;
+            this.count = count;
+        }
+    }
+
+    private void addDrop(String dropCode){
+//        Array<GameObject> currentDrop = new Array<GameObject>();
+        Array<Drop> currentDrop = new Array<Drop>();
+//        HashMap<String, Integer> currentDrop = new HashMap<String, Integer>();//String = texturePath;
+        String[] objects = dropCode.split("/");
+
+        for (String s:objects){
+            String[] curr = s.split(":");
+            switch (curr.length) {
+            case 2:
+                Random rand = new Random();
+                String[] range = curr[1].split("-");
+                int count = rand.nextInt((Integer.parseInt(range[1]) - Integer.parseInt(range[0])) + 1) + Integer.parseInt(range[0]);
+                ItemEnum.addItemById(Integer.parseInt(curr[0]), count, GDefence.getInstance().user);
+//                currentDrop.add(ItemEnum.getItemTextureById(Integer.parseInt(curr[0])));
+                break;
+            case 3:
+                Random chance = new Random();
+                if (chance.nextFloat() > 1 - Float.parseFloat(curr[2])) {
+//                currentDrop.add();
+                    ItemEnum.addItemById(Integer.parseInt(curr[0]), Integer.parseInt(curr[1]), GDefence.getInstance().user);
+                }
+                break;
+            }
+        }
     }
 
 

@@ -22,7 +22,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Mob extends Effectable{
 
     public enum Prototype{
-        //           name          texturePath     moveType       hp  arm spd dmg bounty       //i think it better than Builder
+        //           texturePath          texturePath     moveType       hp  arm spd dmg bounty       //i think it better than Builder
         Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 2),
         Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 70, 2, 3, new HealingAura.P(250, 1, 5)),
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 40,  2, 3, new Sprint.P(4, 2, 50)),
@@ -81,8 +81,8 @@ public class Mob extends Effectable{
         public Array<MobAbility.AblityPrototype> getAbilities() {
             return abilities;
         }
-        //        protected Prototype setName(String name) {
-//            this.name = name;
+        //        protected Prototype setName(String texturePath) {
+//            this.texturePath = texturePath;
 //            return this;
 //        }
 //        protected Prototype setHealth(int health) {

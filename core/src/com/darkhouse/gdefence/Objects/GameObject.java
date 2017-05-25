@@ -15,7 +15,7 @@ public abstract class GameObject {
 //    private Item item;
 
     public abstract String getName(); //{
-//        return name;
+//        return texturePath;
 //    }
     public Texture getTexture() {
         return texture;
@@ -38,7 +38,7 @@ public abstract class GameObject {
 //        this.prototype = prototype;
 //    }
 
-//    protected String name;
+//    protected String texturePath;
     protected Texture texture;
     //protected int ID;
 

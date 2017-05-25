@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.StatManager;
 import com.darkhouse.gdefence.Model.Panels.ResultPanel;
 import com.darkhouse.gdefence.User;
 
@@ -25,8 +26,11 @@ public class LevelEndScreen implements Screen{
     private boolean isWin;
     private Texture backGround;
 
-    public LevelEndScreen(boolean isWin) {
+    private StatManager statManager;
+
+    public LevelEndScreen(boolean isWin, StatManager statManager) {
         this.isWin = isWin;
+        this.statManager = statManager;
     }
 
     @Override
@@ -72,7 +76,7 @@ public class LevelEndScreen implements Screen{
         continueButton.align(Align.bottom);
         //continueButton.pack();
 
-        ResultPanel rPanel = new ResultPanel(isWin);
+        ResultPanel rPanel = new ResultPanel(isWin, statManager);
 
         //table.add(rPanel).spaceBottom(100).row();
         table.add(rPanel).padBottom(100).row();

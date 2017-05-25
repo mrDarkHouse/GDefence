@@ -88,7 +88,7 @@ public class Tower extends Effectable{
 
     /*
     //protected TowerType ID;
-    protected String name;
+    protected String texturePath;
     protected AttackType attackType;
     protected int dmg;
     //protected int speed;
@@ -127,10 +127,10 @@ public class Tower extends Effectable{
         this.dmg = dmg;
     }
     public String getName() {
-        return name;
+        return texturePath;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String texturePath) {
+        this.texturePath = texturePath;
     }
     public float getSpeedDelay() {
         return speedDelay;

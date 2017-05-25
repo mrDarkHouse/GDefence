@@ -2,12 +2,15 @@ package com.darkhouse.gdefence.Level.Loader;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Path.Spawn;
 import com.darkhouse.gdefence.Level.Wave;
+import com.darkhouse.gdefence.Objects.GameObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -34,6 +38,8 @@ public class MapLoader {
     private float[] timeBetweenWaves = new float[20];
     private ArrayList<Wave> waves;
     private Array<Mob.MoveType> moveTypesInLevel;
+    private String dropList;
+    private String penaltyDropList;
 
     public int getExpFromLvl() {
         return expFromLvl;
@@ -58,6 +64,12 @@ public class MapLoader {
     }
     public Array<Mob.MoveType> getMoveTypesInLevel() {
         return moveTypesInLevel;
+    }
+    public String getDropList() {
+        return dropList;
+    }
+    public String getPenaltyDropList() {
+        return penaltyDropList;
     }
 
     public MapLoader(int map) {
@@ -167,6 +179,8 @@ public class MapLoader {
             goldFromLvl = Integer.parseInt(prop.getProperty("goldFromLvl"));
             startEnergyPercent = Float.parseFloat(prop.getProperty("startEnegryPercent"));
             startHpPercent = Float.parseFloat(prop.getProperty("startHpPercent"));
+            dropList = prop.getProperty("drop");
+            penaltyDropList = prop.getProperty("penaltyDrop");
 
             String[] wavesCode = prop.getProperty("waves").split("/");
 
@@ -195,4 +209,7 @@ public class MapLoader {
             e.printStackTrace();
         }
     }
+
+
+
 }

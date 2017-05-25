@@ -7,7 +7,7 @@ public class Chance {
 
     public static boolean proc(float chance){
         Random r = new Random();
-        System.out.println(r.nextFloat());
+//        System.out.println(r.nextFloat());
         return (r.nextFloat() > 1 - chance);
     }
 

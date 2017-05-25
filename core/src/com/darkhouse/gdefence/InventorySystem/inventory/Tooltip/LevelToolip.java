@@ -6,10 +6,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Model.LevelButton;
+
+import java.util.Random;
 
 public class LevelToolip extends Window{
     private LevelButton levelButton;
@@ -42,6 +45,9 @@ public class LevelToolip extends Window{
         String hp = "Start health: " + (int)(ml.getStartHpPercent() * 100) + "%";
         String en = "Start energy: " + (int)(ml.getStartEnergyPercent() * 100) + "%";
 
+        String drop = "";
+        drop += GDefence.getInstance().user.getLevelCompleted(levelButton.getNumber()) ? getDropTooltip(ml.getPenaltyDropList()) : getDropTooltip(ml.getDropList());
+
 
 
 
@@ -49,9 +55,36 @@ public class LevelToolip extends Window{
                                 exp + System.getProperty("line.separator") +
                                 gold + System.getProperty("line.separator") +
                                 hp + System.getProperty("line.separator") +
-                                en, skin);
+                                en +
+                                drop, skin);
         add(label);
         pack();
+    }
+
+    private String getDropTooltip(String dropCode){
+        String tooltip = "";
+        if(dropCode == null)return tooltip;
+        String[] objects = dropCode.split("/");
+
+        for (String s:objects){
+            tooltip += System.getProperty("line.separator");
+            String[] curr = s.split(":");
+            tooltip += ItemEnum.getItemNameById(Integer.parseInt(curr[0]));
+            switch (curr.length) {
+                case 2:
+                    tooltip += "(" + curr[1] + ")";
+                    break;
+                case 3:
+                    if(Integer.parseInt(curr[1]) != 1) tooltip += " - " + curr[1];
+                    if(Float.parseFloat(curr[2]) != 1f) tooltip += "(" + (int)(Float.parseFloat(curr[2])*100) + "%)";
+                    break;
+//                    if(Integer.parseInt(curr[1]) == 1) tooltip += "(" + (int)(Float.parseFloat(curr[2])*100) + "%)";
+//                    else tooltip += " - " + curr[1] + " (" + Float.parseFloat(curr[2])*100 + "%)";
+//                    break;
+            }
+
+        }
+        return tooltip;
     }
 
     @Override

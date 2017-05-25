@@ -81,7 +81,7 @@ public class TowerCraftPanel extends Window{
         setMovable(false);
         setDefaults();
         setResizable(false);
-        setSize(400, 400);
+
 
         this.dragAndDrop = dragAndDrop;
         this.skin = skin;
@@ -101,6 +101,7 @@ public class TowerCraftPanel extends Window{
         add();
 
         pack();
+        setSize(180, 250);
 
 //        recipeSlot.setRound(true);
 //        recipeSlot.setClip(false);
@@ -132,7 +133,7 @@ public class TowerCraftPanel extends Window{
             getCells().get(i + 1).setActor(componentSlots.get(i));
             getCells().get(0).colspan(componentSlots.size);
             getCells().peek().colspan(componentSlots.size);
-            pack();
+//            pack();
 
             dragAndDrop.addSource(new SlotSource(componentSlots.get(i)));
             sourceTargetInventory.addTarget(componentSlots.get(i));
@@ -151,12 +152,18 @@ public class TowerCraftPanel extends Window{
             }
         });
 
-        pack();
+//        pack();
     }
     public void removeRecipe(){
-        for (SlotActor a:componentSlots){//#iterator cannot be used nested
-            User.getTowerInventory().store(a.getSlot().getAll());//saving items
-            a.remove();
+//        for (SlotActor a:componentSlots){//#iterator cannot be used nested
+//            User.getTowerInventory().store(a.getSlot().getAll());//saving items
+//            getCells().get(2).size(0);
+//            a.remove();
+//        }
+        for (int i = 0; i < componentSlots.size; i++){
+            User.getTowerInventory().store(componentSlots.get(i).getSlot().getAll());//saving items
+            getCells().get(i + 1).size(0, 60);
+            componentSlots.get(i).remove();
         }
         componentListeners.clear();
         if(!resultSlot.getSlot().isEmpty()) {
@@ -189,10 +196,10 @@ public class TowerCraftPanel extends Window{
     private void checkResult(){
 //        System.out.println(recipeSlot.getSlot().getLast());
         Recipe r = ((Recipe) recipeSlot.getSlot().getLast());
-//        if(r == null) {
+        if(r == null) {
 //            System.out.println("Null");
-//            return;
-//        }
+            return;
+        }
         Array<TowerObject> needComponents = r.getComponents();//nullPointer
         Array<TowerObject> currentComponents = new Array<TowerObject>();
 
@@ -222,7 +229,7 @@ public class TowerCraftPanel extends Window{
 //
 //        if(currentComponents
     }
-    private void removeResult(){
+    private void removeResult(){//cant do item in seconds time
 //        componentSlots.clear();
 //        recipeSlot.getSlot().takeAll();
 //        System.out.println(recipeSlot.getSlot().getAll());
@@ -234,26 +241,34 @@ public class TowerCraftPanel extends Window{
             //take(1) allows to contains and create a lot components
             componentSlots.get(i).getSlot().addListener(componentListeners.get(i));
         }
-        recipeSlot.getSlot().removeListener(recipeListener);//recipe always not null
-        recipeSlot.getSlot().take(1);
-        recipeSlot.getSlot().addListener(recipeListener);
+//        recipeSlot.getSlot().removeListener(recipeListener);//recipe always not null
+//        recipeSlot.getSlot().take(1);
+//        recipeSlot.getSlot().addListener(recipeListener);
 
         User.getTowerInventory().store(resultSlot.getSlot().take(1));
 
 
-        for (int i = 0; i < componentSlots.size; i++){
-            if(!componentSlots.get(i).getSlot().isEmpty()) return;
-        }
-        if(recipeSlot.getSlot().isEmpty() && resultSlot.getSlot().isEmpty()){//
-            componentListeners.clear();
-            for (int i = 0; i < componentSlots.size; i++){
-                componentSlots.get(i).remove();
-            }
-            componentSlots.clear();
-//            resultSlot.getSlot().removeListener(resultListener);
-//            getCells().peek().setActor(null);
-            resultSlot.remove();
-        }
+        recipeSlot.getSlot().take(1);
+        checkResult();
+//        if(!recipeSlot.getSlot().isEmpty()) {
+//            for (int i = 0; i < componentSlots.size; i++) {
+//                if (!componentSlots.get(i).getSlot().isEmpty()) return;
+//            }
+//        }
+
+
+
+
+//        if(/*recipeSlot.getSlot().isEmpty() && */resultSlot.getSlot().isEmpty()){//
+//            componentListeners.clear();
+//            for (int i = 0; i < componentSlots.size; i++){
+//                componentSlots.get(i).remove();
+//            }
+//            componentSlots.clear();
+////            resultSlot.getSlot().removeListener(resultListener);
+////            getCells().peek().setActor(null);
+//            resultSlot.remove();
+//        }
 
 
 
@@ -265,7 +280,7 @@ public class TowerCraftPanel extends Window{
 
 
     protected void setDefaults(){
-        setPosition(1100, 370);
+        setPosition(1000, 330);
         defaults().space(8);
         defaults().size(60, 60);
 //        row().fill().expandX();
