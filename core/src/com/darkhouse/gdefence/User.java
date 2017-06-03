@@ -4,12 +4,11 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerType;
 
 import com.badlogic.gdx.Gdx;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
+import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
-import com.darkhouse.gdefence.Objects.DetailObject;
-import com.darkhouse.gdefence.Objects.Recipe;
-import com.darkhouse.gdefence.Objects.SpellObject;
-import com.darkhouse.gdefence.Objects.TowerObject;
+import com.darkhouse.gdefence.Objects.*;
 
 import java.io.*;
 import java.util.HashMap;
@@ -256,17 +255,12 @@ public class User {
         return save;
     }
 
-    public enum Research{
+    public enum Research implements Item{
         Powder("powder", "Complete 1 map" + System.getProperty("line.separator") + "to open this research"),
         Steam("steam", "Beat boss on second map" + System.getProperty("line.separator") +  "to open this research");
 
-
         private String tooltip;
         private String texturePath;
-
-        public String getTooltip() {
-            return tooltip;
-        }
 
         public String getTexturePath() {
             return texturePath;
@@ -276,6 +270,31 @@ public class User {
             this.texturePath = texturePath;
             this.tooltip = tooltip;
         }
+
+        @Override
+        public String getTextureRegion() {
+            return texturePath;
+        }
+
+        @Override
+        public int getGlobalCost() {
+            return 0;
+        }
+
+        @Override
+        public int getID() {
+            return ordinal() + 120;
+        }
+
+        public String getName(){
+            return FontLoader.firstCapitalLetter(name()) + " (research)";
+        }
+
+        public String getTooltip() {
+            return tooltip;
+        }
+
+
     }
 
     private HashMap <Research, Boolean> researches;
@@ -368,7 +387,7 @@ public class User {
 //        return new int[]{redGems, yellowGems, blueGems, blackGems, greenGems, whiteGems};
 //    }
 
-    public enum GEM_TYPE{
+    public enum GEM_TYPE implements Item{
         RED("redGem"), YELLOW("yellowGem"), BLUE("blueGem"), BLACK("blackGem"), GREEN("greenGem"), WHITE("whiteGem");
 
         private final String texturePath;
@@ -399,6 +418,35 @@ public class User {
             return 0;
         }
 
+        @Override
+        public String getTextureRegion() {
+            return texturePath;
+        }
+
+        @Override
+        public int getGlobalCost() {
+            return 0;
+        }
+
+        @Override
+        public int getID() {
+            return ordinal() + 1;
+        }
+
+        public String getName(){
+            return FontLoader.firstCapitalLetter(name()) + " gem";
+        }
+
+        @Override
+        public String getTooltip() {
+            switch (this){
+                case RED:case YELLOW:case BLUE:
+                    return "Used for grade towers";
+                case BLACK:case GREEN:case WHITE:
+                    return "Used for grade spells";
+                default:return "shit programmer fuck up my code";//throw wrongArgumentException
+            }
+        }
     }
 
     public int getGemNumber(GEM_TYPE t){
@@ -474,6 +522,10 @@ public class User {
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.RED, 2);
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.YELLOW, 2);
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 1);
+
+//        detailInventory.storeNew(ItemEnum.Gem., 1);
+
+
 //        detailInventory.storeNew(new Recipe(ItemEnum.Tower.Range));
 
 //        initOpenedTowers();

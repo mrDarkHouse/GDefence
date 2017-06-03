@@ -27,6 +27,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tower.*;
 import com.darkhouse.gdefence.Level.Tower.AttackType;
+import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.User;
 
@@ -58,18 +59,33 @@ public enum ItemEnum {;
 
         }
     }
-    public static String getItemNameById(int id){
+//    public static int getIdOfItem(Item i){
+//        if(i instanceof User.GEM_TYPE){
+//
+//        }
+//    }
+    public static Item getItemById(int id){
         switch (id){
-            case 1:case 2:case 3:case 4:case 5:case 6: return FontLoader.firstCapitalLetter(User.GEM_TYPE.values()[id - 1].name() + " gem");
-            case 120:case 121: return "" + FontLoader.firstCapitalLetter(User.Research.values()[id - 120].name());
-
-
-            default:return "Some shit id";
+            case 1:case 2:case 3:case 4:case 5:case 6:{
+                return User.GEM_TYPE.values()[id - 1];
+            }case 120:case 121:
+                return User.Research.values()[id - 120];
+            default:return null;
         }
-
-
-
     }
+//    public static String getItemNameById(int id){
+//        getItemById(id).getName();
+//        switch (id){
+//            case 1:case 2:case 3:case 4:case 5:case 6: return FontLoader.firstCapitalLetter(User.GEM_TYPE.values()[id - 1].name() + " gem");
+//            case 120:case 121: return "" + FontLoader.firstCapitalLetter(User.Research.values()[id - 120].name());
+//
+//
+//            default:return "Some shit id";
+//        }
+//
+//
+//
+//    }
     public static String getItemTextureById(int id){
         switch (id){
             case 1:case 2:case 3:case 4:case 5:case 6: return User.GEM_TYPE.values()[id - 1].getTexturePath();
@@ -232,13 +248,28 @@ public enum ItemEnum {;
 		public int getGlobalCost() {
 			return globalCost;
 		}
-		public int getDmg() {
-			return dmg;
-		}
-		public String getName() {
-			return name;
-		}
-		public int getSpeed() {
+        public int getDmg() {
+            return dmg;
+        }
+
+        @Override
+        public int getID() {
+            return ordinal() + 50;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public String getTooltip() {
+            return "Dmg: " + getDmg() + System.getProperty("line.separator")
+                    + "Range: " + getRange() + System.getProperty("line.separator")
+                    + "Speed: " + getSpeed() + "(" + com.darkhouse.gdefence.Level.Tower.Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
+                    + "Cost: " + getCost();
+        }
+
+        public int getSpeed() {
 			return speed;
 		}
         public Array<TowerObject> getComponents() {
@@ -247,6 +278,8 @@ public enum ItemEnum {;
         public Array<User.Research> getResearchNeed() {
             return researchNeed;
         }
+
+
 
         Tower(String name, String textureName, AttackType attackType, int projectileSpeed, int cost, int globalCost,
               int dmg, int range, int speed, Ability.AblityPrototype... abilities) {
@@ -319,14 +352,37 @@ public enum ItemEnum {;
 		private int dmg;
 		private int manaCost;
 
-		Spell(String name, int dmg, int manaCost) {
+        public int getDmg() {
+            return dmg;
+        }
+        public int getManaCost() {
+            return manaCost;
+        }
+
+        Spell(String name, int dmg, int manaCost) {
 			this.name = name;
 			this.dmg = dmg;
 			this.manaCost = manaCost;
 		}
 
 
-	}
+        @Override
+        public int getID() {
+            return ordinal() + 200;
+        }
+
+        @Override
+        public String getName() {
+            return name();
+        }
+
+        @Override
+        public String getTooltip() {//
+            return "Dmg: " + getDmg() + System.getProperty("line.separator") +
+                    "Mana Cost: " + getManaCost();
+        }
+
+    }
 
 	//Иличев Глеб
 
@@ -342,9 +398,88 @@ public enum ItemEnum {;
 			public int getGlobalCost() {
 				return 0;
 			}
-		}
+		},;
 
-	}
+
+        @Override
+        public int getID() {
+            return ordinal() + 10;
+        }
+
+        @Override
+        public String getName() {
+            return name();
+        }
+
+        @Override
+        public String getTooltip() {
+            return name();
+        }
+
+
+    }
+//    public enum Gem implements Item{
+//        Red {
+//            @Override
+//            public String getTextureRegion() {
+//                return "red";
+//            }
+//
+//            @Override
+//            public int getGlobalCost() {
+//                return 0;
+//            }
+//        },
+//        Yellow {
+//            @Override
+//            public String getTextureRegion() {
+//                return "yellow";
+//            }
+//
+//            @Override
+//            public int getGlobalCost() {
+//                return 0;
+//            }
+//        },
+//        Blue {
+//            @Override
+//            public String getTextureRegion() {
+//                return "blue";
+//            }
+//
+//            @Override
+//            public int getGlobalCost() {
+//                return 0;
+//            }
+//        }
+//
+//    }
+//    public enum Research implements Item{
+//        Steam {
+//            @Override
+//            public String getTextureRegion() {
+//                return "steam";
+//            }
+//
+//            @Override
+//            public int getGlobalCost() {
+//                return 0;
+//            }
+//        },
+//        Powder {
+//            @Override
+//            public String getTextureRegion() {
+//                return "powder";
+//            }
+//
+//            @Override
+//            public int getGlobalCost() {
+//                return 0;
+//            }
+//        }
+//
+//
+//    }
 
 
 

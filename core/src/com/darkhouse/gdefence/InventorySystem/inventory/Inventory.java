@@ -104,7 +104,7 @@ public class Inventory {
 	protected void initSlots(Class<? extends GameObject> type, int numberSlots){
 		slots = new Array<Slot>(numberSlots);
 		for (int i = 0; i < numberSlots; i++) {
-			slots.add(new Slot(type, null, 0));
+			slots.add(new Slot(type/*, null, 0*/));
 		}
 	}
 

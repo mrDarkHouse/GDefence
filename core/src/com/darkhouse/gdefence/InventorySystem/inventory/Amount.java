@@ -12,16 +12,13 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 
 public class Amount extends Label{
-    private Slot slot;
+    private AbstractSlot slot;
 
-
-    public Amount(Skin skin, Slot slot) {
+    public Amount(Skin skin, AbstractSlot slot) {
         super("" + slot.getAmount(), skin);
         this.slot = slot;
         init();
-
     }
-
 
     private void init(){
         Label.LabelStyle style = new Label.LabelStyle();

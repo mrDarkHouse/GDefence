@@ -66,7 +66,7 @@ public class InventoryActor extends Window {
 	}
 
 	public InventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin) {
-		super("Arsenal", skin);
+		super("Inventory", skin);
 		getTitleLabel().setAlignment(Align.center);
 		setMovable(false);
 

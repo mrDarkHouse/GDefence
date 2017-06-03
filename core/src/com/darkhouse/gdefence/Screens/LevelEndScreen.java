@@ -9,13 +9,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.StatManager;
+import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.Model.Panels.ResultPanel;
+import com.darkhouse.gdefence.Objects.DetailObject;
 import com.darkhouse.gdefence.User;
 
 public class LevelEndScreen implements Screen{
@@ -79,7 +84,19 @@ public class LevelEndScreen implements Screen{
         ResultPanel rPanel = new ResultPanel(isWin, statManager);
 
         //table.add(rPanel).spaceBottom(100).row();
-        table.add(rPanel).padBottom(100).row();
+        table.add(rPanel).padBottom(20).row();
+
+
+//        Array<DropSlot> drop = statManager.getDrop();
+
+
+        DropInventoryActor invActor = new DropInventoryActor(statManager.getDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+
+        table.add(invActor).padBottom(20);
+
+
+        table.row();
+
         table.add(continueButton).size(150, 40).align(Align.bottom);
 
 
@@ -87,6 +104,11 @@ public class LevelEndScreen implements Screen{
         //stage.addActor(rPanel);
 
         stage.addActor(table);
+        invActor.init();
+
+
+
+
 
 
     }

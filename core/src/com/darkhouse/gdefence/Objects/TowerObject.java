@@ -163,12 +163,11 @@ public class TowerObject extends GameObject{
 
     @Override
     public String getTooltip() {
-        return "Dmg: " + getDmg() + System.getProperty("line.separator")
-                + "Range: " + getRange() + System.getProperty("line.separator")
-                + "Speed: " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
-                + "Cost: " + getCost();//+ System.getProperty("line.separator")
-//                + "Level: " + getLevel() + System.getProperty("line.separator")
-//                + "Exp:" + getCurrentExp();
+//        return "Dmg: " + getDmg() + System.getProperty("line.separator")
+//                + "Range: " + getRange() + System.getProperty("line.separator")
+//                + "Speed: " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
+//                + "Cost: " + getCost();
+        return prototype.getTooltip();
     }
 
     public void updateGemStat(int gemType, int value){

@@ -6,9 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.Helpers.AssetLoader;
-import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
-import com.darkhouse.gdefence.InventorySystem.inventory.TooltipListener;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.User;
 
 public class ResearchButton extends TowerMapObject{

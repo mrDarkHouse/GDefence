@@ -58,7 +58,7 @@ public class SlotSource extends Source {
 
 		Payload payload = new Payload();
 //		Slot payloadSlot = new Slot(sourceSlot.getPrototype(), sourceSlot.getAmount());
-		payloadSlot = new Slot(sourceSlot.getType(), sourceSlot.getPrototype(), 0);
+		payloadSlot = new Slot(sourceSlot.getType()/*, sourceSlot.getPrototype(), 0*/);
 		takeSlot();
 		payload.setObject(payloadSlot);
 

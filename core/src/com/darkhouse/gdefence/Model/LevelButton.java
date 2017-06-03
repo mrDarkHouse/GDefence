@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.LevelToolip;
-import com.darkhouse.gdefence.InventorySystem.inventory.TooltipListener;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Screens.LevelPreparationScreen;
 
 public class LevelButton extends TextButton {

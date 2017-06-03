@@ -1,10 +1,15 @@
 package com.darkhouse.gdefence.Helpers;
 
 
+import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.InventorySystem.inventory.DropSlot;
+import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
+
 public class StatManager {
     private int mobsKilled;
     private int hpLoose;
     private int energySpend;
+    private Array<DropSlot> drop;
 
 
     public int getMobsKilled() {
@@ -26,6 +31,12 @@ public class StatManager {
         this.energySpend += energySpend;
     }
 
+    public Array<DropSlot> getDrop() {
+        return drop;
+    }
+    public void setDrop(Array<DropSlot> drop) {
+        this.drop = drop;
+    }
 
     public StatManager() {
 

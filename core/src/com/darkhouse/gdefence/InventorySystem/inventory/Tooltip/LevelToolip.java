@@ -69,7 +69,8 @@ public class LevelToolip extends Window{
         for (String s:objects){
             tooltip += System.getProperty("line.separator");
             String[] curr = s.split(":");
-            tooltip += ItemEnum.getItemNameById(Integer.parseInt(curr[0]));
+            tooltip += ItemEnum.getItemById(Integer.parseInt(curr[0])).getName();
+//            tooltip += ItemEnum.getItemNameById(Integer.parseInt(curr[0]));
             switch (curr.length) {
                 case 2:
                     tooltip += "(" + curr[1] + ")";

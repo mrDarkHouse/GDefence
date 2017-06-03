@@ -80,4 +80,41 @@ nothing
   orig: 48, 48
   offset: 0, 0
   index: 48
+steam
+  rotate: false
+  xy: 151, 301
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+powder
+  rotate: false
+  xy: 151, 301
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+redGem
+  rotate: false
+  xy: 1, 301
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+yellowGem
+  rotate: false
+  xy: 51, 301
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+blueGem
+  rotate: false
+  xy: 101, 301
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+
+
 

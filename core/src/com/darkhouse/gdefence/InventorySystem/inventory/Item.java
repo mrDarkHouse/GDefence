@@ -8,5 +8,8 @@ public interface Item {
     String getTextureRegion();
     //String getTooltip();
     int getGlobalCost();
+    int getID();
+    String getName();
+    String getTooltip();
 
 }

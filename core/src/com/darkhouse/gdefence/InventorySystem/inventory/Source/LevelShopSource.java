@@ -23,10 +23,13 @@ public class LevelShopSource extends SlotSource {
 
     @Override
     public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
+
+
+//        if(sourceSlot.isEmpty())return payload;
         TowerObject tower = (TowerObject) sourceSlot.getLast();
-
-
         DragAndDrop.Payload payload = super.dragStart(event, x, y, pointer);
+        if (payload == null)return null;
+
         Level.getMap().setBuild(true, tower, payload);   //start drawing build grid
 
         Image i = ((Image)payload.getValidDragActor());//nullPointer

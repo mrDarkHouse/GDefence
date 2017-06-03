@@ -29,23 +29,18 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.SlotTooltip;
-import com.darkhouse.gdefence.Screens.AbstractScreen;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 
-/**
- * @author Daniel Holderbaum
- */
+
 public class SlotActor extends ImageButton implements SlotListener {
 
 	private Slot slot;
-
 	private Skin skin;
-
 	private Amount amount;
 
 	public SlotActor(Skin skin, Slot slot) {
-		super(createStyle(skin, slot));
+		super(createStyle(skin, slot.getPrototype()));
 		this.slot = slot;
 		this.skin = skin;
 
@@ -67,12 +62,12 @@ public class SlotActor extends ImageButton implements SlotListener {
 		addListener(new TooltipListener(tooltip, true));
 	}
 
-	private static ImageButtonStyle createStyle(Skin skin, Slot slot) {
+	/*public*/ static ImageButtonStyle createStyle(Skin skin, Item prototype/* slot*/) {
 		//TextureAtlas icons = LibgdxUtils.assets.get("icons/icons.atlas", TextureAtlas.class);
 		TextureAtlas icons = new TextureAtlas(Gdx.files.internal("icons/icons.atlas"));
 		TextureRegion image;
-		if (slot.getPrototype() != null) {
-			image = icons.findRegion(slot.getPrototype().getTextureRegion());
+		if (/*slot.getPrototype()*/prototype != null) {
+			image = icons.findRegion(prototype.getTextureRegion());
 		} else {
 			image = icons.findRegion("nothing");
 		}
@@ -88,8 +83,8 @@ public class SlotActor extends ImageButton implements SlotListener {
 	}
 
 	@Override
-	public void hasChanged(Slot slot) {
-		setStyle(createStyle(skin, slot));
+	public void hasChanged(AbstractSlot slot) {
+		setStyle(createStyle(skin, slot.getPrototype()));
 		amount.change();
 	}
 

@@ -31,6 +31,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.InventorySystem.inventory.AbstractSlot;
+import com.darkhouse.gdefence.InventorySystem.inventory.DropSlot;
 import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotListener;
 import com.darkhouse.gdefence.Objects.SpellObject;
@@ -43,9 +45,9 @@ public class SlotTooltip extends Window implements SlotListener {
 
 	private Skin skin;
 
-	private Slot slot;
+	private AbstractSlot slot;
 
-	public SlotTooltip(Stage stage, Slot slot, Skin skin) {
+	public SlotTooltip(Stage stage, AbstractSlot slot, Skin skin) {
 		super("Tooltip...", skin);
 		this.slot = slot;
 		this.skin = skin;
@@ -58,44 +60,53 @@ public class SlotTooltip extends Window implements SlotListener {
 	}
 
 	@Override
-	public void hasChanged(Slot slot) {
+	public void hasChanged(AbstractSlot slot) {
 		if (slot.isEmpty()) {
 			setVisible(false);
 			return;
 		}
 
-		// title displays the amount
+        getTitleLabel().setText(/*slot.getAmount() + "x " + */slot.getTitle());
+        getTitleLabel().setAlignment(Align.center);
+        clear();
+        //Label label = //new Label("Super awesome description of " + slot.getPrototype(), skin);
+        Label label = new Label(slot.getTooltip(), skin);
+        add(label).row();//row can bad
 
-		//setTitle(slot.getAmount() + "x " + slot.getPrototype());
-		getTitleLabel().setText(/*slot.getAmount() + "x " + */slot.getLast().getName());
-		clear();
-		//Label label = //new Label("Super awesome description of " + slot.getPrototype(), skin);
-		Label label = new Label(slot.getLast().getTooltip(), skin);
-		add(label).row();//row can bad
-		if (slot.getLast() instanceof TowerObject) {
-			TowerObject t = ((TowerObject) slot.getLast());
+        if (slot instanceof Slot) {
+            Slot s = ((Slot) slot);
+
+
+
+
+            if (s.getLast() instanceof TowerObject) {
+                TowerObject t = ((TowerObject) s.getLast());
 
             /*FontLoader.generateStyle(16, Color.WHITE)*/
-            Label level = new Label(t.getLevel() + "", skin);//allow FontLoader load skin fonts
-            add(level).align(Align.center).row();
+                Label level = new Label(t.getLevel() + "", skin);//allow FontLoader load skin fonts
+                add(level).align(Align.center).row();
 
 
+                ProgressBar expBar = new ProgressBar(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.2f, false,
+                        GDefence.getInstance().assetLoader.getExpBarSkin()) {
+                    @Override
+                    public float getPrefWidth() {
+                        return 80;
+                    }
+                };//add text inside
+                expBar.getStyle().background.setMinHeight(20);
+                expBar.getStyle().knob.setMinHeight(20);
+                expBar.getStyle().background.setMinWidth(50);
+                expBar.getStyle().knob.setMinWidth(0.1f);
+                expBar.setSize(80, 20);//dont work first argument
+                expBar.setValue(t.getCurrentExp());
+                add(expBar);
+            }
+        }else if(slot instanceof DropSlot){
+            DropSlot s = ((DropSlot) slot);
 
-			ProgressBar expBar = new ProgressBar(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.2f, false,
-					GDefence.getInstance().assetLoader.getExpBarSkin()){
-                @Override
-                public float getPrefWidth() {
-                    return 80;
-                }
-            };//add text inside
-			expBar.getStyle().background.setMinHeight(20);
-			expBar.getStyle().knob.setMinHeight(20);
-			expBar.getStyle().background.setMinWidth(50);
-			expBar.getStyle().knob.setMinWidth(0.1f);
-			expBar.setSize(80, 20);//dont work first argument
-			expBar.setValue(t.getCurrentExp());
-			add(expBar);
-		}
+
+        }
 		pack();
 	}
 

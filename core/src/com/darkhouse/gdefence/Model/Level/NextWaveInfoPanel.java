@@ -3,7 +3,6 @@ package com.darkhouse.gdefence.Model.Level;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,9 +13,8 @@ import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.AbilityTooltip;
-import com.darkhouse.gdefence.InventorySystem.inventory.TooltipListener;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
-import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Screens.LevelMap;

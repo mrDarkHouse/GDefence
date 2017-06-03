@@ -32,6 +32,6 @@ public interface SlotListener {
 	 * @param slot
 	 *            The changed slot.
 	 */
-	void hasChanged(Slot slot);
+	void hasChanged(AbstractSlot slot);
 
 }

@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.StatManager;
+import com.darkhouse.gdefence.InventorySystem.inventory.DropSlot;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.Objects.DetailObject;
 import com.darkhouse.gdefence.Objects.GameObject;
-import com.darkhouse.gdefence.Objects.IDroppable;
 import com.darkhouse.gdefence.Screens.LevelEndScreen;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
@@ -254,21 +256,24 @@ public class Level {
 
 
     }
-    private class Drop{
-        private IDroppable drop;
-        private int count;
-
-        public Drop(IDroppable drop, int count) {
-            this.drop = drop;
-            this.count = count;
-        }
-    }
+//    private class Drop{
+////        private IDroppable drop;
+//        private int count;
+//
+//        public Drop(/*IDroppable drop,*/ int count) {
+////            this.drop = drop;
+//            this.count = count;
+//        }
+//    }
 
     private void addDrop(String dropCode){
 //        Array<GameObject> currentDrop = new Array<GameObject>();
-        Array<Drop> currentDrop = new Array<Drop>();
+//        Array<Drop> currentDrop = new Array<Drop>();
 //        HashMap<String, Integer> currentDrop = new HashMap<String, Integer>();//String = texturePath;
         String[] objects = dropCode.split("/");
+
+        Array<DropSlot> drop = new Array<DropSlot>();
+
 
         for (String s:objects){
             String[] curr = s.split(":");
@@ -278,6 +283,8 @@ public class Level {
                 String[] range = curr[1].split("-");
                 int count = rand.nextInt((Integer.parseInt(range[1]) - Integer.parseInt(range[0])) + 1) + Integer.parseInt(range[0]);
                 ItemEnum.addItemById(Integer.parseInt(curr[0]), count, GDefence.getInstance().user);
+//                DropSlot slot = ;
+                drop.add(new DropSlot(ItemEnum.getItemById(Integer.parseInt(curr[0])), count));
 //                currentDrop.add(ItemEnum.getItemTextureById(Integer.parseInt(curr[0])));
                 break;
             case 3:
@@ -285,10 +292,12 @@ public class Level {
                 if (chance.nextFloat() > 1 - Float.parseFloat(curr[2])) {
 //                currentDrop.add();
                     ItemEnum.addItemById(Integer.parseInt(curr[0]), Integer.parseInt(curr[1]), GDefence.getInstance().user);
+                    drop.add(new DropSlot(ItemEnum.getItemById(Integer.parseInt(curr[0])), 1));
                 }
                 break;
             }
         }
+        getStatManager().setDrop(drop);
     }
 
 

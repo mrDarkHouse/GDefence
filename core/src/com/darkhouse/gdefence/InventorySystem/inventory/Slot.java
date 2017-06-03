@@ -25,10 +25,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.darkhouse.gdefence.Objects.*;
 
-/**
- * @author Daniel Holderbaum
- */
-public class Slot {
+
+public class Slot extends AbstractSlot{
 
 
 	private Item prototype;
@@ -49,16 +47,17 @@ public class Slot {
 
 	//private int amount;
 
-	private Array<SlotListener> slotListeners = new Array<SlotListener>();
+//	private Array<SlotListener> slotListeners = new Array<SlotListener>();
 
-	public Slot(Class<? extends GameObject> type, Item item, int amount) {
-		this.prototype = item;
+	public Slot(Class<? extends GameObject> type/*, Item item, int amount*/) {//created empty slot
+//		this.prototype = item;
 		this.type = type;
 		//this.amount = amount;
-		itemsArray = new Array<GameObject>();
-		for (int i = 0; i < amount; i++){
-			//itemsArray.add(prototype);
-		}
+        itemsArray = new Array<GameObject>();
+//		itemsArray = new Array<GameObject>(GameObject.generateStartObjects(item, amount));//
+//		for (int i = 0; i < amount; i++){
+//			itemsArray.add(GameObject.generateStartObjects(item, 1));
+//		}
 	}
 	public void copy(Slot s){
 //		itemsArray.clear();
@@ -163,13 +162,13 @@ public class Slot {
 		return prototype == null || itemsArray.size <= 0;
 	}
 
-	public void addListener(SlotListener slotListener) {
-		slotListeners.add(slotListener);
-	}
-
-	public void removeListener(SlotListener slotListener) {
-		slotListeners.removeValue(slotListener, true);
-	}
+//	public void addListener(SlotListener slotListener) {
+//		slotListeners.add(slotListener);
+//	}
+//
+//	public void removeListener(SlotListener slotListener) {
+//		slotListeners.removeValue(slotListener, true);
+//	}
 
 
 
@@ -255,11 +254,11 @@ public class Slot {
 
 	}
 
-	public void notifyListeners() {
-		for (SlotListener slotListener : slotListeners) {
-			slotListener.hasChanged(this);
-		}
-	}
+//	public void notifyListeners() {
+//		for (SlotListener slotListener : slotListeners) {
+//			slotListener.hasChanged(this);
+//		}
+//	}
 
 	public Item getPrototype() {
 		return prototype;
@@ -273,7 +272,17 @@ public class Slot {
 		return itemsArray.size;
 	}
 
-	@Override
+    @Override
+    public String getTitle() {
+        return getLast().getName();
+    }
+
+    @Override
+    public String getTooltip() {//
+        return getLast().getTooltip();
+    }
+
+    @Override
 	public String toString() {
 		return "Slot[" + prototype + ":" + getAmount() + "]";
 	}

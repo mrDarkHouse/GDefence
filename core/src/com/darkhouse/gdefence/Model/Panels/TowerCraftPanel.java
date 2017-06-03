@@ -56,13 +56,13 @@ public class TowerCraftPanel extends Window{
     }
     private class RecipeListener implements SlotListener{
         @Override
-        public void hasChanged(Slot slot) {
+        public void hasChanged(AbstractSlot slot) {
             recipeChanged(slot);
         }
     }
     private class ComponentListener implements SlotListener{
         @Override
-        public void hasChanged(Slot slot) {
+        public void hasChanged(AbstractSlot slot) {
             addComponent();
         }
     }
@@ -86,11 +86,11 @@ public class TowerCraftPanel extends Window{
         this.dragAndDrop = dragAndDrop;
         this.skin = skin;
         setSourceTargetInventory(overallInventory);
-        recipeSlot = new SlotActor(skin, new Slot(Recipe.class, null, 0));
+        recipeSlot = new SlotActor(skin, new Slot(Recipe.class/*, null, 0*/));
         recipeListener = new RecipeListener();
         recipeSlot.getSlot().addListener(recipeListener);
 //        resultListener = new ResultListener();
-        resultSlot = new SlotActor(skin, new Slot(TowerObject.class, null, 0));
+        resultSlot = new SlotActor(skin, new Slot(TowerObject.class/*, null, 0*/));
 
         add(recipeSlot).align(Align.center);
         row();
@@ -121,7 +121,7 @@ public class TowerCraftPanel extends Window{
 //        recipeSlot.hasChanged();
 
         for (int i = 0; i < components; i++){
-            componentSlots.add(new SlotActor(skin, new Slot(TowerObject.class, null, 0)));
+            componentSlots.add(new SlotActor(skin, new Slot(TowerObject.class/*, null, 0*/)));
         }
 
         for (int i = 0; i < componentSlots.size; i++){
@@ -176,7 +176,7 @@ public class TowerCraftPanel extends Window{
 //        resultSlot.getSlot().removeListener(resultListener);
         resultSlot.remove();
     }
-    private void recipeChanged(Slot slot){
+    private void recipeChanged(AbstractSlot slot){
         if(!slot.isEmpty()) {
             if (!hasRecipe /*&& slot.getPrototype() == ItemEnum.Detail.Recipe*//*remove when complete <Recipe> slot*/) {//
                 hasRecipe = true;

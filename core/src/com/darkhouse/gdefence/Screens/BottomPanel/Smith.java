@@ -15,6 +15,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Source.GemGradeSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.GemGradeTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GradableTooltip;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Model.Panels.GemGradePanel;
 import com.darkhouse.gdefence.Model.Panels.GemPanel;
 import com.darkhouse.gdefence.Model.Panels.GoldPanel;
