@@ -28,8 +28,92 @@ import com.darkhouse.gdefence.Value;
 import java.util.HashMap;
 
 public class TowerMap extends Window{
+
+    private class TowerMapLinks extends Actor{
+        private Array <TowerMapObject> buttons;
+        private ShapeRenderer sr;
+
+        public TowerMapLinks(Array <TowerMapObject> buttons) {
+            this.buttons = buttons;
+            sr = new ShapeRenderer();
+            sr.setColor(Color.BLACK);
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha) {
+//            super.draw(batch, parentAlpha);
+
+            batch.end();
+            sr.begin(ShapeRenderer.ShapeType.Filled);
+//        sr.setTransformMatrix(batch.getTransformMatrix());
+
+            for (int i = 1; i <= 3; i++){
+                linkTowers(sr, buttons.get(0), buttons.get(i));
+            }
+            linkTowers(sr, buttons.get(1), buttons.get(4));
+//        linkTowers(sr, buttons.get(1), buttons.get(5));
+            linkTowers(sr, buttons.get(2), buttons.get(5));
+
+            linkTowers(sr, buttons.get(1), buttons.get(6));
+            linkTowers(sr, buttons.get(3), buttons.get(6));
+
+            linkTowers(sr, buttons.get(2), buttons.get(7));
+            linkTowers(sr, buttons.get(3), buttons.get(7));
+
+            linkTowers(sr, buttons.get(4), buttons.get(8));
+            linkTowers(sr, buttons.get(5), buttons.get(8));
+//
+            linkTowers(sr, buttons.get(6), buttons.get(10));
+//
+            linkTowers(sr, buttons.get(7), buttons.get(11));
+
+            linkTowers(sr, buttons.get(8), buttons.get(9));
+
+            linkTowers(sr, buttons.get(12), buttons.get(10));
+
+            linkTowers(sr, buttons.get(12), buttons.get(11));
+
+            linkTowers(sr, buttons.get(9), buttons.get(13));
+            linkTowers(sr, buttons.get(12), buttons.get(13));
+
+            linkTowers(sr, buttons.get(8), buttons.get(14));
+            linkTowers(sr, buttons.get(10), buttons.get(14));
+
+            linkTowers(sr, buttons.get(5), buttons.get(15));
+            linkTowers(sr, buttons.get(11), buttons.get(15));
+
+            linkTowers(sr, buttons.get(14), buttons.get(16));
+
+            linkTowers(sr, buttons.get(15), buttons.get(17));
+
+            linkTowers(sr, buttons.get(13), buttons.get(18));
+
+            linkTowers(sr, buttons.get(8), buttons.get(19));
+            linkTowers(sr, buttons.get(17), buttons.get(19));
+
+            linkTowers(sr, buttons.get(16), buttons.get(20));
+
+            linkTowers(sr, buttons.get(21), buttons.get(4));
+
+            linkTowers(sr, buttons.get(1), buttons.get(12));
+            linkTowers(sr, buttons.get(22), buttons.get(12));
+
+//        linkTowers(sr, buttons.get(1), buttons.get(7));
+//        linkTowers(sr, buttons.get(2), buttons.get(6));
+//        linkTowers(sr, buttons.get(2), buttons.get(8));
+//        linkTowers(sr, buttons.get(3), buttons.get(7));
+//        linkTowers(sr, buttons.get(3), buttons.get(8));
+
+            sr.end();
+
+            batch.begin();
+
+
+        }
+    }
+
     private Array <TowerMapObject> buttons;
-    private ShapeRenderer sr;
+    private TowerMapLinks links;
     private Table table;
 
     public TowerMap(Skin skin) {
@@ -46,8 +130,7 @@ public class TowerMap extends Window{
 //        setKeepWithinStage(true);
 
 
-        sr = new ShapeRenderer();
-        sr.setColor(Color.BLACK);
+
 //        Gdx.gl.glLineWidth(1);
 //        sr.setAutoShapeType(true);
 
@@ -98,18 +181,26 @@ public class TowerMap extends Window{
 //        table.setY(-200);
 //        table.setOriginY(-200);
 
-        table.pack();
-        pack();
-
         setSize(table.getPrefWidth(), 630);
 
         table.pack();
+        pack();
+
+//        setSize(table.getPrefWidth(), 630);
+
+//        table.pack();
+
+        links = new TowerMapLinks(buttons);
+        addActor(links);
+
+
+
 //        pack();
 
 //        System.out.println(getX() + " " + getY() + " " + getWidth() + " " + getHeight());
 //        System.out.println(table.getX() + " " + table.getY() + " " + table.getWidth() + " " + table.getHeight());
 
-//        debug();
+//        table.debug();
 
 //        table.setY(-200);
 //        pack();
@@ -134,15 +225,28 @@ public class TowerMap extends Window{
         addListener(new DragListener(){
             private float offsetX;
             private float offsetY;
-            private Rectangle maxBounds = new Rectangle(table.getX() - 100, table.getY() - 100, table.getWidth() + 200, table.getHeight() + 200);
 
             @Override
             public void drag(InputEvent event, float x, float y, int pointer) {
                 super.drag(event, x, y, pointer);
-//                System.out.println(maxBounds.getX() + " " + maxBounds.getY() + " " + maxBounds.getWidth() + " " + maxBounds.getHeight());
-//                System.out.println(table.getX() + " " + table.getY() + " " + table.getWidth() + " " + table.getHeight());
-//                if(maxBounds.contains(new Rectangle(table.getX(), table.getY(), table.getWidth(), table.getHeight())))
-                table.setPosition(offsetX + x, offsetY + y);
+
+                float cx;
+                float cy;
+
+                int lxLimit = -70;
+                int rxLimit = 70;
+                int dyLimit = -140;
+                int uyLimit = 120;
+
+                if(offsetX + x < lxLimit) cx = lxLimit;
+                else if(offsetX + x > rxLimit) cx = rxLimit;
+                else cx = offsetX + x;
+
+                if(offsetY + y < dyLimit) cy = dyLimit;
+                else if(offsetY + y > uyLimit) cy = uyLimit;
+                else cy = offsetY + y;
+
+                table.setPosition(cx, cy);
             }
 
 
@@ -151,8 +255,6 @@ public class TowerMap extends Window{
                 super.dragStart(event, x, y, pointer);
                 offsetX = table.getX() - x;
                 offsetY = table.getY() - y;
-//                maxBounds = new Rectangle(table.getX() - 100, table.getY() - 100, table.getWidth() + 200, table.getHeight() + 200);
-//                System.out.println(offsetX + " " + offsetY);
             }
 
             @Override
@@ -169,6 +271,10 @@ public class TowerMap extends Window{
     }
 
 
+    @Override
+    public float getPrefHeight() {
+        return 630;
+    }
 
     private void initButtons(){
         buttons = new Array<TowerMapObject>();
@@ -255,81 +361,16 @@ public class TowerMap extends Window{
 //        for (int i = 0; i < lenght; i++){
 //            //batch.draw(GDefence.getInstance().assetLoader.get("buildGridLinePixel.png", Texture.class), ((float) (line.x + i * Math.cos(line.angle()))), ((float) (line.y + i * Math.sin(line.angle()))));
 //        }
-        batch.end();
+//        batch.end();
 //        Gdx.gl.glEnable(GL20.GL_BLEND);
 //        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 //        sr.setProjectionMatrix(batch.getProjectionMatrix());
 //        Color tmp = sr.getColor();
 //        sr.setColor(tmp.r, tmp.g, tmp.b, parentAlpha);
 
-        sr.begin(ShapeRenderer.ShapeType.Filled);
-//        sr.setTransformMatrix(batch.getTransformMatrix());
 
-        for (int i = 1; i <= 3; i++){
-            linkTowers(sr, buttons.get(0), buttons.get(i));
-        }
-        linkTowers(sr, buttons.get(1), buttons.get(4));
-//        linkTowers(sr, buttons.get(1), buttons.get(5));
-        linkTowers(sr, buttons.get(2), buttons.get(5));
-
-        linkTowers(sr, buttons.get(1), buttons.get(6));
-        linkTowers(sr, buttons.get(3), buttons.get(6));
-
-        linkTowers(sr, buttons.get(2), buttons.get(7));
-        linkTowers(sr, buttons.get(3), buttons.get(7));
-
-        linkTowers(sr, buttons.get(4), buttons.get(8));
-        linkTowers(sr, buttons.get(5), buttons.get(8));
-//
-        linkTowers(sr, buttons.get(6), buttons.get(10));
-//
-        linkTowers(sr, buttons.get(7), buttons.get(11));
-
-        linkTowers(sr, buttons.get(8), buttons.get(9));
-
-        linkTowers(sr, buttons.get(12), buttons.get(10));
-
-        linkTowers(sr, buttons.get(12), buttons.get(11));
-
-        linkTowers(sr, buttons.get(9), buttons.get(13));
-        linkTowers(sr, buttons.get(12), buttons.get(13));
-
-        linkTowers(sr, buttons.get(8), buttons.get(14));
-        linkTowers(sr, buttons.get(10), buttons.get(14));
-
-        linkTowers(sr, buttons.get(5), buttons.get(15));
-        linkTowers(sr, buttons.get(11), buttons.get(15));
-
-        linkTowers(sr, buttons.get(14), buttons.get(16));
-
-        linkTowers(sr, buttons.get(15), buttons.get(17));
-
-        linkTowers(sr, buttons.get(13), buttons.get(18));
-
-        linkTowers(sr, buttons.get(8), buttons.get(19));
-        linkTowers(sr, buttons.get(17), buttons.get(19));
-
-        linkTowers(sr, buttons.get(16), buttons.get(20));
-
-        linkTowers(sr, buttons.get(21), buttons.get(4));
-
-        linkTowers(sr, buttons.get(1), buttons.get(12));
-        linkTowers(sr, buttons.get(22), buttons.get(12));
-
-
-
-
-
-
-//        linkTowers(sr, buttons.get(1), buttons.get(7));
-//        linkTowers(sr, buttons.get(2), buttons.get(6));
-//        linkTowers(sr, buttons.get(2), buttons.get(8));
-//        linkTowers(sr, buttons.get(3), buttons.get(7));
-//        linkTowers(sr, buttons.get(3), buttons.get(8));
-
-        sr.end();
 //        Gdx.gl.glDisable(GL20.GL_BLEND);
-        batch.begin();
+//        batch.begin();
     }
 
     private void linkTowers(ShapeRenderer sh, ImageButton r1, ImageButton r2){

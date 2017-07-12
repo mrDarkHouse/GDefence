@@ -345,8 +345,8 @@ public class User {
         return getOpenType(t) == RecipeType.opened;
     }
     public void buyTowerRecipe(ItemEnum.Tower t){
-        if(t == ItemEnum.Tower.Range) openResearch(Research.Steam);
-        if(t == ItemEnum.Tower.Arrow) openResearch(Research.Powder);
+//        if(t == ItemEnum.Tower.Range) openResearch(Research.Steam);//debug tool
+//        if(t == ItemEnum.Tower.Arrow) openResearch(Research.Powder);
         getDetailInventory().store(new Recipe(t));
         openedTowers.put(t, RecipeType.opened);
         openRecipes();
