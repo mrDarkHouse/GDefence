@@ -35,6 +35,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.AbstractSlot;
 import com.darkhouse.gdefence.InventorySystem.inventory.DropSlot;
 import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotListener;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
@@ -85,13 +86,14 @@ public class SlotTooltip extends Window implements SlotListener {
             /*FontLoader.generateStyle(16, Color.WHITE)*/
                 Label level = new Label(t.getLevel() + "", skin);//allow FontLoader load skin fonts
                 add(level).align(Align.center).row();
+                final float width = getWidth();
 
 
                 ProgressBar expBar = new ProgressBar(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.2f, false,
                         GDefence.getInstance().assetLoader.getExpBarSkin()) {
                     @Override
                     public float getPrefWidth() {
-                        return 80;
+                        return width - 10;
                     }
                 };//add text inside
                 expBar.getStyle().background.setMinHeight(20);

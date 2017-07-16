@@ -8,17 +8,36 @@ import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.User;
 
 public class DoubleAttack extends Ability implements Ability.IOnBuild{
 
     public static class P extends Ability.AblityPrototype{
+//        private G grader;
+
         private float cdCap;
         private int shots;
 
-        public P(float cdCap, int bonusAttacks) {
+        public P(float cdCap, int bonusAttacks, G grader) {
             super("Spread Attack");
             this.cdCap = cdCap;
             this.shots = bonusAttacks;
+            this.grader = grader;
+            gemsMax = new int[]{2, 0, 0};
+        }
+
+        protected boolean grade(User.GEM_TYPE t) {
+            switch (t){
+                case BLACK:
+                    cdCap -= ((G) grader).cdCapDown;
+                    return true;
+//                case GREEN:
+//                    return false;
+//                case WHITE:
+//                    return false;
+                default:
+                    return false;
+            }
         }
 
         @Override
@@ -31,6 +50,14 @@ public class DoubleAttack extends Ability implements Ability.IOnBuild{
             return "Shot second projectile every " + cdCap + " seconds";
         }
     }
+    public static class G extends AbilityGrader{
+        private float cdCapDown;
+
+        public G(float cdCapDown) {
+            this.cdCapDown = cdCapDown;
+        }
+    }
+
     private class DoubleShotEffect extends Effect<Tower> implements IPostAttack {
 //        private float delay = 0.2f;
 //        private float currentDelayTime = -1;
@@ -137,6 +164,8 @@ public class DoubleAttack extends Ability implements Ability.IOnBuild{
 
 
     private DoubleShotEffect buff;
+
+
 
     public DoubleAttack(P prototype) {
         buff = new DoubleShotEffect(prototype.cdCap, prototype.shots);

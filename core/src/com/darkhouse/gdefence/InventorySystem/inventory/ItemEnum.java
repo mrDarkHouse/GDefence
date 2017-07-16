@@ -22,6 +22,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
@@ -105,11 +106,11 @@ public enum ItemEnum {;
 
 		//	        texturePath        textures              attackType         projSp cost glCost dmg range speed abilities
 		Basic(    "Basic",          "basic",         AttackType.projectile, 250, 10,  80,    10, 100, 23),//1.2
-		Rock(     "Rock",           "rock",          AttackType.projectile, 400, 20,  140,   1, 120, 30, new DoubleAttack.P(3f, 2)),//1.4,
-		Arrow(    "Arrow",          "arrow",         AttackType.projectile, 250, 20,  140,   15, 120, 40),
+		Rock(     "Rock",           "rock",          AttackType.projectile, 400, 20,  140,   1, 120,  30, new DoubleAttack.P(3f, 2, new DoubleAttack.G(0.5f))),//1.4,
+		Arrow(    "Arrow",          "arrow",         AttackType.projectile, 250, 20,  140,   15, 120, 40, new Bash.P(0.2f, 1f, 20, new Bash.G(0.05f, 0.5f, 10))),
 		Range(    "Range",          "range",         AttackType.projectile, 350, 20,  180,   15, 160, 30),
         Short(    "Short",          "short",         AttackType.projectile, 250, 25,  180,   30, 180, 23),
-        Mountain( "Mountain",       "mountain",      AttackType.projectile, 250, 25,  180,   45, 130, 15, new Bash.P(0.2f, 1f, 20)),
+        Mountain( "Mountain",       "mountain",      AttackType.projectile, 250, 25,  180,   45, 130, 15, new Bash.P(0.2f, 1f, 20, new Bash.G(0.05f, 0.5f, 10))),
 //        SteelArrow("Steel Arrow","steelArrow", AttackType.projectile, 250, 25,  200,   20, 140, 30),
         Catapult(  "Catapult",      "range",      AttackType.projectile, 250, 25,  240,   30, 180, 10, new Splash.P(200, 0.4f)),
 		Ballista(  "Ballista",      "range",      AttackType.projectile, 250, 25,  240,   20, 180, 40, new SteelArrow.P(5, 300)),
@@ -120,10 +121,10 @@ public enum ItemEnum {;
         MachineGun("Machine Gun",   "range",         AttackType.projectile, 250, 25,  240,   20, 180, 40, new ShotDelay.P(1f)),
         Sniper(    "Sniper",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40, new ShotDelay.P(1f)),
         Shotgun(   "Shotgun",       "range",       AttackType.projectile, 250, 25,  240,   20, 180, 40, new BuckShot.P(5, 20f, 1)),
-        DoubleBarrel("Double Barrel","range", AttackType.projectile, 250, 25,  240,   20, 180, 40, new DoubleAttack.P(3f, 1), new BuckShot.P(5, 20f, 1)),
+        DoubleBarrel("Double Barrel","range", AttackType.projectile, 250, 25,  240,   20, 180, 40, new DoubleAttack.P(3f, 1, new DoubleAttack.G(0.5f)), new BuckShot.P(5, 20f, 1)),
         Cannon(    "Cannon",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40, new Splash.P(300, 0.8f)),
         Rocket(    "Rocket",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40, new Splash.P(300, 0.8f)),
-        Missle(    "Missle",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40, new Splash.P(300, 0.8f), new DoubleAttack.P(3f, 1)),
+        Missle(    "Missle",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40, new Splash.P(300, 0.8f), new DoubleAttack.P(3f, 1, new DoubleAttack.G(0.5f))),
         Glaive(    "Glaive",        "range",        AttackType.projectile, 250, 25,  240,   20, 180, 40, new Bounce.P(2, 0.2f, 200)),
         MultiShot( "MultiShot",     "range",     AttackType.projectile, 250, 25,  240,   20, 180, 40, new MultiShot.P(2)),
         SteamMachine("Steam Machine","range", AttackType.projectile, 250, 25,  240,   20, 180, 40);
@@ -263,10 +264,17 @@ public enum ItemEnum {;
 
         @Override
         public String getTooltip() {
-            return "Dmg: " + getDmg() + System.getProperty("line.separator")
-                    + "Range: " + getRange() + System.getProperty("line.separator")
-                    + "Speed: " + getSpeed() + "(" + com.darkhouse.gdefence.Level.Tower.Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
-                    + "Cost: " + getCost();
+            String s = "Damage: " + getDmg() + System.getProperty("line.separator")
+                    + "Attack range: " + getRange() + System.getProperty("line.separator")
+                    + "Attack speed: " + getSpeed() + "(" + com.darkhouse.gdefence.Level.Tower.Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
+                    + "Energy cost: " + getCost() + System.getProperty("line.separator");
+            for (int i = 0; i < getAbilities().size; i++){
+                s += System.getProperty("line.separator");
+                Ability.AblityPrototype a = getAbilities().get(i);
+                s += a.getName();
+                s += a.getGemStat();
+            }
+            return s;
         }
 
         public int getSpeed() {

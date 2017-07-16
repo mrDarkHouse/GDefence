@@ -400,6 +400,11 @@ public class User {
             this.texturePath = texturePath;
         }
 
+
+        public static boolean isTowerGem(GEM_TYPE g){
+            return g == RED || g == YELLOW || g == BLUE;
+        }
+
         public static int getBoost(GEM_TYPE type){
             switch (type){
                 case RED:

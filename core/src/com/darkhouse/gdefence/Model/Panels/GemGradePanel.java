@@ -16,6 +16,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradeTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.User;
 
@@ -33,6 +34,13 @@ public class GemGradePanel extends Window{
     private DragAndDrop dragAndDrop;
     private ImageButton[] gemGrades;
 
+    private class GradeSlotListener implements SlotListener{
+        @Override
+        public void hasChanged(AbstractSlot slot) {
+            slotChanged(slot);
+        }
+    }
+
     public GemGradePanel(DragAndDrop dragAndDrop, Skin skin) {
         super("Grade Panel", skin);
         getTitleLabel().setAlignment(Align.center);
@@ -42,10 +50,13 @@ public class GemGradePanel extends Window{
         this.dragAndDrop = dragAndDrop;
         gradeTowerSlot = new SlotActor(skin, new Slot(TowerObject.class/*, null, 0*/));
         add(gradeTowerSlot);
-        gemGrades = new ImageButton[3];
+        gemGrades = new ImageButton[6];
         gemGrades[0] = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(GDefence.getInstance().assetLoader.get("Gems/redGem.png", Texture.class)));
         gemGrades[1] = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(GDefence.getInstance().assetLoader.get("Gems/yellowGem.png", Texture.class)));
         gemGrades[2] = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(GDefence.getInstance().assetLoader.get("Gems/blueGem.png", Texture.class)));
+        gemGrades[3] = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(GDefence.getInstance().assetLoader.get("Gems/blackGem.png", Texture.class)));
+        gemGrades[4] = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(GDefence.getInstance().assetLoader.get("Gems/greenGem.png", Texture.class)));
+        gemGrades[5] = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(GDefence.getInstance().assetLoader.get("Gems/whiteGem.png", Texture.class)));
 //        gemGrades[0].addListener(new InputListener() {
 //            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 //                addGems(User.GEM_TYPE.RED);
@@ -80,6 +91,7 @@ public class GemGradePanel extends Window{
         }
         for (ImageButton i:gemGrades){
             add(i);
+            i.setVisible(false);
         }
 
 
@@ -101,6 +113,17 @@ public class GemGradePanel extends Window{
         gradeTowerSlot.getSlot().notifyListeners();
 
 
+    }
+    private void slotChanged(AbstractSlot slot){
+        if(!slot.isEmpty()){
+            if(slot.getPrototype() instanceof TowerObject){
+
+            }else if(slot.getPrototype() instanceof SpellObject){
+
+            }
+
+
+        }
     }
 
     private void addGems(User.GEM_TYPE type){
