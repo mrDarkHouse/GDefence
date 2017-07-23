@@ -54,7 +54,7 @@ public class Sprint extends MobAbility implements MobAbility.ISpawn{
             super.dispell();
         }
     }
-    public static class P extends AblityPrototype{
+    public static class P extends AbilityPrototype {
         private float cdCap;
         private float duration;
         private int speedBoost;

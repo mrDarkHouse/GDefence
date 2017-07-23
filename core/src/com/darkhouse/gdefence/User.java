@@ -541,6 +541,12 @@ public class User {
 //        gems[3] = 1;
 //        gems[4] = 9;
 //        gems[5] = 41;
+        addGems(GEM_TYPE.RED, 11);
+        addGems(GEM_TYPE.YELLOW, 4);
+        addGems(GEM_TYPE.BLUE, 9);
+        addGems(GEM_TYPE.WHITE, 7);
+        addGems(GEM_TYPE.GREEN, 4);
+        addGems(GEM_TYPE.BLACK, 5);
 
         update();
 

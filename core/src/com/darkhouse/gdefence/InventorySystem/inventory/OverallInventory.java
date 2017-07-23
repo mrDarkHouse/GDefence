@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Screens.CampainMap;
 import com.darkhouse.gdefence.User;
 
@@ -39,17 +41,18 @@ public class OverallInventory extends Window{
 //        inventories[2] = new Inventory();
 
 
+        AssetLoader l = GDefence.getInstance().assetLoader;
 
         setPosition(100, 250);
         actors = new InventoryActor[3];
         actors[0] = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),
-                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+                l.get("skins/uiskin.json", Skin.class));
         actors[0].getTitleLabel().setText("Towers");
         actors[1] = new InventoryActor(User.getSpellInventory(), new DragAndDrop(),
-                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+                l.get("skins/uiskin.json", Skin.class));
         actors[1].getTitleLabel().setText("Spells");
         actors[2] = new InventoryActor(User.getDetailInventory(), new DragAndDrop(),
-                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+                l.get("skins/uiskin.json", Skin.class));
         actors[2].getTitleLabel().setText("Details");
 
 
@@ -58,7 +61,9 @@ public class OverallInventory extends Window{
 
         float size = actors[0].getHeight()/3;
 
-        ImageButton changeTower = new ImageButton(GDefence.getInstance().assetLoader.getNextButtonSkin());
+
+
+        ImageButton changeTower = new ImageButton(l.generateImageButtonSkin(l.get("Buttons/towersButton.png", Texture.class)));
         changeTower.setSize(size, size);//dont work
         changeTower.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -66,7 +71,7 @@ public class OverallInventory extends Window{
                 return true;
             }
         });
-        ImageButton changeSpell = new ImageButton(GDefence.getInstance().assetLoader.getNextButtonSkin());
+        ImageButton changeSpell = new ImageButton(l.generateImageButtonSkin(l.get("Buttons/spellsButton.png", Texture.class)));
         changeSpell.setSize(size, size);
         changeSpell.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -74,7 +79,7 @@ public class OverallInventory extends Window{
                 return true;
             }
         });
-        ImageButton changeDetail = new ImageButton(GDefence.getInstance().assetLoader.getNextButtonSkin());
+        ImageButton changeDetail = new ImageButton(l.generateImageButtonSkin(l.get("Buttons/detailsButton.png", Texture.class)));
         changeDetail.setSize(size, size);
         changeDetail.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -114,6 +119,11 @@ public class OverallInventory extends Window{
     public void init(){
         for (InventoryActor a:actors){
             a.init();
+        }
+    }
+    public void notifyListeners(){
+        for (InventoryActor a:actors){
+            a.notifyListeners();
         }
     }
 

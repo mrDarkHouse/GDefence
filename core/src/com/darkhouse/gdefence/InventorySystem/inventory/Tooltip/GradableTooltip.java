@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.User;
 
-public class GradableTooltip extends Window {
+public class GradableTooltip extends AbstractTooltip {
     private Skin skin;
     private User.Gradable gradable;
 

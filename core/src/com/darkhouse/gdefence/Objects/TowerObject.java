@@ -3,13 +3,12 @@ package com.darkhouse.gdefence.Objects;
 
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.User;
 
-import java.util.ArrayList;
-
-public class TowerObject extends GameObject{
+public class TowerObject extends GameObject implements GemGradable{
     public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
 
     private ItemEnum.Tower prototype;
@@ -22,7 +21,7 @@ public class TowerObject extends GameObject{
     private int speed;
     private int cost;
     private int globalCost;
-    protected Array<Ability.AblityPrototype> abilities;
+    protected Array<Ability.AbilityPrototype> abilities;
 
 
 
@@ -56,7 +55,7 @@ public class TowerObject extends GameObject{
         return t;
     }
 
-    public Array<Ability.AblityPrototype> getAbilities() {
+    public Array<Ability.AbilityPrototype> getAbilities() {
         return abilities;
     }
 //    public AttackType getAttackType() {
@@ -95,9 +94,15 @@ public class TowerObject extends GameObject{
         totalExp += value;
         updateExp();
     }
+    public boolean canGrade(){
+        return (getLevel() > getPrimaryGemsNumber());
+    }
+
     public void addGems(User.GEM_TYPE type, int value){
-        gemsNumber[type.ordinal()] += value;
-        updateGemStat(type.ordinal(), value);
+        if(canGrade()) {
+            gemsNumber[type.ordinal()] += value;
+            updateGemStat(type.ordinal(), value);
+        }
     }
 
     public int getPrimaryGemsNumber(){
@@ -128,6 +133,12 @@ public class TowerObject extends GameObject{
         s += "}";
         return s;
     }
+    private void copyAbilities(Array<Ability.AbilityPrototype> toCopy){
+        abilities = new Array<Ability.AbilityPrototype>();
+        for (Ability.AbilityPrototype a:toCopy){
+            abilities.add(a.copy());
+        }
+    }
 
 
     public TowerObject(ItemEnum.Tower prototype) {
@@ -142,7 +153,9 @@ public class TowerObject extends GameObject{
         speed = prototype.getSpeed();
         cost = prototype.getCost();
         globalCost = prototype.getGlobalCost();
-        abilities = new Array<Ability.AblityPrototype>(prototype.getAbilities());
+
+        copyAbilities(prototype.getAbilities());
+//        abilities = new Array<Ability.AbilityPrototype>(prototype.getAbilities());
 
 
         gemsNumber = new int[]{0, 0, 0, 0, 0, 0};
@@ -152,6 +165,7 @@ public class TowerObject extends GameObject{
 
     public TowerObject(ItemEnum.Tower prototype, int red, int yellow, int blue) {
         this(prototype);
+        level += (red + yellow + blue) - 1;
         addGems(User.GEM_TYPE.RED, red);
         addGems(User.GEM_TYPE.YELLOW, yellow);
         addGems(User.GEM_TYPE.BLUE, blue);
@@ -163,11 +177,18 @@ public class TowerObject extends GameObject{
 
     @Override
     public String getTooltip() {
-//        return "Dmg: " + getDmg() + System.getProperty("line.separator")
-//                + "Range: " + getRange() + System.getProperty("line.separator")
-//                + "Speed: " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
-//                + "Cost: " + getCost();
-        return prototype.getTooltip();
+        String s = "Dmg: " + getDmg() + System.getProperty("line.separator")
+                + "Range: " + getRange() + System.getProperty("line.separator")
+                + "Speed: " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
+                + "Cost: " + getCost() + System.getProperty("line.separator");
+//        s += prototype.getTooltip();
+        for (int i = 0; i < getAbilities().size; i++){
+            s += System.getProperty("line.separator");
+            Ability.AbilityPrototype a = getAbilities().get(i);
+            s += a.getName() + " ";
+            s += a.getGemStat();
+        }
+        return s;
     }
 
     public void updateGemStat(int gemType, int value){
@@ -208,4 +229,48 @@ public class TowerObject extends GameObject{
         return (getPrototype() == anotherTower.getPrototype() && b);
     }
 
+    private String getBoostName(User.GEM_TYPE gemType){
+        switch (gemType) {
+            case RED: return "damage";
+            case YELLOW: return "attack speed";
+            case BLUE: return "attack range";
+            default: return "error";
+        }
+    }
+    private String getBoostValue(User.GEM_TYPE gemType){
+        switch (gemType) {
+            case RED: return getDmg() + "";
+            case YELLOW: return getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")";
+            case BLUE: return getRange() + "";
+            default: return "error";
+        }
+    }
+    private String getGradedBoostValue(User.GEM_TYPE gemType){
+        switch (gemType) {
+            case RED: return (getDmg() + User.GEM_TYPE.getBoost(gemType)) + "";
+            case YELLOW: return (getSpeed() + User.GEM_TYPE.getBoost(gemType)) + "(" + Tower.getAttackSpeedDelay(getSpeed()
+                    + User.GEM_TYPE.getBoost(gemType)) + ")";
+            case BLUE: return (getRange() + User.GEM_TYPE.getBoost(gemType)) + "";
+            default: return "error";
+        }
+    }
+
+    @Override
+    public String getGemGradeTooltip(User.GEM_TYPE gemType) {
+        String s = "";
+        if(!canGrade()) s += "[Up tower level to upgrade]" + System.getProperty("line.separator");
+        s += "+ " + User.GEM_TYPE.getBoost(gemType) + " " + getBoostName(gemType) + System.getProperty("line.separator")
+                + "(" + getBoostValue(gemType) + "=>" + getGradedBoostValue(gemType) + ")";
+        return s;
+
+
+
+//        if (canGrade()) {
+//            return "+ " + User.GEM_TYPE.getBoost(gemType) + " " + getBoostName(gemType) + System.getProperty("line.separator")
+//                    + "(" + getBoostValue(gemType) + "=>" + getGradedBoostValue(gemType) + ")";
+//        }else {
+//            return getBoostName(gemType) + " MAX" + System.getProperty("line.separator") +
+//                    "(" + getBoostValue(gemType) + ")";
+//        }
+    }
 }

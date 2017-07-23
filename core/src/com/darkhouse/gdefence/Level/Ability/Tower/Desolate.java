@@ -4,6 +4,8 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class Desolate extends Ability implements Ability.IOnHit {
 
     private static class ArmorReduction extends Effect<Mob> {
@@ -25,14 +27,32 @@ public class Desolate extends Ability implements Ability.IOnHit {
             super.dispell();
         }
     }
-    public static class P extends Ability.AblityPrototype{
-        private int armor;
-        private float duration;
+    public static class P extends AbilityPrototype {
+        private G grader;
+        private AtomicReference<Integer> armorReduction;
+        private AtomicReference<Float> duration;
 
-        public P(int armor, float duration) {
-            super("Desolate");
-            this.armor = armor;
-            this.duration = duration;
+        public P(int armorReduction, float duration, G grader) {
+            super("Desolate", "desolate", grader.gemCap);
+            this.armorReduction = new AtomicReference<Integer>(armorReduction);
+            this.duration = new AtomicReference<Float>(duration);
+            this.grader = grader;
+        }
+
+        @Override
+        public AbilityPrototype copy() {
+            P p = new P(armorReduction.get(), duration.get(), grader);
+            p.gemBoost[0] = new BoostInteger(p.armorReduction, grader.armorReductionUp, "armor reduction",
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
+            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, "effect duration",
+                    true, BoostFloat.FloatGradeFieldType.TIME);
+            return p;
+        }
+
+        @Override
+        public String getTooltip() {
+            return "Down attacked enemies armorReduction by [#000000ff]" + armorReduction + System.getProperty("line.separator")
+                    + "[] for [#0ffe00ff]" + duration + "[] seconds";
         }
 
         @Override
@@ -40,9 +60,16 @@ public class Desolate extends Ability implements Ability.IOnHit {
             return new Desolate(this);
         }
 
-        @Override
-        public String getTooltip() {
-            return "Down attacked enemies armor by " + armor + " for" + duration + " seconds";
+
+    }
+    public static class G extends AbilityGrader{
+        private int armorReductionUp;
+        private float durationUp;
+
+        public G(int armorReductionUp, float durationUp, int[] gemCap) {
+            super(gemCap);
+            this.armorReductionUp = armorReductionUp;
+            this.durationUp = durationUp;
         }
     }
 
@@ -50,21 +77,21 @@ public class Desolate extends Ability implements Ability.IOnHit {
     private float duration;
 
     public Desolate(P prototype) {
-        armor = prototype.armor;
-        duration = prototype.duration;
+        armor = prototype.armorReduction.get();
+        duration = prototype.duration.get();
         setWorkOnAdditionalProjectiles();
     }
 
-    //    public Desolate(int armor, float duration) {
+    //    public Desolate(int armorReduction, float duration) {
 //        super(UseType.onHit);
-//        this.armor = armor;
+//        this.armorReduction = armorReduction;
 //        this.duration = duration;
 //    }
 
 //    @Override
 //    public void use(Mob target) {
 //        if(target != null) {
-//            target.addEffect(new ArmorReduction(armor, duration).setOwner(target));
+//            target.addEffect(new ArmorReduction(armorReduction, duration).setOwner(target));
 //        }
 //    }
 

@@ -37,7 +37,7 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
 //            getCooldownObject().act(delta);
 //        }
     }
-    public static class P extends AblityPrototype{
+    public static class P extends AbilityPrototype {
         private float cdCap;
 
         public P(float cdCap) {

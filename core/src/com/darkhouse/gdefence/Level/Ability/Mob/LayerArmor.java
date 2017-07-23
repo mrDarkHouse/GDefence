@@ -44,7 +44,7 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
         //        owner.deleteEffect(this.getClass());
         //    }
     }
-    public static class P extends AblityPrototype{
+    public static class P extends AbilityPrototype {
         private int stacks;
         private int armor;
 

@@ -12,7 +12,7 @@ public class Swimmable extends MobAbility implements MobAbility.IMove{
     private Texture walkTexture;
     private boolean isSwim;
 
-    public static class P extends AblityPrototype{
+    public static class P extends AbilityPrototype {
         private String path;
 
         public P(String path) {

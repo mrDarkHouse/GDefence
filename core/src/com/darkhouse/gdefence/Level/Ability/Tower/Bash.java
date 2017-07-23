@@ -6,6 +6,12 @@ import com.darkhouse.gdefence.Level.Ability.Tools.Chance;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.User;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class Bash extends Ability implements Ability.IOnHit{
 
     private class BashEffect extends Effect<Mob>{
@@ -29,37 +35,30 @@ public class Bash extends Ability implements Ability.IOnHit{
             super.dispell();
         }
     }
-    public static class P extends Ability.AblityPrototype{
-//        private G grader;
-        private float chance;
-        private float duration;
-        private int bonusDmg;
+    public static class P extends AbilityPrototype {
+        private G g;
+        private AtomicReference<Float> chance;
+        private AtomicReference<Float> duration;
+        private AtomicReference<Integer> bonusDmg;
 
         public P(float chance, float duration, int bonusDmg, G grader) {
-            super("Bash");
-            this.chance = chance;
-            this.duration = duration;
-            this.bonusDmg = bonusDmg;
-            this.grader = grader;
-            gemsMax = new int[]{3, 3, 3};
+            super("Bash", "bash", grader.gemCap);
+            this.chance = new AtomicReference<Float>(chance);
+            this.duration = new AtomicReference<Float>(duration);
+            this.bonusDmg = new AtomicReference<Integer>(bonusDmg);
+            this.g = grader;
         }
 
-        @Override
-        protected boolean grade(User.GEM_TYPE t) {
-            G g = ((G) grader);
-            switch (t){
-                case BLACK:
-                    chance += g.chanceUp;
-                    return true;
-                case GREEN:
-                    duration += g.durationUp;
-                    return true;
-                case WHITE:
-                    bonusDmg += g.bonusDmgUp;
-                    return true;
-                default:
-                    return false;
-            }
+        public P copy(){
+            P p = new P(chance.get(), duration.get(), bonusDmg.get(), g);
+            p.gemBoost[0] = new BoostFloat(p.chance,     g.chanceUp,   "bash chance",
+                    true, BoostFloat.FloatGradeFieldType.PERCENT);
+            p.gemBoost[1] = new BoostFloat(p.duration,   g.durationUp, "bash duration",
+                    true, BoostFloat.FloatGradeFieldType.TIME);
+            p.gemBoost[2] = new BoostInteger(p.bonusDmg, g.bonusDmgUp, "bonus bash damage",
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
+
+            return p;
         }
 
         @Override
@@ -69,16 +68,53 @@ public class Bash extends Ability implements Ability.IOnHit{
 
         @Override
         public String getTooltip() {
-            return "Have " + chance*100 + " % chance to bash attacked enemy for " + duration +
-                    " seconds and do " + bonusDmg + " bonus damage";
+            return "Have [#000000ff]" + chance.get()*100 + "%[] chance to bash attacked enemy" + System.getProperty("line.separator")
+                    + " for [#0ffe00ff]" + duration + "[] seconds and do [#00ffffff]" + bonusDmg + "[] bonus damage";
         }
+
+//        protected String getBoostName(User.GEM_TYPE gemType){
+//            switch (gemType) {
+//                case BLACK: return "bash chance";
+//                case GREEN: return "stun duration";
+//                case WHITE: return "bonus stun damage";
+//                default: return "error";
+//            }
+//        }
+//        protected String getBoostValue(User.GEM_TYPE gemType){
+//            G g = ((G) grader);//
+//            switch (gemType) {
+//                case BLACK: return "+ " + /*new DecimalFormat("##").format*/(g.chanceUp * 100) + "%";
+//                case GREEN: return "+ " + new DecimalFormat("##.#").format(g.durationUp) + "s";
+//                case WHITE: return "+ " + g.bonusDmgUp + "";
+//                default: return "error";
+//            }
+//        }
+//        protected String getCurrentValue(User.GEM_TYPE gemType){
+//            switch (gemType) {
+//                case BLACK: return new DecimalFormat("##").format(chance * 100) + "%";
+//                case GREEN: return new DecimalFormat("##.#").format(duration) + "s";
+//                case WHITE: return bonusDmg + "";
+//                default: return "error";
+//            }
+//        }
+//        protected String getBoostedValue(User.GEM_TYPE gemType){
+//            G g = ((G) grader);//
+//            switch (gemType) {
+//                case BLACK: return new DecimalFormat("##").format(chance * 100 + g.chanceUp * 100) + "%";
+//                case GREEN: return new DecimalFormat("##.#").format(duration + g.durationUp);
+//                case WHITE: return (bonusDmg + g.bonusDmgUp) + "";
+//                default: return "error";
+//            }
+//        }
+
     }
     public static class G extends AbilityGrader{
         protected float chanceUp;
         protected float durationUp;
         protected int bonusDmgUp;
 
-        public G(float chanceUp, float durationUp, int bonusDmgUp) {
+        public G(float chanceUp, float durationUp, int bonusDmgUp, int[] gemCap) {
+            super(gemCap);
             this.chanceUp = chanceUp;
             this.durationUp = durationUp;
             this.bonusDmgUp = bonusDmgUp;
@@ -90,9 +126,9 @@ public class Bash extends Ability implements Ability.IOnHit{
     private int bonusDmg;
 
     public Bash(P prototype) {
-        this.chance = prototype.chance;
-        this.duration = prototype.duration;
-        this.bonusDmg = prototype.bonusDmg;
+        this.chance = prototype.chance.get();
+        this.duration = prototype.duration.get();
+        this.bonusDmg = prototype.bonusDmg.get();
     }
 
     @Override

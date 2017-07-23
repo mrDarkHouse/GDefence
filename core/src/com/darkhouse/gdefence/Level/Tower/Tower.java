@@ -166,7 +166,7 @@ public class Tower extends Effectable{
         setRegion(towerPrototype.getPrototype().getTowerTexture());
 
         abilities = new Array<Ability>();
-        for (Ability.AblityPrototype p:towerPrototype.getAbilities()){
+        for (Ability.AbilityPrototype p:towerPrototype.getAbilities()){
             abilities.add(p.getAbility());
         }
 

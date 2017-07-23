@@ -38,7 +38,7 @@ public class CommandFaith extends MobAbility implements MobAbility.IDie{
             super.dispell();
         }
     }
-    public static class P extends MobAbility.AblityPrototype {
+    public static class P extends AbilityPrototype {
         private int range;
         private int speedBoost;
         private float duration;

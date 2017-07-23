@@ -4,21 +4,37 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 import com.badlogic.gdx.math.Vector2;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.User;
+
+import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class BuckShot extends Ability implements Ability.IPreShot {
 
-    public static class P extends Ability.AblityPrototype{
-        private int maxTargets;
+    public static class P extends AbilityPrototype {
+        private G grader;
 //        private int range;
-        private int projectiles;
-        private float angle;
+        private AtomicReference<Integer> projectiles;
+        private AtomicReference<Float> angle;
+        private AtomicReference<Integer> maxTargets;//
 
-        public P(int projectiles, float angle, int maxTargets/*, int range*/) {
-            super("Steel Arrow");
-            this.projectiles = projectiles;
-            this. angle = angle;
-            this.maxTargets = maxTargets;
+        public P(int projectiles, float angle/*, int maxTargets*//*, int range*/, G grader) {
+            super("BuckShot", "buckShot", grader.gemCap);
+            this.projectiles = new AtomicReference<Integer>(projectiles);
+            this.angle = new AtomicReference<Float>(angle);
+            this.maxTargets = new AtomicReference<Integer>(1);
+            this.grader = grader;
 //            this.range = range;
+        }
+
+        @Override
+        public AbilityPrototype copy() {
+            P p = new P(projectiles.get(), angle.get(), grader);
+            p.gemBoost[0] = new BoostInteger(p.projectiles, grader.projectilesUp, "projectiles number",
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
+            p.gemBoost[1] = new BoostFloat(p.angle, grader.angleDown, "angle between projectiles",
+                    false, BoostFloat.FloatGradeFieldType.ANGLE);
+            return p;
         }
 
         @Override
@@ -28,9 +44,20 @@ public class BuckShot extends Ability implements Ability.IPreShot {
 
         @Override
         public String getTooltip() {
-            return "After hitting projectile continue fly, hitting " + /*can do changeable */100 + "% dmg from base damage to each target " + System.getProperty("line.separator") +
-                    "After hitting max targets projectile disappear" + System.getProperty("line.separator") +
-                    "Max targets " + maxTargets;
+            return "Shot buck with [#000000ff]" + projectiles.get() + "[] bucks" + System.getProperty("line.separator") +
+                    " in [#0ffe00ff]" + angle.get().intValue() + "*[] between them";
+        }
+    }
+    public static class G extends AbilityGrader{
+        private int projectilesUp;
+        private float angleDown;
+//        private int maxTargetsUp;
+
+        public G(int projectilesUp, float angleDown/*, int maxTargetsUp*/, int[] gemMax) {
+            super(gemMax);
+            this.projectilesUp = projectilesUp;
+            this.angleDown = angleDown;
+//            this.maxTargetsUp = maxTargetsUp;
         }
     }
 
@@ -41,9 +68,9 @@ public class BuckShot extends Ability implements Ability.IPreShot {
 
 
     public BuckShot(P prototype) {
-        this.projectiles = prototype.projectiles;
-        this.angle = prototype.angle;
-        this.maxTargets = prototype.maxTargets;
+        this.projectiles = prototype.projectiles.get();
+        this.angle = prototype.angle.get();
+        this.maxTargets = prototype.maxTargets.get();
 //        this.range = prototype.range;
     }
 

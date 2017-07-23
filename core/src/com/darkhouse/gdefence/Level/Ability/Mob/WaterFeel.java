@@ -26,7 +26,7 @@ public class WaterFeel extends MobAbility implements MobAbility.IMove{
             super.dispell();
         }
     }
-    public static class P extends AblityPrototype{
+    public static class P extends AbilityPrototype {
         private int speedValue;
 
         public P(int speedValue) {

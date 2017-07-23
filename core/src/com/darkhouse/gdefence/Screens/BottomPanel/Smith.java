@@ -25,7 +25,8 @@ import com.darkhouse.gdefence.User;
 public class Smith extends AbstractCampainScreen{
     private ImageButton upHealth;
     private ImageButton upEnergy;
-    private InventoryActor inventoryActor;
+//    private InventoryActor inventoryActor;
+    private OverallInventory inventory;
 
     //private Array<SlotListener> slotListeners = new Array<SlotListener>();
 
@@ -37,6 +38,7 @@ public class Smith extends AbstractCampainScreen{
     @Override
     public void show() {
         super.show();
+        inventory.notifyListeners();
 //        inventoryActor.setTowerInventory(User.getTowerInventory());//update
 //        inventoryActor.remove();
 ////        inventoryActor = null;
@@ -87,33 +89,39 @@ public class Smith extends AbstractCampainScreen{
                 return true;
             }
         });
-        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
-            @Override
-            protected void setDefaults() {
-                setPosition(100, 150);
-                defaults().space(8);
-                defaults().size(60, 60);
-                row().fill().expandX();
-                setRowNumber(5);
-                setRows(3);
-            }
-        };
-        GemGradePanel pn = new GemGradePanel(new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
+        inventory = new OverallInventory();
+        inventory.setPosition(70, 50);
+//        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
+//            @Override
+//            protected void setDefaults() {
+//                setPosition(100, 150);
+//                defaults().space(8);
+//                defaults().size(60, 60);
+//                row().fill().expandX();
+//                setRowNumber(5);
+//                setRows(3);
+//            }
+//        };
+        GemGradePanel pn = new GemGradePanel(new DragAndDrop(), inventory, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class))/*{
             @Override
             protected void setDefaults() {
                 super.setDefaults();
                 setPosition(600, 150);
             }
-        };
-        inventoryActor.getDragAndDrop().addTarget(new GemGradeTarget(pn.getGradeTowerSlot()));
-        pn.getDragAndDrop().addSource(new GemGradeSource(pn.getGradeTowerSlot()));
-        for (SlotActor a:inventoryActor.getActorArray()) {
-            pn.getDragAndDrop().addTarget(new SlotTarget(a));
-        }
+        }*/;
+        pn.setPosition(700, 100);
+        pn.setSize(400, 250);
+//        inventoryActor.getDragAndDrop().addTarget(new GemGradeTarget(pn.getGradeTowerSlot()));
+//        pn.getDragAndDrop().addSource(new GemGradeSource(pn.getGradeTowerSlot()));
+//        for (SlotActor a:inventoryActor.getActorArray()) {
+//            pn.getDragAndDrop().addTarget(new SlotTarget(a));
+//        }
 
 
-        stage.addActor(inventoryActor);
-        inventoryActor.init();
+//        stage.addActor(inventoryActor);
+        stage.addActor(inventory);
+//        inventoryActor.init();
+        inventory.init();
         stage.addActor(pn);
         pn.addTooltips();
         stage.addActor(upHealth);
@@ -123,14 +131,15 @@ public class Smith extends AbstractCampainScreen{
     }
 
     private void notifyListeners(){
+        inventory.notifyListeners();
         for (EventListener l:upHealth.getListeners()){
             if(l.getClass() == TooltipListener.class){
-                ((GradableTooltip)((TooltipListener)l).getTooltip()).hasChanged();
+                ((TooltipListener)l).getTooltip().hasChanged();
             }
         }
         for (EventListener l:upEnergy.getListeners()){
             if(l.getClass() == TooltipListener.class){
-                ((GradableTooltip)((TooltipListener)l).getTooltip()).hasChanged();
+                ((TooltipListener)l).getTooltip().hasChanged();
             }
         }
     }

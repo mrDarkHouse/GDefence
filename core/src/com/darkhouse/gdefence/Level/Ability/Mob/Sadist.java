@@ -32,7 +32,7 @@ public class Sadist extends MobAbility implements MobAbility.ISpawn{
             return dmg;
         }
     }
-    public static class P extends MobAbility.AblityPrototype {
+    public static class P extends AbilityPrototype {
         private int attacksNeed;
         private int healEmount;
 

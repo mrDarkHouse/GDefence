@@ -30,9 +30,9 @@ public class Slot extends AbstractSlot{
 
 
 	private Item prototype;
-	private Class<? extends GameObject> type;
+	private Class<? extends GameObject>[] type;
 
-	public Class<? extends GameObject> getType() {
+	public Class<? extends GameObject>[] getType() {
 		return type;
 	}
 
@@ -49,7 +49,7 @@ public class Slot extends AbstractSlot{
 
 //	private Array<SlotListener> slotListeners = new Array<SlotListener>();
 
-	public Slot(Class<? extends GameObject> type/*, Item item, int amount*/) {//created empty slot
+	public Slot(Class<? extends GameObject>... type/*, Item item, int amount*/) {//created empty slot
 //		this.prototype = item;
 		this.type = type;
 		//this.amount = amount;

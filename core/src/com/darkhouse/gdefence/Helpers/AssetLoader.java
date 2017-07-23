@@ -166,6 +166,9 @@ public class AssetLoader extends AssetManager{
         load("Gems/blackGem.png", Texture.class);
         load("Gems/greenGem.png", Texture.class);
         load("Gems/whiteGem.png", Texture.class);
+        load("Gems/transparentGem.png", Texture.class);
+
+
         load("backButton.png", Texture.class);
 
         load("cell.png", Texture.class);
@@ -198,6 +201,9 @@ public class AssetLoader extends AssetManager{
         load("openedTower.png", Texture.class);
         load("canOpenTower.png", Texture.class);
 
+        load("Buttons/towersButton.png", Texture.class);
+        load("Buttons/spellsButton.png", Texture.class);
+        load("Buttons/detailsButton.png", Texture.class);
 
         load("skins/uiskin.json", Skin.class);
         load("uiskin.json", Skin.class);
@@ -214,6 +220,21 @@ public class AssetLoader extends AssetManager{
 
         load("Researches/powder.png", Texture.class);
         load("Researches/steam.png", Texture.class);
+
+        load("AbilityIcons/Abilities/bash.png", Texture.class);
+        load("AbilityIcons/Abilities/bounce.png", Texture.class);
+        load("AbilityIcons/Abilities/buckShot.png", Texture.class);
+        load("AbilityIcons/Abilities/crit.png", Texture.class);
+        load("AbilityIcons/Abilities/desolate.png", Texture.class);
+        load("AbilityIcons/Abilities/doubleAttack.png", Texture.class);
+        load("AbilityIcons/Abilities/fireArrow.png", Texture.class);
+        load("AbilityIcons/Abilities/hunterSpeed.png", Texture.class);
+        load("AbilityIcons/Abilities/multiShot.png", Texture.class);
+        load("AbilityIcons/Abilities/poisonArrow.png", Texture.class);
+        load("AbilityIcons/Abilities/shotDelay.png", Texture.class);
+        load("AbilityIcons/Abilities/splash.png", Texture.class);
+        load("AbilityIcons/Abilities/steelArrow.png", Texture.class);
+
 
 
 
@@ -353,6 +374,21 @@ public class AssetLoader extends AssetManager{
 
     public Texture getEffectIcon(String effectIconPath){
         return get("AbilityIcons/Effects/" + effectIconPath + ".png", Texture.class);
+    }
+    public Texture getAbilityIcon(String abilityIconPath){
+        return get("AbilityIcons/Abilities/" + abilityIconPath + ".png", Texture.class);
+    }
+
+    public Texture getGemTexure(User.GEM_TYPE type){
+        switch (type){
+            case RED:   return get("Gems/redGem.png", Texture.class);
+            case YELLOW:return get("Gems/yellowGem.png", Texture.class);
+            case BLUE:  return get("Gems/blueGem.png", Texture.class);
+            case BLACK: return get("Gems/blackGem.png", Texture.class);
+            case GREEN: return get("Gems/greenGem.png", Texture.class);
+            case WHITE: return get("Gems/whiteGem.png", Texture.class);
+            default: throw new IllegalArgumentException("Wrong gem type");
+        }
     }
 
     public Texture getMobTexture(String path){

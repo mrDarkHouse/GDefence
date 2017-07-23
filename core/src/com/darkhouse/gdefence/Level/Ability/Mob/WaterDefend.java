@@ -26,7 +26,7 @@ public class WaterDefend extends MobAbility implements MobAbility.IMove{
             super.dispell();
         }
     }
-    public static class P extends AblityPrototype{
+    public static class P extends AbilityPrototype {
         private int armor;
 
         public P(int armor) {

@@ -31,6 +31,7 @@ public class Arsenal extends AbstractCampainScreen{
     public void show() {
         super.show();
         towerMap.updateTypes();//
+        inventoryActor.notifyListeners();
 //        inventoryActor.remove();
 //        inventoryActor = null;
 //        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),

@@ -28,7 +28,7 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
 
         }
     }
-    public static class P extends AblityPrototype{
+    public static class P extends AbilityPrototype {
         private int blockEmount;
         private int blockMinLimit;
 

@@ -10,6 +10,13 @@ import java.util.HashMap;
 
 public abstract class GameObject {
 
+    public static boolean isMatches(Class<? extends GameObject> a, Class<? extends GameObject> b){
+        if(a == b) return true;
+        if(a.getSuperclass() == b) return true;//a Recipe b Detail
+        if(a == b.getSuperclass()) return true;
+        return false;
+    }
+
 
 
 //    private Item item;

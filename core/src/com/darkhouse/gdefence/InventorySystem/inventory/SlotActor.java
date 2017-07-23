@@ -24,6 +24,7 @@ package com.darkhouse.gdefence.InventorySystem.inventory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -60,6 +61,13 @@ public class SlotActor extends ImageButton implements SlotListener {
 		//Arsenal.getStage().addActor(tooltip);
 		//((AbstractScreen)GDefence.getInstance().getScreen()).getStage().addActor(tooltip);
 		addListener(new TooltipListener(tooltip, true));
+	}
+	public void notifyListeners(){
+		for (EventListener e:getListeners()){
+			if(e instanceof TooltipListener){
+				((TooltipListener) e).getTooltip().hasChanged();
+			}
+		}
 	}
 
 	/*public*/ static ImageButtonStyle createStyle(Skin skin, Item prototype/* slot*/) {

@@ -6,12 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.AbstractTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.User;
 
 public class ResearchButton extends TowerMapObject{
 
-    private class ResearchTooltip extends Window{
+    private class ResearchTooltip extends AbstractTooltip{
         private Skin skin;
         private User.Research research;
 
@@ -44,21 +45,22 @@ public class ResearchButton extends TowerMapObject{
         }
 
 
+        @Override
+        public void hasChanged() {
 
+        }
     }
 
 
 //    private boolean open;
     private User.Research research;
     private Sprite s;
-//    private ResearchTooltip tooltip;
-    private Window tooltip;
 
     public ResearchButton(User.Research research) {
         super(GDefence.getInstance().assetLoader.generateResearchButtonSkin(research.getTexturePath()));
         this.research = research;
 
-        tooltip = new ResearchTooltip(research, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        AbstractTooltip tooltip = new ResearchTooltip(research, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
 
 //        tooltip = new ;
 //        tooltip.setLocked(true);

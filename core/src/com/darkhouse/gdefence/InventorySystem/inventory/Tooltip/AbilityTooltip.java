@@ -3,8 +3,6 @@ package com.darkhouse.gdefence.InventorySystem.inventory.Tooltip;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -13,14 +11,14 @@ import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 
-public class AbilityTooltip extends Window{
+public class AbilityTooltip extends AbstractTooltip{
 
 //    private Skin skin;
     private Label label;
     private String text;
     private Table t;
 
-    public AbilityTooltip(Table t, MobAbility.AblityPrototype ab, Skin skin) {
+    public AbilityTooltip(Table t, MobAbility.AbilityPrototype ab, Skin skin) {
         super(ab.getName(), skin);
         getTitleLabel().setAlignment(Align.center);
 //        getTitleLabel().clear();
@@ -48,5 +46,10 @@ public class AbilityTooltip extends Window{
         if(t.isVisible()){
             super.draw(batch, parentAlpha);
         }
+    }
+
+    @Override
+    public void hasChanged() {
+
     }
 }

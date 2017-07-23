@@ -1,33 +1,154 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
-import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.User;
 
+import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicReference;
+
 public abstract class Ability {
 
-    public abstract static class AblityPrototype{
-        protected AbilityGrader grader;
+    public abstract static class AbilityPrototype implements GemGradable{
+//        protected AbilityGrader grader;
         protected String name;
+        protected String texturePath;
         protected int[] gemsNumber = new int[3];
         protected int[] gemsMax = new int[3];
+        public Boost[] gemBoost = new Boost[3];
 
-//        protected boolean isHidden;
+        public static abstract class Boost{
+//            public static Boost createInstance(AtomicReference boostField, Number boostUp, String name, boolean positive){
+//                if(boostField.get() instanceof Integer){//boostUp also
+//                    return new BoostInteger(((AtomicReference<Integer>) boostField), boostUp.intValue(), name, positive);
+//                }else if(boostField.get() instanceof Float){
+//                    return new BoostFloat(boostField.floatValue(), boostUp.floatValue(), name, positive);
+//                }
+//                return null;
+//            }
+
+
+
+            protected String name;
+            protected boolean positive;
+
+            abstract public String boostField();
+            abstract public String boostUp();
+            abstract public String concate();
+            abstract public void grade();
+
+
+            public Boost(String name, boolean positive) {
+                this.name = name;
+                this.positive = positive;
+            }
+        }
+
+        public static class BoostInteger extends Boost{
+            private AtomicReference<Integer> boostField;
+            private int boostUp;
+            private IntegerGradeFieldType type;
+            private float[] params;
+
+            public enum IntegerGradeFieldType {
+                NONE, DPS
+            }
+
+            private String configurate(int i){
+                switch (type){
+                    case NONE: return i + "";
+                    case DPS: return i*(1/params[0]) + "";
+                    default: return "error";
+                }
+            }
+
+            public String boostField() {
+                return configurate(boostField.get());
+            }
+            public String boostUp() {
+                return configurate(boostUp);
+            }
+            public String concate() {
+                if(positive) return configurate(boostField.get() + boostUp);
+                else         return configurate(boostField.get() - boostUp);
+            }
+            public void grade() {
+                if(positive) boostField.set(boostField.get() + boostUp);
+                else         boostField.set(boostField.get() - boostUp);
+            }
+
+            public BoostInteger(AtomicReference<Integer> boostField, int boostUp, String name, boolean positive, IntegerGradeFieldType type, float... params) {
+                super(name, positive);
+                this.boostField = boostField;
+                this.boostUp = boostUp;
+                this.type = type;
+                this.params = params;
+            }
+        }
+        public static class BoostFloat extends Boost{
+            private AtomicReference<Float> boostField;
+            private float boostUp;
+            protected FloatGradeFieldType type;
+
+            public enum FloatGradeFieldType {
+                NONE, PERCENT, TIME, MULTIPLAYER, ANGLE
+            }
+
+            private String configurate(float f){
+                switch (type){
+                    case PERCENT: return f*100 + "%";
+                    case TIME: return f + "s";
+                    case MULTIPLAYER: return f + "x";
+                    case ANGLE: return ((int) f) + "*";
+                    case NONE: return f + "";
+                    default: return "error";
+                }
+            }
+
+            public String boostField() {
+                return configurate(boostField.get());
+            }
+            public String boostUp() {
+                return configurate(boostUp);
+            }
+            public String concate() {
+                if(positive) return configurate(boostField.get() + boostUp);
+                else return configurate(boostField.get() - boostUp);
+            }
+            public void grade() {
+                if(positive) boostField.set(new BigDecimal(boostField.get() + boostUp).setScale(2, BigDecimal.ROUND_FLOOR).floatValue());
+                else         boostField.set(new BigDecimal(boostField.get() - boostUp).setScale(2, BigDecimal.ROUND_FLOOR).floatValue());
+            }
+
+            public BoostFloat(AtomicReference<Float> boostField, float boostUp, String name, boolean positive, FloatGradeFieldType type) {
+                super(name, positive);
+                this.boostField = boostField;
+                this.boostUp = boostUp;
+                this.type = type;
+            }
+        }
+
+
+
+        abstract public AbilityPrototype copy();
 
         public String getName() {
             return name;
         }
-//        public boolean isHidden() {
-//            return isHidden;
-//        }
+        public String getTexturePath() {
+            return texturePath;
+        }
 
-        public AblityPrototype(String name) {
+        public AbilityPrototype(String name, String texturePath, int[] gemsMax) {
             this.name = name;
-//            this.isHidden = isHidden;
+            this.texturePath = texturePath;
+//            this.grader = grader;
+//            this.gemsMax = grader.gemCap;
+            this.gemsMax = gemsMax;
         }
 
         public boolean canGrade(User.GEM_TYPE t){
@@ -41,9 +162,36 @@ public abstract class Ability {
                 grade(t);
             }
         }
+        @Override
+        public String getGemGradeTooltip(User.GEM_TYPE gemType) {
+            String s = "";
+            Boost b = gemBoost[gemType.ordinal() - 3];
+            if(b == null || gemsMax[gemType.ordinal() - 3] == 0) return "Cant grade this gem";
+            if(canGrade(gemType)) {
+                if (b.positive) s += "+ ";
+                else s += "- ";
+                s += b.boostUp() + " " + b.name + System.getProperty("line.separator") +
+                        "(" + b.boostField() + "=>" + (b.concate()) + ")";
+            }else {
+                s += "MAX" + System.getProperty("line.separator") +
+                        "(" + b.boostField() + ")";
+            }
+            return s;
 
-        protected boolean grade(User.GEM_TYPE t){return true;}
-
+//            if(canGrade(gemType)) {
+//                return "+ " + getBoostValue(gemType) + " " + getBoostName(gemType) + System.getProperty("line.separator") +
+//                        "(" + getCurrentValue(gemType) + "=>" + getBoostedValue(gemType) + ")";
+//            }else {
+//                return "MAX" + System.getProperty("line.separator") +
+//                        "(" + getCurrentValue(gemType) + ")";
+//            }
+        }
+        protected boolean grade(User.GEM_TYPE t){
+            if(gemBoost[t.ordinal() - 3] != null) {
+                gemBoost[t.ordinal() - 3].grade();
+                return true;
+            }else return false;
+        }
         public String getGemStat(){
             return "{" + gemsNumber[0] + ", " + gemsNumber[1] + ", " + gemsNumber[2] + "}";
         }
@@ -53,9 +201,10 @@ public abstract class Ability {
     }
 
     public abstract static class AbilityGrader{
-
-
-
+        public int[] gemCap = new int[3];
+        public AbilityGrader(int[] gemCap) {
+            this.gemCap = gemCap;
+        }
     }
 
     public interface IPreShot {
@@ -80,16 +229,6 @@ public abstract class Ability {
     public interface IOnKilled {
         void killed(Mob killedMob);
     }
-
-
-
-
-
-
-
-
-
-
 
     protected abstract void init();
 

@@ -7,20 +7,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
 import com.darkhouse.gdefence.User;
 
-public class GemGradeTooltip extends Window {
+public class GemGradeTooltip extends AbstractTooltip{
 
     private Skin skin;
     private User.GEM_TYPE gemType;
+    private GemGradable g;
     private Label upLabel;
     private String s = "";
 
-    public GemGradeTooltip(Stage stage, User.GEM_TYPE gemType, Skin skin) {
+    public GemGradeTooltip(Stage stage, GemGradable g, User.GEM_TYPE gemType, Skin skin) {
         super("Grade...", skin);
         this.gemType = gemType;
         this.skin = skin;
+        this.g = g;
         init();
         setVisible(false);
         //((AbstractCampainScreen) GDefence.getInstance().getScreen()).getStage().addActor(this);
@@ -31,33 +36,15 @@ public class GemGradeTooltip extends Window {
     private void init(){
         getTitleLabel().setText("Upgrade " + gemType.name());
         getTitleLabel().setAlignment(Align.center);
-        setText();
-        upLabel = new Label(s, skin);
+        upLabel = new Label(g.getGemGradeTooltip(gemType), skin);
+        upLabel.setAlignment(Align.center);
+        upLabel.getStyle().font.getData().markupEnabled = true;
         add(upLabel);
         pack();
     }
-    private void setText(){
-        switch (gemType){
-            case RED:
-                s = "+ " + User.GEM_TYPE.getBoost(gemType) + " dmg";
-                break;
-            case YELLOW:
-                s = "+ " + User.GEM_TYPE.getBoost(gemType) + " as";
-                break;
-            case BLUE:
-                s = "+ " + User.GEM_TYPE.getBoost(gemType) + " range";
-                break;
-            case BLACK:
-                //
-            case GREEN:
-                //
-            case WHITE:
-                //
-        }
-    }
 
     public void hasChanged(){
-        //when level need write this it's update
+        upLabel.setText(g.getGemGradeTooltip(gemType));
     }
 
 

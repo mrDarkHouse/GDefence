@@ -91,7 +91,11 @@ public class InventoryActor extends Window {
 		for(SlotActor a: actorArray) {
 			a.addTooltip(getStage());//
 		}
-
+	}
+	public void notifyListeners(){
+		for(SlotActor a: actorArray) {
+			a.notifyListeners();
+		}
 	}
 
 	protected void setDefaults(){

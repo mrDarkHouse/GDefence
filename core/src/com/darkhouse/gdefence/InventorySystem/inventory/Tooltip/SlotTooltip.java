@@ -42,7 +42,7 @@ import com.darkhouse.gdefence.Objects.TowerObject;
 /**
  * @author Daniel Holderbaum
  */
-public class SlotTooltip extends Window implements SlotListener {
+public class SlotTooltip extends AbstractTooltip implements SlotListener {
 
 	private Skin skin;
 
@@ -111,6 +111,10 @@ public class SlotTooltip extends Window implements SlotListener {
         }
 		pack();
 	}
+    @Override
+    public void hasChanged() {
+        hasChanged(slot);
+    }
 
 	@Override
 	public void setVisible(boolean visible) {
@@ -121,5 +125,6 @@ public class SlotTooltip extends Window implements SlotListener {
 			super.setVisible(false);
 		}
 	}
+
 
 }

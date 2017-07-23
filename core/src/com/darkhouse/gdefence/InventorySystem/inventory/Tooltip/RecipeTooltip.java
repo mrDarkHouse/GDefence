@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Objects.Recipe;
 
-public class RecipeTooltip extends Window{
+public class RecipeTooltip extends AbstractTooltip{
     private Skin skin;
     private Recipe recipe;
     private boolean isLocked = true;
@@ -57,5 +57,10 @@ public class RecipeTooltip extends Window{
         if(isLocked){
             super.setVisible(false);
         }
+    }
+
+    @Override
+    public void hasChanged() {
+
     }
 }

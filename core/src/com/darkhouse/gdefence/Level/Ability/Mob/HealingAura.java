@@ -76,7 +76,7 @@ public class HealingAura extends MobAbility implements MobAbility.ISpawn{
             if(!centerAura.isInRange(owner)) dispell();
         }
     }
-    public static class P extends MobAbility.AblityPrototype {
+    public static class P extends AbilityPrototype {
         private int range;
         private float healDelay;
         private int healEmount;

@@ -4,6 +4,8 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class PoisonArrow extends Ability implements Ability.IOnHit {
 
 
@@ -27,14 +29,25 @@ public class PoisonArrow extends Ability implements Ability.IOnHit {
             super.dispell();
         }
     }
-    public static class P extends Ability.AblityPrototype{
-        private float percent;
-        private float duration;
+    public static class P extends AbilityPrototype {
+        private G grader;
+        private AtomicReference<Float> slowPercent;
+        private AtomicReference<Float> duration;
 
-        public P(float percent, float duration) {
-            super("Poison Arrow");
-            this.percent = percent;
-            this.duration = duration;
+        public P(float slowPercent, float duration, G grader) {
+            super("Poison Arrow", "poisonArrow", grader.gemCap);
+            this.slowPercent = new AtomicReference<Float>(slowPercent);
+            this.duration = new AtomicReference<Float>(duration);
+            this.grader = grader;
+        }
+        @Override
+        public AbilityPrototype copy() {
+            P p = new P(slowPercent.get(), duration.get(), grader);
+            p.gemBoost[0] = new BoostFloat(p.slowPercent, grader.slowPercentUp, "slow percent",
+                    true, BoostFloat.FloatGradeFieldType.PERCENT);
+            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, "slow duration",
+                    true, BoostFloat.FloatGradeFieldType.TIME);
+            return p;
         }
 
         @Override
@@ -44,7 +57,18 @@ public class PoisonArrow extends Ability implements Ability.IOnHit {
 
         @Override
         public String getTooltip() {
-            return "Slow enemies by" + percent*100 + " % for" + duration + " seconds";
+            return "Slow enemies by [#000000ff]" + slowPercent.get()*100 + "%[] for [#0ffe00ff]" + duration + "[] seconds";
+        }
+
+    }
+    public static class G extends AbilityGrader{
+        private float slowPercentUp;
+        private float durationUp;
+
+        public G(float slowPercentUp, float durationUp, int[] gemCap) {
+            super(gemCap);
+            this.slowPercentUp = slowPercentUp;
+            this.durationUp = durationUp;
         }
     }
 
@@ -54,8 +78,8 @@ public class PoisonArrow extends Ability implements Ability.IOnHit {
     private float duration;
 
     public PoisonArrow(P prototype) {
-        this.percent = prototype.percent;
-        this.duration = prototype.duration;
+        this.percent = prototype.slowPercent.get();
+        this.duration = prototype.duration.get();
     }
 
 //    @Override

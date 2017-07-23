@@ -11,7 +11,7 @@ public abstract class MobAbility{
     protected String name;
     protected boolean isHidden = false;
 
-    public abstract static class AblityPrototype{
+    public abstract static class AbilityPrototype {
         protected String name;
         protected boolean isHidden;
 
@@ -22,7 +22,7 @@ public abstract class MobAbility{
             return isHidden;
         }
 
-        public AblityPrototype(String name, boolean isHidden) {
+        public AbilityPrototype(String name, boolean isHidden) {
             this.name = name;
             this.isHidden = isHidden;
         }

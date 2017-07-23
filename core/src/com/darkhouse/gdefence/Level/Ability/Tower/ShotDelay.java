@@ -2,17 +2,28 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
-import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.User;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ShotDelay extends Ability implements Ability.IPreAttack {
 
-    public static class P extends Ability.AblityPrototype{
-        private float delay;
+    public static class P extends AbilityPrototype {
+        private G grader;
+        private AtomicReference<Float> delay;
 
-        public P(float delay) {
-            super("Attack Delay");
-            this.delay = delay;
+        public P(float delay, G grader) {
+            super("Attack Delay", "shotDelay", grader.gemCap);
+            this.delay = new AtomicReference<Float>(delay);
+            this.grader = grader;
+        }
+        @Override
+        public AbilityPrototype copy() {
+            P p = new P(delay.get(), grader);
+            p.gemBoost[0] = new BoostFloat(p.delay, grader.delayDown, "delay before attack",
+                    false, BoostFloat.FloatGradeFieldType.TIME);
+            return p;
         }
 
         @Override
@@ -22,9 +33,18 @@ public class ShotDelay extends Ability implements Ability.IPreAttack {
 
         @Override
         public String getTooltip() {
-            return "Wait " + delay + " seconds before attack";
+            return "Wait [#000000ff]" + delay + "[] seconds before attack";
         }
     }
+    public static class G extends AbilityGrader{
+        private float delayDown;
+
+        public G(float delayDown, int[] gemCap) {
+            super(gemCap);
+            this.delayDown = delayDown;
+        }
+    }
+
     private class AttackBlocker extends Effect<Tower>{
         public AttackBlocker(float duration) {
             super(true, false, duration, "swimSpeed");
@@ -46,7 +66,7 @@ public class ShotDelay extends Ability implements Ability.IPreAttack {
     private float currentTime;
 
     public ShotDelay(P prototype) {
-        this.delay = prototype.delay;
+        this.delay = prototype.delay.get();
     }
 
     @Override

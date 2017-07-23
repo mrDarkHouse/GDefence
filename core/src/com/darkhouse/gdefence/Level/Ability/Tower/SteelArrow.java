@@ -3,23 +3,36 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.User;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class SteelArrow extends Ability implements Ability.IAfterHit{
 
-    public static class P extends Ability.AblityPrototype{
-        private int maxTargets;
-        private int range;
+    public static class P extends AbilityPrototype {
+        private G grader;
+        private AtomicReference<Integer> maxTargets;
+        private AtomicReference<Integer> range;
 
-        public P(int maxTargets, int range) {
-            super("Steel Arrow");
-            this.maxTargets = maxTargets;
-            this.range = range;
+        public P(int maxTargets, int range, G grader) {
+            super("Steel Arrow", "steelArrow", grader.gemCap);
+            this.maxTargets = new AtomicReference<Integer>(maxTargets);
+            this.range = new AtomicReference<Integer>(range);
+            this.grader = grader;
+        }
+        @Override
+        public AbilityPrototype copy() {
+            P p = new P(maxTargets.get(), range.get(), grader);
+            p.gemBoost[0] = new BoostInteger(p.maxTargets, grader.maxTargetsUp, "max targets",
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
+            p.gemBoost[1] = new BoostInteger(p.range, grader.rangeUp, "fly range",
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
+            return p;
         }
 
         @Override
@@ -29,11 +42,24 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
 
         @Override
         public String getTooltip() {
-            return "After hitting projectile continue fly, hitting " + /*can do changeable */100 + "% dmg from base damage to each target " + System.getProperty("line.separator") +
-                    "After hitting max targets projectile disappear" + System.getProperty("line.separator") +
-                    "Max targets " + maxTargets;
+            return "After hitting projectile continue fly, " + System.getProperty("line.separator") +
+                    "hitting " + /*can do changeable */100 + "% dmg from base damage to each target "
+                    + System.getProperty("line.separator") + "After hitting max targets projectile disappear"
+                    + System.getProperty("line.separator") + "Fly range [#0ffe00ff]" + range + "[]"
+                    + System.getProperty("line.separator") + "Max targets [#000000ff]" + maxTargets + "[]";
         }
     }
+    public static class G extends AbilityGrader{
+        private int maxTargetsUp;
+        private int rangeUp;
+
+        public G(int maxTargetsUp, int rangeUp, int[] gemCap) {
+            super(gemCap);
+            this.maxTargetsUp = maxTargetsUp;
+            this.rangeUp = rangeUp;
+        }
+    }
+
     public static class SteelProjectile extends Projectile{
         private Vector2 endLocation;
 
@@ -112,8 +138,8 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
 //    private float dmg; //i think it not need
 
     public SteelArrow(P prototype) {
-        this.maxTargets = prototype.maxTargets;
-        this.range = prototype.range;
+        this.maxTargets = prototype.maxTargets.get();
+        this.range = prototype.range.get();
 //        this.dmg = prototype.dmg;
     }
 

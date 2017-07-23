@@ -5,55 +5,50 @@ import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
-import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
-import com.darkhouse.gdefence.Model.Level.Map;
-import com.darkhouse.gdefence.User;
 
-public class DoubleAttack extends Ability implements Ability.IOnBuild{
+import java.util.concurrent.atomic.AtomicReference;
 
-    public static class P extends Ability.AblityPrototype{
-//        private G grader;
+public class SpreadAttack extends Ability implements Ability.IOnBuild{
 
-        private float cdCap;
+    public static class P extends AbilityPrototype {
+        private G grader;
+        private AtomicReference<Float> cdCap;
         private int shots;
 
         public P(float cdCap, int bonusAttacks, G grader) {
-            super("Spread Attack");
-            this.cdCap = cdCap;
+            super("Spread Attack", "doubleAttack", grader.gemCap);
+            this.cdCap = new AtomicReference<Float>(cdCap);
             this.shots = bonusAttacks;
             this.grader = grader;
-            gemsMax = new int[]{2, 0, 0};
         }
+        @Override
+        public AbilityPrototype copy() {
+            P p = new P(cdCap.get(), shots, grader);
+            p.gemBoost[0] = new BoostFloat(p.cdCap, grader.cdCapDown, "time between next spread attack",
+                    false, BoostFloat.FloatGradeFieldType.TIME);
 
-        protected boolean grade(User.GEM_TYPE t) {
-            switch (t){
-                case BLACK:
-                    cdCap -= ((G) grader).cdCapDown;
-                    return true;
-//                case GREEN:
-//                    return false;
-//                case WHITE:
-//                    return false;
-                default:
-                    return false;
-            }
+            return p;
         }
 
         @Override
         public Ability getAbility() {
-            return new DoubleAttack(this);
+            return new SpreadAttack(this);
         }
 
         @Override
         public String getTooltip() {
-            return "Shot second projectile every " + cdCap + " seconds";
+            return "Shot another " + shots + " projectile" + System.getProperty("line.separator") +
+                    "every [#000000ff]" + cdCap.get() + "[] seconds";
         }
+
+
     }
     public static class G extends AbilityGrader{
         private float cdCapDown;
 
-        public G(float cdCapDown) {
+        public G(float cdCapDown,  int[] gemMax) {
+            super(gemMax);
             this.cdCapDown = cdCapDown;
         }
     }
@@ -167,8 +162,8 @@ public class DoubleAttack extends Ability implements Ability.IOnBuild{
 
 
 
-    public DoubleAttack(P prototype) {
-        buff = new DoubleShotEffect(prototype.cdCap, prototype.shots);
+    public SpreadAttack(P prototype) {
+        buff = new DoubleShotEffect(prototype.cdCap.get(), prototype.shots);
     }
 
     @Override

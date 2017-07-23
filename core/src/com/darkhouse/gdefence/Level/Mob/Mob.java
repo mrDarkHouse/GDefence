@@ -35,7 +35,7 @@ public class Mob extends Effectable{
 //            }
 //        };
 
-        Prototype(String name, String regionPath, MoveType moveType, int health, int armor,  float speed, int dmg, int bounty, MobAbility.AblityPrototype... abilities) {
+        Prototype(String name, String regionPath, MoveType moveType, int health, int armor,  float speed, int dmg, int bounty, MobAbility.AbilityPrototype... abilities) {
             this.texturePath = regionPath;
             this.name = name;
             this.health = health;
@@ -44,7 +44,7 @@ public class Mob extends Effectable{
             this.speed = speed;
             this.dmg = dmg;
             this.bounty = bounty;
-            this.abilities = new Array<MobAbility.AblityPrototype>(abilities);
+            this.abilities = new Array<MobAbility.AbilityPrototype>(abilities);
         }
 
         protected String texturePath;
@@ -55,7 +55,7 @@ public class Mob extends Effectable{
         protected float speed;
         protected int dmg;
         protected int bounty;
-        protected Array<MobAbility.AblityPrototype> abilities;
+        protected Array<MobAbility.AbilityPrototype> abilities;
 
         public String getName() {
             return name;
@@ -78,7 +78,7 @@ public class Mob extends Effectable{
         public int getBounty() {
             return bounty;
         }
-        public Array<MobAbility.AblityPrototype> getAbilities() {
+        public Array<MobAbility.AbilityPrototype> getAbilities() {
             return abilities;
         }
         //        protected Prototype setName(String texturePath) {
@@ -311,9 +311,9 @@ public class Mob extends Effectable{
     public void setBounty(int bounty) {
         this.bounty = bounty;
     }
-    public void setAbilities(Array<MobAbility.AblityPrototype> abilities) {
+    public void setAbilities(Array<MobAbility.AbilityPrototype> abilities) {
         this.abilities = new Array<MobAbility>();
-        for (MobAbility.AblityPrototype a:abilities){
+        for (MobAbility.AbilityPrototype a:abilities){
             this.abilities.add(a.getAbility());
         }
 //        this.abilities = new Array<MobAbility>(abilities);

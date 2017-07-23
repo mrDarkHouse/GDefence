@@ -97,8 +97,14 @@ public class SlotSource extends Source {
 	}
 	protected void ifSlotTarget(Target target){
 		Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-		if(targetSlot.getType() != payloadSlot.getType() && targetSlot.getType().getSuperclass() != payloadSlot.getType()
-				&& payloadSlot.getType().getSuperclass() != targetSlot.getType()) {//recipe extends detail
+		boolean sameType = false;
+		for (Class<? extends GameObject> i : targetSlot.getType()){
+			if(GameObject.isMatches(i, payloadSlot.getLast().getClass())){
+				sameType = true;
+			}
+		}
+		if(/*targetSlot.getType() != payloadSlot.getType() && targetSlot.getType().getSuperclass() != payloadSlot.getType()
+				&& payloadSlot.getType().getSuperclass() != targetSlot.getType()*/!sameType) {//recipe extends detail
 			ifNullTarget();
 			return;
 		}//new engine lol

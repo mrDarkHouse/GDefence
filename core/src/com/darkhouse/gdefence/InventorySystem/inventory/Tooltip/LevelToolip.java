@@ -14,7 +14,7 @@ import com.darkhouse.gdefence.Model.LevelButton;
 
 import java.util.Random;
 
-public class LevelToolip extends Window{
+public class LevelToolip extends AbstractTooltip{
     private LevelButton levelButton;
     private Skin skin;
 
