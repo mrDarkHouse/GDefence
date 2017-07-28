@@ -242,7 +242,7 @@ public abstract class MapTile extends GDSprite{
             t.init();
             t.procBuildAbilities(this);
             this.buildedTower = t;
-            LevelMap.getLevel().getStatManager().energySpendAdd(tower.getCost());
+//            LevelMap.getLevel().getStatManager().energySpendAdd(tower.getCost());
             return true;
         }else return false;
     }

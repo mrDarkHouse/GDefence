@@ -6,19 +6,25 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
-import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
-import com.darkhouse.gdefence.InventorySystem.inventory.LevelShopPanel;
+import com.darkhouse.gdefence.InventorySystem.inventory.*;
+import com.darkhouse.gdefence.Level.Ability.Spell.Spell;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Model.Level.*;
+import com.darkhouse.gdefence.Objects.SpellObject;
+import com.darkhouse.gdefence.Objects.TowerObject;
+
+import java.util.Arrays;
 
 public class LevelMap extends AbstractScreen {
     private SpriteBatch batch;
     private ShapeRenderer shape;
     //private Map map;
     private int number;
-    private Inventory inventory;
+    private Inventory towers;
 
     private NextWaveInfoPanel nWPanel;
     private CurrentWaveInfoPanel cWpanel;
@@ -32,15 +38,16 @@ public class LevelMap extends AbstractScreen {
 
     private static Level level;
     public static LevelMap levelMap;//debug
+    private SpellPanel spellPanel;
 
     public static Level getLevel() {
         return level;
     }
 
 
-    public LevelMap(int number, Inventory inventory) {
+    public LevelMap(int number, Inventory towers, Inventory spells) {
         this.number = number;
-        this.inventory = inventory;
+        this.towers = towers;
 
         batch = new SpriteBatch();
         stage = new Stage();
@@ -50,7 +57,8 @@ public class LevelMap extends AbstractScreen {
         initWavePanel();
         initMapTileActors();
         initTextures();//after loading textures
-        initShop(inventory);
+        initShop(towers);
+        initSpellPanel(spells);
     }
 
     private void initTextures(){
@@ -145,13 +153,33 @@ public class LevelMap extends AbstractScreen {
         stage.addActor(cWpanel);
 
     }
-    private void initShop(Inventory inventory){
-        LevelShopPanel shop = new LevelShopPanel(inventory);
+    private void initShop(Inventory towers){
+        LevelShopPanel shop = new LevelShopPanel(towers);
 
         shop.addTarget(Level.getMap().getTiles());
+        shop.setPosition(90, 10);
         stage.addActor(shop);
         shop.init();
 
+    }
+    private void initSpellPanel(Inventory spells){
+        Array<SpellObject> a = new Array<SpellObject>();
+        for (Slot s:spells.getSlots()){
+            if(!s.isEmpty() && TowerObject.isMatches(s.getLast().getClass(), SpellObject.class)){
+                a.add(((SpellObject) s.getLast()));
+            }
+        }
+
+
+        spellPanel = new SpellPanel(a);
+
+        spellPanel.setPosition(1000, 500);
+        stage.addActor(spellPanel);
+        spellPanel.init();
+
+    }
+    public void actSpellPanel(float delta){
+        spellPanel.act(delta);
     }
     public void updateEnd(){//when new wave is ended
         nWPanel.hasChanged();

@@ -8,6 +8,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
 import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.Objects.TowerObject;
 
 public class BuySlotSource extends SlotSource {
 
@@ -26,7 +27,7 @@ public class BuySlotSource extends SlotSource {
     @Override
     protected void takeSlot() {
         //dont take from shop
-        payloadSlot.add(GameObject.generateStartObjects(sourceSlot.getPrototype(), 1));
+        payloadSlot.add(TowerObject.generateStartObjects(sourceSlot.getPrototype(), 1));
     }
 
     @Override

@@ -25,7 +25,7 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
         //    }
 
         @Override
-        public float getDmg(Tower source, float dmg) {
+        public float getDmg(/*Tower source, */float dmg) {
             owner.changeArmor(-armorPerStack);
             getStackableObject().deleteStack();
             if(getStackableObject().isZeroStacks()) dispell();

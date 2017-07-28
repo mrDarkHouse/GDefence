@@ -75,7 +75,7 @@ public class GemGradePanel extends Window{
 
         this.dragAndDrop = dragAndDrop;
         this.inventory = inventory;
-        gradeTowerSlot = new SlotActor(skin, new Slot(TowerObject.class));
+        gradeTowerSlot = new SlotActor(skin, new Slot(1, TowerObject.class, SpellObject.class));
         gradeTowerSlot.getSlot().addListener(new GradeSlotListener());
 
 
@@ -134,7 +134,8 @@ public class GemGradePanel extends Window{
                     addTower(((TowerObject) ((Slot) slot).getLast()));//
                     pack();
                 } else if (slot.getPrototype() instanceof ItemEnum.Spell) {
-
+                    addSpell(((SpellObject) ((Slot) slot).getLast()));
+                    pack();
                 }
             }
         }else {
@@ -240,22 +241,35 @@ public class GemGradePanel extends Window{
             }
         }
     }
+    private void addSpell(final SpellObject o){
+        AssetLoader loader = GDefence.getInstance().assetLoader;
 
-//    private void addGems(User.GEM_TYPE type){
-//        GameObject object = gradeTowerSlot.getSlot().getLast();
-//        if(object != null){
-//            if(object instanceof TowerObject){
-//                TowerObject towerObject = (TowerObject) object;
-//                if(towerObject.getLevel() > towerObject.getPrimaryGemsNumber()) {
-//                    if(GDefence.getInstance().user.spendGems(type, 1)) {
-//                        towerObject.addGems(type, 1);
-//                    }
-//                }else {
-//                    tooltipShow();
-//                }
-//            }
-//        }
-//    }
+        GemGradeButton[] b = new GemGradeButton[3];
+
+        for (int i = 0; i < b.length; i++) {
+            final int finalI = i + 3;
+            b[i] = new GemGradeButton(o, User.GEM_TYPE.values()[finalI]);
+            b[i].addListener(new TooltipListener(new GemGradeTooltip(getStage(), o, User.GEM_TYPE.values()[finalI],
+                    loader.get("skins/uiskin.json", Skin.class)), true));
+            b[i].addListener(new InputListener() {
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    if(o.canGrade(User.GEM_TYPE.values()[finalI]) && GDefence.getInstance().user.spendGems(User.GEM_TYPE.values()[finalI], 1)) {
+                        o.addGem(User.GEM_TYPE.values()[finalI]);
+                        notifyListeners();
+                    }
+                    return true;
+                }
+            });
+            g[0].addActor(b[i]);
+        }
+        g[0].pack();
+        for (Actor a:g[0].getChildren()){
+            if(a instanceof GemGradeButton){
+                ((GemGradeButton) a).init();
+            }
+        }
+    }
+
 
 //    private void tooltipShow(){
 //        //TextTooltip tt = new TextTooltip("Level must be greater then gems number", GDefence.getInstance().getSkin());

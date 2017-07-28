@@ -6,6 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
+import com.darkhouse.gdefence.InventorySystem.inventory.Source.SellSlotSource;
+import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.Model.Panels.GoldPanel;
 import com.darkhouse.gdefence.Model.Panels.StoreBuyPanel;
 import com.darkhouse.gdefence.Screens.AbstractCampainScreen;
@@ -29,6 +33,12 @@ public class Store extends AbstractCampainScreen{
     }
     public void init(){
         inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)){
+            @Override
+            protected void addSourceTarget(SlotActor slotActor) {
+                dragAndDrop.addSource(new SellSlotSource(slotActor));
+                dragAndDrop.addTarget(new SlotTarget(slotActor));
+            }
+
             @Override
             protected void setDefaults() {
                 setPosition(100, 250);

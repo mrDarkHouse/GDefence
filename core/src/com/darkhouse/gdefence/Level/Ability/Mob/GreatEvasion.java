@@ -24,8 +24,8 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(Tower source, float dmg) {
-            if (getCooldownObject().isReady() && evasion.getDmg(source, dmg) == 0){
+        public float getDmg(/*Tower source, */float dmg) {
+            if (getCooldownObject().isReady() && evasion.getDmg(/*source,*/ dmg) == 0){
                 getCooldownObject().resetCooldown();
                 return 0;
             }else return dmg;

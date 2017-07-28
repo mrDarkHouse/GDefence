@@ -26,11 +26,15 @@ import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.darkhouse.gdefence.Objects.*;
 
 
-public class Slot extends AbstractSlot{
-
+public class Slot/*<T extends GameObject>*/ extends AbstractSlot{
 
 	private Item prototype;
 	private Class<? extends GameObject>[] type;
+	private int maxItems;
+
+	public int getMaxItems() {
+		return maxItems;
+	}
 
 	public Class<? extends GameObject>[] getType() {
 		return type;
@@ -41,7 +45,6 @@ public class Slot extends AbstractSlot{
 		notifyListeners();
 	}
 
-
 	private Array <GameObject> itemsArray;
 
 
@@ -50,19 +53,22 @@ public class Slot extends AbstractSlot{
 //	private Array<SlotListener> slotListeners = new Array<SlotListener>();
 
 	public Slot(Class<? extends GameObject>... type/*, Item item, int amount*/) {//created empty slot
-//		this.prototype = item;
-		this.type = type;
-		//this.amount = amount;
-        itemsArray = new Array<GameObject>();
-//		itemsArray = new Array<GameObject>(GameObject.generateStartObjects(item, amount));//
-//		for (int i = 0; i < amount; i++){
-//			itemsArray.add(GameObject.generateStartObjects(item, 1));
-//		}
+		this(16, type);
 	}
+
+	public Slot(int maxItems, Class<? extends GameObject>... type) {
+		this.type = type;
+		this.maxItems = maxItems;
+		itemsArray = new Array<GameObject>();
+	}
+
+
+
 	public void copy(Slot s){
 //		itemsArray.clear();
 		itemsArray = new Array<GameObject>(s.itemsArray);//
 		setPrototype(s.getPrototype());
+//		maxItems = s.maxItems //
 
 		//itemsArray.addAll(s.itemsArray);
 //		for (int i = 0; i < s.itemsArray.size; i++){
@@ -197,6 +203,8 @@ public class Slot extends AbstractSlot{
 //		itemsArray.removeValue(itemsArray.peek(), true);
 //		return o;
 //	}
+
+
 	public GameObject getLast(){
 		if(itemsArray.size > 0) {
 			return itemsArray.peek();
@@ -223,7 +231,7 @@ public class Slot extends AbstractSlot{
 		Array<GameObject> tmpArr = new Array<GameObject>();
 		if(getAmount() >= amount){
 			for (int i = 0; i < amount; i++){
-				tmpArr.add(itemsArray.peek());
+				tmpArr.add(itemsArray.peek());//pop()
 				itemsArray.removeValue(itemsArray.peek(), true);
 			}
 		}

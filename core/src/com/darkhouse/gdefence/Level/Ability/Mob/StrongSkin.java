@@ -17,7 +17,7 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(Tower source, float dmg) {
+        public float getDmg(/*Tower source, */float dmg) {
             if(dmg < blockMinLimit)return dmg;
             float newDmg = dmg - blockEmount;
             return newDmg > blockMinLimit ? newDmg:blockMinLimit;

@@ -8,12 +8,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.Path.*;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
+import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
+import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
 import java.util.ArrayList;
@@ -95,7 +98,8 @@ public class Map {
     public static Mob getNearestMob(Mob startSearch, int range){
         float currentF = 99999;//infinity
         Mob currentMob = null;
-        for (Mob m: Wave.mobs) {
+        for (int i = 0; i < Wave.mobs.size; i++){
+            Mob m = Wave.mobs.get(i);
             float dst = m.getCenter().dst(startSearch.getCenter());
             if(startSearch != m && dst < range && dst < currentF){
                 currentF = dst;
@@ -107,13 +111,70 @@ public class Map {
 
     public static Array<Mob> getMobsInRange(Mob searchMob, int range){
         Array<Mob> found = new Array<Mob>();
-        for (Mob m: Wave.mobs) {
+        for (int i = 0; i < Wave.mobs.size; i++){
+            Mob m = Wave.mobs.get(i);
             float dst = m.getCenter().dst(searchMob.getCenter());
             if(dst <= range){
                 found.add(m);
             }
         }
         return found;
+    }
+    public static Array<Mob> getMobsInRange(Vector2 searchPoint, int range){
+        Array<Mob> found = new Array<Mob>();
+        for (int i = 0; i < Wave.mobs.size; i++){
+            Mob m = Wave.mobs.get(i);
+            float dst = m.getCenter().dst(searchPoint);
+            if(dst <= range){
+                found.add(m);
+            }
+        }
+        return found;
+    }
+    public Array<Tower> getTowersInRange(Vector2 searchPoint, int range){
+        Array<Tower> found = new Array<Tower>();
+        for (int x = 0; x < tiles.length; x++){
+            for (int y = 0; y < tiles[0].length; y++){
+                if (tiles[x][y].getBuildedTower() != null){
+                    Tower t = tiles[x][y].getBuildedTower();
+                    float dst = tiles[x][y].getCenter().dst(searchPoint);//can do tower.getCenter();
+                    if(dst <= range){
+                        found.add(t);
+                    }
+                }
+            }
+        }
+        return found;
+
+    }
+    public Array<Effectable> getUnitsInRange(Vector2 searchPoint, int range, Array<Class<? extends Effectable>> affected){
+        Array<Effectable> tmp = new Array<Effectable>();
+        if(affected.contains(Mob.class, true)) {
+            tmp.addAll(getMobsInRange(searchPoint, range));
+        }
+        if(affected.contains(Tower.class, true)){
+            tmp.addAll(getTowersInRange(searchPoint, range));
+        }
+        return tmp;
+    }
+    public Effectable getTargetUnit(Vector2 searchPoint, Array<Class<? extends Effectable>> affected){//those all method very bad need rework// TODO
+        if(affected.contains(Mob.class, true)) {
+            for (int i = 0; i < Wave.mobs.size; i++){
+                Mob m = Wave.mobs.get(i);
+                if(m.contains(searchPoint)) return m;
+            }
+        }
+        if(affected.contains(Tower.class, true)){
+            for (int x = 0; x < tiles.length; x++){
+                for (int y = 0; y < tiles[0].length; y++){
+                    if (tiles[x][y].getBuildedTower() != null){
+                        Tower t = tiles[x][y].getBuildedTower();
+                        if(tiles[x][y].contains(searchPoint)) return t;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 
@@ -525,6 +586,7 @@ public class Map {
             p.act(delta);
             p.draw(batch, 1);
         }
+
 
         if(isBuild){
             drawBuildGrid(batch, delta);

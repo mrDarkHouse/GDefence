@@ -35,6 +35,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.Objects.TowerObject;
 
 /**
  * @author Daniel Holderbaum
@@ -90,7 +91,10 @@ public class SlotSource extends Source {
 			ifNullTarget();
 		} else if(target instanceof SlotTarget){
 			ifSlotTarget(target);
-		}
+		} /*else {// other targets
+			System.out.println("else");
+			ifNullTarget();
+		}*/
 	}
 	protected void ifNullTarget(){
 		sourceSlot.add(payloadSlot.takeAll());
@@ -99,7 +103,7 @@ public class SlotSource extends Source {
 		Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
 		boolean sameType = false;
 		for (Class<? extends GameObject> i : targetSlot.getType()){
-			if(GameObject.isMatches(i, payloadSlot.getLast().getClass())){
+			if(TowerObject.isMatches(i, payloadSlot.getLast().getClass())){
 				sameType = true;
 			}
 		}
@@ -108,9 +112,18 @@ public class SlotSource extends Source {
 			ifNullTarget();
 			return;
 		}//new engine lol
-		if (targetSlot.matches(payloadSlot)|| targetSlot.isEmpty()) {
-			targetSlot.add(payloadSlot.takeAll());
-		} else {
+		if (targetSlot.matches(payloadSlot) || targetSlot.isEmpty()){
+
+//			targetSlot.add(payloadSlot.takeAll());
+
+			int toMove = targetSlot.getMaxItems() - targetSlot.getAmount();
+			if(payloadSlot.getAmount() <= toMove) {
+				targetSlot.add(payloadSlot.takeAll());
+			} else 								  {
+				targetSlot.add(payloadSlot.take(toMove));
+				sourceSlot.add(payloadSlot.takeAll());
+			}
+		} else{//swap slot items
 			Array<? extends GameObject> tmp = targetSlot.takeAll();
 			targetSlot.add(payloadSlot.takeAll());
 			sourceSlot.add(tmp);

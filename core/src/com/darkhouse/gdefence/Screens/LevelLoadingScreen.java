@@ -13,7 +13,8 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 public class LevelLoadingScreen extends AbstractLoadingScreen{
 
     private int level;
-    private Inventory inventory;
+    private Inventory towers;
+    private Inventory spells;
     private LevelMap map;
     private Label tipsLabel;
     private Table tipsTable;
@@ -26,10 +27,11 @@ public class LevelLoadingScreen extends AbstractLoadingScreen{
         GDefence.getInstance().assetLoader.loadLevelMap();
     }
 
-    public LevelLoadingScreen(int level, Inventory inventory) {
+    public LevelLoadingScreen(int level, Inventory towers, Inventory spells) {
         super();
         this.level = level;
-        this.inventory = inventory;
+        this.towers = towers;
+        this.spells = spells;
         tipsLabel = new Label(GDefence.getTip(), FontLoader.generateStyle(24, Color.BLACK));
         tipsLabel.setAlignment(Align.center);
         tipsTable = new Table();
@@ -42,7 +44,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen{
 
     @Override
     protected void onLoad() {
-        map = new LevelMap(level, inventory);
+        map = new LevelMap(level, towers, spells);
 //        if (Gdx.input.isTouched()) {
             GDefence.getInstance().switchScreen(map);
 //            LevelMap.getLevel().start();//WHAT THE SHIT THIS

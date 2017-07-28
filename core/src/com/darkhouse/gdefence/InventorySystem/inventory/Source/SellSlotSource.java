@@ -10,24 +10,28 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Target.GemGradeTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SellTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.TowerCraftTarget;
 
-public class CombinedSlotSource extends SlotSource {
-    public CombinedSlotSource(SlotActor actor) {
+public class SellSlotSource extends SlotSource {
+    public SellSlotSource(SlotActor actor) {
         super(actor);
     }
 
 
     @Override
     public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
-        super.dragStop(event, x, y, pointer, payload, target);
         if (target instanceof SellTarget) {
             Item item = payloadSlot.getPrototype();
             int amount = payloadSlot.getAmount();
             if (item != null) {
                 GDefence.getInstance().user.addGold(item.getGlobalCost() * amount);
             } else {
-                System.out.println("Item - null");
+                GDefence.getInstance().log("SellSlotSource: Item - null");
             }
-        } else if(target instanceof GemGradeTarget){
+            return;
+        }
+
+        super.dragStop(event, x, y, pointer, payload, target);
+
+         /*else if(target instanceof GemGradeTarget){
             Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
             if(targetSlot.isEmpty()){//targetSlot.getPrototype() == null
                 int noNeed = 0;
@@ -41,7 +45,7 @@ public class CombinedSlotSource extends SlotSource {
             }
         } else if(target instanceof TowerCraftTarget){
             //
-        }
+        }*/
     }
 
 

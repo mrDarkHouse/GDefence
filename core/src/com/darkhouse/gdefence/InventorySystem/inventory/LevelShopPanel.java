@@ -8,9 +8,22 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Source.LevelShopSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.TileTarget;
 import com.darkhouse.gdefence.Level.Path.MapTile;
+import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class LevelShopPanel extends InventoryActor {
+
+    public static class LevelShop extends Inventory{
+
+        public LevelShop() {
+            super(TowerObject.class, 8);
+        }
+
+        public LevelShop(Inventory copyInventory) {
+            this();
+            copy(copyInventory);
+        }
+    }
 
 
     public LevelShopPanel(Inventory inventory) {
@@ -22,7 +35,7 @@ public class LevelShopPanel extends InventoryActor {
 
     @Override
     protected void setDefaults() {
-        setPosition(90, 10);
+//        setPosition(90, 10);
         defaults().space(8);
         defaults().size(60, 60);
         row().fill().expandX();

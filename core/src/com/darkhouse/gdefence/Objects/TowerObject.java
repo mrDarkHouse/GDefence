@@ -2,13 +2,45 @@ package com.darkhouse.gdefence.Objects;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.User;
 
-public class TowerObject extends GameObject implements GemGradable{
+public class TowerObject implements ExpEarner, GameObject, GemGradable{
+
+    public static boolean isMatches(Class<? extends GameObject> a, Class<? extends GameObject> b){
+        if(a == b) return true;
+        if(a.getSuperclass() == b) return true;//a Recipe b Detail
+        if(a == b.getSuperclass()) return true;
+        return false;
+    }
+    public static Array<? extends GameObject> generateStartObjects(Item item, int amount){
+        if(item instanceof ItemEnum.Tower){
+            Array<TowerObject> tmp = new Array<TowerObject>();
+            for (int i = 0; i < amount; i++) {
+                tmp.add(new TowerObject(((ItemEnum.Tower) item)));
+            }
+            return tmp;
+        }/*else if(item instanceof ItemEnum.Spell){
+            Array<SpellObject> tmp = new Array<SpellObject>();
+            for (int i = 0; i < amount; i++) {
+                tmp.add(new SpellObject(((ItemEnum.Spell) item)));
+            }
+            return tmp;
+        }*/else if(item instanceof ItemEnum.Detail){
+            Array<DetailObject> tmp = new Array<DetailObject>();
+            for (int i = 0; i < amount; i++) {
+                tmp.add(new DetailObject(((ItemEnum.Detail) item)));
+            }
+            return tmp;
+        }
+        return null;
+    }
+
+
     public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
 
     private ItemEnum.Tower prototype;
@@ -216,7 +248,7 @@ public class TowerObject extends GameObject implements GemGradable{
 
     public void updateExp(){
         currentExp = getTotalExp();
-        for(int i = level - 1; currentExp >= exp2nextLvl[i]; i ++){//if max lvl throws exeption
+        for(int i = level - 1; currentExp >= exp2nextLvl[i]; i++){//if max lvl throws exeption
             currentExp -= exp2nextLvl[i];
             level++;
         }

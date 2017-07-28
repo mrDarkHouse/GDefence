@@ -347,15 +347,6 @@ public enum ItemEnum {;
 
 		}
 		public static void init(){
-//			Basic.setTextures();
-//			Rock.setTextures();
-//			Arrow.setTextures();
-//			Range.setTextures();
-//            Short.setTextures();
-//            Mountain.setTextures();
-//            SteelArrow.setTextures();
-//            Catapult.setTextures();
-//			Ballista.setTextures();
             //for to last setTextures
             for (int i = 0; i < Tower.values().length; i++){
                 Tower.values()[i].setTextures();
@@ -363,69 +354,111 @@ public enum ItemEnum {;
 		}
 
 	}
-	public enum Spell implements Item{
-		Firestorm("Firestorm", "fireStorm", 20, 100) {
-			@Override
-			public String getTextureRegion() {
-				return null;
-			}
 
-			@Override
-			public int getGlobalCost() {
-				return 0;
-			}
-		},
-		IceBlast("Ice Blast", "iceBlast", 10, 60) {
-			@Override
-			public String getTextureRegion() {
-				return null;
-			}
+    public enum Spell implements Item{
+        GlobalSlow("Global Slow", "rock", 200),
+        IceBlast("Ice blast", "range", 200);
 
 
-			@Override
-			public int getGlobalCost() {
-				return 0;
-			}
-		};
-
-
-		private String name;
+        private String name;
         private String texturePath;
-		private int dmg;
-		private int manaCost;
+        private int globalCost;
 
-        public int getDmg() {
-            return dmg;
-        }
-        public int getManaCost() {
-            return manaCost;
-        }
-
-        Spell(String name, String texturePath, int dmg, int manaCost) {
-			this.name = name;
+        Spell(String name, String texturePath, int globalCost) {
+            this.name = name;
             this.texturePath = texturePath;
-			this.dmg = dmg;
-			this.manaCost = manaCost;
-		}
+            this.globalCost = globalCost;
+        }
 
+        @Override
+        public String getTextureRegion() {
+            return texturePath;
+        }
+
+        @Override
+        public int getGlobalCost() {
+            return globalCost;
+        }
 
         @Override
         public int getID() {
-            return ordinal() + 200;
+            return ordinal() + 117;//
         }
 
         @Override
         public String getName() {
-            return name();
+            return name;
         }
 
         @Override
-        public String getTooltip() {//
-            return "Dmg: " + getDmg() + System.getProperty("line.separator") +
-                    "Mana Cost: " + getManaCost();
+        public String getTooltip() {
+            return "";
         }
-
     }
+
+//	public enum Spell implements Item{
+//		Firestorm("Firestorm", "fireStorm", 20, 100) {
+//			@Override
+//			public String getTextureRegion() {
+//				return null;
+//			}
+//
+//			@Override
+//			public int getGlobalCost() {
+//				return 0;
+//			}
+//		},
+//		IceBlast("Ice Blast", "iceBlast", 10, 60) {
+//			@Override
+//			public String getTextureRegion() {
+//				return null;
+//			}
+//
+//
+//			@Override
+//			public int getGlobalCost() {
+//				return 0;
+//			}
+//		};
+//
+//
+//		private String name;
+//        private String texturePath;
+//		private int dmg;
+//		private int manaCost;
+//
+//        public int getDmg() {
+//            return dmg;
+//        }
+//        public int getManaCost() {
+//            return manaCost;
+//        }
+//
+//        Spell(String name, String texturePath, int dmg, int manaCost) {
+//			this.name = name;
+//            this.texturePath = texturePath;
+//			this.dmg = dmg;
+//			this.manaCost = manaCost;
+//		}
+//
+//
+//        @Override
+//        public int getID() {
+//            return ordinal() + 200;
+//        }
+//
+//        @Override
+//        public String getName() {
+//            return name();
+//        }
+//
+//        @Override
+//        public String getTooltip() {//
+//            return "Dmg: " + getDmg() + System.getProperty("line.separator") +
+//                    "Mana Cost: " + getManaCost();
+//        }
+//
+//    }
 
 	//Иличев Глеб
 

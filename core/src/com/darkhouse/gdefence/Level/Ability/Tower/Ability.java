@@ -21,6 +21,12 @@ public abstract class Ability {
         protected int[] gemsMax = new int[3];
         public Boost[] gemBoost = new Boost[3];
 
+        public int getGemsNumber(){
+            return gemsNumber[0] + gemsNumber[1] + gemsNumber[2];
+        }
+
+
+
         public static abstract class Boost{
 //            public static Boost createInstance(AtomicReference boostField, Number boostUp, String name, boolean positive){
 //                if(boostField.get() instanceof Integer){//boostUp also
@@ -47,7 +53,6 @@ public abstract class Ability {
                 this.positive = positive;
             }
         }
-
         public static class BoostInteger extends Boost{
             private AtomicReference<Integer> boostField;
             private int boostUp;
@@ -131,7 +136,6 @@ public abstract class Ability {
                 this.type = type;
             }
         }
-
 
 
         abstract public AbilityPrototype copy();

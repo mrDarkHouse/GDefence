@@ -248,11 +248,11 @@ public class NextWaveInfoPanel extends Table{
 
 
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-//        if(LevelMap.getLevel().getCurrentWave() != null) {//hotfix
-//            hasChanged();
-//        }
-    }
+//    @Override
+//    public void act(float delta) {
+//        super.act(delta);
+////        if(LevelMap.getLevel().getCurrentWave() != null) {//hotfix
+////            hasChanged();
+////        }
+//    }
 }

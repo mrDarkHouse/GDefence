@@ -4,7 +4,7 @@ package com.darkhouse.gdefence.Objects;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 
-public class DetailObject extends GameObject{
+public class DetailObject implements GameObject{
     private ItemEnum.Detail prototype;
 
     public static DetailObject loadSaveCode(String savecode) {

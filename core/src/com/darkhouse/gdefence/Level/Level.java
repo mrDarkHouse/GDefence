@@ -67,6 +67,10 @@ public class Level {
         return energyNumber;
     }
 
+    public boolean haveEnergy(int energy){
+        return energy <= energyNumber;
+    }
+
     public void addEnergy(int energy) {
         if(energy + energyNumber <= GDefence.getInstance().user.maxEnegry.getCurrentValue()) {
             this.energyNumber += energy;
@@ -77,12 +81,11 @@ public class Level {
         }
     }
     public boolean removeEnergy(int energy) {
-        if(energy <= energyNumber) {
+        if(haveEnergy(energy)) {
             this.energyNumber -= energy;
+            getStatManager().energySpendAdd(energy);
             return true;
-        }else{
-            return false;
-        }
+        }else return false;
     }
     public float getTimerTime(){
         return timeBetweenWaves[currentWave];
@@ -225,6 +228,7 @@ public class Level {
 
 
     private void winLevel(){
+        Wave.mobs.clear();//bug when mobs from prev level appear in current
         isWin = true;
         //System.out.println("win");
 
@@ -251,6 +255,7 @@ public class Level {
     }
 
     private void looseLevel(){
+        Wave.mobs.clear();
         //System.out.println("loose");
         GDefence.getInstance().setScreen(new LevelEndScreen(false, getStatManager()));
 

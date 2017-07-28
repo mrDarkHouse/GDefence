@@ -195,6 +195,14 @@ public class AssetLoader extends AssetManager{
         load("Projectiles/ballista.png", Texture.class);
         load("Projectiles/catapult.png", Texture.class);
         load("coin.png", Texture.class);
+        load("manaCostLabelFon.png", Texture.class);
+        load("spellCdTransparent.png", Texture.class);
+        load("spellPanelFon.png", Texture.class);
+        load("AbilityIcons/Spells/globalSlow.png", Texture.class);
+        load("AbilityIcons/Spells/nothing.png", Texture.class);
+
+
+
 
 
         load("lockedTower.png", Texture.class);
@@ -335,7 +343,6 @@ public class AssetLoader extends AssetManager{
 
 
 
-
         load("Mobs/mob.png", Texture.class);
         load("Mobs/mob2.png", Texture.class);
         load("Mobs/mob3.png", Texture.class);
@@ -377,6 +384,10 @@ public class AssetLoader extends AssetManager{
     }
     public Texture getAbilityIcon(String abilityIconPath){
         return get("AbilityIcons/Abilities/" + abilityIconPath + ".png", Texture.class);
+    }
+
+    public Texture getSpellIcon(String path){
+        return get("AbilityIcons/Spells/" + path + ".png", Texture.class);//
     }
 
     public Texture getGemTexure(User.GEM_TYPE type){
@@ -472,6 +483,14 @@ public class AssetLoader extends AssetManager{
 
         return nameButtonStyle;
     }
+    public ImageTextButton.ImageTextButtonStyle getSpellPanelCdButtonStyle(){
+        ImageTextButton.ImageTextButtonStyle s = new ImageTextButton.ImageTextButtonStyle();
+        s.up = new TextureRegionDrawable(new TextureRegion(get("spellCdTransparent.png", Texture.class)));
+        s.over = new TextureRegionDrawable(new TextureRegion(get("spellCdTransparent.png", Texture.class)));
+        s.down = new TextureRegionDrawable(new TextureRegion(get("spellCdTransparent.png", Texture.class)));
+        s.font = FontLoader.generateFont(30, Color.WHITE, 4, Color.BLACK);
+        return s;
+    }
 
 
     public ImageButton.ImageButtonStyle getPrevButtonSkin(){
@@ -534,7 +553,7 @@ public class AssetLoader extends AssetManager{
         TextButton.TextButtonStyle s = new TextButton.TextButtonStyle();
 
         s.up = new TextureRegionDrawable(new TextureRegion(get("cell.png", Texture.class)));
-        s.font = FontLoader.generateFont(52);
+        s.font = FontLoader.generateFont(52, Color.WHITE);
         s.fontColor = Color.BLACK;
 
         return s;

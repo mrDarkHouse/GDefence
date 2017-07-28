@@ -13,28 +13,14 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.Objects.DamageSource;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.math.BigDecimal;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Tower extends Effectable{
-
-//    public static Tower createTower(ItemEnum.Tower tower){
-//        switch (tower){
-//            case Basic:
-//                return new BasicTower();
-//            case Rock:
-//                return new RockTower();
-//            case Arrow:
-//                return new ArrowTower();
-//            case Range:
-//                return new RangeTower();
-//            default:
-//                return null;
-//        }
-//    }
+public class Tower extends Effectable implements DamageSource{
 
     public static float getAttackSpeedDelay(int asValue){
         return new BigDecimal(4/(1 + (float)asValue/10)).setScale(2, BigDecimal.ROUND_FLOOR).floatValue();
@@ -140,20 +126,7 @@ public class Tower extends Effectable{
     }
 
     */
-//    public static Tower getTowerByID(int ID){
-//        switch (ID){
-//            case 0:
-//                return new BasicTower();
-//            case 1:
-//                return new RockTower();
-//            case 2:
-//                return new ArrowTower();
-//            case 3:
-//                return new RangeTower();
-//            default:
-//                return null;
-//        }
-//    }
+
 
     public Tower(TowerObject towerPrototype, float x, float y, float width, float height) {
         super();
@@ -212,9 +185,6 @@ public class Tower extends Effectable{
     public void addKill(/*Class<? extends Mob>*/Mob killedMob){
         //add exp from killedMob
         procKillAbilities(killedMob);
-
-        LevelMap.getLevel().addEnergy(killedMob.getBounty());
-        LevelMap.getLevel().getStatManager().MobsKilledAdd(1);
     }
 
     private void procKillAbilities(Mob killedMob){

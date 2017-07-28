@@ -28,7 +28,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
-import com.darkhouse.gdefence.InventorySystem.inventory.Source.CombinedSlotSource;
 
 /**
  * @author Daniel Holderbaum
@@ -127,7 +126,7 @@ public class InventoryActor extends Window {
 		afterInitCells();
 	}
 	protected void addSourceTarget(SlotActor slotActor){
-		dragAndDrop.addSource(new CombinedSlotSource(slotActor));
+		dragAndDrop.addSource(new SlotSource(slotActor));
 		dragAndDrop.addTarget(new SlotTarget(slotActor));
 	}
 

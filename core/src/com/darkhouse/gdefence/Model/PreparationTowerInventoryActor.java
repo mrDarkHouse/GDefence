@@ -6,9 +6,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
+import com.darkhouse.gdefence.Objects.TowerObject;
 
 public class PreparationTowerInventoryActor extends InventoryActor{
 
+    public static class PreparationTowerInventory extends Inventory{
+
+        public PreparationTowerInventory() {
+            super(TowerObject.class, 4);
+        }
+
+    }
 
     public PreparationTowerInventoryActor(DragAndDrop dragAndDrop, Skin skin) {
         super(new PreparationTowerInventory(), dragAndDrop, skin);
@@ -36,7 +44,7 @@ public class PreparationTowerInventoryActor extends InventoryActor{
 
     @Override
     protected void setDefaults() {
-        setPosition(700, 250);
+//        setPosition(700, 250);
         defaults().space(8);
         defaults().size(60, 60);
         row().fill().expandX();
@@ -49,4 +57,6 @@ public class PreparationTowerInventoryActor extends InventoryActor{
         dragAndDrop.addSource(new SlotSource(slotActor));
         dragAndDrop.addTarget(new SlotTarget(slotActor));
     }
+
+
 }

@@ -78,10 +78,10 @@ public class CommandFaith extends MobAbility implements MobAbility.IDie{
     }
 
     @Override
-    public boolean die(Tower source) {
+    public boolean die(/*Tower source*/) {
         Circle dieAoe = new Circle(owner.getX(), owner.getY(), aoeRange);
         for (int i = 0; i < Wave.mobs.size; i++){
-            Mob m = Wave.mobs.get(i);
+                Mob m = Wave.mobs.get(i);
             if(dieAoe.contains(m.getPosition())){
                 m.addEffect(new CommandFaithBuff(aoeRange, speedBoost, duration).setOwner(m));
             }

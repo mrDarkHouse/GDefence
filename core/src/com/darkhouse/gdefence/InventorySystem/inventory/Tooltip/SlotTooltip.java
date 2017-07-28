@@ -36,6 +36,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.DropSlot;
 import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotListener;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
+import com.darkhouse.gdefence.Objects.ExpEarner;
 import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
@@ -49,7 +50,7 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
 	private AbstractSlot slot;
 
 	public SlotTooltip(Stage stage, AbstractSlot slot, Skin skin) {
-		super("Tooltip...", skin);
+		super("", skin);
 		this.slot = slot;
 		this.skin = skin;
 		hasChanged(slot);
@@ -67,8 +68,8 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
 			return;
 		}
 
-        getTitleLabel().setText(/*slot.getAmount() + "x " + */slot.getTitle());
-        getTitleLabel().setAlignment(Align.center);
+        getTitleLabel().setText(slot.getTitle());
+//        getTitleLabel().setAlignment(Align.center);
         clear();
         //Label label = //new Label("Super awesome description of " + slot.getPrototype(), skin);
         Label label = new Label(slot.getTooltip(), skin);
@@ -80,8 +81,8 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
 
 
 
-            if (s.getLast() instanceof TowerObject) {
-                TowerObject t = ((TowerObject) s.getLast());
+            if (s.getLast() instanceof ExpEarner) {
+                ExpEarner t = ((ExpEarner) s.getLast());
 
             /*FontLoader.generateStyle(16, Color.WHITE)*/
                 Label level = new Label(t.getLevel() + "", skin);//allow FontLoader load skin fonts
@@ -100,10 +101,11 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
                 expBar.getStyle().knob.setMinHeight(20);
                 expBar.getStyle().background.setMinWidth(50);
                 expBar.getStyle().knob.setMinWidth(0.1f);
-                expBar.setSize(80, 20);//dont work first argument
+//                expBar.setSize(80, 20);//dont work first argument
                 expBar.setValue(t.getCurrentExp());
                 add(expBar);
             }
+
         }else if(slot instanceof DropSlot){
             DropSlot s = ((DropSlot) slot);
 

@@ -75,7 +75,7 @@ public abstract class MobAbility{
 //    }
 
     public interface IGetDmg extends IType {
-        float getDmg(Tower source, float dmg);
+        float getDmg(/*Tower source, */float dmg);
     }
     public interface IMove extends IType{
         void move(MapTile currentTile);
@@ -84,7 +84,7 @@ public abstract class MobAbility{
         void spawned();
     }
     public interface IDie extends IType{
-        boolean die(Tower source);
+        boolean die(/*Tower source*/);
     }
 
 //    public enum EventTypes implements Event{

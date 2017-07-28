@@ -19,7 +19,7 @@ public class GemGradeTooltip extends AbstractTooltip{
     private User.GEM_TYPE gemType;
     private GemGradable g;
     private Label upLabel;
-    private String s = "";
+//    private String s = "";
 
     public GemGradeTooltip(Stage stage, GemGradable g, User.GEM_TYPE gemType, Skin skin) {
         super("Grade...", skin);

@@ -68,6 +68,7 @@ public class FontLoader {
         style.fontColor = fontColor;
         return style;
     }
+
     public static String getOneColorButtonString(int index, String s, Color first, Color other){
 //        BitmapFont b1 = generateFont(size);
 //        b1.getData().markupEnabled = true;
@@ -77,10 +78,20 @@ public class FontLoader {
                 s.substring(index, index + 1) + "[#" + other.toString() + "]" + s.substring(index + 1));
     }
 
-    public static BitmapFont generateFont(int size){
+    public static BitmapFont generateFont(int size, Color color, int borderSize, Color borderColor){
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = size;
+        parameter.color = color;
+        parameter.borderWidth = borderSize;
+        parameter.borderColor = borderColor;
+        return  generator.generateFont(parameter);
+    }
+    public static BitmapFont generateFont(int size, Color color){
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = size;
+        parameter.color = color;
         return  generator.generateFont(parameter);
     }
 

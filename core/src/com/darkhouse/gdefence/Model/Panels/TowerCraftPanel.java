@@ -217,7 +217,7 @@ public class TowerCraftPanel extends Window{
             }
         }
         if(contains == needComponents.size){
-            resultSlot.getSlot().add(GameObject.generateStartObjects(r.getTower(), 1));//create new tower
+            resultSlot.getSlot().add(TowerObject.generateStartObjects(r.getTower(), 1));//create new tower
         }else{
             if(!resultSlot.getSlot().isEmpty()){
 //                resultSlot.getSlot().removeListener(resultListener);//kostil'

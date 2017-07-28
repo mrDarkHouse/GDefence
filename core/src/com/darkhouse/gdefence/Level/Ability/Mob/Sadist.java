@@ -22,7 +22,7 @@ public class Sadist extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(Tower source, float dmg) {
+        public float getDmg(/*Tower source, */float dmg) {
             getStackableObject().addStack();
             if(getStackableObject().isMaxStacks()){
                 getStackableObject().setCurrentStacks(0);

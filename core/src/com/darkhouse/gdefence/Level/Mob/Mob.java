@@ -15,6 +15,7 @@ import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.Objects.DamageSource;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -378,18 +379,17 @@ public class Mob extends Effectable{
             }
         }
     }
-    private float useDefenceAbilities(Tower source, float dmg){
+    private float useDefenceAbilities(/*Tower source, */float dmg){
         float resistDmg = dmg;
         for (MobAbility a:abilities){
             if(a instanceof MobAbility.IGetDmg){
-                System.out.println(a.getName());
-                resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, resistDmg);
+                resistDmg = ((MobAbility.IGetDmg) a).getDmg(/*source, */resistDmg);
             }
         }
         CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
         for (Effect e:tmp){
             if(e instanceof MobAbility.IGetDmg){
-                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, resistDmg);
+                resistDmg = ((MobAbility.IGetDmg) e).getDmg(/*source, */resistDmg);
             }
         }
         return resistDmg;
@@ -401,11 +401,11 @@ public class Mob extends Effectable{
             }
         }
     }
-    private boolean useDieAbilities(Tower source){
+    private boolean useDieAbilities(/*Tower source*/){
         boolean isAlive = false;
         for (MobAbility a:abilities){
             if(a instanceof MobAbility.IDie){
-                if(((MobAbility.IDie) a).die(source)) isAlive = true;
+                if(((MobAbility.IDie) a).die(/*source*/)) isAlive = true;
             }
         }
         return isAlive;
@@ -429,21 +429,23 @@ public class Mob extends Effectable{
         return v;
     }
 
-    public void setDie(Tower source) {
+    public void setDie(DamageSource source) {
         this.inGame = false;
         Wave.mobs.removeValue(this, true);//add "if contains this" if error
         if(source!= null){
+            LevelMap.getLevel().addEnergy(getBounty());
+            LevelMap.getLevel().getStatManager().MobsKilledAdd(1);
             source.addKill(this);
         }
     }
 
-    public void hit(int dmg, Tower source){//tower ==> spell&tower
+    public void hit(int dmg, DamageSource source){//tower ==> spell&tower//TODO
 //        System.out.println(getArmor() + " " + getArmorReduction(getArmor()));
-        float resistDmg = useDefenceAbilities(source, dmg * (1 - getArmorReduction(getArmor())));
+        float resistDmg = useDefenceAbilities(/*source, */dmg * (1 - getArmorReduction(getArmor())));
         if(resistDmg < getHealth()){
             health -= resistDmg;
         }else if(isInGame()){
-            if(!useDieAbilities(source)) {
+            if(!useDieAbilities(/*source*/)) {
                 health = 0;
                 setDie(source);
             }

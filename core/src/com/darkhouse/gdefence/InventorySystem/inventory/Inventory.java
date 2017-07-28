@@ -43,28 +43,10 @@ public class Inventory {
 	public Inventory(Class<? extends GameObject> type, int slots) {
 		initSlots(type, slots);//35
 		this.type = type;
-
-		// create some random items
-		//for (Slot slot : slots) {
-		//	slot.add(Item.values()[MathUtils.random(0, Item.values().length - 1)], 1);
-		//}
-
-		// create a few random empty slots
-		//for (int i = 0; i < 3; i++) {
-		//	Slot randomSlot = slots.get(MathUtils.random(0, slots.size - 1));
-		//	randomSlot.take(randomSlot.getAmount());
-		//}
-//		for(Item i:GDefence.getInstance().user.items){
-//			Slot s = firstSlotWithItem(null);
-//			if(s != null){
-//				s.add(i, 1);
-//			}
-//		}
-//		for (Slot slot : slots) {
-//
-//			//slot.add(Item.BATTERY, 1);
-//		}
-
+	}
+	public Inventory(Class<? extends GameObject> type, int slots, int maxItems) {
+		initSlots(type, slots, maxItems);//35
+		this.type = type;
 	}
 
 	public Inventory(Inventory copyInventory){
@@ -107,6 +89,12 @@ public class Inventory {
 			slots.add(new Slot(type/*, null, 0*/));
 		}
 	}
+	protected void initSlots(Class<? extends GameObject> type, int numberSlots, int maxItems){
+		slots = new Array<Slot>(numberSlots);
+		for (int i = 0; i < numberSlots; i++) {
+			slots.add(new Slot(maxItems, type/*, null, 0*/));
+		}
+	}
 
 	public int checkInventory(Item item) {
 		int amount = 0;
@@ -125,13 +113,13 @@ public class Inventory {
 		Slot itemSlot = firstSlotWithItem(item);
 		if (itemSlot != null) {
 //			itemSlot.add(item, amount);
-			itemSlot.add(GameObject.generateStartObjects(item, amount));
+			itemSlot.add(TowerObject.generateStartObjects(item, amount));
 			return true;
 		} else {
 			// now check for an available empty slot
 			Slot emptySlot = firstSlotWithItem(null);
 			if (emptySlot != null) {
-				emptySlot.add(GameObject.generateStartObjects(item, amount));
+				emptySlot.add(TowerObject.generateStartObjects(item, amount));
 				return true;
 			}
 		}

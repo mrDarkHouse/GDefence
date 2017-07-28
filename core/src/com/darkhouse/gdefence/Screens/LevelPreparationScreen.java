@@ -9,14 +9,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
+import com.darkhouse.gdefence.InventorySystem.inventory.OverallInventory;
+import com.darkhouse.gdefence.Model.PreparationSpellInventoryActor;
 import com.darkhouse.gdefence.Model.PreparationTowerInventoryActor;
 import com.darkhouse.gdefence.User;
 
 public class LevelPreparationScreen extends AbstractCampainScreen{
     private int level;
-    private InventoryActor inventoryActor;
+//    private InventoryActor inventoryActor;
+    private OverallInventory inventoryActor;
     private PreparationTowerInventoryActor preparationTowerInventoryActor;
-    private Inventory saveInventory;
+    private PreparationSpellInventoryActor preparationSpellInventoryActor;
+    private Inventory saveInventory[];
 
     public LevelPreparationScreen(int level) {
         super("" + level);
@@ -29,7 +33,10 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         super.show();
         //saveInventory = User.getTowerInventory().copy();
         //saveInventory.copy(User.getTowerInventory());
-        saveInventory = new Inventory(User.getTowerInventory());
+        saveInventory = new Inventory[3];
+        saveInventory[0] = new Inventory(User.getTowerInventory());
+        saveInventory[1] = new Inventory(User.getSpellInventory());
+        saveInventory[2] = new Inventory(User.getDetailInventory());
 
 
         load(level);
@@ -37,23 +44,42 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
     }
 
     private void load(final int level){
-        inventoryActor = new InventoryActor(saveInventory, new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+//        inventoryActor = new InventoryActor(saveInventory, new DragAndDrop(),
+//                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        inventoryActor = new OverallInventory(saveInventory);
         stage.addActor(inventoryActor);
         inventoryActor.init();
-        preparationTowerInventoryActor = new PreparationTowerInventoryActor(new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
-        inventoryActor.addSlots(preparationTowerInventoryActor);
-        preparationTowerInventoryActor.addSlots(inventoryActor);
+        preparationTowerInventoryActor = new PreparationTowerInventoryActor(new DragAndDrop(),
+                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        preparationTowerInventoryActor.setPosition(700, 250);
+        inventoryActor.addTarget(preparationTowerInventoryActor);
+        inventoryActor.addSlotAsTarget(preparationTowerInventoryActor.getDragAndDrop());
+//        inventoryActor.addSlots(preparationTowerInventoryActor);
+//        preparationTowerInventoryActor.addSlots(inventoryActor);
         stage.addActor(preparationTowerInventoryActor);
         preparationTowerInventoryActor.init();
 
+
         inventoryActor.setPosition(100, 50);
+
+        preparationSpellInventoryActor = new PreparationSpellInventoryActor(new DragAndDrop(),
+                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        preparationSpellInventoryActor.setPosition(700, 100);
+        inventoryActor.addTarget(preparationSpellInventoryActor);
+        inventoryActor.addSlotAsTarget(preparationSpellInventoryActor.getDragAndDrop());
+
+//        preparationSpellInventoryActor.addSlots(inventoryActor);
+        stage.addActor(preparationSpellInventoryActor);
+        preparationSpellInventoryActor.init();
+
 
         TextButton startButton = new TextButton("Start", GDefence.getInstance().assetLoader.getSkin());
         startButton.setSize(150, 70);
         startButton.setPosition(Gdx.graphics.getWidth() - 200, 30);
         startButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                GDefence.getInstance().setScreen(new LevelLoadingScreen(level, preparationTowerInventoryActor.getInventory()));
+                GDefence.getInstance().setScreen(new LevelLoadingScreen(level, preparationTowerInventoryActor.getInventory(),
+                        preparationSpellInventoryActor.getInventory()));
                 return true;
             }
         });

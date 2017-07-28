@@ -1,50 +1,135 @@
 package com.darkhouse.gdefence.Objects;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
+import com.darkhouse.gdefence.Level.Ability.Spell.GlobalSlow;
+import com.darkhouse.gdefence.Level.Ability.Spell.Spell;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
+import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.User;
 
-public class SpellObject extends GameObject implements GemGradable{
-
+public abstract class SpellObject extends Ability.AbilityPrototype implements ExpEarner, GameObject, GemGradable{
+    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
+    //                                 30  100 230  420  660  800  1230 1760
 
     public static SpellObject loadSaveCode(String s) {
         return null;
     }
 
 
-    private ItemEnum.Spell prototype;
+//    private int[] currentGems;
+//    private int[] maxGems;
 
+//    protected Ability.AbilityPrototype.Boost[] gemBoost = new Ability.AbilityPrototype.Boost[3];
 
-    public SpellObject(ItemEnum.Spell prototype) {
+    private int level;
+    private float totalExp;
+    private float currentExp;
+
+    public int getLevel() {
+        return level;
+//        for (int i = 0; totalExp >= exp2nextLvl[i]; i++){
+//
+//        }
+    }
+    public float getTotalExp() {
+        return totalExp;
+    }
+    public float getCurrentExp() {
+        return currentExp;
+
     }
 
-
-    public interface ITarget{
-        enum targetType{
-            TOWER, MOB, BOTH
+    public void addExp(int value){
+        totalExp += value;
+        updateExp();
+    }
+    public void updateExp(){
+        currentExp = getTotalExp();
+        for(int i = level - 1; currentExp >= exp2nextLvl[i]; i++){//if max lvl throws exeption
+            currentExp -= exp2nextLvl[i];
+            level++;
         }
     }
-    public interface INonTarget{
 
+    private int energyCost;
+    private int cooldown;
+
+    private Array<Class<? extends Effectable>> affectedTypes;
+
+    public Array<Class<? extends Effectable>> getAffectedTypes() {
+        return affectedTypes;
     }
 
+    public int getEnergyCost() {
+        return energyCost;
+    }
+
+    public int getCooldown() {
+        return cooldown;
+    }
+
+    public SpellObject(String name, String texturePath, int energyCost, int cooldown, int[] maxGems,
+                       Class<? extends Effectable>... affectedTypes) {
+        super(name, texturePath, maxGems);
+        this.affectedTypes = new Array<Class<? extends Effectable>>(affectedTypes);
+        this.energyCost = energyCost;
+        this.cooldown = cooldown;
+        level = 1;
+        totalExp = 0;
+        updateExp();
+    }
+
+    @Override
+    public boolean canGrade(User.GEM_TYPE t) {
+        return super.canGrade(t) && level > getGemsNumber();
+    }
 
     @Override
     public String getName() {
-        return null;
+        return name + " " + getGemStat();
     }
 
     @Override
-    public Item getPrototype() {
+    public Ability.AbilityPrototype copy() {
         return null;
     }
 
     @Override
     public String getTooltip() {
+        String s = getChildTooltip() + System.getProperty("line.separator");
+        if(this instanceof Spell.IAoe){
+            s += "Radius: " + ((Spell.IAoe) this).getAoe() + System.getProperty("line.separator");
+        }
+        s += "Energy cost: " + energyCost + System.getProperty("line.separator") +
+                "Cooldown: " + cooldown + "s";
+        return s;
+    }
+
+    abstract protected String getChildTooltip();
+
+    @Override
+    public String getGemGradeTooltip(User.GEM_TYPE gemType) {
+        String s = "";
+        if(level > getGemsNumber()) s += "Up spell level to upgrade" + System.getProperty("line.separator");
+        return s + super.getGemGradeTooltip(gemType);
+    }
+
+    @Deprecated
+    public Ability getAbility() {
         return null;
     }
+
+    public abstract Spell createSpell();
+
+
+    //    @Override
+//    public Item getPrototype() {
+//        return null;
+//    }
 
     @Override
     public String getSaveCode() {
@@ -52,8 +137,9 @@ public class SpellObject extends GameObject implements GemGradable{
     }
 
 
-    @Override
-    public String getGemGradeTooltip(User.GEM_TYPE gemType) {
-        return null;
-    }
+
+//    @Override
+//    public String getGemGradeTooltip(User.GEM_TYPE gemType) {
+//        return null;
+//    }
 }

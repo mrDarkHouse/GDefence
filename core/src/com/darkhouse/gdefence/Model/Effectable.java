@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class Effectable extends GDSprite{
 
-    protected class EffectBar extends HorizontalGroup {
+    protected class EffectBar extends Table {
         public Array<EffectIcon> getChildrenArray() {
 //            return super.getChildren();
             Array<EffectIcon> icons = new Array<EffectIcon>();
@@ -42,7 +42,7 @@ public class Effectable extends GDSprite{
     }
     public void initEffectable(){//after setSize
         effectBar.setSize(getWidth(), getHeight()/2);
-        effectBar.space(5);//.spaceLeft(5).spaceRight(5);
+        effectBar.defaults()/*.space(5);//*/.spaceLeft(5).spaceRight(5);
         effectBar.align(Align.center);
     }
 
@@ -54,8 +54,8 @@ public class Effectable extends GDSprite{
             if(!d.isHidden()) {
                 EffectIcon ei = new EffectIcon(d);
                 ei.setSize(effectBar.getHeight(), effectBar.getHeight());
-                effectBar.addActor(ei);
-                effectBar.pack();
+                effectBar.add(ei);
+//                effectBar.pack();
             }
         }else {
             getEffect(d.getClass()).updateDuration();
@@ -66,10 +66,10 @@ public class Effectable extends GDSprite{
         Effect searched = getEffect(d);
         if(searched != null) {
             effects.remove(searched);
-            if(searched.getIconPath() != null) {
+//            if(searched.getIconPath() != null) {
                 effectBar.removeIcon(GDefence.getInstance().assetLoader.getEffectIcon(searched.getIconPath()));
-                effectBar.pack();
-            }
+//                effectBar.pack();
+//            }
         }
     }
 

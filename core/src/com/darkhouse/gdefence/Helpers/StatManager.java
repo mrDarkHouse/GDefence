@@ -39,6 +39,6 @@ public class StatManager {
     }
 
     public StatManager() {
-
+        drop = new Array<DropSlot>();//set empty slots for level loose
     }
 }

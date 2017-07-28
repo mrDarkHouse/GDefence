@@ -8,6 +8,8 @@ import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.Level.Ability.Spell.GlobalSlow;
+import com.darkhouse.gdefence.Level.Ability.Spell.IceBlast;
 import com.darkhouse.gdefence.Objects.*;
 
 import java.io.*;
@@ -508,6 +510,9 @@ public class User {
         this.totalExp = 0;
         addGold(3000);
         currentMap = 1;
+
+//        openResearch(Research.Powder);
+//        openResearch(Research.Steam);
 //        towerInventory = new Inventory(TowerObject.class, 35);
 //        spellInventory = new Inventory(SpellObject.class, 35);
 //        detailInventory = new Inventory(DetailObject.class, 35);
@@ -527,6 +532,10 @@ public class User {
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.RED, 2);
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.YELLOW, 2);
         ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 1);
+
+        spellInventory.store(new GlobalSlow.P(20, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
+        spellInventory.store(new IceBlast.P(5, 3, 30, 0.3f, 3, 100, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
+        spellInventory.store(new IceBlast.P(30, 10, 10, 0.3f, 3, 100, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
 
 //        detailInventory.storeNew(ItemEnum.Gem., 1);
 

@@ -56,6 +56,7 @@ public class Arsenal extends AbstractCampainScreen{
         inventoryActor = new OverallInventory();
         stage.addActor(inventoryActor);
         inventoryActor.init();
+        inventoryActor.setPosition(100, 250);
         towerMap = new TowerMap(GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         stage.addActor(towerMap);
         final TextButton towerMapButton = new TextButton("Tower Map", GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));

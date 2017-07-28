@@ -88,14 +88,16 @@ public class LevelEndScreen implements Screen{
 
 
 //        Array<DropSlot> drop = statManager.getDrop();
+        DropInventoryActor invActor = null;
+        if(isWin) {
+             invActor = new DropInventoryActor(statManager.getDrop(),
+                    GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+
+            table.add(invActor).padBottom(20);
 
 
-        DropInventoryActor invActor = new DropInventoryActor(statManager.getDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
-
-        table.add(invActor).padBottom(20);
-
-
-        table.row();
+            table.row();
+        }
 
         table.add(continueButton).size(150, 40).align(Align.bottom);
 
@@ -104,7 +106,7 @@ public class LevelEndScreen implements Screen{
         //stage.addActor(rPanel);
 
         stage.addActor(table);
-        invActor.init();
+        if(isWin) invActor.init();
 
 
 

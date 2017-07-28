@@ -8,14 +8,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 
 import java.util.HashMap;
 
-public abstract class GameObject {
-
-    public static boolean isMatches(Class<? extends GameObject> a, Class<? extends GameObject> b){
-        if(a == b) return true;
-        if(a.getSuperclass() == b) return true;//a Recipe b Detail
-        if(a == b.getSuperclass()) return true;
-        return false;
-    }
+public interface GameObject {
 
 
 
@@ -24,9 +17,9 @@ public abstract class GameObject {
     public abstract String getName(); //{
 //        return texturePath;
 //    }
-    public Texture getTexture() {
-        return texture;
-    }
+//    public Texture getTexture() {
+//        return texture;
+//    }
     //public int getID(){
     //    return ID;
     //}
@@ -46,39 +39,18 @@ public abstract class GameObject {
 //    }
 
 //    protected String texturePath;
-    protected Texture texture;
+//    protected Texture texture;
     //protected int ID;
 
-    public GameObject(/*Item prototype*/) {
-        //this.prototype = prototype;
-    }
+//    public GameObject(/*Item prototype*/) {
+//        //this.prototype = prototype;
+//    }
 
 //    public void generateStartObjects(Item item, int amount){
 //        Array<GameObject> tmp = new Array<GameObject>();
 //        tmp.add();
 //    }
 
-    public static Array<? extends GameObject> generateStartObjects(Item item, int amount){
-        if(item instanceof ItemEnum.Tower){
-            Array<TowerObject> tmp = new Array<TowerObject>();
-            for (int i = 0; i < amount; i++) {
-                tmp.add(new TowerObject(((ItemEnum.Tower) item)));
-            }
-            return tmp;
-        }else if(item instanceof ItemEnum.Spell){
-            Array<SpellObject> tmp = new Array<SpellObject>();
-            for (int i = 0; i < amount; i++) {
-                tmp.add(new SpellObject(((ItemEnum.Spell) item)));
-            }
-            return tmp;
-        }else if(item instanceof ItemEnum.Detail){
-            Array<DetailObject> tmp = new Array<DetailObject>();
-            for (int i = 0; i < amount; i++) {
-                tmp.add(new DetailObject(((ItemEnum.Detail) item)));
-            }
-            return tmp;
-        }
-        return null;
-    }
+
 
 }
