@@ -22,62 +22,62 @@ public class Value {
     //public static int mobSlime = 0;
 
 
-    public static class Towers{
-        //public static TowerType[] towersID = {TowerType.Basic, TowerType.Rocky, TowerType.Arrow, TowerType.Range};
-
-
-
-//        public static enum Class{
-//            BASIC(Basic), ROCKY;
+//    public static class Towers{
+//        //public static TowerType[] towersID = {TowerType.Basic, TowerType.Rocky, TowerType.Arrow, TowerType.Range};
+//
+//
+//
+////        public static enum Class{
+////            BASIC(Basic), ROCKY;
+////        }
+//
+//
+//
+//        public static class Basic{
+//            public static String name = "Basic";
+//            public static int Dmg = 1;
+//            public static int Range = 60;
+//            public static int As = 300;
+//            public static int ID = 0;
+//            public static int Cost = 10;
+//            public static Image texture = new ImageIcon("src/ru/res/Tower/basicTower.png").getImage();
+//            public static Image projectile = new ImageIcon("src/ru/res/bullet.png").getImage();
 //        }
-
-
-
-        public static class Basic{
-            public static String name = "Basic";
-            public static int Dmg = 1;
-            public static int Range = 60;
-            public static int As = 300;
-            public static int ID = 0;
-            public static int Cost = 10;
-            public static Image texture = new ImageIcon("src/ru/res/Tower/basicTower.png").getImage();
-            public static Image projectile = new ImageIcon("src/ru/res/bullet.png").getImage();
-        }
-
-        public static class Rocky{
-            public static String name = "Rocky";
-            public static int Dmg = 3;
-            public static int Range = 75;
-            public static int As = 600;
-            public static int ID = 1;
-            public static int Cost = 25;
-            public static Image texture = new ImageIcon("src/ru/res/Tower/rockTower.png").getImage();
-            public static Image projectile = new ImageIcon("src/ru/res/bullet.png").getImage();
-        }
-
-        public static class Arrow{
-            public static String name = "Arrow";
-            public static int Dmg = 1;
-            public static int Range = 75;
-            public static int As = 200;
-            public static int ID = 2;
-            public static int Cost = 30;
-            public static Image texture = new ImageIcon("src/ru/res/Tower/arrowTower.png").getImage();
-            public static Image projectile = new ImageIcon("src/ru/res/bullet.png").getImage();
-        }
-
-        public static class Range{
-            public static String name = "Range";
-            public static int Dmg = 1;
-            public static int Range = 140;
-            public static int As = 200;
-            public static int ID = 3;
-            public static int Cost = 45;
-            public static Image texture = new ImageIcon("src/ru/res/Tower/rangeTower.png").getImage();
-            public static Image projectile = new ImageIcon("src/ru/res/bullet.png").getImage();
-        }
-
-    }
+//
+//        public static class Rocky{
+//            public static String name = "Rocky";
+//            public static int Dmg = 3;
+//            public static int Range = 75;
+//            public static int As = 600;
+//            public static int ID = 1;
+//            public static int Cost = 25;
+//            public static Image texture = new ImageIcon("src/ru/res/Tower/rockTower.png").getImage();
+//            public static Image projectile = new ImageIcon("src/ru/res/bullet.png").getImage();
+//        }
+//
+//        public static class Arrow{
+//            public static String name = "Arrow";
+//            public static int Dmg = 1;
+//            public static int Range = 75;
+//            public static int As = 200;
+//            public static int ID = 2;
+//            public static int Cost = 30;
+//            public static Image texture = new ImageIcon("src/ru/res/Tower/arrowTower.png").getImage();
+//            public static Image projectile = new ImageIcon("src/ru/res/bullet.png").getImage();
+//        }
+//
+//        public static class Range{
+//            public static String name = "Range";
+//            public static int Dmg = 1;
+//            public static int Range = 140;
+//            public static int As = 200;
+//            public static int ID = 3;
+//            public static int Cost = 45;
+//            public static Image texture = new ImageIcon("src/ru/res/Tower/rangeTower.png").getImage();
+//            public static Image projectile = new ImageIcon("src/ru/res/bullet.png").getImage();
+//        }
+//
+//    }
 
     public static class Enemies{
         public static Class[] enemiesID = {Slime.class, Dog.class, KingSlime.class};

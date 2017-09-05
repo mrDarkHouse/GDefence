@@ -239,7 +239,10 @@ public abstract class MapTile extends GDSprite{
     public boolean build(TowerObject tower){
         if(isBuildable() && buildedTower == null && LevelMap.getLevel().removeEnergy(tower.getCost())) {//tooltip "no enought enegry", "cannot build there"
             Tower t = new Tower(tower, getX(), getY(), getWidth(), getHeight());
+            LevelMap.levelMap.getStage().addActor(t);//TODO
+
             t.init();
+
             t.procBuildAbilities(this);
             this.buildedTower = t;
 //            LevelMap.getLevel().getStatManager().energySpendAdd(tower.getCost());
@@ -247,52 +250,13 @@ public abstract class MapTile extends GDSprite{
         }else return false;
     }
 
-    public void draw(SpriteBatch batch, float delta){
-        draw(batch);
-//        Image f;
+    public void draw(SpriteBatch batch/*, float delta*/){
+//        draw(batch, 1f);
+        super.draw(batch, 1f);
 
-        if(buildedTower != null) {
-            buildedTower.physic(delta);
-            buildedTower.draw(batch, delta);
-        }
-//        if(towerMask != null){//
-//
-//            return;
+//        if(getBuildedTower() != null) {
+//            getBuildedTower().drawRange(batch, delta);
 //        }
-
-//        switch (logic){
-//            case spawnerR:
-//                break;
-//            case spawnerL:
-//
-//                break;
-//            case spawnerU:
-//
-//                break;
-//            case spawnerD:
-//
-//                break;
-//            case turnR:
-//
-//                break;
-//            case turnL:
-//
-//                break;
-//            case turnU:
-//
-//                break;
-//            case turnD:
-//
-//                break;
-//            case castle:
-//                f = new Image(GDefence.getInstance().assetLoader.get("castle.png", Texture.class));
-//                f.setPosition(getX(), getY());
-//                f.setSize(getWidth(), getHeight());
-//                f.draw(batch, 1);
-//                break;
-//        }
-
-
 
 
     }

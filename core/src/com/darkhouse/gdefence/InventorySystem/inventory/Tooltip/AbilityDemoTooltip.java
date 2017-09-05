@@ -28,7 +28,7 @@ public class AbilityDemoTooltip extends AbstractTooltip{
     private void init(){
 //        skin.getFont().
         label = new Label(ab.getTooltip(), /*FontLoader.generateStyle(15, Color.LIGHT_GRAY*/
-                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+                GDefence.getInstance().assetLoader.getSkin(), "description");
         label.getStyle().font.getData().markupEnabled = true;
         label.setAlignment(Align.center);
         add(label);

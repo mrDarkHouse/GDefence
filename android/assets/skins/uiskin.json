@@ -1,5 +1,8 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont: { default-font: { file: default.fnt } },
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+  iskoola: { file: Fonts/IskoolaWhite60.fnt }
+},
+
 com.badlogic.gdx.graphics.Color: {
 	green: { a: 1, b: 0, g: 1, r: 0 },
 	white: { a: 1, b: 1, g: 1, r: 1 },
@@ -7,7 +10,8 @@ com.badlogic.gdx.graphics.Color: {
 	black: { a: 1, b: 0, g: 0, r: 0 }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
-	dialogDim: { name: white, color: { r: 0, g: 0, b: 0, a: 0.45 } }
+	dialogDim: { name: white, color: { r: 255, g: 255, b: 255, a: 0.45 } },
+    pauseDim: { name: white, color: { r: 0, g: 0, b: 0, a: 0.85 } }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: default-round-down, up: default-round },
@@ -15,8 +19,19 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: default-round-down, up: default-round, font: default-font, fontColor: white },
+    rect: { down: rect-down, up: rect-up, font: default-font, fontColor: white },
+    description : { down: default-round-down, up: default-round, font: secondaryFont, fontColor: white },
+
+    campainTop: { down: default-rect-pad, up: default-rect-pad, font: default-font, fontColor: white},
+    main-menu: { down: default-round-down, up: default-round, font: default-font48, fontColor: white },
 	toggle: { down: default-round-down, up: default-round, checked: default-round-down, font: default-font, fontColor: white, downFontColor: red }
 },
+com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+
+
+
+},
+
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: { vScroll: default-scroll, hScrollKnob: default-round-large, background: default-rect, hScroll: default-scroll, vScrollKnob: default-round-large }
 },
@@ -26,6 +41,12 @@ com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 		scrollStyle: default,
 		listStyle: { font: default-font, selection: default-select-selection }
 	}
+    description: {
+      font: secondaryFont, fontColor: white, background: default-select,
+      scrollStyle: default,
+      listStyle: { font: secondaryFont, selection: default-select-selection }
+    }
+
 },
 com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 	default-vertical: { handle: default-splitpane-vertical },
@@ -33,11 +54,16 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: { titleFont: default-font, background: default-window, titleFontColor: white },
-	dialog: { titleFont: default-font, background: default-window, titleFontColor: white, stageBackground: dialogDim }
+    description: { titleFont: secondaryFont, background: default-window, titleFontColor: white },
+	dialog: { titleFont: default-font, titleFontColor: white, stageBackground: dialogDim },
+    pause-menu: { titleFont: iskoola, titleFontColor: white, stageBackground: pauseDim }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: { background: default-slider, knob: default-slider-knob },
-	default-vertical: { background: default-slider, knob: default-round-large }
+	default-vertical: { background: default-slider, knob: default-round-large },
+    health-bar: { background: bar-bg, knobBefore: health-bar-knob},
+    energy-bar: { background: bar-bg, knobBefore: energy-bar-knob},
+    exp-bar: { background: bar-bg, knobBefore: exp-bar-knob},
 },
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-horizontal: { background: default-slider, knob: default-slider-knob },
@@ -45,6 +71,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: default-font, fontColor: white }
+    description: { font: secondaryFont, fontColor: white }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor }

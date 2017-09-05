@@ -22,6 +22,7 @@ public class StartingLoadScreen extends AbstractLoadingScreen{
     protected void onLoad() {
 //        GDefence.getInstance().initScreens();
         GDefence.getInstance().initAll();
+        GDefence.getInstance().assetLoader.setFilters();
         GDefence.getInstance().switchScreen(GDefence.getInstance().getMainMenu());
     }
 }

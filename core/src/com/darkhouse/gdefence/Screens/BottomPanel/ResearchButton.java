@@ -40,7 +40,7 @@ public class ResearchButton extends TowerMapObject{
             getTitleLabel().setText(research.name());//
             getTitleLabel().setAlignment(Align.center);
 
-            add(new Label(research.getTooltip(), skin)).row();
+            add(new Label(research.getTooltip(), skin, "description")).row();
             pack();
         }
 
@@ -60,7 +60,7 @@ public class ResearchButton extends TowerMapObject{
         super(GDefence.getInstance().assetLoader.generateResearchButtonSkin(research.getTexturePath()));
         this.research = research;
 
-        AbstractTooltip tooltip = new ResearchTooltip(research, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        AbstractTooltip tooltip = new ResearchTooltip(research, GDefence.getInstance().assetLoader.getSkin());
 
 //        tooltip = new ;
 //        tooltip.setLocked(true);

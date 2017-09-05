@@ -27,7 +27,7 @@ public class LevelShopPanel extends InventoryActor {
 
 
     public LevelShopPanel(Inventory inventory) {
-        super(new LevelShop(inventory), new DragAndDrop(), GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        super(new LevelShop(inventory), new DragAndDrop(), GDefence.getInstance().assetLoader.getSkin());
         getTitleLabel().setText("");
     }
 

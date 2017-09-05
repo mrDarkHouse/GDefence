@@ -72,7 +72,7 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
 //        getTitleLabel().setAlignment(Align.center);
         clear();
         //Label label = //new Label("Super awesome description of " + slot.getPrototype(), skin);
-        Label label = new Label(slot.getTooltip(), skin);
+        Label label = new Label(slot.getTooltip(), skin, "description");
         add(label).row();//row can bad
 
         if (slot instanceof Slot) {
@@ -85,7 +85,7 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
                 ExpEarner t = ((ExpEarner) s.getLast());
 
             /*FontLoader.generateStyle(16, Color.WHITE)*/
-                Label level = new Label(t.getLevel() + "", skin);//allow FontLoader load skin fonts
+                Label level = new Label(t.getLevel() + "", skin, "description");//allow FontLoader load skin fonts
                 add(level).align(Align.center).row();
                 final float width = getWidth();
 

@@ -23,7 +23,7 @@ public class Arsenal extends AbstractCampainScreen{
 
 
     public Arsenal() {
-        super("Arsenal");
+        super("arsenal");
         //init();
     }
 
@@ -57,9 +57,9 @@ public class Arsenal extends AbstractCampainScreen{
         stage.addActor(inventoryActor);
         inventoryActor.init();
         inventoryActor.setPosition(100, 250);
-        towerMap = new TowerMap(GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        towerMap = new TowerMap(GDefence.getInstance().assetLoader.getSkin());
         stage.addActor(towerMap);
-        final TextButton towerMapButton = new TextButton("Tower Map", GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        final TextButton towerMapButton = new TextButton("Tower Map", GDefence.getInstance().assetLoader.getSkin(), "description");
         towerMapButton.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight() - 100);
         towerMapButton.setSize(140, 40);
         towerMapButton.addListener(new InputListener() {
@@ -70,7 +70,7 @@ public class Arsenal extends AbstractCampainScreen{
             }
         });
         stage.addActor(towerMapButton);
-        TowerCraftPanel towerCraftPanel = new TowerCraftPanel(new DragAndDrop(), inventoryActor, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        TowerCraftPanel towerCraftPanel = new TowerCraftPanel(new DragAndDrop(), inventoryActor, GDefence.getInstance().assetLoader.getSkin());
         stage.addActor(towerCraftPanel);
         towerCraftPanel.init();
 
@@ -80,10 +80,10 @@ public class Arsenal extends AbstractCampainScreen{
 
     }
 
-    @Override
-    public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
-    }
+//    @Override
+//    public void resize(int width, int height) {
+//        stage.getViewport().update(width, height, true);
+//    }
 
     @Override
     public void pause() {}

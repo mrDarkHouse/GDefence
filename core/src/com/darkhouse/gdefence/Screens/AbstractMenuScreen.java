@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,18 +16,16 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 public abstract class AbstractMenuScreen extends AbstractScreen {
 
     protected SpriteBatch batch;
-    private boolean enableBackButton;
-
-
+//    private boolean enableBackButton;
 
     public AbstractMenuScreen(boolean enableBackButton) {
         super();
-        this.enableBackButton = enableBackButton;
+//        this.enableBackButton = enableBackButton;
         batch = new SpriteBatch();
         // stage = new Stage();
 
-        Viewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage = new Stage(viewport,batch);
+//        Viewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        stage = new Stage(viewport,batch);
 
         //Gdx.input.setInputProcessor(stage);
 
@@ -60,6 +59,12 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
+//        batch.setProjectionMatrix(camera.combined);
+//        batch.setTransformMatrix(camera.view);
+//        batch.setProjectionMatrix(camera.projection);
+
+
         batch.begin();
         batch.draw(GDefence.getInstance().assetLoader.get("MainMenuBg.png", Texture.class), 0, 0);
         batch.end();
@@ -68,8 +73,10 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
         stage.draw();
     }
 
-
-
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+    }
 
     @Override
     public void hide() {

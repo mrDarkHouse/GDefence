@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Model.Panels;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
@@ -26,7 +27,8 @@ public class ResultPanel extends AbstractPanel{
         String hpLoose = "Hp loose: " + manager.getHpLoose();
         String moneySpend = "Energy spend: " + manager.getEnergySpend();
 
-        setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("infoPanelFone.png", Texture.class))));
+
+        setBackground(GDefence.getInstance().assetLoader.getSkin().getDrawable("info-panel"));
 
         Label mobsKilledLabel = new Label(mobsKilled, GDefence.getInstance().assetLoader.getTimerSkin());
         Label hpLooseLabel = new Label(hpLoose, GDefence.getInstance().assetLoader.getTimerSkin());

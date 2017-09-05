@@ -31,7 +31,7 @@ public class Smith extends AbstractCampainScreen{
     //private Array<SlotListener> slotListeners = new Array<SlotListener>();
 
     public Smith() {
-        super("Smith");
+        super("smith");
 //        init();
     }
 
@@ -102,7 +102,7 @@ public class Smith extends AbstractCampainScreen{
 //                setRows(3);
 //            }
 //        };
-        GemGradePanel pn = new GemGradePanel(new DragAndDrop(), inventory, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class))/*{
+        GemGradePanel pn = new GemGradePanel(new DragAndDrop(), inventory, GDefence.getInstance().assetLoader.getSkin())/*{
             @Override
             protected void setDefaults() {
                 super.setDefaults();
@@ -126,8 +126,8 @@ public class Smith extends AbstractCampainScreen{
         pn.addTooltips();
         stage.addActor(upHealth);
         stage.addActor(upEnergy);
-        stage.addActor(new GoldPanel(1000, 500, 160, 100));
-        stage.addActor(new GemPanel(1000, 300, 270, 160));
+        stage.addActor(new GoldPanel(800, 500, 160, 100));
+        stage.addActor(new GemPanel(1000, 500, 270, 160));
     }
 
     private void notifyListeners(){
@@ -145,10 +145,10 @@ public class Smith extends AbstractCampainScreen{
     }
 
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
+//    @Override
+//    public void resize(int width, int height) {
+//
+//    }
 
     @Override
     public void pause() {

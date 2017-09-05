@@ -131,10 +131,16 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
     }
 
     public void addGems(User.GEM_TYPE type, int value){
-        if(canGrade()) {
-            gemsNumber[type.ordinal()] += value;
-            updateGemStat(type.ordinal(), value);
+        for (int i = 0; i < value; i++){
+            if(canGrade()) {
+                gemsNumber[type.ordinal()]++;
+                updateGemStat(type.ordinal(), 1);
+            }
         }
+//        if(canGrade()) {
+//            gemsNumber[type.ordinal()] += value;
+//            updateGemStat(type.ordinal(), value);
+//        }
     }
 
     public int getPrimaryGemsNumber(){

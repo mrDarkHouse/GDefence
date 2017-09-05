@@ -11,9 +11,13 @@ public class SellButton extends ImageButton{
         super(GDefence.getInstance().assetLoader.getStoreSellButtonStyle());
     }
 
+    @Override
+    public float getPrefWidth() {
+        return 140;
+    }
 
-
-
-
-
+    @Override
+    public float getPrefHeight() {
+        return 80;
+    }
 }

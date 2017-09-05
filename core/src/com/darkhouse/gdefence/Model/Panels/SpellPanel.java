@@ -1,4 +1,4 @@
-package com.darkhouse.gdefence.Model.Level;
+package com.darkhouse.gdefence.Model.Panels;
 
 
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -169,7 +170,7 @@ public class SpellPanel extends Table{
             public SpellTooltip(Skin skin) {
                 super(SpellButton.this.spell.getPrototype().getName(), skin);
 //                getTitleLabel().setAlignment(Align.center);
-                tooltipLabel = new Label(SpellButton.this.spell.getPrototype().getTooltip(), skin);
+                tooltipLabel = new Label(SpellButton.this.spell.getPrototype().getTooltip(), skin, "description");
 //                cooldown = new TextButton(SpellButton.this.spell.getPrototype().getCooldown() + "", skin);
 
                 add(tooltipLabel);
@@ -212,11 +213,11 @@ public class SpellPanel extends Table{
 //                  GDefence.getInstance().assetLoader.getSpellIcon(spell.getPrototype().getTexturePath())));
 //
             energyCost = new TextButton(spell.getEnergyCost() + "",
-                    GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+                    GDefence.getInstance().assetLoader.getSkin(), "description");
             chooseTransparent = new Image(GDefence.getInstance().assetLoader.get("spellCdTransparent.png", Texture.class));
 
 //
-            setSize(60, 60);
+//            setSize(100, 100);
 //            spellIcon.setSize(70, 70);
 //            energyCost.setSize(25, 25);
 //            energyCost.align(Align.center);
@@ -231,7 +232,7 @@ public class SpellPanel extends Table{
 
 //            cdText = new Label("", FontLoader.generateStyle(19, Color.BLACK));
 //            cdText.setAlignment(Align.center);
-            addListener(new TooltipListener(new SpellTooltip(GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
+            addListener(new TooltipListener(new SpellTooltip(GDefence.getInstance().assetLoader.getSkin()), true));
             addListener(new SpellThrower(spell));//
 
 
@@ -241,7 +242,7 @@ public class SpellPanel extends Table{
                     GDefence.getInstance().assetLoader.getSpellIcon("nothing")));
 //            spellIcon = new ImageButton(GDefence.getInstance().assetLoader.generateImageButtonSkin(
 //                    GDefence.getInstance().assetLoader.getSpellIcon("crit")));
-            setSize(60, 60);
+//            setSize(100, 100);
 //            spellIcon.setSize(70, 70);
 //            addActor(spellIcon);
         }
@@ -304,12 +305,15 @@ public class SpellPanel extends Table{
     }
 
     public SpellPanel(Array<SpellObject> spells) {
+        super();
         buttons = new SpellButton[4];
-        TextureRegion bg = new TextureRegion(
-                GDefence.getInstance().assetLoader.get("spellPanelFon.png", Texture.class));
-        bg.setRegionWidth(60*4/*+8*5*/);
-        bg.setRegionHeight(70);
-        setBackground(new TextureRegionDrawable(bg));
+        Drawable bg = GDefence.getInstance().assetLoader.getSkin().getDrawable("info-panel");
+//        TextureRegion bg = new TextureRegion(
+//                GDefence.getInstance().assetLoader.get("spellPanelFon.png", Texture.class));
+//        bg.setRegionWidth(60*4/*+8*5*/);
+//        bg.setRegionHeight(70);
+        pad(10);
+        setBackground(bg);
         defaults().space(8);
 
         for (int i = 0; i < 4; i++){
@@ -318,7 +322,8 @@ public class SpellPanel extends Table{
             }
             else buttons[i] = new SpellButton();
 
-            add(buttons[i]);
+            add(buttons[i]).minSize(70);
+            row();
         }
 //        debug();
 

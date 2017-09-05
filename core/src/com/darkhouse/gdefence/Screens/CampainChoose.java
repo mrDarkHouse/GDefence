@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.User;
@@ -21,10 +22,12 @@ public class CampainChoose extends AbstractMenuScreen{
     //private GDefence mainclass;
     //private TextButton newCamp;
     //private TextButton loadCamp;
+    private Dialog d;
 
     public CampainChoose() {
         super(true);
         loadButtons();
+        newCampDialog();
         //this.mainclass = mainclass;
 
     }
@@ -39,16 +42,18 @@ public class CampainChoose extends AbstractMenuScreen{
     private void loadButtons(){
         Table table = new Table();
         //ImageButton backButton = new ImageButton();
-        TextButton newCamp = new TextButton("New Campain", GDefence.getInstance().getSkin());
+        I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+
+        TextButton newCamp = new TextButton(b.get("new_game"), GDefence.getInstance().assetLoader.getSkin(), "rect");
         newCamp.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                newCampDialog();
+                showDialog();
                 //mainclass.setScreen(new CampainMap(mainclass));
                 return true;
             }
         });
         //newCamp.setSize();
-        TextButton loadCamp = new TextButton("Load Campain", GDefence.getInstance().getSkin());
+        TextButton loadCamp = new TextButton(b.get("load_game"), GDefence.getInstance().assetLoader.getSkin(), "rect");
         File f = new File("Save/UserSave.properties");
         if(!f.exists()) {
             loadCamp.setTouchable(Touchable.disabled);
@@ -73,8 +78,8 @@ public class CampainChoose extends AbstractMenuScreen{
 
 
         table.padTop(200);
-        table.add(newCamp).width(200).height(50).spaceBottom(30).row();
-        table.add(loadCamp).width(200).height(50).row();
+        table.add(newCamp).width(260).height(50).spaceBottom(30).row();
+        table.add(loadCamp).width(260).height(50).row();
         //table.bottom();
 
 
@@ -82,12 +87,13 @@ public class CampainChoose extends AbstractMenuScreen{
     }
 
     private void newCampDialog(){
-        Dialog d = new Dialog("", GDefence.getInstance().assetLoader.get("uiskin.json", Skin.class)){
+        d = new Dialog("", GDefence.getInstance().assetLoader.getSkin(), "dialog"){
 
             {
-                text("Are you sure to start new campain?").padTop(250);
-                button("Yes", true);
-                button("No", false);
+                I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+                text(b.get("campain_sure")).padTop(250);
+                button(b.get("accept"), true);
+                button(b.get("decline"), false);
                 //getButtonTable();//defaults().width(200);
                 Array<Cell> cells = getButtonTable().getCells();
                 Cell cell = cells.get(0);
@@ -98,7 +104,7 @@ public class CampainChoose extends AbstractMenuScreen{
 
                 cell = cells.get(1);
                 cell.width(50).padBottom(360);
-                cell.height(40);
+                cell.height(40).row();
                 //cell.padBottom(Gdx.graphics.getHeight()/2);
 
             }
@@ -121,9 +127,8 @@ public class CampainChoose extends AbstractMenuScreen{
                 }
             }
         };
-        d.setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("MainMenuTranparent.png", Texture.class))));
-        d.getBackground().setMinWidth(Gdx.graphics.getWidth());
-        d.getBackground().setMinHeight(Gdx.graphics.getHeight());
+    }
+    private void showDialog(){
         d.show(stage);
     }
 
@@ -136,10 +141,10 @@ public class CampainChoose extends AbstractMenuScreen{
 
 
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
+//    @Override
+//    public void resize(int width, int height) {
+//
+//    }
 
     @Override
     public void pause() {

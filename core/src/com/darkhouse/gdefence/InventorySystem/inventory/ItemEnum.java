@@ -100,21 +100,21 @@ public enum ItemEnum {;
 	public enum Tower implements Item {
 
 		//	  texturePath        textures              attackType         projSp cost glCost dmg range speed /n abilities
-		Basic(    "Basic",          "basic",         AttackType.projectile, 250, 10,  80,    10, 100, 23,
+		Basic(    "Basic",          "basic",         AttackType.projectile, 250, 10,  80,    10, 100, 23/*,
                 new SteelArrow.P(2, 300, new SteelArrow.G(1, 50, new int[]{3, 2, 0})),
-                new ShotDelay.P(1f, new ShotDelay.G(0.2f, new int[]{2, 0, 0}))),
+                new ShotDelay.P(1f, new ShotDelay.G(0.2f, new int[]{2, 0, 0}))*/),
 
-		Rock(     "Rock",           "rock",          AttackType.projectile, 400, 20,  140,   1, 120,  30,
+		Rock(     "Rock",           "rock",          AttackType.projectile, 400, 20,  140,   1, 120,  30/*,
                 new BuckShot.P(5, 20f, new BuckShot.G(1, 5f, new int[]{3, 2, 0})),
-                new SpreadAttack.P(3f, 2, new SpreadAttack.G(0.5f, new int[]{2, 0, 0}))),
+                new SpreadAttack.P(3f, 2, new SpreadAttack.G(0.5f, new int[]{2, 0, 0}))*/),
 
-		Arrow(    "Arrow",          "arrow",         AttackType.projectile, 250, 20,  140,   15, 120, 40,
+		Arrow(    "Arrow",          "arrow",         AttackType.projectile, 250, 20,  140,   15, 120, 40/*,
                 new Bash.P(0.5f, 1f, 20, new Bash.G(0.05f, 0.5f, 10, new int[]{3, 3, 3})),
-                new Crit.P(0.3f, 2f,     new Crit.G(0.05f, 0.5f,     new int[]{2, 2, 0}))),
+                new Crit.P(0.3f, 2f,     new Crit.G(0.05f, 0.5f,     new int[]{2, 2, 0}))*/),
 
-        Range(    "Range",          "range",         AttackType.projectile, 350, 20,  180,   15, 160, 30,
+        Range(    "Range",          "range",         AttackType.projectile, 350, 20,  180,   15, 160, 30/*,
                 new FireArrow.P(10, 0.2f, 2, new FireArrow.G(5, 1f, new int[]{2, 2, 0})),
-                new HunterSpeed.P(5, 30, 5, new HunterSpeed.G(10, 1, 1, new int[]{3, 3, 2}))),
+                new HunterSpeed.P(5, 30, 5, new HunterSpeed.G(10, 1, 1, new int[]{3, 3, 2}))*/),
 
         Short(    "Short",          "short",         AttackType.projectile, 250, 25,  180,   30, 180, 23),
         Mountain( "Mountain",       "mountain",      AttackType.projectile, 250, 25,  180,   45, 130, 15,

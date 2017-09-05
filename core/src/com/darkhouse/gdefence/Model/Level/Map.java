@@ -561,20 +561,36 @@ public class Map {
         }
     }
 
-    public void draw(float delta, SpriteBatch batch){
+
+
+    public void draw(SpriteBatch batch){
         for (int y = 0; y < tiles[0].length; y++){
             for (int x = 0; x < tiles.length; x++){
-                tiles[x][y].draw(batch, delta);
+                tiles[x][y].draw(batch, 1f);
             }
         }
         for (int y = 0; y < tiles[0].length; y++){
             for (int x = 0; x < tiles.length; x++){
                 if(tiles[x][y].getBuildedTower() != null) {
-                    tiles[x][y].getBuildedTower().drawRange(batch, delta);
+                    tiles[x][y].getBuildedTower().drawRange(batch/*, delta*/);
                 }
             }
         }
-       // Iterator<Projectile> it = projectiles.iterator();
+        List<Projectile> tmp = new CopyOnWriteArrayList<Projectile>(projectiles);
+
+        for (Projectile p:tmp){
+            p.draw(batch, 1);
+        }
+
+
+        if(isBuild){
+            drawBuildGrid(batch);
+            drawTowerRange(batch);
+        }
+
+    }
+    public void physic(float delta){
+        // Iterator<Projectile> it = projectiles.iterator();
         List<Projectile> tmp = new CopyOnWriteArrayList<Projectile>(projectiles);
 
 //        while(it.hasNext()){
@@ -584,18 +600,10 @@ public class Map {
 //        }
         for (Projectile p:tmp){
             p.act(delta);
-            p.draw(batch, 1);
         }
-
-
-        if(isBuild){
-            drawBuildGrid(batch, delta);
-            drawTowerRange(batch);
-        }
-
     }
 
-    public void drawBuildGrid(SpriteBatch batch, float delta){
+    public void drawBuildGrid(SpriteBatch batch){
         Texture linePixel = GDefence.getInstance().assetLoader.get("buildGridLinePixel.png", Texture.class);
         for (int y = 0; y < tiles[0].length; y++){
             for (int x = 0; x < tiles.length; x++){

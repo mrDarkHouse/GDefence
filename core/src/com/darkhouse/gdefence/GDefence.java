@@ -26,6 +26,9 @@ public class GDefence extends Game {
 	//private MainMenu menu;
 	private static GDefence mainClass;
 
+    public static int WIDTH = 1280;
+    public static int HEIGHT = 720;
+
 	public static GDefence getInstance(){
 		return mainClass;
 	}
@@ -37,7 +40,7 @@ public class GDefence extends Game {
 	private Arsenal arsenal;
 	private Store store;
 	private Smith smith;
-	//private LevelPreparationScreen levelPreparationScreen;
+	private LevelPreparationScreen levelPreparationScreen;
 
 	public MainMenu getMainMenu() {
 		return mainMenu;
@@ -60,9 +63,9 @@ public class GDefence extends Game {
 	public Smith getSmith() {
 		return smith;
 	}
-//	public LevelPreparationScreen getLevelPreparationScreen() {
-//		return levelPreparationScreen;
-//	}
+	public LevelPreparationScreen getLevelPreparationScreen() {
+		return levelPreparationScreen;
+	}
 	//private Screen currentScreen;
 
 	public User user;
@@ -77,6 +80,8 @@ public class GDefence extends Game {
 		mainClass = this;
 		//assets = new AssetManager();
 		Texture.setAssetManager(assetLoader);
+
+
 //        assetLoader.loadOld();
 
 
@@ -135,7 +140,7 @@ public class GDefence extends Game {
 		store.init();
 		smith = new Smith();
 		smith.init();
-		//levelPreparationScreen = new LevelPreparationScreen();
+		levelPreparationScreen = new LevelPreparationScreen();
 	}
 
 	public void switchScreen(Screen screen){
@@ -171,10 +176,6 @@ public class GDefence extends Game {
     public void log(String s){
         System.out.println("LOG: " + s);
     }
-
-	public Skin getSkin(){
-		return new Skin(Gdx.files.internal("uiskin.json"));
-	}
 
 
 	private static String[] tips = {

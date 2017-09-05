@@ -567,6 +567,8 @@ public class Mob extends Effectable{
 //        System.out.println("spawned " + this.getName());
 //        way = Map.checkSpawnerWay(spawner);
         setRegion(GDefence.getInstance().assetLoader.getMobTexture(texturePath));
+//        setUserObject(GDefence.getInstance().assetLoader.getMobTexture(texturePath));
+
 
         currentTile = spawner;
         way = ((Spawn) spawner).manipulatePath(this.getMoveType());
@@ -586,7 +588,7 @@ public class Mob extends Effectable{
         //i.setPosition(x, y);
 
         if(isInGame()) {
-            draw(batch);
+            draw(batch, 1f);
             drawHpBar(batch);
             drawEffects(batch);
         }

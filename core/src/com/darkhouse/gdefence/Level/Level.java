@@ -307,8 +307,12 @@ public class Level {
 
 
 
-    public void render(float delta, SpriteBatch batch){
-        map.draw(delta, batch);
+    public void render(SpriteBatch batch){
+        map.draw(batch);
+        drawMobs(batch);
+    }
+    public void physic(float delta){
+        map.physic(delta);
         if(isPaused) return;
         if(inWave){
             for (int i = 0; i < map.getSpawner().size(); i++) {
@@ -316,7 +320,7 @@ public class Level {
                     waves.get(currentWave + i).update(delta);
                 }
             }
-            physicMobs(batch, delta);
+            physicMobs(delta);
 //            drawTowers();
 //            drawParticles();
 
@@ -341,10 +345,6 @@ public class Level {
         }else {
             updateRoundTimer(delta);
         }
-
-
-
-
     }
 //    private void drawWave(float delta, SpriteBatch batch){
 //        for (int i = 0; i < map.getSpawner().size(); i++){
@@ -358,12 +358,17 @@ public class Level {
         ownerScreen.updateStart();
     }
 
-    private void physicMobs(SpriteBatch batch, float delta){
+    private void drawMobs(SpriteBatch batch){
+        for (Mob m: Wave.mobs){
+            m.render(batch);
+        }
+    }
+
+    private void physicMobs(float delta){
 //        List<Mob> tmpMobs = new CopyOnWriteArrayList<Mob>(Wave.mobs);
         for (Mob m: Wave.mobs){
             m.actEffects(delta);
             m.move(delta);
-            m.render(batch);
         }
     }
 

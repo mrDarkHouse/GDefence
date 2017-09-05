@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.SlotTooltip;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TowerTooltip;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -25,8 +28,6 @@ public class Tower extends Effectable implements DamageSource{
     public static float getAttackSpeedDelay(int asValue){
         return new BigDecimal(4/(1 + (float)asValue/10)).setScale(2, BigDecimal.ROUND_FLOOR).floatValue();
     }
-
-
 
     protected boolean canAttack = true;
 
@@ -47,9 +48,21 @@ public class Tower extends Effectable implements DamageSource{
     private Circle attackRange;
     private Texture attackRangeTexture;
 
+    private TowerTooltip tooltip;
+
     private int dmg;
+
+    public int getDmg() {
+        return dmg;
+    }
+
     private int speed;
-//    private float speedDelay;
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    //    private float speedDelay;
 
     private Array<Ability> abilities;
 //    private Array<Effect> effects;//
@@ -138,6 +151,8 @@ public class Tower extends Effectable implements DamageSource{
 
         setRegion(towerPrototype.getPrototype().getTowerTexture());
 
+
+
         abilities = new Array<Ability>();
         for (Ability.AbilityPrototype p:towerPrototype.getAbilities()){
             abilities.add(p.getAbility());
@@ -156,6 +171,8 @@ public class Tower extends Effectable implements DamageSource{
     public void init(){
         //
         initAbilities();
+        tooltip = new TowerTooltip(this, GDefence.getInstance().assetLoader.getSkin());
+        addListener(new TooltipListener(tooltip, true));
     }
 
     private void initAbilities(){
@@ -200,6 +217,11 @@ public class Tower extends Effectable implements DamageSource{
     public boolean isInRange(Vector2 p){
         //Circle attackRange = new Circle(getCenter(), towerPrototype.getRange());
         return attackRange.contains(p);
+    }
+
+    @Override
+    public void act(float delta) {
+        physic(delta);
     }
 
     public void physic(float delta){
@@ -338,10 +360,23 @@ public class Tower extends Effectable implements DamageSource{
         if(target != null) {//hotfix
             target.hit(dmg, this);
             getTowerPrototype().addExp(dmg / 10);
+            tooltip.hasChanged();
 //            procAfterHitAbilities(target, dmg);
         }
     }
-//    private void procAfterHitAbilities(Mob target, int dmg){
+
+    @Override
+    public void addEffect(Effect d) {
+        super.addEffect(d);
+        tooltip.hasChanged();
+    }
+
+    @Override
+    public void deleteEffect(Class d) {
+        super.deleteEffect(d);
+        tooltip.hasChanged();
+    }
+    //    private void procAfterHitAbilities(Mob target, int dmg){
 //        for (Ability a:abilities){
 //            if(a instanceof Ability.IAfterHit){
 //                ((Ability.IAfterHit) a).hit(target, dmg);//this.dmg if need not buff by abilities
@@ -357,12 +392,14 @@ public class Tower extends Effectable implements DamageSource{
 //        f.draw(batch, 1);
 //        batch.draw(attackRangeTexture, attackRange.x, attackRange.y);
 //    }
+
+
     public void draw(SpriteBatch batch, float delta){
-        super.draw(batch);
+        super.draw(batch, 1f);
         drawEffects(batch);
     }
 
-    public void drawRange(SpriteBatch batch, float delta){
+    public void drawRange(SpriteBatch batch/*, float delta*/){
         //Image im = new Image(attackRangeTexture);
         //im.setScaling(Scaling.none);
         //im.setDebug(true);
@@ -371,8 +408,10 @@ public class Tower extends Effectable implements DamageSource{
         //im.setSize(attackRange.radius*2, attackRange.radius*2);
         //im.draw(batch, 1);
 
-        batch.draw(attackRangeTexture, attackRange.x - attackRange.radius, attackRange.y - attackRange.radius,
-                attackRange.radius*2, attackRange.radius*2);
+        if(tooltip.isVisible()) {
+            batch.draw(attackRangeTexture, attackRange.x - attackRange.radius, attackRange.y - attackRange.radius,
+                    attackRange.radius * 2, attackRange.radius * 2);
+        }
         //batch.end();
         //shape.setAutoShapeType(true);
         //shape.setColor(Color.BLACK);

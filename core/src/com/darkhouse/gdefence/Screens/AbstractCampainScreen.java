@@ -18,8 +18,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -30,23 +32,35 @@ import com.darkhouse.gdefence.Model.BackButton;
 
 public abstract class AbstractCampainScreen extends AbstractScreen {
 
-    protected ImageTextButton nameButton;
-    protected String name;
+    protected TextButton nameButton;
+    private String name;
     protected final int topPadSize = 64;
+
+    public void setName(String name) {
+        this.name = name;
+        I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+        nameButton.setText(b.get(name));
+    }
+    public void setName(String name, String addictionalName) {
+        this.name = name;
+        I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+        nameButton.setText(b.get(name) + " " + addictionalName);
+    }
 
     protected SpriteBatch batch;
 
 
     protected ShapeRenderer shape;
 
-    private Viewport viewport;
+//    private Viewport viewport;
 
     private Table table;
 
 
     public AbstractCampainScreen(String name) {
         super();
-        this.name = name;
+        I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+        this.name = b.get(name);
         batch = new SpriteBatch();
         //stage = new Stage();
         //shape = new ShapeRenderer();
@@ -70,8 +84,8 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
         //cam.setToOrtho(false);
         //stage.setViewport(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam));
 
-        OrthographicCamera camera = new OrthographicCamera();
-        viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+//        OrthographicCamera camera = new OrthographicCamera();
+//        viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 
         table = new Table();
 
@@ -80,7 +94,7 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
 
 
 
-        nameButton = new ImageTextButton(name, GDefence.getInstance().assetLoader.getNameButtonStyle());
+        nameButton = new TextButton(name, /*GDefence.getInstance().assetLoader.getNameButtonStyle()*/GDefence.getInstance().assetLoader.getSkin(), "campainTop");
         nameButton.setSize(Gdx.graphics.getWidth()/*nameButtonSize[0]*/, nameButtonSize[1]);
         //nameButton.setPosition(0/*backButton.getX() + backButtonsSize[0]*/, Gdx.graphics.getHeight() - backButtonsSize[1]);
 
@@ -113,13 +127,16 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
         shape.end();
     }
 
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
-    }
+//    @Override
+//    public void resize(int width, int height) {
+////        viewport.update(width, height);
+//    }
 
     @Override
     public void render(float delta) {
+        super.render(delta);
+        batch.setProjectionMatrix(camera.combined);
+
         batch.begin();
         batch.draw(GDefence.getInstance().assetLoader.get("CampainBg.png", Texture.class), 0, 0);
         batch.end();

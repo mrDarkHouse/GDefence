@@ -41,7 +41,7 @@ public class GradableTooltip extends AbstractTooltip {
             value = "Value: " + gradable.getCurrentValue();
             cost = "";
         }
-        Label label = new Label(currentLvl  + value + cost, skin);
+        Label label = new Label(currentLvl  + value + cost, skin, "description");
         add(label);
         pack();
     }

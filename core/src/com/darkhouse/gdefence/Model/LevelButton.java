@@ -42,8 +42,8 @@ public class LevelButton extends TextButton {
         addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (!isLocked()) {
-                    GDefence.getInstance().setScreen(new LevelPreparationScreen(number));
-
+                    GDefence.getInstance().getLevelPreparationScreen().setLevel(number);
+                    GDefence.getInstance().switchScreen(GDefence.getInstance().getLevelPreparationScreen());
                 }
                 return true;
             }

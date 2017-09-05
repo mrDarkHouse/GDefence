@@ -3,15 +3,15 @@ package com.darkhouse.gdefence.Helpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Objects.GameObject;
@@ -80,6 +80,23 @@ public class AssetLoader extends AssetManager{
         loadLevelMap();
         loadShop();
         loadSmith();
+    }
+
+    public void setFilters(){
+//        get("skins/uiskin.json", Skin.class).add("default-font", FontLoader.generateFont(20, Color.BLACK), BitmapFont.class);
+        get("skins/uiskin.json", Skin.class).getFont("default-font").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("skins/uiskin.json", Skin.class).getFont("secondaryFont").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("skins/uiskin.json", Skin.class).getFont("default-font").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        get("Gems/redGem.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("Gems/yellowGem.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("Gems/blueGem.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("Gems/blackGem.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("Gems/greenGem.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("Gems/whiteGem.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+
+
     }
 
     public void loadOld(){
@@ -177,8 +194,8 @@ public class AssetLoader extends AssetManager{
         load("MainMenuTranparent.png", Texture.class);
         load("expBar1.png", Texture.class);
         load("expBar2.png", Texture.class);
-        load("energyBarBg.png", Texture.class);
-        load("energyBarKnob.png", Texture.class);
+//        load("energyBarBg.png", Texture.class);
+//        load("energyBarKnob.png", Texture.class);
 //        load("mobHpBarBg.png", Texture.class);
 //        load("mobHpBarKnob.png", Texture.class);
         load("levelLock.png", Texture.class);
@@ -197,7 +214,7 @@ public class AssetLoader extends AssetManager{
         load("coin.png", Texture.class);
         load("manaCostLabelFon.png", Texture.class);
         load("spellCdTransparent.png", Texture.class);
-        load("spellPanelFon.png", Texture.class);
+//        load("spellPanelFon.png", Texture.class);
         load("AbilityIcons/Spells/globalSlow.png", Texture.class);
         load("AbilityIcons/Spells/nothing.png", Texture.class);
 
@@ -213,8 +230,16 @@ public class AssetLoader extends AssetManager{
         load("Buttons/spellsButton.png", Texture.class);
         load("Buttons/detailsButton.png", Texture.class);
 
-        load("skins/uiskin.json", Skin.class);
-        load("uiskin.json", Skin.class);
+
+        ObjectMap<String, Object> fontMap = new ObjectMap<String, Object>();
+        fontMap.put("default-font", FontLoader.generateFont(26, Color.BLACK));
+        fontMap.put("default-font48", FontLoader.generateFont(48, Color.BLACK));
+        fontMap.put("secondaryFont", FontLoader.generateSecondaryFont(16, Color.WHITE));
+
+
+        SkinLoader.SkinParameter parameter = new SkinLoader.SkinParameter(fontMap);
+
+        load("skins/uiskin.json", Skin.class, parameter);
 
         load("Tower/basic.png", Texture.class);
         load("Tower/rock.png", Texture.class);
@@ -242,7 +267,6 @@ public class AssetLoader extends AssetManager{
         load("AbilityIcons/Abilities/shotDelay.png", Texture.class);
         load("AbilityIcons/Abilities/splash.png", Texture.class);
         load("AbilityIcons/Abilities/steelArrow.png", Texture.class);
-
 
 
 
@@ -351,7 +375,7 @@ public class AssetLoader extends AssetManager{
         load("Mobs/mob6walk.png", Texture.class);
         load("Mobs/mob6swim.png", Texture.class);
 
-        load("infoPanelFone.png", Texture.class);
+//        load("infoPanelFone.png", Texture.class);
         load("levelLooseBg.png", Texture.class);
         load("levelWinBg.png", Texture.class);
         load("buildGridLinePixel.png", Texture.class);
@@ -362,6 +386,102 @@ public class AssetLoader extends AssetManager{
 
 
     }
+    public void disposeLevelMap(){
+        unload("Path/grass.png");
+        unload("Path/castle.png");
+        unload("Path/waterHorizontal.png");
+        unload("Path/waterVertical.png");
+        unload("Path/roadHorizontal.png");
+        unload("Path/roadVertical.png");
+        unload("Path/Turn/turnLU.png");
+        unload("Path/Turn/turnLD.png");
+        unload("Path/Turn/turnRU.png");
+        unload("Path/Turn/turnRD.png");
+        unload("Path/Turn/turnWaterLU.png");
+        unload("Path/Turn/turnWaterLD.png");
+        unload("Path/Turn/turnWaterRU.png");
+        unload("Path/Turn/turnWaterRD.png");
+        unload("Path/Bridge/bridgeLUD1.png");
+        unload("Path/Bridge/bridgeLUD2.png");
+        unload("Path/Bridge/bridgeRUD1.png");
+        unload("Path/Bridge/bridgeRUD2.png");
+        unload("Path/Bridge/bridgeULR1.png");
+        unload("Path/Bridge/bridgeULR2.png");
+        unload("Path/Bridge/bridgeDLR1.png");
+        unload("Path/Bridge/bridgeDLR2.png");
+
+        unload("Path/Bridge/bridgeUUL1.png");
+        unload("Path/Bridge/bridgeUUL2.png");
+        unload("Path/Bridge/bridgeUUR1.png");
+        unload("Path/Bridge/bridgeUUR2.png");
+        unload("Path/Bridge/bridgeDDL1.png");
+        unload("Path/Bridge/bridgeDDL2.png");
+        unload("Path/Bridge/bridgeDDR1.png");
+        unload("Path/Bridge/bridgeDDR2.png");
+
+        unload("Path/Turn/bridgeLnoArrows.png");
+        unload("Path/Turn/bridgeRnoArrows.png");
+        unload("Path/Turn/bridgeUnoArrows.png");
+        unload("Path/Turn/bridgeDnoArrows.png");
+        unload("Path/Turn/waterBridgeLnoArrows.png");
+        unload("Path/Turn/waterBridgeRnoArrows.png");
+        unload("Path/Turn/waterBridgeUnoArrows.png");
+        unload("Path/Turn/waterBridgeDnoArrows.png");
+
+        unload("Path/Turn/turnWaterGroundLDL.png");
+        unload("Path/Turn/turnWaterGroundLDU.png");
+        unload("Path/Turn/turnWaterGroundLDL.png");
+        unload("Path/Turn/turnWaterGroundLUD.png");
+        unload("Path/Turn/turnWaterGroundLUL.png");
+        unload("Path/Turn/turnWaterGroundRDR.png");
+        unload("Path/Turn/turnWaterGroundRDU.png");
+        unload("Path/Turn/turnWaterGroundRUD.png");
+        unload("Path/Turn/turnWaterGroundRUR.png");
+
+        unload("Path/Signer/signLL.png");
+        unload("Path/Signer/signRR.png");
+        unload("Path/Signer/signUU.png");
+        unload("Path/Signer/signDD.png");
+        unload("Path/Signer/signLU.png");
+        unload("Path/Signer/signLD.png");
+        unload("Path/Signer/signRU.png");
+        unload("Path/Signer/signRD.png");
+        unload("Path/Signer/signUL.png");
+        unload("Path/Signer/signUR.png");
+        unload("Path/Signer/signDL.png");
+        unload("Path/Signer/signDR.png");
+
+        unload("AbilityIcons/Effects/swimSpeed.png");
+        unload("AbilityIcons/Effects/waterBonusArmor.png");
+        unload("AbilityIcons/Effects/blockDmg.png");
+        unload("AbilityIcons/Effects/slow.png");
+        unload("AbilityIcons/Effects/armorReduction.png");
+        unload("AbilityIcons/Effects/bonusArmor.png");
+        unload("AbilityIcons/Effects/fireArrow.png");
+        unload("AbilityIcons/Effects/bash.png");
+        unload("AbilityIcons/Effects/heal.png");
+
+
+        unload("Mobs/mob.png");
+        unload("Mobs/mob2.png");
+        unload("Mobs/mob3.png");
+        unload("Mobs/mob4.png");
+        unload("Mobs/mob5.png");
+        unload("Mobs/mob6walk.png");
+        unload("Mobs/mob6swim.png");
+
+//        unload("infoPanelFone.png");
+//        unload("levelLooseBg.png");
+//        unload("levelWinBg.png");
+        unload("buildGridLinePixel.png");
+        unload("towerRangeTexture.png");
+    }
+    public void disposeLevelEndScreen(){
+        unload("infoPanelFone.png");
+        unload("levelLooseBg.png");
+        unload("levelWinBg.png");
+    }
+
     public void loadShop(){
         load("sellButton.png", Texture.class);
 
@@ -626,7 +746,8 @@ public class AssetLoader extends AssetManager{
         return null;
     }
     public Skin getSkin(){
-        return new Skin(Gdx.files.internal("uiskin.json"));
+        return get("skins/uiskin.json", Skin.class);
+//        return new Skin(Gdx.files.internal("uiskin.json"));
     }
 
     public Label.LabelStyle getTimerSkin(){
@@ -639,7 +760,7 @@ public class AssetLoader extends AssetManager{
 //        Label.LabelStyle l = new Label.LabelStyle();
 //        l.font = FontLoader.impact16;
 //        l.fontColor = Color.BLACK;
-        return FontLoader.generateStyle(16, Color.BLACK);
+        return FontLoader.generateStyle(20, Color.BLACK);
     }
     public Label.LabelStyle getCurrentInfoPanelSkin(){
 //        Label.LabelStyle l = new Label.LabelStyle();

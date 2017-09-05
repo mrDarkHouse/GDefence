@@ -9,6 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 public class FontLoader {
     private static FreeTypeFontGenerator generator;
 
+    final static String font_chars_ru =
+            "абвгдежзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
+
+
     public static BitmapFont impact12;//refactor
     public static BitmapFont impact14;
     public static BitmapFont impact16;
@@ -19,6 +23,8 @@ public class FontLoader {
     public static BitmapFont impact26;
     public static BitmapFont impact28;
     public static BitmapFont impact36;
+
+    public static BitmapFont impact_Ru;
 
 
     public static String firstCapitalLetter(String s){
@@ -34,7 +40,13 @@ public class FontLoader {
 
     public static void load(){
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
+
+
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameter.size = 26;
+        impact_Ru = generator.generateFont(parameter);
+
         parameter.size = 12;
         impact12 = generator.generateFont(parameter);
         parameter.size = 14;
@@ -61,10 +73,11 @@ public class FontLoader {
     }
     public static Label.LabelStyle generateStyle(int size, Color fontColor){
         Label.LabelStyle style = new Label.LabelStyle();
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = size;
-        style.font = generator.generateFont(parameter);
+//        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
+//        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+//        parameter.size = size;
+        style.font = generateFont(size, Color.WHITE);
+                //generator.generateFont(parameter);
         style.fontColor = fontColor;
         return style;
     }
@@ -85,15 +98,32 @@ public class FontLoader {
         parameter.color = color;
         parameter.borderWidth = borderSize;
         parameter.borderColor = borderColor;
-        return  generator.generateFont(parameter);
+        return generator.generateFont(parameter);
     }
     public static BitmapFont generateFont(int size, Color color){
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.characters = font_chars_ru;
         parameter.size = size;
         parameter.color = color;
-        return  generator.generateFont(parameter);
+        return generator.generateFont(parameter);
     }
+    public static BitmapFont generateSecondaryFont(int size, Color color){
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto-regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.characters = font_chars_ru;
+        parameter.size = size;
+        parameter.color = color;
+        return generator.generateFont(parameter);
+    }
+//    public static BitmapFont generateMenuFont(int size, Color color){
+//        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Iscoola.ttf"));
+//        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+//        parameter.size = size;
+//        parameter.color = color;
+//        return  generator.generateFont(parameter);
+//    }
+
 
 
 

@@ -117,7 +117,7 @@ public class TowerMap extends Window{
     private Table table;
 
     public TowerMap(Skin skin) {
-        super("Tower Map", skin);
+        super("Tower Map", skin, "description");
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
         setResizable(false);
@@ -139,7 +139,7 @@ public class TowerMap extends Window{
         setPosition(700, 50);
         setHeight(630);
 
-        TextButton closeButton = new TextButton("X", skin);
+        TextButton closeButton = new TextButton("X", skin, "description");
         closeButton.addListener(new HidingClickListener(this));
 //        add(closeButton).height(getPadTop());//
         getTitleTable().add(closeButton).height(getPadTop());

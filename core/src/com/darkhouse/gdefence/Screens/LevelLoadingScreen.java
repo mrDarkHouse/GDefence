@@ -45,6 +45,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen{
     @Override
     protected void onLoad() {
         map = new LevelMap(level, towers, spells);
+        map.init();
 //        if (Gdx.input.isTouched()) {
             GDefence.getInstance().switchScreen(map);
 //            LevelMap.getLevel().start();//WHAT THE SHIT THIS

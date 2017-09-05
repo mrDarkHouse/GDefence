@@ -55,7 +55,17 @@ public class SlotActor extends ImageButton implements SlotListener {
 //		addTooltip();
 	}
 
-	public void addTooltip(Stage stage){
+    @Override
+    public float getPrefWidth() {
+        return 60;
+    }
+
+    @Override
+    public float getPrefHeight() {
+        return 60;
+    }
+
+    public void addTooltip(Stage stage){
 		SlotTooltip tooltip = new SlotTooltip(stage, slot, skin);
 		tooltip.setTouchable(Touchable.disabled); // allows for mouse to hit tooltips in the top-right corner of the screen without flashing
 		//Arsenal.getStage().addActor(tooltip);

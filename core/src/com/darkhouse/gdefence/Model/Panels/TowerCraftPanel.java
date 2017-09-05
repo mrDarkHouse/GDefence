@@ -76,7 +76,7 @@ public class TowerCraftPanel extends Window{
 //    }
 
     public TowerCraftPanel(DragAndDrop dragAndDrop, OverallInventory overallInventory, Skin skin) {
-        super("Grade Panel", skin);
+        super("Grade Panel", skin, "description");
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
         setDefaults();
@@ -245,7 +245,11 @@ public class TowerCraftPanel extends Window{
 //        recipeSlot.getSlot().take(1);
 //        recipeSlot.getSlot().addListener(recipeListener);
 
-        User.getTowerInventory().store(resultSlot.getSlot().take(1));
+
+
+        GDefence.getInstance().user.craftTower((ItemEnum.Tower) resultSlot.getSlot().getLast().getPrototype());//
+//        TowerObject.generateStartObjects(r.getTower(), 1);
+//        User.getTowerInventory().store(resultSlot.getSlot().take(1));
 
 
         recipeSlot.getSlot().take(1);

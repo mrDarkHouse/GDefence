@@ -36,7 +36,7 @@ public class Crit extends Ability {
         @Override
         public String getTooltip() {
             return "Have [#000000ff]" + chance.get()*100 + " % []chance " + System.getProperty("line.separator")
-                    + "to increase dmg by for [#0ffe00ff]" + multiplayer.get() + "[]";
+                    + "to increase dmg by for[#0ffe00ff]" + multiplayer.get().intValue() + "x []";
         }
     }
     public static class G extends AbilityGrader {

@@ -1,4 +1,4 @@
-package com.darkhouse.gdefence.Model.Level;
+package com.darkhouse.gdefence.Model.Panels;
 
 
 import com.badlogic.gdx.graphics.Color;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -17,6 +18,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
+import com.darkhouse.gdefence.Model.Level.NextWaveTimer;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class NextWaveInfoPanel extends Table{
@@ -59,10 +61,11 @@ public class NextWaveInfoPanel extends Table{
 
     public void init(){
         nextWaveTimer = new NextWaveTimer();
-        setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("infoPanelFone.png", Texture.class))));
+        setBackground(GDefence.getInstance().assetLoader.getSkin().getDrawable("info-panel"));
+        pad(10);
         //setFillParent(false);
         abilities = new Array<Label>();
-        abilities.add(new Label(abilitiesS, FontLoader.generateStyle(16, null)));
+        abilities.add(new Label(abilitiesS, FontLoader.generateStyle(20, null)));
         abilities.get(0).getStyle().font.getData().markupEnabled = true;
         Array<Label> abilitiesLabels = initString(Level.getMap().getSpawner().size());
         for (Label l:abilitiesLabels){
@@ -73,7 +76,7 @@ public class NextWaveInfoPanel extends Table{
         currentWave = new Label(currentWaveS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
         mobsNumber = new Label(mobsNumberS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
         mobName = new Label(mobNameS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
-        mobName = new Label(mobNameS, FontLoader.generateStyle(16, null));//without color
+        mobName = new Label(mobNameS, FontLoader.generateStyle(20, null));//without color
         mobName.getStyle().font.getData().markupEnabled = true;
         mobHealth = new Label(mobHealthS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
         mobArmor = new Label(mobArmorS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
@@ -164,7 +167,7 @@ public class NextWaveInfoPanel extends Table{
 
                         Label label = new Label(ab.getName(), GDefence.getInstance().assetLoader.getInfoPanelSkin());
                         label.setAlignment(Align.center);
-                        AbilityTooltip aTooltip = new AbilityTooltip(this, ab, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+                        AbilityTooltip aTooltip = new AbilityTooltip(this, ab, GDefence.getInstance().assetLoader.getSkin());
                         TooltipListener tListener = new TooltipListener(aTooltip, true);
                         tListener.setOffset(-aTooltip.getWidth()/2, 15/*-20, 10*/);//center
                         label.addListener(tListener);

@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Align;
 
 public abstract class AbstractTooltip extends Window{
     public AbstractTooltip(String title, Skin skin) {
-        super(title, skin);
+        super(title, skin, "description");
         getTitleLabel().setAlignment(Align.center);
     }
 

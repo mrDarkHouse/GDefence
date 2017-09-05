@@ -33,6 +33,8 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
+
         progress = (int)(GDefence.getInstance().assetLoader.getProgress() * 100);
         stage.update(progress);
         if(GDefence.getInstance().assetLoader.update()){
@@ -48,10 +50,10 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     protected abstract void onLoad();
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
+//    @Override
+//    public void resize(int width, int height) {
+//
+//    }
 
     @Override
     public void pause() {

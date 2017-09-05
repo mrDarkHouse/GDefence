@@ -15,13 +15,12 @@ public class HealthBar extends WidgetGroup{
     private Label text;
 
     public HealthBar(int width, int height, int x, int y) {
-        healthBar = new ProgressBar(0, LevelMap.getLevel().getMaxHP(), 0.5f, false, GDefence.getInstance().assetLoader.getExpBarSkin());
+        healthBar = new ProgressBar(0, LevelMap.getLevel().getMaxHP(), 0.5f, false, /*GDefence.getInstance().assetLoader.getExpBarSkin()*/GDefence.getInstance().assetLoader.getSkin(), "health-bar");
         healthBar.getStyle().background.setMinHeight(height);
-        healthBar.getStyle().knob.setMinHeight(height);
+        healthBar.getStyle().knobBefore.setMinHeight(height - 2);
         healthBar.setPosition(x, y);
         //setPosition(Gdx.graphics.getWidth() - expBarSize[0], userlevelButton.getY() - expBarSize[1] - 4);
         healthBar.setSize(width, height);
-        //setAnimateDuration(5);
         healthBar.setValue(LevelMap.getLevel().getHealthNumber());
         healthBar.setAnimateDuration(0.5f);
         addActor(healthBar);

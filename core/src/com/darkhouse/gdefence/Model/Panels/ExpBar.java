@@ -15,14 +15,16 @@ public class ExpBar extends ProgressBar{
     }
 
     public ExpBar(int width, int height) {
-        super(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.5f, false, GDefence.getInstance().assetLoader.getExpBarSkin());
+        super(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.5f, false, /*GDefence.getInstance().assetLoader.getExpBarSkin()*/ GDefence.getInstance().assetLoader.getSkin(), "exp-bar");
 
         //ProgressBar bar = new ProgressBar(0, 10, 0.5f, false, AssetLoader.getExpBarSkin());
         int expBarSize[] = {width, height};
         //setPosition(x, y);
         //setPosition(Gdx.graphics.getWidth() - expBarSize[0], userlevelButton.getY() - expBarSize[1] - 4);
         setSize(expBarSize[0], expBarSize[1]);
-        getStyle().knob.setMinWidth(0.1f);
+//        getStyle().knobBefore.setMinWidth(0.1f);
+        getStyle().background.setMinHeight(height);
+        getStyle().knobBefore.setMinHeight(height - 8);
         // bar.setAnimateDuration(5);
 
         //setValue(7.8f);

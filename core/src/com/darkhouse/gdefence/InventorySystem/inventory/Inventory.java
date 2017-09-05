@@ -154,7 +154,7 @@ public class Inventory {
 
         return false;
     }
-	public boolean store(Array<GameObject> objects) {
+	public boolean store(Array<? extends GameObject> objects) {//Array<GameObject>
 		for (GameObject o:objects){
 			if(!store(o)) return false;
 		}

@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Level;
@@ -33,17 +34,18 @@ public class LevelToolip extends AbstractTooltip{
 //            setVisible(false);
 //            return;
 //        }
-        getTitleLabel().setText("Level " + levelButton.getNumber());
+        I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+        getTitleLabel().setText(b.get("level") + " " + levelButton.getNumber());
         getTitleLabel().setAlignment(Align.center);
         clear();
         MapLoader ml = new MapLoader(levelButton.getNumber());
         ml.loadMap();
         ml.loadProperties(ml.getSpawnersNumber(), false);
-        String waves = "Waves: " + ml.getNumberWaves();
-        String exp = "Exp: " + ml.getExpFromLvl();
-        String gold = "Gold: " + ml.getGoldFromLvl();
-        String hp = "Start health: " + (int)(ml.getStartHpPercent() * 100) + "%";
-        String en = "Start energy: " + (int)(ml.getStartEnergyPercent() * 100) + "%";
+        String waves = b.get("waves") + ": " + ml.getNumberWaves();
+        String exp = b.get("exp") + " : " + ml.getExpFromLvl();
+        String gold = b.get("gold") + ": " + ml.getGoldFromLvl();
+        String hp = b.get("sHealth") + ": " + (int)(ml.getStartHpPercent() * 100) + "%";
+        String en = b.get("sEnergy") + ": " + (int)(ml.getStartEnergyPercent() * 100) + "%";
 
         String drop = "";
         drop += GDefence.getInstance().user.getLevelCompleted(levelButton.getNumber()) ? getDropTooltip(ml.getPenaltyDropList()) : getDropTooltip(ml.getDropList());
@@ -56,7 +58,7 @@ public class LevelToolip extends AbstractTooltip{
                                 gold + System.getProperty("line.separator") +
                                 hp + System.getProperty("line.separator") +
                                 en +
-                                drop, skin);
+                                drop, skin, "description");
         add(label);
         pack();
     }

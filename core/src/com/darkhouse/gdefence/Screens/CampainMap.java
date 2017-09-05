@@ -166,7 +166,7 @@ public class CampainMap extends AbstractCampainScreen {
 
 
     public CampainMap() {
-        super("Campain");
+        super("campain");
 //        loadButtons();
         //batch = new SpriteBatch();
         //shape = new ShapeRenderer();
@@ -224,7 +224,7 @@ public class CampainMap extends AbstractCampainScreen {
         drawLines();
         super.render(delta);
 
-        //drawLines();
+//        drawLines();
     }
     private void drawLines(){
         int lineWidth = 6;      //KOSTIl'
@@ -259,10 +259,10 @@ public class CampainMap extends AbstractCampainScreen {
 
 
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
+//    @Override
+//    public void resize(int width, int height) {
+//
+//    }
 
     @Override
     public void pause() {

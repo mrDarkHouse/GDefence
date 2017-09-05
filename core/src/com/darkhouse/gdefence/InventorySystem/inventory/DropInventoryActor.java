@@ -15,7 +15,7 @@ public class DropInventoryActor extends Window{
     private Skin skin;
 
     public DropInventoryActor(Array<DropSlot> slots, Skin skin) {
-        super("Drop", skin);
+        super("Drop", skin, "description");
         this.skin = skin;
 
         getTitleLabel().setAlignment(Align.center);

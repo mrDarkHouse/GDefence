@@ -17,13 +17,12 @@ public class EnegryBar extends WidgetGroup{
     private Label text;
 
     public EnegryBar(int width, int height, int x, int y) {
-        energyBar = new ProgressBar(0, LevelMap.getLevel().getMaxEnergy(), 0.5f, true, GDefence.getInstance().assetLoader.getEnergyBarSkin());
+        energyBar = new ProgressBar(0, LevelMap.getLevel().getMaxEnergy(), 0.5f, true, /*GDefence.getInstance().assetLoader.getEnergyBarSkin()*/ GDefence.getInstance().assetLoader.getSkin(), "energy-bar");
         energyBar.getStyle().background.setMinWidth(width);
-        energyBar.getStyle().knob.setMinWidth(width);
+        energyBar.getStyle().knobBefore.setMinWidth(width - 2);
         energyBar.setPosition(x, y);
         //setPosition(Gdx.graphics.getWidth() - expBarSize[0], userlevelButton.getY() - expBarSize[1] - 4);
         energyBar.setSize(width, height);
-        // bar.setAnimateDuration(5);
         energyBar.setValue(LevelMap.getLevel().getEnergyNumber());
         energyBar.setAnimateDuration(0.5f);
         addActor(energyBar);

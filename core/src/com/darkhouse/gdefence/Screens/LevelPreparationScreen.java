@@ -22,35 +22,45 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
     private PreparationSpellInventoryActor preparationSpellInventoryActor;
     private Inventory saveInventory[];
 
-    public LevelPreparationScreen(int level) {
-        super("" + level);
-        this.level = level;
-
+    public LevelPreparationScreen() {
+        super("prepare_to_level");
     }
+    public void setLevel(int level){
+        setName("prepare_to_level", String.valueOf(level));
+//        this.level = level;
+        load(level);
+    }
+
+
 
     @Override
     public void show() {
         super.show();
         //saveInventory = User.getTowerInventory().copy();
         //saveInventory.copy(User.getTowerInventory());
+//        saveInventory = new Inventory[3];
+//        saveInventory[0] = new Inventory(User.getTowerInventory());
+//        saveInventory[1] = new Inventory(User.getSpellInventory());
+//        saveInventory[2] = new Inventory(User.getDetailInventory());
+
+
+//        load(level);
+        //System.out.println(saveInventory.getSlots());
+    }
+
+    public void load(final int level){
         saveInventory = new Inventory[3];
         saveInventory[0] = new Inventory(User.getTowerInventory());
         saveInventory[1] = new Inventory(User.getSpellInventory());
         saveInventory[2] = new Inventory(User.getDetailInventory());
 
-
-        load(level);
-        //System.out.println(saveInventory.getSlots());
-    }
-
-    private void load(final int level){
 //        inventoryActor = new InventoryActor(saveInventory, new DragAndDrop(),
 //                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         inventoryActor = new OverallInventory(saveInventory);
         stage.addActor(inventoryActor);
         inventoryActor.init();
         preparationTowerInventoryActor = new PreparationTowerInventoryActor(new DragAndDrop(),
-                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+                GDefence.getInstance().assetLoader.getSkin());
         preparationTowerInventoryActor.setPosition(700, 250);
         inventoryActor.addTarget(preparationTowerInventoryActor);
         inventoryActor.addSlotAsTarget(preparationTowerInventoryActor.getDragAndDrop());
@@ -63,7 +73,7 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         inventoryActor.setPosition(100, 50);
 
         preparationSpellInventoryActor = new PreparationSpellInventoryActor(new DragAndDrop(),
-                GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+                GDefence.getInstance().assetLoader.getSkin());
         preparationSpellInventoryActor.setPosition(700, 100);
         inventoryActor.addTarget(preparationSpellInventoryActor);
         inventoryActor.addSlotAsTarget(preparationSpellInventoryActor.getDragAndDrop());
@@ -75,7 +85,7 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
 
         TextButton startButton = new TextButton("Start", GDefence.getInstance().assetLoader.getSkin());
         startButton.setSize(150, 70);
-        startButton.setPosition(Gdx.graphics.getWidth() - 200, 30);
+        startButton.setPosition(/*Gdx.graphics.getWidth() - 200*/1080, 30);
         startButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 GDefence.getInstance().setScreen(new LevelLoadingScreen(level, preparationTowerInventoryActor.getInventory(),
@@ -88,16 +98,16 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
 
     }
 
-    @Override
-    public void hide() {
-        //User.setTowerInventory(saveInventory/*.copy()*/);
-        super.hide();
-    }
+//    @Override
+//    public void hide() {
+//        //User.setTowerInventory(saveInventory/*.copy()*/);
+//        super.hide();
+//    }
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
+//    @Override
+//    public void resize(int width, int height) {
+//
+//    }
 
     @Override
     public void pause() {

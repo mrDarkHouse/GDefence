@@ -31,7 +31,7 @@ public class OverallInventory extends Window{
 
 
     public OverallInventory(Inventory[] customInventories){
-        super("Arsenal", GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        super("Arsenal", GDefence.getInstance().assetLoader.getSkin(), "description");
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
 
@@ -41,13 +41,13 @@ public class OverallInventory extends Window{
 
         actors = new InventoryActor[3];
         actors[0] = new InventoryActor(customInventories[0], dragAndDrop,
-                l.get("skins/uiskin.json", Skin.class));
+                l.getSkin());
         actors[0].getTitleLabel().setText("Towers");
         actors[1] = new InventoryActor(customInventories[1], dragAndDrop,
-                l.get("skins/uiskin.json", Skin.class));
+                l.getSkin());
         actors[1].getTitleLabel().setText("Spells");
         actors[2] = new InventoryActor(customInventories[2], dragAndDrop,
-                l.get("skins/uiskin.json", Skin.class));
+                l.getSkin());
         actors[2].getTitleLabel().setText("Details");
 
 
@@ -55,7 +55,7 @@ public class OverallInventory extends Window{
     }
 
     public OverallInventory() {
-        super("Arsenal", GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        super("Arsenal", GDefence.getInstance().assetLoader.getSkin(), "description");
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
 

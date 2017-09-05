@@ -10,6 +10,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Ability.Spell.GlobalSlow;
 import com.darkhouse.gdefence.Level.Ability.Spell.IceBlast;
+import com.darkhouse.gdefence.Model.Panels.StoreBuyPanel;
 import com.darkhouse.gdefence.Objects.*;
 
 import java.io.*;
@@ -219,6 +220,32 @@ public class User {
     private static Inventory spellInventory;//<Spell>
     private static Inventory detailInventory;//<Detail>
 
+    private static StoreBuyPanel storePanel;
+//    public static StoreBuyPanel getStorePanel() {
+//        return storePanel;
+//    }
+    public static void setStorePanel(StoreBuyPanel storePanel) {
+        User.storePanel = storePanel;
+    }
+
+    public void openTowerToBuy(ItemEnum.Tower t){
+        storePanel.store(t);
+//        storePanel.pack();
+    }
+
+    private int[] craftedTowers;//need to know how many towers are crafted
+
+    public void craftTower(ItemEnum.Tower t){
+        getTowerInventory().store(TowerObject.generateStartObjects(t, 1));
+        craftedTowers[t.ordinal()]++;
+        if(craftedTowers[t.ordinal()] >= 3){//3 = NUMBER TO AVAILABLE TOWER
+//            if(getOpenType(t) != RecipeType.available){
+                setAvailableTower(t);
+//            }
+//            openTowerToBuy(t);//
+        }
+    }
+
     public static Inventory getTowerInventory() {
         return towerInventory;
     }
@@ -321,7 +348,7 @@ public class User {
 
 
     public enum RecipeType{
-        opened, canOpen, locked;
+        opened, canOpen, locked, available;
     }
 
     private HashMap <ItemEnum.Tower, RecipeType> openedTowers;
@@ -340,6 +367,12 @@ public class User {
     private void unlockRecipe(ItemEnum.Tower t){
         if(getOpenType(t) == RecipeType.locked) openedTowers.put(t, RecipeType.canOpen);
     }
+    private void setAvailableTower(ItemEnum.Tower t){
+        if(getOpenType(t) == RecipeType.opened) {
+            openedTowers.put(t, RecipeType.available);
+            openTowerToBuy(t);
+        }
+    }
     public RecipeType getOpenType(ItemEnum.Tower t){//texturePath
         return openedTowers.get(t);
     }
@@ -347,7 +380,7 @@ public class User {
         return getOpenType(t) == RecipeType.opened;
     }
     public void buyTowerRecipe(ItemEnum.Tower t){
-//        if(t == ItemEnum.Tower.Range) openResearch(Research.Steam);//debug tool
+//        if(t == ItemEnum.Tower.Range) openTowerToBuy(ItemEnum.Tower.Range);//debug tool
 //        if(t == ItemEnum.Tower.Arrow) openResearch(Research.Powder);
         getDetailInventory().store(new Recipe(t));
         openedTowers.put(t, RecipeType.opened);
@@ -495,6 +528,10 @@ public class User {
         towerInventory = new Inventory(TowerObject.class, 35);
         spellInventory = new Inventory(SpellObject.class, 35);
         detailInventory = new Inventory(DetailObject.class, 35);
+//        storePanel = new StoreBuyPanel(new StoreBuyInventory());
+
+        craftedTowers = new int[ItemEnum.Tower.values().length];
+
         initResearches();
         initOpenedTowers();
     }
@@ -516,26 +553,45 @@ public class User {
 //        towerInventory = new Inventory(TowerObject.class, 35);
 //        spellInventory = new Inventory(SpellObject.class, 35);
 //        detailInventory = new Inventory(DetailObject.class, 35);
-        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
-        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.RED, 1);
-        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.YELLOW, 1);
-        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.BLUE, 3);
-        towerInventory.storeNew(ItemEnum.Tower.Rock, 1);
-        ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.RED, 4);
-        ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.YELLOW, 1);
-        ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.BLUE, 1);
-        towerInventory.storeNew(ItemEnum.Tower.Arrow, 1);
-        ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.RED, 2);
-        ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.YELLOW, 2);
-        ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.BLUE, 2);
-        towerInventory.storeNew(ItemEnum.Tower.Range, 1);
-        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.RED, 2);
-        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.YELLOW, 2);
-        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 1);
 
-        spellInventory.store(new GlobalSlow.P(20, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
-        spellInventory.store(new IceBlast.P(5, 3, 30, 0.3f, 3, 100, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
-        spellInventory.store(new IceBlast.P(30, 10, 10, 0.3f, 3, 100, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
+
+//        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
+        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
+        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
+
+//        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addExp(500f);
+//        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.RED, 3);
+//        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.YELLOW, 1);
+//        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.BLUE, 1);
+//        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
+//        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.RED, 3);
+//        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.YELLOW, 1);
+//        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.BLUE, 1);
+//        towerInventory.storeNew(ItemEnum.Tower.Rock, 1);
+//        ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.RED, 4);
+//        ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.YELLOW, 1);
+//        ((TowerObject) towerInventory.getSlots().get(1).getLast()).addGems(GEM_TYPE.BLUE, 1);
+//        towerInventory.storeNew(ItemEnum.Tower.Arrow, 1);
+//        ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.RED, 2);
+//        ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.YELLOW, 2);
+//        ((TowerObject) towerInventory.getSlots().get(2).getLast()).addGems(GEM_TYPE.BLUE, 2);
+//        towerInventory.storeNew(ItemEnum.Tower.Range, 1);
+//        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.RED, 2);
+//        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.YELLOW, 2);
+//        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 1);
+//
+//        spellInventory.store(new GlobalSlow.P(20, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
+//        spellInventory.store(new IceBlast.P(5, 3, 30, 0.3f, 3, 100, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
+//        spellInventory.store(new IceBlast.P(30, 10, 10, 0.3f, 3, 100, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
+
+
+//        storePanel.store(ItemEnum.Tower.Basic);
+//        storePanel.store(ItemEnum.Tower.Rock);
+//        storePanel.store(ItemEnum.Tower.Arrow);
+//        storePanel.store(ItemEnum.Tower.Basic);
+//        storePanel.store(ItemEnum.Tower.Rock);
+//        storePanel.store(ItemEnum.Tower.Arrow);
+//        storePanel.store(ItemEnum.Tower.Range);
 
 //        detailInventory.storeNew(ItemEnum.Gem., 1);
 
@@ -550,24 +606,34 @@ public class User {
 //        gems[3] = 1;
 //        gems[4] = 9;
 //        gems[5] = 41;
-        addGems(GEM_TYPE.RED, 11);
-        addGems(GEM_TYPE.YELLOW, 4);
-        addGems(GEM_TYPE.BLUE, 9);
-        addGems(GEM_TYPE.WHITE, 7);
-        addGems(GEM_TYPE.GREEN, 4);
-        addGems(GEM_TYPE.BLACK, 5);
+
+//        addGems(GEM_TYPE.RED, 11);
+//        addGems(GEM_TYPE.YELLOW, 4);
+//        addGems(GEM_TYPE.BLUE, 9);
+//        addGems(GEM_TYPE.WHITE, 7);
+//        addGems(GEM_TYPE.GREEN, 4);
+//        addGems(GEM_TYPE.BLACK, 5);
 
         update();
 
 //        this.levelsAvailable[0] = true;
+
+        openTowerToBuy(ItemEnum.Tower.Basic);
+//        storePanel.store(ItemEnum.Tower.Rock);
+//        storePanel.store(ItemEnum.Tower.Arrow);
+//        storePanel.store(ItemEnum.Tower.Range);
+//        storePanel.store(ItemEnum.Tower.Basic);
+//        storePanel.store(ItemEnum.Tower.Rock);
+//        storePanel.store(ItemEnum.Tower.Arrow);
+
         openLevel(1);
-        openLevel(2);
-        openLevel(3);
-        openLevel(4);
-        openLevel(5);
-        openLevel(6);
-        openLevel(7);
-        openLevel(8);
+//        openLevel(2);
+//        openLevel(3);
+//        openLevel(4);
+//        openLevel(5);
+//        openLevel(6);
+//        openLevel(7);
+//        openLevel(8);
 //        levelsAvailable[5] = true;
 //        levelsAvailable[6] = true;
 //        levelsAvailable[4] = true;
@@ -579,6 +645,8 @@ public class User {
 
         GDefence.getInstance().log("New User created");
     }
+
+
 
 
 

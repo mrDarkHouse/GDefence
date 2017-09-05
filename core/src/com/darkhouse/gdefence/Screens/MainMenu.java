@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.darkhouse.gdefence.GDefence;
@@ -31,41 +32,16 @@ import java.util.Map;
 
 
 public class MainMenu extends AbstractMenuScreen{
-    //private GDefence mainclass;
-    //private CampainMap campainMap;
 
-
-
-    //private SpriteBatch batch;
-   // private Texture menuBg;
-    //private Texture texturePath;
-//    private ImageButton campainButton;
-//    public Map<String, TextureRegion> textureRegions = new HashMap<String, TextureRegion>();
-   // private Stage stage;
-    private static final float BUTTON_WIDTH = 300f;
-    private static final float BUTTON_HEIGHT = 60f;
-    private static final float BUTTON_SPACING = 10f;
-
-//    private float CAMERA_WIDTH = 800F;
-//    private float CAMERA_HEIGHT = 480F;
-//    public float ppuX;
-//    public float ppuY;
-//    private OrthographicCamera camera;
+    Dialog exitDialog;
 
 
     public MainMenu() {
         super(false);
-        //this.mainclass = mainclass;
-        //campainMap = new CampainMap(mainclass);
-
-        //batch = new SpriteBatch();
-       // menuBg = new Texture("MainMenuBg.png");
-        //loadButtons();
-
-
     }
     public void init(){
         loadButtons();
+        exitDialog();
     }
 
     @Override
@@ -85,7 +61,7 @@ public class MainMenu extends AbstractMenuScreen{
 //        connectToHost.up = buttonsSkin.getDrawable("menu-connect-btn");
 //        connectToHost.over = buttonsSkin.getDrawable("menu-connect-btn");
 //        connectToHost.down = buttonsSkin.getDrawable("menu-connect-btn-down");
-        int buttonsSize[] = {200, 100};
+        int buttonsSize[] = {250, 90};
         int startBorder = Gdx.graphics.getHeight()/16;
         int sizeBetween = Gdx.graphics.getHeight()/24;
         //TextureRegion tmp[][] = TextureRegion.split(texturePath, texturePath.getWidth() / 2, texturePath.getHeight() / 10);
@@ -108,7 +84,41 @@ public class MainMenu extends AbstractMenuScreen{
 //        exitStyle.over = new TextureRegionDrawable(textureRegions.get("exitPressed"));
 //        exitStyle.down = new TextureRegionDrawable(textureRegions.get("exitPressed"));
 
-        ImageButton campainButton = new ImageButton(GDefence.getInstance().assetLoader.getMainMenuButtons(1));
+//        ImageButton campainButton = new ImageButton(GDefence.getInstance().assetLoader.getMainMenuButtons(1));
+//        campainButton.setSize(buttonsSize[0], buttonsSize[1]);
+//        campainButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, Gdx.graphics.getHeight() - buttonsSize[1] - startBorder);
+//        campainButton.addListener(new InputListener(){
+//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainChoose());
+//                //GDefence.getInstance().setScreen(new CampainChoose());
+//                //mainclass.setScreen(new CampainMap(mainclass));
+//                return true;
+//            }
+//        });
+//
+//        ImageButton optionsButton = new ImageButton(GDefence.getInstance().assetLoader.getMainMenuButtons(2));
+//        optionsButton.setSize(buttonsSize[0], buttonsSize[1]);
+//        optionsButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, campainButton.getY() - buttonsSize[1] - sizeBetween);
+//        optionsButton.addListener(new InputListener(){
+//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                GDefence.getInstance().switchScreen(/*GDefence.getInstance().getOptionScreen()*/new OptionScreen());
+//                //GDefence.getInstance().setScreen(new OptionScreen());
+//                return true;
+//            }
+//        });
+//
+//        ImageButton exitButton = new ImageButton(GDefence.getInstance().assetLoader.getMainMenuButtons(3));
+//        exitButton.setSize(buttonsSize[0], buttonsSize[1]);
+//        exitButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, optionsButton.getY() - buttonsSize[1] - sizeBetween);
+//        exitButton.addListener(new InputListener(){
+//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                exitDialog.show(stage);
+//                //Gdx.app.exit();
+//                return true;
+//            }
+//        });
+        I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+        TextButton campainButton = new TextButton(b.get("campain"), GDefence.getInstance().assetLoader.getSkin(), "main-menu");
         campainButton.setSize(buttonsSize[0], buttonsSize[1]);
         campainButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, Gdx.graphics.getHeight() - buttonsSize[1] - startBorder);
         campainButton.addListener(new InputListener(){
@@ -119,30 +129,26 @@ public class MainMenu extends AbstractMenuScreen{
                 return true;
             }
         });
-
-        ImageButton optionsButton = new ImageButton(GDefence.getInstance().assetLoader.getMainMenuButtons(2));
+        TextButton optionsButton = new TextButton(b.get("options"), GDefence.getInstance().assetLoader.getSkin(), "main-menu");
         optionsButton.setSize(buttonsSize[0], buttonsSize[1]);
         optionsButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, campainButton.getY() - buttonsSize[1] - sizeBetween);
         optionsButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
+                GDefence.getInstance().switchScreen(/*GDefence.getInstance().getOptionScreen()*/new OptionScreen());
                 //GDefence.getInstance().setScreen(new OptionScreen());
                 return true;
             }
         });
-
-        ImageButton exitButton = new ImageButton(GDefence.getInstance().assetLoader.getMainMenuButtons(3));
+        TextButton exitButton = new TextButton(b.get("exit"), GDefence.getInstance().assetLoader.getSkin(), "main-menu");
         exitButton.setSize(buttonsSize[0], buttonsSize[1]);
         exitButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, optionsButton.getY() - buttonsSize[1] - sizeBetween);
         exitButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                exitDialog();
+                exitDialog.show(stage);
                 //Gdx.app.exit();
                 return true;
             }
         });
-
-
 
 
 
@@ -166,12 +172,13 @@ public class MainMenu extends AbstractMenuScreen{
 
 
 
-        Dialog d = new Dialog("", GDefence.getInstance().assetLoader.get("uiskin.json", Skin.class)){
+        exitDialog = new Dialog("", GDefence.getInstance().assetLoader.getSkin(), "dialog"){
 
             {
-                text("Are you sure exit?").padTop(250);
-                button("Yes", true);
-                button("No", false);
+                I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+                text(b.get("exit_sure")).padTop(250);
+                button(b.get("accept"), true);
+                button(b.get("decline"), false);
                 //getButtonTable();//defaults().width(200);
                 Array<Cell> cells = getButtonTable().getCells();
                 Cell cell = cells.get(0);
@@ -198,62 +205,12 @@ public class MainMenu extends AbstractMenuScreen{
         };
 
 
-        //d.getButtonTable().center().top();
-        //d.getButtonTable().defaults().width(200);
-        d.setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("MainMenuTranparent.png", Texture.class))));
-        d.getBackground().setMinWidth(Gdx.graphics.getWidth());
-        d.getBackground().setMinHeight(Gdx.graphics.getHeight());
-        d.show(stage);
-        //stage.addActor(d);
-
-
-
-
-
-
-
-    }
-
-    private void newCampDialog(){
-        Dialog d = new Dialog("", GDefence.getInstance().assetLoader.get("uiskin.json", Skin.class)){
-
-            {
-                text("Are you sure to start new campain?").padTop(250);
-                button("Yes", true);
-                button("No", false);
-                //getButtonTable();//defaults().width(200);
-                Array<Cell> cells = getButtonTable().getCells();
-                Cell cell = cells.get(0);
-                cell.width(50).padBottom(360);
-                cell.height(40);
-                //cell.padBottom(Gdx.graphics.getHeight()/2);
-                //cell.center().top();
-
-                cell = cells.get(1);
-                cell.width(50).padBottom(360);
-                cell.height(40);
-                //cell.padBottom(Gdx.graphics.getHeight()/2);
-
-            }
-
-            @Override
-            protected void result(Object object) {
-                if(object.equals(true)){
-                    Gdx.app.exit();
-                }else{
-                    hide();
-                }
-            }
-        };
-
 
         //d.getButtonTable().center().top();
         //d.getButtonTable().defaults().width(200);
-        d.setBackground(new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("MainMenuTranparent.png", Texture.class))));
-        d.getBackground().setMinWidth(Gdx.graphics.getWidth());
-        d.getBackground().setMinHeight(Gdx.graphics.getHeight());
-        d.show(stage);
     }
+
+
 
 
 
@@ -275,10 +232,10 @@ public class MainMenu extends AbstractMenuScreen{
 
     }
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
+//    @Override
+//    public void resize(int width, int height) {
+//
+//    }
 
     @Override
     public void pause() {

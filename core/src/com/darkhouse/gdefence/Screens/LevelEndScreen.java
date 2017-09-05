@@ -91,7 +91,7 @@ public class LevelEndScreen implements Screen{
         DropInventoryActor invActor = null;
         if(isWin) {
              invActor = new DropInventoryActor(statManager.getDrop(),
-                    GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+                    GDefence.getInstance().assetLoader.getSkin());
 
             table.add(invActor).padBottom(20);
 
@@ -136,12 +136,12 @@ public class LevelEndScreen implements Screen{
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-        dispose();
+//        dispose();
     }
 
     @Override
     public void dispose() {
-
+        GDefence.getInstance().assetLoader.disposeLevelEndScreen();
     }
 
     @Override
