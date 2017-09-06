@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Helpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.I18NBundleLoader;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +17,8 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Objects.GameObject;
 import com.darkhouse.gdefence.User;
+
+import java.util.Locale;
 
 import static com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum.Tower.*;
 
@@ -74,8 +77,12 @@ public class AssetLoader extends AssetManager{
 //    public static Texture maxHpGrade;
 //    public static Texture maxEnergyGrade;
 
+    private I18NBundle b;
+
 
     public void loadAll() {
+//        param = new I18NBundleLoader.I18NBundleParameter(new Locale("ru"), "UTF-8");
+
         loadTextures();
         loadLevelMap();
         loadShop();
@@ -83,6 +90,8 @@ public class AssetLoader extends AssetManager{
     }
 
     public void setFilters(){
+        b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+
 //        get("skins/uiskin.json", Skin.class).add("default-font", FontLoader.generateFont(20, Color.BLACK), BitmapFont.class);
         get("skins/uiskin.json", Skin.class).getFont("default-font").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         get("skins/uiskin.json", Skin.class).getFont("secondaryFont").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -531,6 +540,10 @@ public class AssetLoader extends AssetManager{
         Texture t = get(texturePath, Texture.class);
         t.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         return t;
+    }
+
+    public String getWord(String word){
+        return b.get(word);
     }
 
 

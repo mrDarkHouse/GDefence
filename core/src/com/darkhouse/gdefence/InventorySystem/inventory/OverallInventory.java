@@ -31,7 +31,7 @@ public class OverallInventory extends Window{
 
 
     public OverallInventory(Inventory[] customInventories){
-        super("Arsenal", GDefence.getInstance().assetLoader.getSkin(), "description");
+        super(GDefence.getInstance().assetLoader.getWord("arsenal"), GDefence.getInstance().assetLoader.getSkin(), "description");
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
 
@@ -42,40 +42,42 @@ public class OverallInventory extends Window{
         actors = new InventoryActor[3];
         actors[0] = new InventoryActor(customInventories[0], dragAndDrop,
                 l.getSkin());
-        actors[0].getTitleLabel().setText("Towers");
+        actors[0].getTitleLabel().setText(l.getWord("towers"));
         actors[1] = new InventoryActor(customInventories[1], dragAndDrop,
                 l.getSkin());
-        actors[1].getTitleLabel().setText("Spells");
+        actors[1].getTitleLabel().setText(l.getWord("spells"));
         actors[2] = new InventoryActor(customInventories[2], dragAndDrop,
                 l.getSkin());
-        actors[2].getTitleLabel().setText("Details");
+        actors[2].getTitleLabel().setText(l.getWord("details"));
 
 
         createButtons();
     }
 
     public OverallInventory() {
-        super("Arsenal", GDefence.getInstance().assetLoader.getSkin(), "description");
-        getTitleLabel().setAlignment(Align.center);
-        setMovable(false);
+        this(new Inventory[]{User.getTowerInventory(), User.getSpellInventory(), User.getDetailInventory()});
 
-        dragAndDrop = new DragAndDrop();
-
-        AssetLoader l = GDefence.getInstance().assetLoader;
-
-//        setPosition(100, 250);
-        actors = new InventoryActor[3];
-        actors[0] = new InventoryActor(User.getTowerInventory(), dragAndDrop,
-                l.get("skins/uiskin.json", Skin.class));
-        actors[0].getTitleLabel().setText("Towers");
-        actors[1] = new InventoryActor(User.getSpellInventory(), dragAndDrop,
-                l.get("skins/uiskin.json", Skin.class));
-        actors[1].getTitleLabel().setText("Spells");
-        actors[2] = new InventoryActor(User.getDetailInventory(), dragAndDrop,
-                l.get("skins/uiskin.json", Skin.class));
-        actors[2].getTitleLabel().setText("Details");
-
-        createButtons();
+//        super("Arsenal", GDefence.getInstance().assetLoader.getSkin(), "description");
+//        getTitleLabel().setAlignment(Align.center);
+//        setMovable(false);
+//
+//        dragAndDrop = new DragAndDrop();
+//
+//        AssetLoader l = GDefence.getInstance().assetLoader;
+//
+////        setPosition(100, 250);
+//        actors = new InventoryActor[3];
+//        actors[0] = new InventoryActor(User.getTowerInventory(), dragAndDrop,
+//                l.get("skins/uiskin.json", Skin.class));
+//        actors[0].getTitleLabel().setText("Towers");
+//        actors[1] = new InventoryActor(User.getSpellInventory(), dragAndDrop,
+//                l.get("skins/uiskin.json", Skin.class));
+//        actors[1].getTitleLabel().setText("Spells");
+//        actors[2] = new InventoryActor(User.getDetailInventory(), dragAndDrop,
+//                l.get("skins/uiskin.json", Skin.class));
+//        actors[2].getTitleLabel().setText("Details");
+//
+//        createButtons();
     }
 
     private void createButtons(){

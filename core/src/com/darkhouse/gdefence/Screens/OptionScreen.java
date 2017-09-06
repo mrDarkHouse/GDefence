@@ -125,6 +125,7 @@ public class OptionScreen extends AbstractMenuScreen {
                             GDefence.getInstance().assetLoader.load("Language/text", I18NBundle.class, param);
                             GDefence.getInstance().assetLoader.finishLoading();
                             GDefence.getInstance().initScreens();
+                            GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
                             break;
                         case 1:
                             GDefence.getInstance().assetLoader.unload("Language/text");
@@ -132,6 +133,7 @@ public class OptionScreen extends AbstractMenuScreen {
                             GDefence.getInstance().assetLoader.load("Language/text", I18NBundle.class, param);
                             GDefence.getInstance().assetLoader.finishLoading();
                             GDefence.getInstance().initScreens();
+                            GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
                             break;
                     }
                 } catch (LWJGLException e) {
@@ -185,7 +187,7 @@ public class OptionScreen extends AbstractMenuScreen {
         table.add(fullscreen).size(90).row();
         table.add(new Label(b.get("vsync"), skin, "description"));
         table.add(vSync).row();
-        table.add(new Label("languages", skin, "description"));
+        table.add(new Label(b.get("language"), skin, "description"));
         table.add(language).row();
 
 
