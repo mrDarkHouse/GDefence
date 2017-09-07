@@ -8,17 +8,13 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.StatManager;
 import com.darkhouse.gdefence.InventorySystem.inventory.DropSlot;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
-import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Level.Map;
-import com.darkhouse.gdefence.Objects.DetailObject;
-import com.darkhouse.gdefence.Objects.GameObject;
 import com.darkhouse.gdefence.Screens.LevelEndScreen;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Level {
     private boolean isPaused = true;
@@ -72,11 +68,11 @@ public class Level {
     }
 
     public void addEnergy(int energy) {
-        if(energy + energyNumber <= GDefence.getInstance().user.maxEnegry.getCurrentValue()) {
+        if(energy + energyNumber <= GDefence.getInstance().user.maxEnergy.getCurrentValue()) {
             this.energyNumber += energy;
         }else {
-            if(this.energyNumber != GDefence.getInstance().user.maxEnegry.getCurrentValue()) {
-                this.energyNumber = GDefence.getInstance().user.maxEnegry.getCurrentValue();
+            if(this.energyNumber != GDefence.getInstance().user.maxEnergy.getCurrentValue()) {
+                this.energyNumber = GDefence.getInstance().user.maxEnergy.getCurrentValue();
             }
         }
     }
@@ -171,7 +167,7 @@ public class Level {
         ml.loadProperties(spawners, true);
         expFromLvl = ml.getExpFromLvl();
         goldFromLvl = ml.getGoldFromLvl();
-        startEnergy = (int)(GDefence.getInstance().user.maxEnegry.getCurrentValue() * ml.getStartEnergyPercent());
+        startEnergy = (int)(GDefence.getInstance().user.maxEnergy.getCurrentValue() * ml.getStartEnergyPercent());
         startHP = (int)(GDefence.getInstance().user.maxHealth.getCurrentValue() * ml.getStartHpPercent());
         waves = ml.getWaves();
         numberWaves = ml.getNumberWaves();
@@ -179,7 +175,7 @@ public class Level {
         dropList = ml.getDropList();
         penaltyDropList = ml.getPenaltyDropList();
 
-        maxEnergy = GDefence.getInstance().user.maxEnegry.getCurrentValue();
+        maxEnergy = GDefence.getInstance().user.maxEnergy.getCurrentValue();
         energyNumber = startEnergy;
         maxHP = GDefence.getInstance().user.maxHealth.getCurrentValue();
         healthNumber = startHP;

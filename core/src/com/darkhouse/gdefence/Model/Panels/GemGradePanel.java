@@ -56,7 +56,7 @@ public class GemGradePanel extends Window{
     }
 
     public GemGradePanel(DragAndDrop dragAndDrop, OverallInventory inventory, Skin skin) {
-        super("Grade Panel", skin, "description");
+        super(GDefence.getInstance().assetLoader.getWord("grade_panel"), skin, "description");
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
 //        g = new Array<HorizontalGroup>();

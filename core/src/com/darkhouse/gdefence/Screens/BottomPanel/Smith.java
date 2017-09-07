@@ -11,9 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
-import com.darkhouse.gdefence.InventorySystem.inventory.Source.GemGradeSource;
-import com.darkhouse.gdefence.InventorySystem.inventory.Target.GemGradeTarget;
-import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GradableTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Model.Panels.GemGradePanel;
@@ -81,10 +78,10 @@ public class Smith extends AbstractCampainScreen{
 
         upEnergy.setSize(120, 80);
         upEnergy.setPosition(40, upHealth.getY() - upHealth.getHeight() - 20);
-        upEnergy.addListener(new TooltipListener(new GradableTooltip(getStage(), user.maxEnegry, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
+        upEnergy.addListener(new TooltipListener(new GradableTooltip(getStage(), user.maxEnergy, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class)), true));
         upEnergy.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                if(user.deleteGold(user.maxEnegry.getNextCost())) user.maxEnegry.up();
+                if(user.deleteGold(user.maxEnergy.getNextCost())) user.maxEnergy.up();
                 notifyListeners();
                 return true;
             }

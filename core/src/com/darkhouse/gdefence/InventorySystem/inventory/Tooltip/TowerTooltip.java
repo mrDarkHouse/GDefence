@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Objects.TowerObject;
@@ -70,9 +71,10 @@ public class TowerTooltip extends AbstractTooltip{
     public void hasChanged() {
         String s = "";
 //        s += tower.getName() + "/n";
-        s += "Damage: " + tower.getDmg() + System.getProperty("line.separator");
-        s += "Range: " + tower.getTowerPrototype().getRange() + System.getProperty("line.separator");
-        s += "Speed: " + tower.getSpeed() + System.getProperty("line.separator");
+        AssetLoader l = GDefence.getInstance().assetLoader;
+        s += l.getWord("dmg") + ": " + tower.getDmg() + System.getProperty("line.separator");
+        s += l.getWord("range") + ": " + tower.getTowerPrototype().getRange() + System.getProperty("line.separator");
+        s += l.getWord("speed") + ": " + tower.getSpeed() + "(" + Tower.getAttackSpeedDelay(tower.getSpeed()) + ")" + System.getProperty("line.separator");
         for (int i = 0; i < tower.getTowerPrototype().getAbilities().size; i++){
             s += System.getProperty("line.separator");
             Ability.AbilityPrototype a = tower.getTowerPrototype().getAbilities().get(i);

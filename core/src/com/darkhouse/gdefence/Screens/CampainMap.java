@@ -95,8 +95,15 @@ public class CampainMap extends AbstractCampainScreen {
             if(hasPrevous()) prev.setVisible(true);
             else prev.setVisible(false);
 
-            for (Page p:pages){//
-//                p.updateLockedLevels();
+//            for (Page p:pages){//
+////                p.updateLockedLevels();
+//            }
+        }
+        public void updateTooltips(){
+            for (Page p:pages){
+                for (int i = 0; i < p.buttons; i++){
+                    p.levels[i].getTooltip().hasChanged();
+                }
             }
         }
     }
@@ -275,6 +282,7 @@ public class CampainMap extends AbstractCampainScreen {
     }
     private void update(){
         pagedMap.update();
+        pagedMap.updateTooltips();
     }
 
 

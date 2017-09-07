@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Objects;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.User;
@@ -93,7 +94,7 @@ public class Recipe extends DetailObject{
 
     @Override
     public String getTooltip() {
-        String s = new String();
+        String s = "";
 //        if(getComponents().size > 0) {//
         for (int i = 0; i < getComponents().size; i++){
             s += getComponents().get(i).getPrototype().getName() + " " + getComponents().get(0).getSimplyGemStatString();
@@ -117,6 +118,6 @@ public class Recipe extends DetailObject{
 
     @Override
     public String getName() {
-        return "Recipe: " + getTower().getName();
+        return GDefence.getInstance().assetLoader.getWord("recipe") + ": " + getTower().getName();
     }
 }

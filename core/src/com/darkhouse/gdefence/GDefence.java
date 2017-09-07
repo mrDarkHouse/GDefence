@@ -118,11 +118,28 @@ public class GDefence extends Game {
 	public void initAll(){
         FontLoader.load();
 		ItemEnum.Tower.init();
+        User.Research.init();
 //        assetLoader.init();
 //		GDefence.getInstance().user.init();//it must be in campain loading
 //		GDefence.getInstance().user.save();
 		initScreens();
+        initTips();
 	}
+    private void initTips(){
+        String tip2 = assetLoader.getWord("tip2_1") + " " + User.GEM_TYPE.getBoost(User.GEM_TYPE.RED) + System.getProperty("line.separator") +
+                assetLoader.getWord("tip2_2") + " " + User.GEM_TYPE.getBoost(User.GEM_TYPE.YELLOW) + System.getProperty("line.separator") +
+                assetLoader.getWord("tip2_3") + " " + User.GEM_TYPE.getBoost(User.GEM_TYPE.BLUE);
+        String tip3 = assetLoader.getWord("tip3_1") + System.getProperty("line.separator") +
+                assetLoader.getWord("tip3_2");
+        String tip4 = assetLoader.getWord("tip4_1") + System.getProperty("line.separator") +
+                assetLoader.getWord("tip4_2");
+        String tip5 = assetLoader.getWord("tip5_1") + System.getProperty("line.separator") +
+                assetLoader.getWord("tip5_2") + System.getProperty("line.separator") +
+                assetLoader.getWord("tip5_3");
+
+        tips = new String[]{assetLoader.getWord("tip1"), tip2, tip3, tip4, tip5, assetLoader.getWord("tip6"),};
+    }
+
     public void initCampainMap(){
         campainMap = new CampainMap();
         campainMap.init();
@@ -178,7 +195,7 @@ public class GDefence extends Game {
     }
 
 
-	private static String[] tips = {
+	private String[] tips;/* = {
 			"Every tower level up it can be grade by gem",
 
 			"Red gem up attack damage by " + User.GEM_TYPE.getBoost(User.GEM_TYPE.RED) + System.getProperty("line.separator") +
@@ -194,9 +211,9 @@ public class GDefence extends Game {
 			"If you complete level in second time " + System.getProperty("line.separator") +
             "You receive only 1/4 of gold and exp" + System.getProperty("line.separator") +
             "Drop also became less quality and count",
-			/*"f",*/};
+			*//*"f",*//*};*/
 
-	public static String getTip(){
+	public String getTip(){
 		Random r = new Random();
 		return tips[r.nextInt(tips.length)];
 	}

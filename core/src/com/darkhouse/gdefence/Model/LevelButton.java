@@ -9,12 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.darkhouse.gdefence.GDefence;
-import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.LevelToolip;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.LevelTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
-import com.darkhouse.gdefence.Screens.LevelPreparationScreen;
 
 public class LevelButton extends TextButton {
     private int number;
+    private LevelTooltip tooltip;
+
+    public LevelTooltip getTooltip() {
+        return tooltip;
+    }
 
     public int getNumber() {
         return number;
@@ -32,7 +36,7 @@ public class LevelButton extends TextButton {
     }
 
     private void load(){
-        LevelToolip tooltip = new LevelToolip(this, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
+        tooltip = new LevelTooltip(this, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));
         tooltip.setTouchable(Touchable.disabled);
         //CampainMap.getStage().addActor(tooltip);
 //        GDefence.getInstance().getCampainMap().getStage().addActor(tooltip);

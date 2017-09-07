@@ -85,7 +85,7 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
                 ExpEarner t = ((ExpEarner) s.getLast());
 
             /*FontLoader.generateStyle(16, Color.WHITE)*/
-                Label level = new Label(t.getLevel() + "", skin, "description");//allow FontLoader load skin fonts
+                Label level = new Label(GDefence.getInstance().assetLoader.getWord("level") + " " + t.getLevel() + "", skin, "description");//allow FontLoader load skin fonts
                 add(level).align(Align.center).row();
                 final float width = getWidth();
 

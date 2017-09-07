@@ -117,7 +117,7 @@ public class TowerMap extends Window{
     private Table table;
 
     public TowerMap(Skin skin) {
-        super("Tower Map", skin, "description");
+        super(GDefence.getInstance().assetLoader.getWord("tower_map"), skin, "description");
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
         setResizable(false);

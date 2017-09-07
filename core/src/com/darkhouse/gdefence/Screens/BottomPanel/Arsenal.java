@@ -20,7 +20,9 @@ public class Arsenal extends AbstractCampainScreen{
     private OverallInventory inventoryActor;
     private TowerMap towerMap;
 
-
+    public TowerMap getTowerMap() {
+        return towerMap;
+    }
 
     public Arsenal() {
         super("arsenal");
@@ -58,8 +60,9 @@ public class Arsenal extends AbstractCampainScreen{
         inventoryActor.init();
         inventoryActor.setPosition(100, 250);
         towerMap = new TowerMap(GDefence.getInstance().assetLoader.getSkin());
+        GDefence.getInstance().user.setTowerMap(towerMap);
         stage.addActor(towerMap);
-        final TextButton towerMapButton = new TextButton("Tower Map", GDefence.getInstance().assetLoader.getSkin(), "description");
+        final TextButton towerMapButton = new TextButton(GDefence.getInstance().assetLoader.getWord("tower_map"), GDefence.getInstance().assetLoader.getSkin(), "description");
         towerMapButton.setPosition(Gdx.graphics.getWidth() - 200, Gdx.graphics.getHeight() - 100);
         towerMapButton.setSize(140, 40);
         towerMapButton.addListener(new InputListener() {

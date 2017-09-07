@@ -15,25 +15,30 @@ import com.darkhouse.gdefence.Model.LevelButton;
 
 import java.util.Random;
 
-public class LevelToolip extends AbstractTooltip{
+public class LevelTooltip extends AbstractTooltip{
     private LevelButton levelButton;
     private Skin skin;
 
-    public LevelToolip(LevelButton levelButton, Skin skin) {
+    private Label label;
+
+    private String waves;
+    private String exp;
+    private String gold;
+    private String hp;
+    private String en;
+    private String drop1;
+    private String drop2;
+
+    public LevelTooltip(LevelButton levelButton, Skin skin) {
         super("Tooltip...", skin);
         this.levelButton = levelButton;
         this.skin = skin;
-        hasChanged();
+        init();
         setVisible(false);
         GDefence.getInstance().getCampainMap().getStage().addActor(this);//do stage.addActor(this)
         //levelButton.getStage().addActor(this);
     }
-
-    public void hasChanged() {
-//        if (levelButton.isLocked()) {
-//            setVisible(false);
-//            return;
-//        }
+    private void init(){
         I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
         getTitleLabel().setText(b.get("level") + " " + levelButton.getNumber());
         getTitleLabel().setAlignment(Align.center);
@@ -41,25 +46,41 @@ public class LevelToolip extends AbstractTooltip{
         MapLoader ml = new MapLoader(levelButton.getNumber());
         ml.loadMap();
         ml.loadProperties(ml.getSpawnersNumber(), false);
-        String waves = b.get("waves") + ": " + ml.getNumberWaves();
-        String exp = b.get("exp") + " : " + ml.getExpFromLvl();
-        String gold = b.get("gold") + ": " + ml.getGoldFromLvl();
-        String hp = b.get("sHealth") + ": " + (int)(ml.getStartHpPercent() * 100) + "%";
-        String en = b.get("sEnergy") + ": " + (int)(ml.getStartEnergyPercent() * 100) + "%";
+        waves = b.get("waves") + ": " + ml.getNumberWaves();
+        exp = b.get("exp") + " : " + ml.getExpFromLvl();
+        gold = b.get("gold") + ": " + ml.getGoldFromLvl();
+        hp = b.get("sHealth") + ": " + (int)(ml.getStartHpPercent() * 100) + "%";
+        en = b.get("sEnergy") + ": " + (int)(ml.getStartEnergyPercent() * 100) + "%";
 
-        String drop = "";
-        drop += GDefence.getInstance().user.getLevelCompleted(levelButton.getNumber()) ? getDropTooltip(ml.getPenaltyDropList()) : getDropTooltip(ml.getDropList());
+//        drop1 = "";
+//        drop2 = "";
+        drop1 = getDropTooltip(ml.getDropList());
+        drop2 = getDropTooltip(ml.getPenaltyDropList());
+//        drop += GDefence.getInstance().user.getLevelCompleted(levelButton.getNumber()) ? getDropTooltip(ml.getPenaltyDropList()) : getDropTooltip(ml.getDropList());
 
 
 
+//        String drop = GDefence.getInstance().user.getLevelCompleted(levelButton.getNumber()) ? drop2 : drop1;
 
-        Label label = new Label(waves + System.getProperty("line.separator") +
-                                exp + System.getProperty("line.separator") +
-                                gold + System.getProperty("line.separator") +
-                                hp + System.getProperty("line.separator") +
-                                en +
-                                drop, skin, "description");
+        label = new Label(""/*waves + System.getProperty("line.separator") +
+                exp + System.getProperty("line.separator") +
+                gold + System.getProperty("line.separator") +
+                hp + System.getProperty("line.separator") +
+                en +
+                drop*/, skin, "description");
+        hasChanged();
         add(label);
+//        pack();
+    }
+
+    public void hasChanged() {
+        String drop = GDefence.getInstance().user.getLevelCompleted(levelButton.getNumber()) ? drop2 : drop1;
+        label.setText(waves + System.getProperty("line.separator") +
+                exp + System.getProperty("line.separator") +
+                gold + System.getProperty("line.separator") +
+                hp + System.getProperty("line.separator") +
+                en +
+                drop);
         pack();
     }
 

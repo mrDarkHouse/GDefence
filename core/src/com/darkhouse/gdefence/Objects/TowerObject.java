@@ -2,6 +2,8 @@ package com.darkhouse.gdefence.Objects;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
@@ -215,10 +217,12 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
 
     @Override
     public String getTooltip() {
-        String s = "Dmg: " + getDmg() + System.getProperty("line.separator")
-                + "Range: " + getRange() + System.getProperty("line.separator")
-                + "Speed: " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
-                + "Cost: " + getCost() + System.getProperty("line.separator");
+
+        AssetLoader l = GDefence.getInstance().assetLoader;
+        String s = l.getWord("dmg") + ": " + getDmg() + System.getProperty("line.separator")
+                + l.getWord("range") + ": " + getRange() + System.getProperty("line.separator")
+                + l.getWord("speed") + ": " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
+                + l.getWord("cost") + ": " + getCost() + System.getProperty("line.separator");
 //        s += prototype.getTooltip();
         for (int i = 0; i < getAbilities().size; i++){
             s += System.getProperty("line.separator");

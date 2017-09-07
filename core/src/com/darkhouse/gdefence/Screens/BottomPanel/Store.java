@@ -17,6 +17,9 @@ public class Store extends AbstractCampainScreen{
     private InventoryActor inventoryActor;
     private StoreBuyPanel storeBuyPanel;
 
+    public StoreBuyPanel getStoreBuyPanel() {
+        return storeBuyPanel;
+    }
 
     public Store() {
         super("store");
@@ -57,7 +60,7 @@ public class Store extends AbstractCampainScreen{
 
 
         storeBuyPanel = new StoreBuyPanel(inventoryActor.getDragAndDrop());
-        User.setStorePanel(storeBuyPanel);
+//        User.setStorePanel(storeBuyPanel);
 //        storeBuyPanel.addSlots(inventoryActor);
 
         storeBuyPanel.setPosition(740, 200);

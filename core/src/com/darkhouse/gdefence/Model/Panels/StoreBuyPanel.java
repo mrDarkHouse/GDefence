@@ -11,6 +11,8 @@ import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.BuySlotSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SellTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.SlotTooltip;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.Screens.BottomPanel.SellButton;
 
@@ -250,7 +252,7 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
         };
         a.setSize(60, 60);
         a.getSlot().add(TowerObject.generateStartObjects(item, 1));
-//        a.addListener()
+        a.addListener(new TooltipListener(new SlotTooltip(getStage(), a.getSlot(), GDefence.getInstance().assetLoader.getSkin()), true));
         dragAndDrop.addSource(new BuySlotSource(a));
 
         items.addActor(a);

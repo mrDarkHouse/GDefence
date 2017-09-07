@@ -12,6 +12,7 @@ import com.darkhouse.gdefence.Level.Ability.Spell.GlobalSlow;
 import com.darkhouse.gdefence.Level.Ability.Spell.IceBlast;
 import com.darkhouse.gdefence.Model.Panels.StoreBuyPanel;
 import com.darkhouse.gdefence.Objects.*;
+import com.darkhouse.gdefence.Screens.BottomPanel.TowerMap;
 
 import java.io.*;
 import java.util.HashMap;
@@ -182,7 +183,7 @@ public class User {
     }
 
     public Gradable maxHealth = new Gradable("Max Health", 5, 10, 5, 100, 25);
-    public Gradable maxEnegry = new Gradable("Max Energy", 5, 50, 10, 100, 25);
+    public Gradable maxEnergy = new Gradable("Max Energy", 5, 50, 10, 100, 25);
 
     //public void upHealth(){
     //    addMaxHealth(5);
@@ -289,20 +290,31 @@ public class User {
         Steam("steam", "Beat boss on second map" + System.getProperty("line.separator") +  "to open this research");
 
         private String tooltip;
-        private String texturePath;
+//        private String texturePath;
 
         public String getTexturePath() {
-            return texturePath;
+            return name().toLowerCase();//
         }
 
         Research(String texturePath, String tooltip) {
-            this.texturePath = texturePath;
-            this.tooltip = tooltip;
+//            this.texturePath = texturePath;
+//            this.tooltip = GDefence.getInstance().assetLoader.getWord(name().toLowerCase() + "_tooltip");
+//            this.tooltip = tooltip;
+        }
+        public static void init(){
+            for (int i = 0; i < Research.values().length; i++){
+                Research.values()[i].initTooltips();
+            }
+        }
+
+        private void initTooltips(){
+            this.tooltip = GDefence.getInstance().assetLoader.getWord(name().toLowerCase() + "_tooltip") + System.getProperty("line.separator") +
+                           GDefence.getInstance().assetLoader.getWord("research_complete_need");
         }
 
         @Override
         public String getTextureRegion() {
-            return texturePath;
+            return getTexturePath();
         }
 
         @Override
@@ -316,7 +328,7 @@ public class User {
         }
 
         public String getName(){
-            return FontLoader.firstCapitalLetter(name()) + " (research)";
+            return GDefence.getInstance().assetLoader.getWord(name().toLowerCase()) + " (" + GDefence.getInstance().assetLoader.getWord("research") + ")";
         }
 
         public String getTooltip() {
@@ -327,6 +339,12 @@ public class User {
     }
 
     private HashMap <Research, Boolean> researches;
+
+    private TowerMap towerMap;
+
+    public void setTowerMap(TowerMap towerMap) {
+        this.towerMap = towerMap;
+    }
 
     private void initResearches(){
         researches = new HashMap<Research, Boolean>();
@@ -344,6 +362,7 @@ public class User {
     }
     public void openResearch(Research r){
         researches.put(r, true);
+        if(towerMap != null) towerMap.updateTypes(); //==null when open researches in start(in debug)
     }
 
 
@@ -474,16 +493,16 @@ public class User {
         }
 
         public String getName(){
-            return FontLoader.firstCapitalLetter(name()) + " gem";
+            return GDefence.getInstance().assetLoader.getWord(name().toLowerCase()) + " " + GDefence.getInstance().assetLoader.getWord("gem");
         }
 
         @Override
         public String getTooltip() {
             switch (this){
                 case RED:case YELLOW:case BLUE:
-                    return "Used for grade towers";
+                    return GDefence.getInstance().assetLoader.getWord("rybGemTooltip");
                 case BLACK:case GREEN:case WHITE:
-                    return "Used for grade spells";
+                    return GDefence.getInstance().assetLoader.getWord("bgwGemTooltip");
                 default:return "shit programmer fuck up my code";//throw wrongArgumentException
             }
         }
@@ -545,14 +564,19 @@ public class User {
         GDefence.getInstance().log("Init new User");
         flush();
         this.totalExp = 0;
-        addGold(3000);
+        addGold(7000);
         currentMap = 1;
 
-//        openResearch(Research.Powder);
-//        openResearch(Research.Steam);
+        openResearch(Research.Powder);
+        openResearch(Research.Steam);
 //        towerInventory = new Inventory(TowerObject.class, 35);
 //        spellInventory = new Inventory(SpellObject.class, 35);
 //        detailInventory = new Inventory(DetailObject.class, 35);
+
+//        System.out.println(storePanel);//TODO
+
+        setStorePanel(GDefence.getInstance().getStore().getStoreBuyPanel());
+        setTowerMap(GDefence.getInstance().getArsenal().getTowerMap());
 
 
 //        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
@@ -721,6 +745,9 @@ public class User {
         for (int i = 0; i < levelsCompleted.length; i++){
             levelsCompleted[i] = false;
         }
+
+        setStorePanel(null);
+        setTowerMap(null);
 
         //etc
     }

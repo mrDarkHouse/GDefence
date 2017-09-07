@@ -30,7 +30,7 @@ public class RecipeTooltip extends AbstractTooltip{
 
 
     private void init(){
-        getTitleLabel().setText("Buy " + recipe.getName());
+        getTitleLabel().setText(GDefence.getInstance().assetLoader.getWord("buy") + " " + recipe.getName());
         getTitleLabel().setAlignment(Align.center);
 
         add(new Label(recipe.getTooltip(), skin, "description")).row();
@@ -46,7 +46,7 @@ public class RecipeTooltip extends AbstractTooltip{
 //                add(components).row();
 //            }
 //        }
-        Label cost = new Label(recipe.getGlobalCost() + " gold", skin, "description");
+        Label cost = new Label(recipe.getGlobalCost() + " " + GDefence.getInstance().assetLoader.getWord("gold2"), skin, "description");
         add(cost);
         pack();
     }

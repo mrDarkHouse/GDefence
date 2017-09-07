@@ -76,7 +76,7 @@ public class TowerCraftPanel extends Window{
 //    }
 
     public TowerCraftPanel(DragAndDrop dragAndDrop, OverallInventory overallInventory, Skin skin) {
-        super("Grade Panel", skin, "description");
+        super(GDefence.getInstance().assetLoader.getWord("craft_panel"), skin, "description");
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
         setDefaults();

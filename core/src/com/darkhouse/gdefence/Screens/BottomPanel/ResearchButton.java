@@ -37,10 +37,12 @@ public class ResearchButton extends TowerMapObject{
 
         private void init(){
 //            getStage().addActor(this);
-            getTitleLabel().setText(research.name());//
+            getTitleLabel().setText(GDefence.getInstance().assetLoader.getWord(research.name().toLowerCase()));//
             getTitleLabel().setAlignment(Align.center);
 
-            add(new Label(research.getTooltip(), skin, "description")).row();
+            Label l = new Label(research.getTooltip(), skin, "description");
+            l.setAlignment(Align.center);
+            add(l).row();
             pack();
         }
 
