@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Model;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
@@ -20,7 +21,7 @@ public class PreparationTowerInventoryActor extends InventoryActor{
 
     public PreparationTowerInventoryActor(DragAndDrop dragAndDrop, Skin skin) {
         super(new PreparationTowerInventory(), dragAndDrop, skin);
-        getTitleLabel().setText("Level towers");
+        getTitleLabel().setText(GDefence.getInstance().assetLoader.getWord("levelTowers"));
     }
 
 

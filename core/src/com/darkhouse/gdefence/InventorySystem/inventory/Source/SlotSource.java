@@ -119,8 +119,8 @@ public class SlotSource extends Source {
 			int toMove = targetSlot.getMaxItems() - targetSlot.getAmount();
 			if(payloadSlot.getAmount() <= toMove) {
 				targetSlot.add(payloadSlot.takeAll());
-			} else 								  {
-				targetSlot.add(payloadSlot.take(toMove));
+			} else {
+				targetSlot.add(payloadSlot.take(toMove));//java.lang.IllegalStateException: Array is empty. //TODO swmith swap 1 item to second
 				sourceSlot.add(payloadSlot.takeAll());
 			}
 		} else{//swap slot items

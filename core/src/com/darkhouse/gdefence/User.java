@@ -582,6 +582,7 @@ public class User {
 //        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
         towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
         towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
+        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
 
 //        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addExp(500f);
 //        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.RED, 3);

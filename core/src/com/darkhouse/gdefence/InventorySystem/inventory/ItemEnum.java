@@ -104,7 +104,7 @@ public enum ItemEnum {;
                 new SteelArrow.P(2, 300, new SteelArrow.G(1, 50, new int[]{3, 2, 0})),
                 new ShotDelay.P(1f, new ShotDelay.G(0.2f, new int[]{2, 0, 0}))*/),
 
-		Rock(     /*"rock",  */        AttackType.projectile, 400, 20,  140,   1, 120,  30/*,
+		Rock(     /*"rock",  */        AttackType.projectile, 400, 20,  140,   25, 120,  30/*,
                 new BuckShot.P(5, 20f, new BuckShot.G(1, 5f, new int[]{3, 2, 0})),
                 new SpreadAttack.P(3f, 2, new SpreadAttack.G(0.5f, new int[]{2, 0, 0}))*/),
 

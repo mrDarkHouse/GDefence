@@ -273,9 +273,9 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
 
     private String getBoostName(User.GEM_TYPE gemType){
         switch (gemType) {
-            case RED: return "damage";
-            case YELLOW: return "attack speed";
-            case BLUE: return "attack range";
+            case RED: return "dmg";
+            case YELLOW: return "speed2";
+            case BLUE: return "range2";
             default: return "error";
         }
     }
@@ -300,8 +300,9 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
     @Override
     public String getGemGradeTooltip(User.GEM_TYPE gemType) {
         String s = "";
-        if(!canGrade()) s += "[Up tower level to upgrade]" + System.getProperty("line.separator");
-        s += "+ " + User.GEM_TYPE.getBoost(gemType) + " " + getBoostName(gemType) + System.getProperty("line.separator")
+        AssetLoader l = GDefence.getInstance().assetLoader;
+        if(!canGrade()) s += l.getWord("gemGradeTooltip") + System.getProperty("line.separator");
+        s += "+ " + User.GEM_TYPE.getBoost(gemType) + " " + l.getWord(getBoostName(gemType)) + System.getProperty("line.separator")
                 + "(" + getBoostValue(gemType) + "=>" + getGradedBoostValue(gemType) + ")";
         return s;
 

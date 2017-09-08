@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Model;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
@@ -23,7 +24,7 @@ public class PreparationSpellInventoryActor extends InventoryActor{
 
     public PreparationSpellInventoryActor(DragAndDrop dragAndDrop, Skin skin) {
         super(new PreparationSpellInventory(), dragAndDrop, skin);
-        getTitleLabel().setText("Level spells");
+        getTitleLabel().setText(GDefence.getInstance().assetLoader.getWord("levelSpells"));
     }
 
     @Override
