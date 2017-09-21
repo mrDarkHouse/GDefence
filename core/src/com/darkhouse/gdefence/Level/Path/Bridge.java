@@ -40,8 +40,10 @@ public class Bridge extends MapTile implements Walkable{
     public void initTexture() {
 //        Texture texturePath;
         try {
-            texture1 = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + inputWay.getShortName() +
+//            texture1 = GDefence.getInstance().assetLoader.get("Path/roadHorizontal.png", Texture.class);
+            texture1 = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + inputWay.getShortName() +//Textures from identical bridges//TODO
                     endWay1.getShortName() + endWay2.getShortName() + "1.png", Texture.class);
+//            texture2 = GDefence.getInstance().assetLoader.get("Path/roadHorizontal.png", Texture.class);
             texture2 = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + inputWay.getShortName() +
                     endWay1.getShortName() + endWay2.getShortName() + "2.png", Texture.class);
         }catch (IllegalArgumentException e){
@@ -111,7 +113,7 @@ public class Bridge extends MapTile implements Walkable{
 
 
 
-    public Way manipulatePath(Mob.MoveType enterMobType){
+    public Way manipulatePath(Mob.MoveType enterMobType, Way currentWay){
         Way w = counter == toAct?endWay2:endWay1;//2:1 or 1:2 ???
 //        switch (inputWay){
 //            case LEFT:
@@ -129,7 +131,7 @@ public class Bridge extends MapTile implements Walkable{
 //        }
         if(counter < toAct) counter++;
         else counter = 0;
-        updateTexture();
+        updateTexture();//pre level not need //TODO
         return w;
     }
 }

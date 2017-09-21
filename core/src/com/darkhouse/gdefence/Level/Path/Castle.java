@@ -32,7 +32,7 @@ public class Castle extends MapTile implements Walkable{
     }
 
     @Override
-    public Way manipulatePath(Mob.MoveType enterMobType) {
+    public Way manipulatePath(Mob.MoveType enterMobType, Way currentWay) {
         return null;//
     }
 }

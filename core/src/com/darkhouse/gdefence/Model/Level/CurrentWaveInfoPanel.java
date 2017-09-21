@@ -15,17 +15,21 @@ import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class CurrentWaveInfoPanel extends Table{
-    private Label mobsCount = new Label("Mobs left: " + Wave.mobs.size, GDefence.getInstance().assetLoader.getCurrentInfoPanelSkin());
+    private Label mobsCount;// = new Label("Mobs left: " + Wave.mobs.size, GDefence.getInstance().assetLoader.getCurrentInfoPanelSkin());
     private NextWaveTimer timer;
+    private String mobsLeft;
 
 
     public CurrentWaveInfoPanel(NextWaveTimer t) {
         this.timer = t;
+        mobsLeft = GDefence.getInstance().assetLoader.getWord("mobsLeft");
+        mobsCount = new Label(mobsLeft + ": " + Wave.mobs.size, GDefence.getInstance().assetLoader.getCurrentInfoPanelSkin());
+
         init();
     }
 
     private void init() {
-        pad(30);
+        pad(20);
         setBackground(GDefence.getInstance().assetLoader.getSkin().getDrawable("info-panel"));
         add(mobsCount);
 
@@ -45,7 +49,7 @@ public class CurrentWaveInfoPanel extends Table{
     @Override
     public void act(float delta) {
         super.act(delta);
-        mobsCount.setText("Mobs left: " + Wave.mobs.size);
+        mobsCount.setText(mobsLeft + ": " + Wave.mobs.size);
 
     }
 }

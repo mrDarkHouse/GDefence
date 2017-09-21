@@ -49,12 +49,13 @@ public class LevelEndScreen implements Screen{
     }
 
     private void init(boolean isWin){
+        AssetLoader l = GDefence.getInstance().assetLoader;
         if(isWin){
-            backGround = GDefence.getInstance().assetLoader.get("levelWinBg.png", Texture.class);
-            result = "Win";
+            backGround = l.get("levelWinBg.png", Texture.class);
+            result = l.getWord("win");
         }else {
-            backGround = GDefence.getInstance().assetLoader.get("levelLooseBg.png", Texture.class);
-            result = "Loose";
+            backGround = l.get("levelLooseBg.png", Texture.class);
+            result = l.getWord("loose");
         }
 
         Table table = new Table();
@@ -63,13 +64,14 @@ public class LevelEndScreen implements Screen{
         table.align(Align.center|Align.top);
         table.setPosition(0, 0);//Gdx.graphics.getHeight());
 
-        Label resultLabel = new Label(result, AssetLoader.getLevelEndResultSkin());
+        Label resultLabel = new Label(result, l.getLevelEndResultSkin());
         resultLabel.setText(result);
 
         table.add(resultLabel).padTop(70).padBottom(100).row();
 
 
-        continueButton = new TextButton("Continue", GDefence.getInstance().assetLoader.getSkin());
+        continueButton = new TextButton(l.getWord("continue"), l.getSkin());
+        continueButton.pad(10);
         //continueButton.setSize(200, 40);
         continueButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -90,8 +92,7 @@ public class LevelEndScreen implements Screen{
 //        Array<DropSlot> drop = statManager.getDrop();
         DropInventoryActor invActor = null;
         if(isWin) {
-             invActor = new DropInventoryActor(statManager.getDrop(),
-                    GDefence.getInstance().assetLoader.getSkin());
+            invActor = new DropInventoryActor(statManager.getDrop(), l.getSkin());
 
             table.add(invActor).padBottom(20);
 

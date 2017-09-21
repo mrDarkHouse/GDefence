@@ -23,13 +23,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Mob extends Effectable{
 
     public enum Prototype{
-        //           texturePath          texturePath     moveType       hp  arm spd dmg bounty       //i think it better than Builder
-        Slime      ("Slime",      "mob",     MoveType.ground, 80,  0, 50,  1, 2),
-        Dog        ("Dog",        "mob2",    MoveType.ground, 50,  1, 70, 2, 3/*, new HealingAura.P(250, 1, 5)*/),
+        //           texturePath  texturePath  moveType       hp  arm spd dmg bounty       //i think it better than Builder
+//        Slime      ("Slime",      "mob",     MoveType.ground, 50,  0, 50,  1, 2),
+        Dog        ("Dog",        "mob2",    MoveType.ground, 30,  0, 70, 1, 2/*, new HealingAura.P(250, 1, 5)*/),
         Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 40,  2, 3, new Sprint.P(4, 2, 50)),
-        JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 4, new Sadist.P(3, 35)),
-        Boar       ("Boar",       "mob5",    MoveType.ground, 250, 0, 60,  3, 7, new LayerArmor.P(10, 2), new StrongSkin.P(15, 2)),
-        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable.P("Mobs/mob6swim.png"), new WaterFeel.P(20), new WaterDefend.P(4));// {
+        JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 4/*, new Sadist.P(3, 35)*/),
+        Boar       ("Boar",       "mob5",    MoveType.ground, 2500, 5, 50,  100, 7/*, new LayerArmor.P(10, 2), new StrongSkin.P(15, 2)*/),
+        Slime      ("Slime",      "mob",     MoveType.ground, 50,  0, 50,  1, 2),
+        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5/*, new Swimmable.P("Mobs/mob6swim.png"), new WaterFeel.P(20), new WaterDefend.P(4)*/);
+        // {
 //            @Override
 //            publ ic void setAbilities() {
 ////                abilities.add(new Swimmable(GDefence.getInstance().assetLoader.get(, Texture.class)));
@@ -533,7 +535,7 @@ public class Mob extends Effectable{
             Walkable t = ((Walkable) currentTile);
 
 //            Way w = Map.checkTurnWay(currentTile);
-            Way w = t.manipulatePath(this.getMoveType());//must call 1 time per block
+            Way w = t.manipulatePath(this.getMoveType(), way);//must call 1 time per block
 
 
             if(w!= null && way!= w){
@@ -571,7 +573,8 @@ public class Mob extends Effectable{
 
 
         currentTile = spawner;
-        way = ((Spawn) spawner).manipulatePath(this.getMoveType());
+        Spawn spawn = ((Spawn) spawner);
+        way = spawn.manipulatePath(this.getMoveType(), null);
 
 //        update();//some mobs must change texturePath in spawn block
         setPosition(spawner.getX(), spawner.getY());

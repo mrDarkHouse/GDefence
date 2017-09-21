@@ -6,5 +6,5 @@ import com.darkhouse.gdefence.Level.Mob.Way;
 
 public interface Walkable {
     TargetType getApplyMobs();
-    Way manipulatePath(Mob.MoveType enterMobType);
+    Way manipulatePath(Mob.MoveType enterMobType, Way currentWay);
 }

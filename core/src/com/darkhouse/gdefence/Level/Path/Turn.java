@@ -120,7 +120,7 @@ public class Turn extends MapTile implements Walkable{
     }
 
     @Override
-    public Way manipulatePath(Mob.MoveType enterMobType) {
+    public Way manipulatePath(Mob.MoveType enterMobType, Way currentWay){
         if(applyMobs.isConsist(enterMobType)) return resultWay;
         else return null;//
     }

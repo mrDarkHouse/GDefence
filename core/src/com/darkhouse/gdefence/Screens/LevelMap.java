@@ -18,6 +18,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.Level.Level;
+import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.*;
 import com.darkhouse.gdefence.Model.Panels.NextWaveInfoPanel;
 import com.darkhouse.gdefence.Model.Panels.SpellPanel;
@@ -90,6 +91,7 @@ public class LevelMap extends AbstractScreen {
                 hide();
                 offPause();
             } else if (object.equals(1)){
+                Wave.mobs.clear();
                 GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainMap());
             }
         }
@@ -123,7 +125,7 @@ public class LevelMap extends AbstractScreen {
     }
 
     private void initTextures(){
-        Level.getMap().initBaseTextures();
+//        Level.getMap().initBaseTextures();
         Level.getMap().normalizeBlocks();
     }
 
@@ -226,16 +228,18 @@ public class LevelMap extends AbstractScreen {
     }
     private void initWavePanel(){
         nWPanel = new NextWaveInfoPanel();
-        nWPanel.setPosition(Gdx.graphics.getWidth() - 205, 5);
         stage.addActor(nWPanel);
         nWPanel.init();
+        nWPanel.setPosition(Gdx.graphics.getWidth() - /*205*/nWPanel.getWidth() - 5, 5);
+
+
 
         pathSigner = new PathSigner(nWPanel.getNextWaveTimer(), level.getMap().getPaths());//static
         stage.addActor(pathSigner);
 
         cWpanel = new CurrentWaveInfoPanel(nWPanel.getNextWaveTimer());
         cWpanel.setVisible(false);
-        cWpanel.setPosition(Gdx.graphics.getWidth() - 205, 5);
+        cWpanel.setPosition(Gdx.graphics.getWidth() - cWpanel.getWidth() - 5, 5);
         stage.addActor(cWpanel);
 
     }
@@ -259,7 +263,7 @@ public class LevelMap extends AbstractScreen {
 
         spellPanel = new SpellPanel(a);
 
-        spellPanel.setPosition(1150, 300);
+        spellPanel.setPosition(1180, 330);
         stage.addActor(spellPanel);
         spellPanel.init();
 

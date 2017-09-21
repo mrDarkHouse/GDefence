@@ -118,9 +118,13 @@ public class CampainChoose extends AbstractMenuScreen{
 //                    if(GDefence.getInstance().user != null) {///
 //                        GDefence.getInstance().user = null;
 //                    }
-//                    GDefence.getInstance().user = new User();
+                    GDefence.getInstance().user = new User();
+                    GDefence.getInstance().flushCampainScreens();
                     GDefence.getInstance().user.initNewUser();
+
                     GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainMap());
+
+                    GDefence.getInstance().flushCampainChoose();//delete hide effects
                     //GDefence.getInstance().setScreen(new CampainMap());
                 }else{
                     hide();

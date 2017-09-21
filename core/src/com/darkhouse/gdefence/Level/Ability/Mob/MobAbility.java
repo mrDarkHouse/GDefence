@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
@@ -16,7 +17,7 @@ public abstract class MobAbility{
         protected boolean isHidden;
 
         public String getName() {
-            return name;
+            return GDefence.getInstance().assetLoader.getWord(name);
         }
         public boolean isHidden() {
             return isHidden;
@@ -35,9 +36,9 @@ public abstract class MobAbility{
         return isHidden;
     }
 
-    public String getName() {
-        return name;
-    }
+//    public String getName() {
+//        return name;
+//    }
 
 //    public MobAbility copy(){
 //        try {

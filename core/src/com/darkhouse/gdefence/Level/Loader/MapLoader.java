@@ -100,7 +100,7 @@ public class MapLoader {
             for(int i = 0; i < blocksY.length; i++){
                 String[] tmp = blocksY[i].split("-");
                 for (int j = 0; j < tmp.length; j++){
-                    blocks[j][i] = tmp[j];
+                    blocks[j][i] = tmp[j].replaceAll(" ", "");//replace allow to use spacing in map files
                 }
             }
             //

@@ -241,8 +241,10 @@ public class Tower extends Effectable implements DamageSource{
 
     private void attack(float delta){
 //        target = Mob.getMobOnMap(AttackLogic.First, this);//if !shot one target
+
         if(target == null || !isInRange(target.getCenter()) || !target.isInGame()) {
             target = Mob.getMobOnMap(AttackLogic.First, this);
+            preShotTime += delta;//fix when next attack after kill has delay
         }else {
 //            preShotTime += delta;
             if(preShotTime >= getAttackSpeedDelay(speed)){//
@@ -359,7 +361,7 @@ public class Tower extends Effectable implements DamageSource{
     public void hitTarget(Mob target, int dmg){
         if(target != null) {//hotfix
             target.hit(dmg, this);
-            getTowerPrototype().addExp(dmg / 10);
+            getTowerPrototype().addExp(dmg / 10f);
             tooltip.hasChanged();
 //            procAfterHitAbilities(target, dmg);
         }

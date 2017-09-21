@@ -24,6 +24,7 @@ import java.util.Locale;
 
 
 public class OptionScreen extends AbstractMenuScreen {
+
     public OptionScreen() {
         super(true);
         loadButtons();
@@ -54,6 +55,7 @@ public class OptionScreen extends AbstractMenuScreen {
 
     private void loadButtons(){
         Skin skin = GDefence.getInstance().assetLoader.getSkin();
+        final AssetLoader l = GDefence.getInstance().assetLoader;
 
         final Table table = new Table();
         table.defaults().space(10);
@@ -89,11 +91,32 @@ public class OptionScreen extends AbstractMenuScreen {
         final CheckBox fullscreen = new CheckBox("", skin);
         fullscreen.setSize(80, 80);
         if(Gdx.graphics.isFullscreen())fullscreen.setChecked(true);
-        final CheckBox vSync = new CheckBox("", skin);
-        vSync.sizeBy(80, 80);
+        final CheckBox vSync = new CheckBox("", skin)/*{
+            @Override
+            public float getPrefWidth() {
+                return 40;
+            }
+
+            @Override
+            public float getMinWidth() {
+                return 40;
+            }
+
+            @Override
+            public float getMinHeight() {
+                return 40;
+            }
+
+            @Override
+            public float getPrefHeight() {
+                return 40;
+            }
+        }*/;
+        if(GDefence.getInstance().vSync) vSync.setChecked(true);
+//        vSync.setSize(80, 80);
 //        if(Gdx.graphics.v)
 
-        String[] languagesS = new String[]{"Russian", "English"};
+        String[] languagesS = new String[]{"English", "Русский"};
         final SelectBox<String> language = new SelectBox<String>(skin, "description"){
             @Override
             protected void onHide(Actor selectBoxList) {
@@ -101,40 +124,42 @@ public class OptionScreen extends AbstractMenuScreen {
             }
         };
         language.setItems(languagesS);
+//        System.out.println(l.getLanguage());
+         if     (l.getLanguage().equals("en"))  language.setSelectedIndex(0);
+         else if(l.getLanguage().equals("ru"))  language.setSelectedIndex(1);
 
-        TextButton apply = new TextButton("Apply", skin, "description");
+
+        TextButton apply = new TextButton(l.getWord("apply"), skin, "description");
         apply.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 try {
-                    Display.setDisplayMode(new DisplayMode(resolution.getSelected().a, resolution.getSelected().b));
-                    if(fullscreen.isChecked()) Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                    Display.setDisplayMode(new DisplayMode(resolution.getSelected().a, resolution.getSelected().b));//
+                    if(fullscreen.isChecked()) {
+                        if(!Gdx.graphics.isFullscreen())
+                        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                    }
 
 //                    getStage().getViewport().update(resolution.getSelected().a, resolution.getSelected().b);
 //                    else Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
 
-                    if(vSync.isChecked()) Gdx.graphics.setVSync(true);
-                    else Gdx.graphics.setVSync(false);
+                    if(vSync.isChecked() != GDefence.getInstance().vSync) {
+                        if (vSync.isChecked()) {
+                            Gdx.graphics.setVSync(true);
+                            GDefence.getInstance().vSync = true;
+                        } else {
+                            Gdx.graphics.setVSync(false);
+                            GDefence.getInstance().vSync = false;
+                        }
+                    }
 
-
-                    I18NBundleLoader.I18NBundleParameter param;
                     switch (language.getSelectedIndex()){
-                        case 0:
-                            GDefence.getInstance().assetLoader.unload("Language/text");
-                            param = new I18NBundleLoader.I18NBundleParameter(new Locale("ru"), "UTF-8");
-                            GDefence.getInstance().assetLoader.load("Language/text", I18NBundle.class, param);
-                            GDefence.getInstance().assetLoader.finishLoading();
-                            GDefence.getInstance().initScreens();
-                            GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
-                            break;
-                        case 1:
-                            GDefence.getInstance().assetLoader.unload("Language/text");
-                            param = new I18NBundleLoader.I18NBundleParameter(Locale.US, "UTF-8");
-                            GDefence.getInstance().assetLoader.load("Language/text", I18NBundle.class, param);
-                            GDefence.getInstance().assetLoader.finishLoading();
-                            GDefence.getInstance().initScreens();
-                            GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
-                            break;
+                        case 0: {
+                            if(!l.getLanguage().equals("en")) l.changeLang("en");
+                        } break;
+                        case 1: {
+                            if(!l.getLanguage().equals("ru")) l.changeLang("ru");
+                        } break;
                     }
                 } catch (LWJGLException e) {
                     e.printStackTrace();
@@ -184,7 +209,7 @@ public class OptionScreen extends AbstractMenuScreen {
         table.add(new Label(b.get("resolution"), skin, "description"));
         table.add(resolution).width(200).height(50).row();
         table.add(new Label(b.get("fullscreen"), skin, "description"));
-        table.add(fullscreen).size(90).row();
+        table.add(fullscreen).prefSize(40).row();
         table.add(new Label(b.get("vsync"), skin, "description"));
         table.add(vSync).row();
         table.add(new Label(b.get("language"), skin, "description"));

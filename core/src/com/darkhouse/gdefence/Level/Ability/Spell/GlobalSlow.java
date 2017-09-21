@@ -46,6 +46,11 @@ public class GlobalSlow extends Spell{
         public Item getPrototype() {
             return ItemEnum.Spell.GlobalSlow;
         }
+
+        @Override
+        public int[] exp2nextLevel() {
+            return new int[]{20, 30, 40, 50, 60};
+        }
     }
     public static class G extends Ability.AbilityGrader{
         private float slowPercentUp;

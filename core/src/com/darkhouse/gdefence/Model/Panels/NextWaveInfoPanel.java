@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.AbilityTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
@@ -60,29 +61,30 @@ public class NextWaveInfoPanel extends Table{
     }
 
     public void init(){
+        AssetLoader l = GDefence.getInstance().assetLoader;
         nextWaveTimer = new NextWaveTimer();
-        setBackground(GDefence.getInstance().assetLoader.getSkin().getDrawable("info-panel"));
+        setBackground(l.getSkin().getDrawable("info-panel"));
         pad(10);
         //setFillParent(false);
         abilities = new Array<Label>();
-        abilities.add(new Label(abilitiesS, FontLoader.generateStyle(20, null)));
+        abilities.add(new Label(abilitiesS, FontLoader.generateStyle(16, null)));
         abilities.get(0).getStyle().font.getData().markupEnabled = true;
         Array<Label> abilitiesLabels = initString(Level.getMap().getSpawner().size());
-        for (Label l:abilitiesLabels){
-            abilities.add(l);
+        for (Label label:abilitiesLabels){
+            abilities.add(label);
         }
         abilities.get(0).setText(abilitiesS);
 
-        currentWave = new Label(currentWaveS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
-        mobsNumber = new Label(mobsNumberS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
-        mobName = new Label(mobNameS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
-        mobName = new Label(mobNameS, FontLoader.generateStyle(20, null));//without color
+        currentWave = new Label(currentWaveS, l.getInfoPanelSkin());
+        mobsNumber = new Label(mobsNumberS, l.getInfoPanelSkin());
+        mobName = new Label(mobNameS, l.getInfoPanelSkin());
+        mobName = new Label(mobNameS, FontLoader.generateStyle(16, null));//without color
         mobName.getStyle().font.getData().markupEnabled = true;
-        mobHealth = new Label(mobHealthS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
-        mobArmor = new Label(mobArmorS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
-        mobSpeed = new Label(mobSpeedS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
-        mobDmg = new Label(mobDmgS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
-        mobBounty = new Label(mobBountyS, GDefence.getInstance().assetLoader.getInfoPanelSkin());
+        mobHealth = new Label(mobHealthS, l.getInfoPanelSkin());
+        mobArmor = new Label(mobArmorS, l.getInfoPanelSkin());
+        mobSpeed = new Label(mobSpeedS, l.getInfoPanelSkin());
+        mobDmg = new Label(mobDmgS, l.getInfoPanelSkin());
+        mobBounty = new Label(mobBountyS, l.getInfoPanelSkin());
 
 
 
@@ -116,17 +118,18 @@ public class NextWaveInfoPanel extends Table{
         //setBackground(new TextureRegionDrawable(new TextureRegion(AssetLoader.infoPanelFone)));
     }
     private Array<Label> initString(int spawners){
-        Level lvl = LevelMap.getLevel();//
+        Level lvl = LevelMap.getLevel();//TODO
+        AssetLoader l = GDefence.getInstance().assetLoader;
 //        Mob m = Mob.getMobById(lvl.getCurrentWave().getMobID());
-        currentWaveS = "Prepare Wave: ";
-        mobsNumberS = "Mobs number: ";
-        mobHealthS = "Health: " ;//+ m.getHealth();
-        mobArmorS = "Armor: " ;//+ m.getArmor();
-        mobSpeedS = "Speed: ";// + m.getSpeed();
-        mobDmgS = "Dmg: " ;//+ m.getDmg();
-        mobBountyS = "Bounty: " ;//+ m.getBounty();
-        mobNameS = "[#000000ff]Name: ";
-        abilitiesS = "[#000000ff]Abilities: ";// + System.getProperty("line.separator");
+        currentWaveS = l.getWord("prepareWave") + ": ";//"Prepare Wave: ";
+        mobsNumberS = l.getWord("mobsNumber") + ": ";//"Mobs number: ";
+        mobHealthS = l.getWord("mobHealth") + ": ";//"Health: " ;//+ m.getHealth();
+        mobArmorS = l.getWord("mobArmor") + ": ";//"Armor: " ;//+ m.getArmor();
+        mobSpeedS = l.getWord("mobSpeed") + ": ";//"Speed: ";// + m.getSpeed();
+        mobDmgS = l.getWord("mobDmg") + ": ";//"Dmg: " ;//+ m.getDmg();
+        mobBountyS = l.getWord("mobBounty") + ": ";//"Bounty: " ;//+ m.getBounty();
+        mobNameS = "[#000000ff]" + l.getWord("mobName") + ": ";//Name: ";
+        abilitiesS = "[#000000ff]" + l.getWord("mobAbilities") + ": ";// + System.getProperty("line.separator");//Abilities: ";// + System.getProperty("line.separator");
 
         int ground = 0;
         int water = 0;
@@ -136,7 +139,9 @@ public class NextWaveInfoPanel extends Table{
             currentWaveS += lvl.currentWave + 1 + i;
             mobsNumberS += lvl.getWave(lvl.currentWave + 1 + i).getNumberMobs();
 
-            Mob.Prototype m = Mob.getMobById(lvl.getWave(lvl.currentWave + 1 + i).getMobID());
+
+            Mob.Prototype m = /*i == 0 ? null :*/ Mob.getMobById(lvl.getWave(lvl.currentWave + 1 + i).getMobID());//
+//            System.out.println(m.getName());
 
             if(m.getMoveType() == Mob.MoveType.ground){
                 if(ground == 0) mobNameS += FontLoader.getOneColorButtonString(0, m.getName(), Color.FIREBRICK, Color.BLACK);
@@ -151,12 +156,31 @@ public class NextWaveInfoPanel extends Table{
             }
 
 
-            if(/*i + 1 != spawners &&*/ spawners == 1 || Mob.getMobById(lvl.getWave(lvl.currentWave + 2 + i).getMobID()).getName() != m.getName()) {
+//            System.out.println(lvl.currentWave + 2 + i);
+//            System.out.println(lvl.getWave(lvl.currentWave + 2 + i).getMobID());
+
+            if(/*i + 1 != spawners &&*/ i == 0 || !Mob.getMobById(lvl.getWave(lvl.currentWave + /*2 +*/ i).getMobID()).getName().equals(m.getName())) {
+//                System.out.println(Mob.getMobById(lvl.getWave(lvl.currentWave + 2 + i).getMobID()).getName() + " " + m.getName());
+                if(i != 0/*i + 1 != spawners*/){
+                    mobHealthS += " + ";
+                    mobArmorS += " + ";
+                    mobSpeedS += " + ";
+                    mobDmgS += " + ";
+                    mobBountyS += " + ";
+                }
+
                 mobHealthS += m.getHealth();
                 mobArmorS += m.getArmor();
                 mobSpeedS += m.getSpeed();
                 mobDmgS += m.getDmg();
                 mobBountyS += m.getBounty();
+
+                if(i != 0) {
+                    Label space = new Label("       +", GDefence.getInstance().assetLoader.getInfoPanelSkin());
+                    space.setAlignment(Align.center);
+                    tmp.add(space);
+                    //                abilitiesS += " + ";
+                }
 
                 boolean empty = true;
                 for (MobAbility.AbilityPrototype ab:m.getAbilities()){
@@ -164,7 +188,6 @@ public class NextWaveInfoPanel extends Table{
 //                        if(!empty) row();
                         //abilitiesS += System.getProperty("line.separator");
                         //abilitiesS += ab.getName();
-
                         Label label = new Label(ab.getName(), GDefence.getInstance().assetLoader.getInfoPanelSkin());
                         label.setAlignment(Align.center);
                         AbilityTooltip aTooltip = new AbilityTooltip(this, ab, GDefence.getInstance().assetLoader.getSkin());
@@ -176,24 +199,15 @@ public class NextWaveInfoPanel extends Table{
                         empty = false;
                     }
                 }
-                if(empty)tmp.add(new Label("none", GDefence.getInstance().assetLoader.getInfoPanelSkin()));
+                if(empty)tmp.add(new Label(l.getWord("none"), GDefence.getInstance().assetLoader.getInfoPanelSkin()));
                     //abilitiesS += "none";
-                if(i + 1 != spawners){
-                    mobHealthS += " + ";
-                    mobArmorS += " + ";
-                    mobSpeedS += " + ";
-                    mobDmgS += " + ";
-                    mobBountyS += " + ";
-                }
+
             }
+
             if(i + 1 != spawners) {
                 mobNameS += " + ";
                 currentWaveS += " + ";
                 mobsNumberS += " + ";
-                Label l = new Label("       +", GDefence.getInstance().assetLoader.getInfoPanelSkin());
-                l.setAlignment(Align.center);
-                tmp.add(l);
-//                abilitiesS += " + ";
             }
         }
         return tmp;

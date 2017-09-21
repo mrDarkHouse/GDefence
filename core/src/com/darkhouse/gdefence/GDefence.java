@@ -48,6 +48,9 @@ public class GDefence extends Game {
 	public CampainChoose getCampainChoose() {
 		return campainChoose;
 	}
+    public void flushCampainChoose(){
+        campainChoose = new CampainChoose();
+    }
 	public OptionScreen getOptionScreen() {
 		return optionScreen;
 	}
@@ -63,6 +66,18 @@ public class GDefence extends Game {
 	public Smith getSmith() {
 		return smith;
 	}
+
+    public void flushCampainScreens(){
+        initCampainMap();
+        arsenal = new Arsenal();
+        arsenal.init();
+        store = new Store();
+        store.init();
+        smith = new Smith();
+        smith.init();
+        levelPreparationScreen = new LevelPreparationScreen();
+    }
+
 	public LevelPreparationScreen getLevelPreparationScreen() {
 		return levelPreparationScreen;
 	}
@@ -72,7 +87,12 @@ public class GDefence extends Game {
 
 	public AssetLoader assetLoader = new AssetLoader();
 
-	//public AssetManager assets;
+    public boolean vSync;
+
+//    public boolean isvSync() {
+//        return vSync;
+//    }
+    //public AssetManager assets;
 
 
 	@Override
@@ -86,7 +106,7 @@ public class GDefence extends Game {
 
 
 
-		user = new User();//
+//		user = new User();//
 
 		//setScreen(new StartingLoadScreen());
 		switchScreen(new StartingLoadScreen());
@@ -149,15 +169,15 @@ public class GDefence extends Game {
 		mainMenu = new MainMenu();
 		mainMenu.init();
 		campainChoose = new CampainChoose();
-        initCampainMap();
+//        initCampainMap();
 		optionScreen = new OptionScreen();
-		arsenal = new Arsenal();
-		arsenal.init();
-		store = new Store();
-		store.init();
-		smith = new Smith();
-		smith.init();
-		levelPreparationScreen = new LevelPreparationScreen();
+//		arsenal = new Arsenal();
+//		arsenal.init();
+//		store = new Store();
+//		store.init();
+//		smith = new Smith();
+//		smith.init();
+//		levelPreparationScreen = new LevelPreparationScreen();
 	}
 
 	public void switchScreen(Screen screen){

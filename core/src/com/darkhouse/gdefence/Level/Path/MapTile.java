@@ -96,7 +96,11 @@ public abstract class MapTile extends GDSprite{
             case 0:
                 return new Grass();
             case 18:
-                return new Road(Way.values()[Integer.parseInt(info[1])], TargetType.values()[Integer.parseInt(info[2])]);
+                return new Road();
+//                if(Integer.parseInt(info[1]) == 5) return new Road(null, TargetType.values()[Integer.parseInt(info[2])]);
+//                else return new Road(Way.values()[Integer.parseInt(info[1])], TargetType.values()[Integer.parseInt(info[2])]);
+//            case 19:
+//                return new Road(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])], TargetType.values()[Integer.parseInt(info[3])]);
             case 20:
                 return new Turn(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
                         TargetType.values()[Integer.parseInt(info[3])]);

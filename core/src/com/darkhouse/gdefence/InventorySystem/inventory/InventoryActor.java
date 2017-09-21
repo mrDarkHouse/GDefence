@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 
@@ -65,7 +66,7 @@ public class InventoryActor extends Window {
 	}
 
 	public InventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin) {
-		super("Inventory", skin, "description");
+		super(GDefence.getInstance().assetLoader.getWord("towers"), skin, "description");
 		getTitleLabel().setAlignment(Align.center);
 		setMovable(false);
 

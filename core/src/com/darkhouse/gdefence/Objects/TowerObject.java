@@ -13,6 +13,7 @@ import com.darkhouse.gdefence.User;
 
 public class TowerObject implements ExpEarner, GameObject, GemGradable{
 
+
     public static boolean isMatches(Class<? extends GameObject> a, Class<? extends GameObject> b){
         if(a == b) return true;
         if(a.getSuperclass() == b) return true;//a Recipe b Detail
@@ -42,8 +43,8 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         return null;
     }
 
-
-    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
+    private static int[] exp2nextLvl = {20, 30, 40, 60, 75, 90};
+//    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
 
     private ItemEnum.Tower prototype;
     private int level;
@@ -256,12 +257,22 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         }
     }
 
-    public void updateExp(){
-        currentExp = getTotalExp();
-        for(int i = level - 1; currentExp >= exp2nextLvl[i]; i++){//if max lvl throws exeption
-            currentExp -= exp2nextLvl[i];
-            level++;
+    public void updateExp(){//currentExp bug
+        float tmpExp = getTotalExp();
+
+        int n = 1;
+        for(int i = /*level - 1*/0; tmpExp >= exp2nextLvl[i]; i++){//if max lvl throws exeption//TODO
+            tmpExp -= exp2nextLvl[i];
+            n++;
         }
+        level = n;
+//        System.out.println(tmpExp);
+        currentExp = tmpExp;
+    }
+
+    @Override
+    public int[] exp2nextLevel() {
+        return exp2nextLvl;
     }
 
     public boolean equalsOrHigher(TowerObject anotherTower){

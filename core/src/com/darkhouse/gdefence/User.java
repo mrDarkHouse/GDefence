@@ -182,8 +182,8 @@ public class User {
         }
     }
 
-    public Gradable maxHealth = new Gradable("Max Health", 5, 10, 5, 100, 25);
-    public Gradable maxEnergy = new Gradable("Max Energy", 5, 50, 10, 100, 25);
+    public Gradable maxHealth = new Gradable("Max Health", 5, 5, 5, 100, 25);
+    public Gradable maxEnergy = new Gradable("Max Energy", 5, 30, 10, 100, 25);
 
     //public void upHealth(){
     //    addMaxHealth(5);
@@ -562,27 +562,28 @@ public class User {
 
     public void initNewUser(){
         GDefence.getInstance().log("Init new User");
-        flush();
-        this.totalExp = 0;
-        addGold(7000);
+//        GDefence.getInstance().user = new User();
+//        flush();
+//        this.totalExp = 0;
+//        addGold(7000);
+        addGold(160);
         currentMap = 1;
 
-        openResearch(Research.Powder);
-        openResearch(Research.Steam);
+//        openResearch(Research.Powder);
+//        openResearch(Research.Steam);
 //        towerInventory = new Inventory(TowerObject.class, 35);
 //        spellInventory = new Inventory(SpellObject.class, 35);
 //        detailInventory = new Inventory(DetailObject.class, 35);
 
-//        System.out.println(storePanel);//TODO
-
         setStorePanel(GDefence.getInstance().getStore().getStoreBuyPanel());
         setTowerMap(GDefence.getInstance().getArsenal().getTowerMap());
+        openTowerToBuy(ItemEnum.Tower.Basic);
 
 
 //        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
-        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
-        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
-        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
+//        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
+//        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
+//        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
 
 //        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addExp(500f);
 //        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.RED, 3);
@@ -643,7 +644,9 @@ public class User {
 
 //        this.levelsAvailable[0] = true;
 
-        openTowerToBuy(ItemEnum.Tower.Basic);
+
+
+//        addGems(GEM_TYPE.RED, 1);
 //        storePanel.store(ItemEnum.Tower.Rock);
 //        storePanel.store(ItemEnum.Tower.Arrow);
 //        storePanel.store(ItemEnum.Tower.Range);
@@ -652,13 +655,16 @@ public class User {
 //        storePanel.store(ItemEnum.Tower.Arrow);
 
         openLevel(1);
-//        openLevel(2);
-//        openLevel(3);
-//        openLevel(4);
-//        openLevel(5);
-//        openLevel(6);
-//        openLevel(7);
-//        openLevel(8);
+        openLevel(2);
+        openLevel(3);
+        openLevel(4);
+        openLevel(5);
+        openLevel(6);
+        openLevel(7);
+        openLevel(8);
+        openLevel(9);
+        openLevel(10);
+        openLevel(11);
 //        levelsAvailable[5] = true;
 //        levelsAvailable[6] = true;
 //        levelsAvailable[4] = true;
@@ -730,25 +736,29 @@ public class User {
     }
     public void flush(){
         GDefence.getInstance().log("User flush");
-        gold = 0;
-        totalExp = 0;
-        currentExp = 0;
-        for (int i = 0; i < gems.length; i++){
-            gems[i] = 0;
-        }
-        getTowerInventory().flush();
-        getSpellInventory().flush();
-        getDetailInventory().flush();
-        initOpenedTowers();//default towers
-        for (int i = 0; i < levelsAvailable.length; i++){
-            levelsAvailable[i] = false;
-        }
-        for (int i = 0; i < levelsCompleted.length; i++){
-            levelsCompleted[i] = false;
-        }
+//        GDefence.getInstance().flushCampainScreens();
 
-        setStorePanel(null);
-        setTowerMap(null);
+//        gold = 0;
+//        totalExp = 0;
+//        currentExp = 0;
+//        for (int i = 0; i < gems.length; i++){
+//            gems[i] = 0;
+//        }
+//        getTowerInventory().flush();
+//        getSpellInventory().flush();
+//        getDetailInventory().flush();
+//        initOpenedTowers();//default towers
+//        for (int i = 0; i < levelsAvailable.length; i++){
+//            levelsAvailable[i] = false;
+//        }
+//        for (int i = 0; i < levelsCompleted.length; i++){
+//            levelsCompleted[i] = false;
+//        }
+
+
+
+//        setStorePanel(null);
+//        setTowerMap(null);
 
         //etc
     }

@@ -228,19 +228,20 @@ public class Map {
         Array<MapTile> path = new Array<MapTile>();
         path.add(spawner);
 
+        Way manipulatedWay = null;
         while (!(path.peek() instanceof Castle)) {
             MapTile currentTile = path.peek();
             Walkable thisTile = ((Walkable) currentTile);
-            Way manipulatedWay = thisTile.manipulatePath(type);
+            manipulatedWay = thisTile.manipulatePath(type, manipulatedWay);
             int i = 1;//
             while(manipulatedWay == null){
-                manipulatedWay = ((Walkable) path.get(path.size - 1 - i)).manipulatePath(type);//last - i
+                manipulatedWay = ((Walkable) path.get(path.size - 1 - i)).manipulatePath(type, manipulatedWay);//last - i
                 i++;
             }
             int[] coord = Way.getCoordOffset(manipulatedWay, currentTile.getIndexX(), currentTile.getIndexY());
             MapTile checkTile = tiles[coord[0]][coord[1]];
             if (checkTile instanceof Walkable) path.add(checkTile);
-            else throw new IllegalArgumentException("Path logic is wrong, bad tile is " + "x " + coord[0] + "y " + coord[1]);
+            else throw new IllegalArgumentException("Path logic is wrong, bad tile is " + "x " + coord[0] + " y " + coord[1]);
         }
         GDefence.getInstance().log("End generate path for " + type.name());
         return path;
@@ -256,7 +257,7 @@ public class Map {
             Array<Path> possiblePaths = new Array<Path>();
             Path currentPath;
             for (int i = 0; i < spawner.size(); i++){
-                while (true) {//rework with deleting break and infinity loop
+                while (true) {//rework with deleting break and infinity loop//TODO
                     currentPath = new Path(generatePath(spawner.get(i), moveType), i);
                     if (!possiblePaths.contains(currentPath, false)) {
                         possiblePaths.add(currentPath);//override contains
@@ -325,6 +326,7 @@ public class Map {
     private void initMap(final int number){
         MapLoader ml = new MapLoader(number);
         tiles = ml.loadMap();
+        initBaseTextures();
         ml.loadProperties(ml.getSpawnersNumber(), false);//may do outside (in Level class)
         setIndexTiles();//
         searchSpawner();
@@ -411,8 +413,17 @@ public class Map {
                     }
                     switch (rightTiles.size){
                         case 2://turn
-                            if(rightTiles.get(0).getIndexX() == rightTiles.get(1).getIndexX() ||
-                                    rightTiles.get(0).getIndexY() == rightTiles.get(1).getIndexY()) {//check for line road (--- or -/n-/n- )
+//                            if(rightTiles.get(0).getIndexX() == rightTiles.get(1).getIndexX() ||
+//                                    rightTiles.get(0).getIndexY() == rightTiles.get(1).getIndexY()) {//check for line road (--- or -/n-/n- )
+////                                break;
+//
+//                            }
+                            if(rightTiles.get(0).getIndexX() == rightTiles.get(1).getIndexX()){
+                                texture = GDefence.getInstance().assetLoader.get("Path/roadVertical.png", Texture.class);//do water
+                                break;
+                            }
+                            if(rightTiles.get(0).getIndexY() == rightTiles.get(1).getIndexY()){
+                                texture = GDefence.getInstance().assetLoader.get("Path/roadHorizontal.png", Texture.class);
                                 break;
                             }
 //                            if(rightTiles.get(0).isSwimmable() && rightTiles.get(1).isSwimmable() && road.isSwimmable()){
@@ -529,7 +540,7 @@ public class Map {
 
                             break;
                         case 4://cross
-
+                            texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/cross.png");
                             break;
                     }
                     if(texture != null)road.setRegion(texture);

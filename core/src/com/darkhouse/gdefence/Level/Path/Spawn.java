@@ -10,6 +10,10 @@ public class Spawn extends MapTile implements Walkable{
     private Way startWay;
     private TargetType applyMobs;
 
+    public Way getStartWay() {
+        return startWay;
+    }
+
     @Override
     public TargetType getApplyMobs() {
         return applyMobs;
@@ -45,7 +49,7 @@ public class Spawn extends MapTile implements Walkable{
     }
 
     @Override
-    public Way manipulatePath(Mob.MoveType enterMobType) {
+    public Way manipulatePath(Mob.MoveType enterMobType, Way currentWay) {
         return startWay;
     }
 }

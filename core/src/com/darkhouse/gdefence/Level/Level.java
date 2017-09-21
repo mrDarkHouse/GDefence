@@ -282,7 +282,9 @@ public class Level {
             case 2:
                 Random rand = new Random();
                 String[] range = curr[1].split("-");
-                int count = rand.nextInt((Integer.parseInt(range[1]) - Integer.parseInt(range[0])) + 1) + Integer.parseInt(range[0]);
+                int count;
+                if(range.length > 1) count = rand.nextInt((Integer.parseInt(range[1]) - Integer.parseInt(range[0])) + 1) + Integer.parseInt(range[0]);
+                else count = Integer.parseInt(range[0]);//One item
                 ItemEnum.addItemById(Integer.parseInt(curr[0]), count, GDefence.getInstance().user);
 //                DropSlot slot = ;
                 drop.add(new DropSlot(ItemEnum.getItemById(Integer.parseInt(curr[0])), count));

@@ -57,6 +57,11 @@ public class IceBlast extends Spell/* implements Spell.IAoe*/{
         public int getAoe() {
             return aoe.get();
         }
+
+        @Override
+        public int[] exp2nextLevel() {
+            return new int[]{20, 30, 40, 50, 60};
+        }
     }
     public static class G extends Ability.AbilityGrader{
         private int dmgUp;

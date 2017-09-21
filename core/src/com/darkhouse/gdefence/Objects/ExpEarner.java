@@ -7,6 +7,7 @@ public interface ExpEarner {
     float getTotalExp();
     float getCurrentExp();
     void updateExp();
+    int[] exp2nextLevel();
 
 
 }

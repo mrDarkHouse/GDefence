@@ -90,7 +90,7 @@ public class AssetLoader extends AssetManager{
     }
 
     public void setFilters(){
-        b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+        b = get("Language/text", I18NBundle.class);
 
 //        get("skins/uiskin.json", Skin.class).add("default-font", FontLoader.generateFont(20, Color.BLACK), BitmapFont.class);
         get("skins/uiskin.json", Skin.class).getFont("default-font").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -371,6 +371,8 @@ public class AssetLoader extends AssetManager{
         load("Path/Turn/turnWaterGroundRUD.png", Texture.class);
         load("Path/Turn/turnWaterGroundRUR.png", Texture.class);
 
+        load("Path/Turn/cross.png", Texture.class);
+
         load("Path/Signer/signLL.png", Texture.class);
         load("Path/Signer/signRR.png", Texture.class);
         load("Path/Signer/signUU.png", Texture.class);
@@ -574,6 +576,19 @@ public class AssetLoader extends AssetManager{
         return b.get(word);
     }
 
+    public String getLanguage(){
+//        if(b.getLocale() == Locale.US) return "us";
+        return b.getLocale().getLanguage();
+    }
+    public void changeLang(String locale){
+        unload("Language/text");
+        I18NBundleLoader.I18NBundleParameter param = new I18NBundleLoader.I18NBundleParameter(new Locale(locale), "UTF-8");
+        load("Language/text", I18NBundle.class, param);
+        finishLoading();
+        b = get("Language/text", I18NBundle.class);
+        GDefence.getInstance().initScreens();
+        GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
+    }
 
 
     public ImageButton.ImageButtonStyle generateImageButtonSkin(Texture t){
@@ -801,15 +816,15 @@ public class AssetLoader extends AssetManager{
 //        Label.LabelStyle l = new Label.LabelStyle();
 //        l.font = FontLoader.impact16;
 //        l.fontColor = Color.BLACK;
-        return FontLoader.generateStyle(20, Color.BLACK);
+        return FontLoader.generateStyle(16, Color.BLACK);
     }
     public Label.LabelStyle getCurrentInfoPanelSkin(){
 //        Label.LabelStyle l = new Label.LabelStyle();
 //        l.font = FontLoader.impact24;
 //        l.fontColor = Color.BLACK;
-        return FontLoader.generateStyle(24, Color.BLACK);
+        return FontLoader.generateStyle(20, Color.BLACK);
     }
-    public static Label.LabelStyle getLevelEndResultSkin(){
+    public Label.LabelStyle getLevelEndResultSkin(){
 //        Label.LabelStyle l = new Label.LabelStyle();
 //        l.font = FontLoader.impact36;
 //        l.fontColor = Color.BLACK;

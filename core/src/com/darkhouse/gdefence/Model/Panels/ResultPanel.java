@@ -23,16 +23,19 @@ public class ResultPanel extends AbstractPanel{
     }
 
     private void init(){
-        String mobsKilled = "Killed mobs: " + manager.getMobsKilled();
-        String hpLoose = "Hp loose: " + manager.getHpLoose();
-        String moneySpend = "Energy spend: " + manager.getEnergySpend();
+        pad(20);
+        AssetLoader l = GDefence.getInstance().assetLoader;
+
+        String mobsKilled = l.getWord("killedMobs") + ": " + manager.getMobsKilled();
+        String hpLoose = l.getWord("hpLoose") + ": " + manager.getHpLoose();
+        String moneySpend = l.getWord("energySpend") + ": " + manager.getEnergySpend();
 
 
-        setBackground(GDefence.getInstance().assetLoader.getSkin().getDrawable("info-panel"));
+        setBackground(l.getSkin().getDrawable("info-panel"));
 
-        Label mobsKilledLabel = new Label(mobsKilled, GDefence.getInstance().assetLoader.getTimerSkin());
-        Label hpLooseLabel = new Label(hpLoose, GDefence.getInstance().assetLoader.getTimerSkin());
-        Label mobeySpendLabel = new Label(moneySpend, GDefence.getInstance().assetLoader.getTimerSkin());
+        Label mobsKilledLabel = new Label(mobsKilled, l.getTimerSkin());
+        Label hpLooseLabel = new Label(hpLoose, l.getTimerSkin());
+        Label mobeySpendLabel = new Label(moneySpend, l.getTimerSkin());
 
         add(mobsKilledLabel).align(Align.left).row();
         add(hpLooseLabel).align(Align.left).row();

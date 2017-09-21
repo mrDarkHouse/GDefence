@@ -38,7 +38,7 @@ public class TowerTooltip extends AbstractTooltip{
 
 
         final float width = getWidth();
-        expBar = new ProgressBar(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.2f, false,
+        expBar = new ProgressBar(0, tower.getTowerPrototype().exp2nextLevel()[tower.getTowerPrototype().getLevel() - 1], 0.2f, false,
                 GDefence.getInstance().assetLoader.getExpBarSkin()) {
             @Override
             public float getPrefWidth() {

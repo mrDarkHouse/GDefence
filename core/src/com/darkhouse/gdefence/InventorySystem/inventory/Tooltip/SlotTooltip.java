@@ -73,6 +73,7 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
         clear();
         //Label label = //new Label("Super awesome description of " + slot.getPrototype(), skin);
         Label label = new Label(slot.getTooltip(), skin, "description");
+//        label.setAlignment(Align.center);
         add(label).row();//row can bad
 
         if (slot instanceof Slot) {
@@ -90,7 +91,7 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
                 final float width = getWidth();
 
 
-                ProgressBar expBar = new ProgressBar(0, GDefence.getInstance().user.getMaxExpThisLvl(), 0.2f, false,
+                ProgressBar expBar = new ProgressBar(0, t.exp2nextLevel()[t.getLevel() - 1], 0.2f, false,
                         GDefence.getInstance().assetLoader.getExpBarSkin()) {
                     @Override
                     public float getPrefWidth() {

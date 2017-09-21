@@ -1,6 +1,8 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -60,7 +62,7 @@ public class Sprint extends MobAbility implements MobAbility.ISpawn{
         private int speedBoost;
 
         public P(float cdCap, float duration, int speedBoost) {
-            super("Sprint", false);
+            super("sprint", false);
             this.cdCap = cdCap;
             this.duration = duration;
             this.speedBoost = speedBoost;
@@ -71,9 +73,13 @@ public class Sprint extends MobAbility implements MobAbility.ISpawn{
 
         @Override
         public String getTooltip() {
-            return "Increase move speed by [#64A619ff]" + speedBoost +  System.getProperty("line.separator") +
-                    "[] for [#64A619ff]" + duration + "[] seconds" +  System.getProperty("line.separator") +
-                    "every [#64A619ff]" + cdCap + "[] seconds";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+//            return "Increase move speed by [#64A619ff]" + speedBoost + System.getProperty("line.separator") +
+//                    "[] for [#64A619ff]" + duration + "[] seconds" +  System.getProperty("line.separator") +
+//                    "every [#64A619ff]" + cdCap + "[] seconds";
+            return l.getWord("sprintTooltip1") + speedBoost + System.getProperty("line.separator") +
+                   l.getWord("sprintTooltip2") + duration + l.getWord("sprintTooltip3") /*+ System.getProperty("line.separator")*/ +
+                   l.getWord("sprintTooltip4") + cdCap + l.getWord("sprintTooltip3");
         }
     }
 
