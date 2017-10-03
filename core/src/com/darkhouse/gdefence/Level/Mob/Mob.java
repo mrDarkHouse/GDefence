@@ -18,6 +18,7 @@ import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Objects.DamageSource;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
+import java.awt.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Mob extends Effectable{
@@ -30,7 +31,7 @@ public class Mob extends Effectable{
         JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 4/*, new Sadist.P(3, 35)*/),
         Boar       ("Boar",       "mob5",    MoveType.ground, 2500, 5, 50,  100, 7/*, new LayerArmor.P(10, 2), new StrongSkin.P(15, 2)*/),
         Slime      ("Slime",      "mob",     MoveType.ground, 50,  0, 50,  1, 2),
-        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5/*, new Swimmable.P("Mobs/mob6swim.png"), new WaterFeel.P(20), new WaterDefend.P(4)*/);
+        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable.P("Mobs/mob6swim.png"), new WaterFeel.P(20)/*, new WaterDefend.P(4)*/);
         // {
 //            @Override
 //            publ ic void setAbilities() {
@@ -175,7 +176,7 @@ public class Mob extends Effectable{
     //private double pxlPerHealth;
     protected boolean inGame = true;
     //protected int xC, yC;
-    protected MapTile currentTile;
+    protected WalkableMapTile currentTile;
 
     private String texturePath;
     private ProgressBar hpBar;
@@ -255,6 +256,7 @@ public class Mob extends Effectable{
         initEffectable();
 
         setState(State.normal);
+        setRegion(GDefence.getInstance().assetLoader.getMobTexture(texturePath));//
 
 //        effects = new ArrayList<Effect>();
 //        effectBar = new EffectBar();
@@ -498,12 +500,14 @@ public class Mob extends Effectable{
     private void step(float delta){
 //        currentTile = Level.getMap().getTileContainMob(this);
         MapTile t = Level.getMap().getTileContainMob(this);
-        if(t!= null && t != currentTile) {
+        if(t!= null && t != currentTile && t instanceof WalkableMapTile) {
+//            System.out.println(t);
             //MapTile nextTile = Level.getMap().getNextTile(currentTile, way);
             //if(nextTile!= null && nextTile.getType() != moveType){
-            checkTurn(t);
+            WalkableMapTile tt = ((WalkableMapTile) t);
+            checkTurn(tt);
             //}
-            currentTile = t;
+//            currentTile = tt;
             useMoveAbilities();
 //            System.out.println(speed);
         }
@@ -515,7 +519,7 @@ public class Mob extends Effectable{
 
             switch (way) {
                 case RIGHT:
-                    setX(getX() + delta);//bug when delta > time when check turn
+                    setX(getX() + delta);//bug when delta > time when check turn//fixed maybe
                     break;
                 case LEFT:
                     setX(getX() - delta);
@@ -529,22 +533,30 @@ public class Mob extends Effectable{
             }
         }
     }
-    private void checkTurn(MapTile currentTile){
+    private void checkTurn(WalkableMapTile t){
 //        if(currentTile != null){
             //System.out.println(currentTile.getLogic());
-            Walkable t = ((Walkable) currentTile);
+//        WalkableMapTile t = (/*(WalkableMapTile)*/ currentTile);
 
+//        System.out.println(t);
 //            Way w = Map.checkTurnWay(currentTile);
-            Way w = t.manipulatePath(this.getMoveType(), way);//must call 1 time per block
+        Point v = t.manipulateMob();
+        if(v != null) {
+            teleport(Level.getMap().getTiles()[v.y][v.x].getX(), Level.getMap().getTiles()[v.y][v.x].getY());
+            currentTile = ((WalkableMapTile) Level.getMap().getTileContainMob(this));
+        }else currentTile = t;//vrode tak norm no esli che to mozet v etom problema
 
 
-            if(w!= null && way!= w){
-                way = w;
-                //System.out.println(way);
-                //System.out.println(currentTile.getLogic());
-            }
+        Way w = currentTile.manipulatePath(this.getMoveType(), way);
 
-//        }
+
+        if(w!= null && way!= w){
+            way = w;
+            //System.out.println(way);
+            //System.out.println(currentTile.getLogic());
+        }
+
+//    }
     }
     private void checkCastle(MapTile currentTile){
         if(currentTile != null){
@@ -565,10 +577,10 @@ public class Mob extends Effectable{
     }
 
 
-    public void spawn(MapTile spawner){
+    public void spawn(WalkableMapTile spawner){
 //        System.out.println("spawned " + this.getName());
 //        way = Map.checkSpawnerWay(spawner);
-        setRegion(GDefence.getInstance().assetLoader.getMobTexture(texturePath));
+//        setRegion(GDefence.getInstance().assetLoader.getMobTexture(texturePath));//
 //        setUserObject(GDefence.getInstance().assetLoader.getMobTexture(texturePath));
 
 
@@ -582,6 +594,10 @@ public class Mob extends Effectable{
         useSpawnAbilities();
         //setDrawable(texturePath);
 
+    }
+    public void teleport(float x, float y){
+        setX(x);//if in bounds
+        setY(y);
     }
 //    public abstract void update();
 

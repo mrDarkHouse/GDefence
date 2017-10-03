@@ -18,11 +18,14 @@ public class GlobalSlow extends Spell{
     public static class P extends SpellObject implements Spell.INonTarget{
         private AtomicReference<Float> slowPercent;
         private AtomicReference<Integer> duration;//Float
+        private G g;
 
         public P(int energyCost, int cooldown, float slowPercent, int duration, G grader) {
-            super("Global Slow", "globalSlow", energyCost, cooldown, grader.gemCap, Mob.class);
+            super(20, "Global Slow", "globalSlow", energyCost, cooldown, grader.gemCap, Mob.class);
             this.slowPercent = new AtomicReference<Float>(slowPercent);
             this.duration = new AtomicReference<Integer>(duration);
+            this.g = grader;
+
 
 
             gemBoost[0] = new Ability.AbilityPrototype.BoostFloat(this.slowPercent, grader.slowPercentUp, "Slow Percent",
@@ -41,6 +44,23 @@ public class GlobalSlow extends Spell{
             return "Slows all mobs on map by " + (int)(slowPercent.get()*100) + "%" + System.getProperty("line.separator") +
                     "for " + duration + " seconds";
         }
+
+        @Override
+        public String getSaveCode() {
+            return super.getSaveCode() + ";" + slowPercent + ";" + duration + ";" + g.slowPercentUp + ";" + g.durationUp;
+        }
+
+        @Override
+        public Ability.AbilityPrototype copy() {
+            P p = new P(energyCost, cooldown, slowPercent.get(), duration.get(), g);
+//            p.gemBoost[0] = new BoostFloat();
+            p.gemBoost[0] = new Ability.AbilityPrototype.BoostFloat(this.slowPercent, g.slowPercentUp, "Slow Percent",
+                    true, Ability.AbilityPrototype.BoostFloat.FloatGradeFieldType.PERCENT);
+            p.gemBoost[1] = new Ability.AbilityPrototype.BoostInteger(this.duration, g.durationUp, "Slow duration",
+                    true, Ability.AbilityPrototype.BoostInteger.IntegerGradeFieldType.NONE);
+            return p;
+        }
+
 
         @Override
         public Item getPrototype() {

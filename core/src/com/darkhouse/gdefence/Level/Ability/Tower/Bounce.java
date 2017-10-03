@@ -19,12 +19,17 @@ public class Bounce extends Ability implements Ability.IAfterHit{
         private AtomicReference<Integer> maxRange;
 
         public P(int bounces, float resDmgFromEachBounce, int maxRange, G grader) {
-            super("Bounce", "bounce", grader.gemCap);
+            super(7, "Bounce", "bounce", grader.gemCap);
             this.bounces = new AtomicReference<Integer>(bounces);
             this.resDmgFromEachBounce = new AtomicReference<Float>(resDmgFromEachBounce);
             this.maxRange = new AtomicReference<Integer>(maxRange);
             this.grader = grader;
         }
+
+//        @Override
+//        public String getSaveCode() {
+//            return null;
+//        }
 
         @Override
         public AbilityPrototype copy() {

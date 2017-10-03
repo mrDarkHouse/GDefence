@@ -20,11 +20,17 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
         private AtomicReference<Integer> range;
 
         public P(int maxTargets, int range, G grader) {
-            super("Steel Arrow", "steelArrow", grader.gemCap);
+            super(12, "Steel Arrow", "steelArrow", grader.gemCap);
             this.maxTargets = new AtomicReference<Integer>(maxTargets);
             this.range = new AtomicReference<Integer>(range);
             this.grader = grader;
         }
+
+        @Override
+        public String getSaveCode() {
+            return null;
+        }
+
         @Override
         public AbilityPrototype copy() {
             P p = new P(maxTargets.get(), range.get(), grader);

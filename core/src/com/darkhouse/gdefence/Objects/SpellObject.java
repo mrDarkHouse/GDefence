@@ -16,7 +16,19 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
     //                                 30  100 230  420  660  800  1230 1760
 
     public static SpellObject loadSaveCode(String s) {
-        return null;
+        String[] info = s.split("-");
+        Ability.AbilityPrototype a = Ability.AbilityPrototype.loadAbilityCode(info[1]);
+        if (a instanceof SpellObject) {
+            SpellObject sp = ((SpellObject) a);
+            sp.totalExp = Float.parseFloat(info[0]);
+            return sp;
+        }
+        else throw new RuntimeException("che ti loadish daun eto ne spell save");
+    }
+
+    @Override
+    public String getSaveCode() {
+        return totalExp + "-" + super.getSaveCode() + "z" + energyCost + ";" + cooldown;
     }
 
 
@@ -55,8 +67,8 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
         }
     }
 
-    private int energyCost;
-    private int cooldown;
+    protected int energyCost;
+    protected int cooldown;
 
     private Array<Class<? extends Effectable>> affectedTypes;
 
@@ -72,9 +84,9 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
         return cooldown;
     }
 
-    public SpellObject(String name, String texturePath, int energyCost, int cooldown, int[] maxGems,
+    public SpellObject(int id, String name, String texturePath, int energyCost, int cooldown, int[] maxGems,
                        Class<? extends Effectable>... affectedTypes) {
-        super(name, texturePath, maxGems);
+        super(id, name, texturePath, maxGems);
         this.affectedTypes = new Array<Class<? extends Effectable>>(affectedTypes);
         this.energyCost = energyCost;
         this.cooldown = cooldown;
@@ -93,10 +105,10 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
         return name + " " + getGemStat();
     }
 
-    @Override
-    public Ability.AbilityPrototype copy() {
-        return null;
-    }
+//    @Override
+//    public Ability.AbilityPrototype copy() {
+//        return null;
+//    }
 
     @Override
     public String getTooltip() {
@@ -114,8 +126,8 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
     @Override
     public String getGemGradeTooltip(User.GEM_TYPE gemType) {
         String s = "";
-        if(level > getGemsNumber()) s += "Up spell level to upgrade" + System.getProperty("line.separator");
-        return s + super.getGemGradeTooltip(gemType);
+        if(level <= getGemsNumber() && super.canGrade(gemType)) s += "Up spell level to upgrade" + System.getProperty("line.separator");
+        return s + super.getGemGradeTooltip(gemType);//TODO Max when not max
     }
 
     @Deprecated
@@ -131,10 +143,8 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
 //        return null;
 //    }
 
-    @Override
-    public String getSaveCode() {
-        return null;
-    }
+
+
 
 
 

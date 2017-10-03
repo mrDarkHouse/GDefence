@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 import com.badlogic.gdx.graphics.Texture;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Path.MapTile;
+import com.darkhouse.gdefence.Level.Path.WalkableMapTile;
 
 public class Swimmable extends MobAbility implements MobAbility.IMove{
 
@@ -44,7 +45,7 @@ public class Swimmable extends MobAbility implements MobAbility.IMove{
     }
 
     @Override
-    public void move(MapTile currentTile) {
+    public void move(WalkableMapTile currentTile) {
 //        System.out.println(owner);
 //        System.out.println(owner.getTexture());
         if(currentTile.isSwimmable()){

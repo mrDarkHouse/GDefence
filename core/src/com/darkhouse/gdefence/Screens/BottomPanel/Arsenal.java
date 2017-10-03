@@ -45,11 +45,11 @@ public class Arsenal extends AbstractCampainScreen{
         //init();
     }
 
-    @Override
-    public void hide() {
-        super.hide();
-
-    }
+//    @Override
+//    public void hide() {
+//        super.hide();
+//
+//    }
 
     public void init(){
         //Skin skin = LibgdxUtils.assets.get("skins/uiskin.json", Skin.class);

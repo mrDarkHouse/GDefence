@@ -15,10 +15,15 @@ public class Splash extends Ability implements Ability.IAfterHit{
         private AtomicReference<Integer> aoe;
 
         public P(int aoe, float aoeDmg, G grader) {
-            super("Splash", "splash", grader.gemCap);
+            super(10, "Splash", "splash", grader.gemCap);
             this.aoe = new AtomicReference<Integer>(aoe);
             this.aoeDmg = new AtomicReference<Float>(aoeDmg);
             this.grader = grader;
+        }
+
+        @Override
+        public String getSaveCode() {
+            return null;
         }
 
         @Override

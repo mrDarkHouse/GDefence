@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
+import com.darkhouse.gdefence.Level.Ability.Spell.GlobalSlow;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
@@ -15,11 +16,49 @@ public abstract class Ability {
 
     public abstract static class AbilityPrototype implements GemGradable{
 //        protected AbilityGrader grader;
+        protected int id;
         protected String name;
         protected String texturePath;
         protected int[] gemsNumber = new int[3];
         protected int[] gemsMax = new int[3];
         public Boost[] gemBoost = new Boost[3];
+
+        public AbilityPrototype gemCur(int[] gems){
+            gemsNumber = gems;
+            return this;
+        }
+
+        public String getSaveCode(){
+            return id + "z" + gemsNumber[0] + ";" + gemsNumber[1] + ";" + gemsNumber[2] + ";" + gemsMax[0] + ";" + gemsMax[1] + ";" + gemsMax[2];
+        }
+        public static AbilityPrototype loadAbilityCode(String code){
+            String[] info = code.split("z");
+            int id = Integer.parseInt(info[0]);
+            String[] tmp = info[1].split(";");
+            int[] gemCur = new int[3];
+            int[] gemCap = new int[3];
+            for (int i = 0; i < gemCap.length; i++){
+                gemCur[i] = Integer.parseInt(tmp[i]);
+            }
+            for (int i = 3; i < gemCap.length*2; i++){
+                gemCap[i - 3] = Integer.parseInt(tmp[i]);
+            }
+            String[] param = info[2].split(";");
+//            System.out.println(param[0] + " " + param[1] + " " + param[2] + " " +param[3] + " " +param[4]);
+
+            switch (id){//TODO do all
+                case 0:
+                return new Bash.P(Float.parseFloat(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[2]),
+                        new Bash.G(Float.parseFloat(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap)).copy().gemCur(gemCur);
+                case 20:
+                    return new GlobalSlow.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]), Float.parseFloat(param[2]), Integer.parseInt(param[3]),
+                            new GlobalSlow.G(Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap))/*.copy()*/.gemCur(gemCur);
+//                case 21:
+//                  return
+                default:return null;
+            }
+
+        }
 
         public int getGemsNumber(){
             return gemsNumber[0] + gemsNumber[1] + gemsNumber[2];
@@ -147,7 +186,8 @@ public abstract class Ability {
             return texturePath;
         }
 
-        public AbilityPrototype(String name, String texturePath, int[] gemsMax) {
+        public AbilityPrototype(int id, String name, String texturePath, int[] gemsMax) {
+            this.id = id;
             this.name = name;
             this.texturePath = texturePath;
 //            this.grader = grader;
@@ -171,7 +211,7 @@ public abstract class Ability {
             String s = "";
             Boost b = gemBoost[gemType.ordinal() - 3];
             if(b == null || gemsMax[gemType.ordinal() - 3] == 0) return "Cant grade this gem";
-            if(canGrade(gemType)) {
+            if(/*canGrade(gemType)*/gemsNumber[gemType.ordinal() - 3] + 1 <= gemsMax[gemType.ordinal() - 3]) {//it take override version so it's better
                 if (b.positive) s += "+ ";
                 else s += "- ";
                 s += b.boostUp() + " " + b.name + System.getProperty("line.separator") +

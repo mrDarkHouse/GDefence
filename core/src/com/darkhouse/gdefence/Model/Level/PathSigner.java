@@ -18,7 +18,6 @@ import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Path.Road;
-import com.darkhouse.gdefence.Level.Path.Walkable;
 import com.darkhouse.gdefence.Objects.GameObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
@@ -63,7 +62,7 @@ public class PathSigner extends WidgetGroup{
                     else if (j + 1 >= currPath.size) continue;
                         //signCode = MapTile.getSignerCode(paths.get(moveTypes[i]).get(k).get(j - 1), paths.get(moveTypes[i]).get(k).get(j), null);
                     else signCode = MapTile.getSignerCode(currPath.get(j - 1), currPath.get(j), currPath.get(j + 1));
-
+                    if(signCode == null) continue;
 //                    switch (((Walkable) currPath.get(j)).getApplyMobs())
                     ImageButton s;
                     Texture signerTexture = GDefence.getInstance().assetLoader.get("Path/Signer/sign" + signCode + ".png", Texture.class);

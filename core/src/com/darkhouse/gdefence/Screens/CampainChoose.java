@@ -64,9 +64,18 @@ public class CampainChoose extends AbstractMenuScreen{
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 //mainClass.user = new User();
                 //if(/*GDefence.getInstance().user.load()*//*GDefence.getInstance().user != null*/) {
+                GDefence.getInstance().user = new User();
+                GDefence.getInstance().flushCampainScreens();
+//                GDefence.getInstance().user.initNewUser();
                 GDefence.getInstance().user.load();
+
+                GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainMap());
+
+                GDefence.getInstance().flushCampainChoose();//delete hide effects
+
+
 //                GDefence.getInstance().initCampainMap();//do it
-                GDefence.getInstance().setScreen(GDefence.getInstance().getCampainMap());
+//                GDefence.getInstance().setScreen(GDefence.getInstance().getCampainMap());
                 //}
                 return true;
             }

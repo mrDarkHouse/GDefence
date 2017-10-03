@@ -17,11 +17,17 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
         private int shots;
 
         public P(float cdCap, int bonusAttacks, G grader) {
-            super("Spread Attack", "doubleAttack", grader.gemCap);
+            super(11, "Spread Attack", "doubleAttack", grader.gemCap);
             this.cdCap = new AtomicReference<Float>(cdCap);
             this.shots = bonusAttacks;
             this.grader = grader;
         }
+
+        @Override
+        public String getSaveCode() {
+            return null;
+        }
+
         @Override
         public AbilityPrototype copy() {
             P p = new P(cdCap.get(), shots, grader);

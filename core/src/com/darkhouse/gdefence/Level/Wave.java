@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Level;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
+import com.darkhouse.gdefence.Level.Path.WalkableMapTile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Wave {
 //        return mobsToSpawn;
 //    }
 
-    private MapTile spawner;
+    private WalkableMapTile spawner;
     //private boolean inWave;
 
     //public boolean isInWave() {
@@ -49,7 +50,7 @@ public class Wave {
         return isFinished;
     }
 
-    public void setSpawner(MapTile spawner) {
+    public void setSpawner(WalkableMapTile spawner) {
         this.spawner = spawner;
     }
 

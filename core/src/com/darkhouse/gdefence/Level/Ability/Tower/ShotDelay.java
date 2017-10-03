@@ -14,10 +14,16 @@ public class ShotDelay extends Ability implements Ability.IPreAttack {
         private AtomicReference<Float> delay;
 
         public P(float delay, G grader) {
-            super("Attack Delay", "shotDelay", grader.gemCap);
+            super(9, "Attack Delay", "shotDelay", grader.gemCap);
             this.delay = new AtomicReference<Float>(delay);
             this.grader = grader;
         }
+
+        @Override
+        public String getSaveCode() {
+            return null;
+        }
+
         @Override
         public AbilityPrototype copy() {
             P p = new P(delay.get(), grader);

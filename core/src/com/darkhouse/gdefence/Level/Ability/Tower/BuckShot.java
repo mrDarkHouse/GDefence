@@ -19,12 +19,17 @@ public class BuckShot extends Ability implements Ability.IPreShot {
         private AtomicReference<Integer> maxTargets;//
 
         public P(int projectiles, float angle/*, int maxTargets*//*, int range*/, G grader) {
-            super("BuckShot", "buckShot", grader.gemCap);
+            super(1, "BuckShot", "buckShot", grader.gemCap);
             this.projectiles = new AtomicReference<Integer>(projectiles);
             this.angle = new AtomicReference<Float>(angle);
             this.maxTargets = new AtomicReference<Integer>(1);
             this.grader = grader;
 //            this.range = range;
+        }
+
+        @Override
+        public String getSaveCode() {
+            return null;
         }
 
         @Override

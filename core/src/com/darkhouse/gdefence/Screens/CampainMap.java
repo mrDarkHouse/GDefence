@@ -44,9 +44,13 @@ public class CampainMap extends AbstractCampainScreen {
             pages[0] = new Page(6, 1);
             pages[1] = new Page(6, pages[0].getLastButtonsInt());
             pages[2] = new Page(5, pages[1].getLastButtonsInt());
-            addActor(pages[0]);
-            addActor(pages[1]);
-            addActor(pages[2]);
+            pages[3] = new Page(5, pages[2].getLastButtonsInt());
+            for (Page p:pages){
+                addActor(p);
+            }
+//            addActor(pages[0]);
+//            addActor(pages[1]);
+//            addActor(pages[2]);
 
             next = new ImageButton(GDefence.getInstance().assetLoader.getNextButtonSkin());
             prev = new ImageButton(GDefence.getInstance().assetLoader.getPrevButtonSkin());
@@ -195,7 +199,7 @@ public class CampainMap extends AbstractCampainScreen {
     }
 
     private void loadButtons(){
-        pagedMap = new PagedMap(3);//
+        pagedMap = new PagedMap(4);//
         stage.addActor(pagedMap);
 
 

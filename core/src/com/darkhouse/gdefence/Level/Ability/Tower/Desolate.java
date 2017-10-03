@@ -33,10 +33,15 @@ public class Desolate extends Ability implements Ability.IOnHit {
         private AtomicReference<Float> duration;
 
         public P(int armorReduction, float duration, G grader) {
-            super("Desolate", "desolate", grader.gemCap);
+            super(3, "Desolate", "desolate", grader.gemCap);
             this.armorReduction = new AtomicReference<Integer>(armorReduction);
             this.duration = new AtomicReference<Float>(duration);
             this.grader = grader;
+        }
+
+        @Override
+        public String getSaveCode() {
+            return null;
         }
 
         @Override

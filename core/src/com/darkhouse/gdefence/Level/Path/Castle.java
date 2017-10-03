@@ -6,7 +6,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
 
-public class Castle extends MapTile implements Walkable{
+public class Castle extends WalkableMapTile/* implements Walkable*/{
     public Castle() {
 //        initTexture();
     }

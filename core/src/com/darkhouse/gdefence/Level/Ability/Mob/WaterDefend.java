@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
+import com.darkhouse.gdefence.Level.Path.WalkableMapTile;
 
 public class WaterDefend extends MobAbility implements MobAbility.IMove{
 
@@ -57,7 +58,7 @@ public class WaterDefend extends MobAbility implements MobAbility.IMove{
     }
 
     @Override
-    public void move(MapTile currentTile) {
+    public void move(WalkableMapTile currentTile) {
         if(currentTile.isSwimmable()){
             if(!owner.haveEffect(WaterBonusArmor.class)) owner.addEffect(buff);
         } else {

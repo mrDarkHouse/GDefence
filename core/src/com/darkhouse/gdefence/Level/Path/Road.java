@@ -6,7 +6,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
 
-public class Road extends MapTile implements Walkable{
+public class Road extends WalkableMapTile{
     private Way startWay;
     private Way innerWay;
     private TargetType applyMobs;
@@ -17,7 +17,17 @@ public class Road extends MapTile implements Walkable{
         return applyMobs;
     }
 
-//    public Road(Way startWay, TargetType applyMobs) {
+    public Road(TargetType applyMobs) {
+        this.applyMobs = applyMobs;
+    }
+
+    public Road() {
+    }
+    //    public Road(TargetType applyMobs) {
+//        this.applyMobs = applyMobs;
+//    }
+
+    //    public Road(Way startWay, TargetType applyMobs) {
 //        this.startWay = startWay;
 //        this.applyMobs = applyMobs;
 ////        initTexture();

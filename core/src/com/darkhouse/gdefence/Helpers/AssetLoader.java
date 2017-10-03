@@ -106,6 +106,14 @@ public class AssetLoader extends AssetManager{
 
 
 
+
+
+    }
+    public void setLevelMapFilters(){
+        get("Path/Bridge/bridgeDDR1.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("Path/Bridge/bridgeDDR2.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("Path/Bridge/waterBridgeUUR1.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("Path/Bridge/waterBridgeUUR2.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     public void loadOld(){
@@ -352,6 +360,11 @@ public class AssetLoader extends AssetManager{
         load("Path/Bridge/bridgeDDR1.png", Texture.class);
         load("Path/Bridge/bridgeDDR2.png", Texture.class);
 
+        load("Path/Bridge/waterBridgeDDR1.png", Texture.class);
+        load("Path/Bridge/waterBridgeDDR2.png", Texture.class);
+        load("Path/Bridge/waterBridgeUUR1.png", Texture.class);
+        load("Path/Bridge/waterBridgeUUR2.png", Texture.class);
+
         load("Path/Turn/bridgeLnoArrows.png", Texture.class);
         load("Path/Turn/bridgeRnoArrows.png", Texture.class);
         load("Path/Turn/bridgeUnoArrows.png", Texture.class);
@@ -371,7 +384,45 @@ public class AssetLoader extends AssetManager{
         load("Path/Turn/turnWaterGroundRUD.png", Texture.class);
         load("Path/Turn/turnWaterGroundRUR.png", Texture.class);
 
+        load("Path/Turn/turnGroundWaterLUD.png", Texture.class);
+        load("Path/Turn/turnGroundWaterLDL.png", Texture.class);
+        load("Path/Turn/turnGroundWaterLDU.png", Texture.class);
+        load("Path/Turn/turnGroundWaterLUL.png", Texture.class);
+        load("Path/Turn/turnGroundWaterRUD.png", Texture.class);
+        load("Path/Turn/turnGroundWaterRDU.png", Texture.class);
+        load("Path/Turn/turnGroundWaterRUR.png", Texture.class);
+        load("Path/Turn/turnGroundWaterRDR.png", Texture.class);
+        load("Path/Turn/turnGroundWaterRRD.png", Texture.class);
+        load("Path/Turn/turnGroundWaterRRU.png", Texture.class);
+        load("Path/Turn/turnGroundWaterUUR.png", Texture.class);
+        load("Path/Turn/turnGroundWaterUUL.png", Texture.class);
+
         load("Path/Turn/cross.png", Texture.class);
+
+        load("Path/Portal/portalD1.png", Texture.class);
+        load("Path/Portal/portalU1.png", Texture.class);
+        load("Path/Portal/portalR1.png", Texture.class);
+        load("Path/Portal/portalL1.png", Texture.class);
+        load("Path/Portal/portalD2.png", Texture.class);
+        load("Path/Portal/portalU2.png", Texture.class);
+        load("Path/Portal/portalR2.png", Texture.class);
+        load("Path/Portal/portalL2.png", Texture.class);
+        load("Path/Portal/portalD3.png", Texture.class);
+        load("Path/Portal/portalU3.png", Texture.class);
+        load("Path/Portal/portalR3.png", Texture.class);
+        load("Path/Portal/portalL3.png", Texture.class);
+        load("Path/Portal/portalD4.png", Texture.class);
+        load("Path/Portal/portalU4.png", Texture.class);
+        load("Path/Portal/portalR4.png", Texture.class);
+        load("Path/Portal/portalL4.png", Texture.class);
+        load("Path/Portal/portalD5.png", Texture.class);
+        load("Path/Portal/portalU5.png", Texture.class);
+        load("Path/Portal/portalR5.png", Texture.class);
+        load("Path/Portal/portalL5.png", Texture.class);
+        load("Path/Portal/portalD6.png", Texture.class);
+        load("Path/Portal/portalU6.png", Texture.class);
+        load("Path/Portal/portalR6.png", Texture.class);
+        load("Path/Portal/portalL6.png", Texture.class);
 
         load("Path/Signer/signLL.png", Texture.class);
         load("Path/Signer/signRR.png", Texture.class);
@@ -385,6 +436,7 @@ public class AssetLoader extends AssetManager{
         load("Path/Signer/signUR.png", Texture.class);
         load("Path/Signer/signDL.png", Texture.class);
         load("Path/Signer/signDR.png", Texture.class);
+//        load("Path/Signer/signUD.png", Texture.class);lolololol
 
         load("AbilityIcons/Effects/swimSpeed.png", Texture.class);
         load("AbilityIcons/Effects/waterBonusArmor.png", Texture.class);

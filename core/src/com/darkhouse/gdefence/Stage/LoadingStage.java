@@ -23,7 +23,7 @@ public class LoadingStage extends Stage{
         GDefence.getInstance().assetLoader.load("MainMenuBg.png", Texture.class);//TODO
         GDefence.getInstance().assetLoader.load("mobHpBarBg.png", Texture.class);
         GDefence.getInstance().assetLoader.load("mobHpBarKnob.png", Texture.class);
-        I18NBundleLoader.I18NBundleParameter param = new I18NBundleLoader.I18NBundleParameter(new Locale("ru")/*Locale.US*/, "UTF-8");
+        I18NBundleLoader.I18NBundleParameter param = new I18NBundleLoader.I18NBundleParameter(/*new Locale("ru")*/Locale.US, "UTF-8");//TODO move to another place
         GDefence.getInstance().assetLoader.load("Language/text", I18NBundle.class, param);
         GDefence.getInstance().assetLoader.finishLoading();
 

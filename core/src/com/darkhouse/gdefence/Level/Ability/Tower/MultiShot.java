@@ -18,10 +18,15 @@ public class MultiShot extends Ability implements Ability.IPreShot {
         private AtomicReference<Float> dmgPercent;//not work yet
 
         public P(int bonusTarget, float dmgPercent, G grader) {
-            super("MultiShot", "multiShot", grader.gemCap);
+            super(6, "MultiShot", "multiShot", grader.gemCap);
             this.bonusTarget = new AtomicReference<Integer>(bonusTarget);
             this.dmgPercent = new AtomicReference<Float>(dmgPercent);
             this.grader = grader;
+        }
+
+        @Override
+        public String getSaveCode() {
+            return null;
         }
 
         @Override

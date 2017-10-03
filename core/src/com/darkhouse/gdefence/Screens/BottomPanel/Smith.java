@@ -22,6 +22,7 @@ import com.darkhouse.gdefence.User;
 public class Smith extends AbstractCampainScreen{
     private ImageButton upHealth;
     private ImageButton upEnergy;
+    private GemGradePanel pn;
 //    private InventoryActor inventoryActor;
     private OverallInventory inventory;
 
@@ -99,7 +100,7 @@ public class Smith extends AbstractCampainScreen{
 //                setRows(3);
 //            }
 //        };
-        GemGradePanel pn = new GemGradePanel(new DragAndDrop(), inventory, GDefence.getInstance().assetLoader.getSkin())/*{
+        pn = new GemGradePanel(new DragAndDrop(), inventory, GDefence.getInstance().assetLoader.getSkin())/*{
             @Override
             protected void setDefaults() {
                 super.setDefaults();
@@ -107,7 +108,9 @@ public class Smith extends AbstractCampainScreen{
             }
         }*/;
         pn.setPosition(700, 100);
-        pn.setSize(400, 250);
+//        pn.setSize(400, 250);
+//        pn.pack();
+
 //        inventoryActor.getDragAndDrop().addTarget(new GemGradeTarget(pn.getGradeTowerSlot()));
 //        pn.getDragAndDrop().addSource(new GemGradeSource(pn.getGradeTowerSlot()));
 //        for (SlotActor a:inventoryActor.getActorArray()) {
@@ -127,7 +130,7 @@ public class Smith extends AbstractCampainScreen{
         stage.addActor(new GemPanel(1000, 500, 270, 160));
     }
 
-    private void notifyListeners(){
+    public void notifyListeners(){
         inventory.notifyListeners();
         for (EventListener l:upHealth.getListeners()){
             if(l.getClass() == TooltipListener.class){
@@ -141,8 +144,13 @@ public class Smith extends AbstractCampainScreen{
         }
     }
 
+    @Override
+    public void hide() {
+        super.hide();
+        User.getTowerInventory().store(pn.getGradeTowerSlot().getSlot().takeAll());
+    }
 
-//    @Override
+    //    @Override
 //    public void resize(int width, int height) {
 //
 //    }

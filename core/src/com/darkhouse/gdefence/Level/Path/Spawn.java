@@ -6,7 +6,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
 
-public class Spawn extends MapTile implements Walkable{
+public class Spawn extends WalkableMapTile /*implements Walkable*/{
     private Way startWay;
     private TargetType applyMobs;
 

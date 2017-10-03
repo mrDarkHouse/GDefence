@@ -21,8 +21,4 @@ public class Decor extends MapTile{
         return false;
     }
 
-    @Override
-    public boolean isSwimmable() {
-        return false;
-    }
 }

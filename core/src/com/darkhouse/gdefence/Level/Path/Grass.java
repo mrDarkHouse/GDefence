@@ -21,10 +21,6 @@ public class Grass extends MapTile{
         return true;
     }
 
-    @Override
-    public boolean isSwimmable() {
-        return false;
-    }
 
 
 

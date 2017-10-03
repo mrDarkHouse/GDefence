@@ -18,12 +18,18 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
         private AtomicReference<Float> duration;
 
         public P(int kills, int speed, float duration, G grader) {
-            super("Hunter Speed", "hunterSpeed", grader.gemCap);
+            super(5, "Hunter Speed", "hunterSpeed", grader.gemCap);
             this.kills = new AtomicReference<Integer>(kills);
             this.speed = new AtomicReference<Integer>(speed);
             this.duration = new AtomicReference<Float>(duration);
             this.grader = grader;
         }
+
+        @Override
+        public String getSaveCode() {
+            return null;
+        }
+
         @Override
         public AbilityPrototype copy() {
             P p = new P(kills.get(), speed.get(), duration.get(), grader);

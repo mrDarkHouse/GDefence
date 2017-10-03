@@ -35,11 +35,17 @@ public class PoisonArrow extends Ability implements Ability.IOnHit {
         private AtomicReference<Float> duration;
 
         public P(float slowPercent, float duration, G grader) {
-            super("Poison Arrow", "poisonArrow", grader.gemCap);
+            super(8, "Poison Arrow", "poisonArrow", grader.gemCap);
             this.slowPercent = new AtomicReference<Float>(slowPercent);
             this.duration = new AtomicReference<Float>(duration);
             this.grader = grader;
         }
+
+        @Override
+        public String getSaveCode() {
+            return null;
+        }
+
         @Override
         public AbilityPrototype copy() {
             P p = new P(slowPercent.get(), duration.get(), grader);

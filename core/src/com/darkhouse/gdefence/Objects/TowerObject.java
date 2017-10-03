@@ -7,6 +7,7 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
+import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.User;
@@ -43,7 +44,7 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         return null;
     }
 
-    private static int[] exp2nextLvl = {20, 30, 40, 60, 75, 90};
+    private static int[] exp2nextLvl = {20, 30, 40, 60, 75, 90, 115, 160, 200, 250};
 //    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
 
     private ItemEnum.Tower prototype;
@@ -70,7 +71,14 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
                 gemsCode+= ";";
             }
         }
-        return prototype.name() + "-" + totalExp + "-" + gemsCode;
+        String abilitiesCode = "";
+        for (int i = 0; i < abilities.size; i++){
+            abilitiesCode += abilities.get(i).getSaveCode();
+            if(i!= abilities.size - 1){//may be unnecessary
+                abilitiesCode+= "a";
+            }
+        }
+        return prototype.name() + "-" + totalExp + "-" + gemsCode + "-" + abilitiesCode;
     }
 
 
@@ -78,13 +86,31 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         String[] info = save.split("-");
         String[] gemsString = info[2].split(";");
 
-        TowerObject t = new TowerObject(ItemEnum.Tower.getTower(info[0]));
+        TowerObject t = new TowerObject(ItemEnum.Tower.getTower(info[0])/*, Integer.parseInt(gemsString[0]), Integer.parseInt(gemsString[1]), Integer.parseInt(gemsString[2])*/);
+//        System.out.println(t.abilities);
         t.addExp(Float.parseFloat(info[1]));
         t.updateExp();//adding level
 
         for (int i = 0; i < gemsString.length; i++){
             t.addGems(User.GEM_TYPE.values()[i], Integer.parseInt(gemsString[i]));
         }
+
+
+        if(info.length == 4){
+            String[] abi = info[3].split("a");
+            for (int i = 0; i < abi.length; i++){
+//                System.out.println(i);
+//                System.out.println(abi[i]);
+//                System.out.println(t.abilities);
+                t.abilities.clear();//wut//TODO without it bug when after each load add additional ability for infinitely
+                t.abilities.add(Ability.AbilityPrototype.loadAbilityCode(abi[i]));
+            }
+        }
+//
+//        for (int i = 0; i < abi.length; i++){
+//            t.abilities.add(Ability.AbilityPrototype.loadAbilityCode(abi[i]));
+//        }
+
 
 
         return t;
@@ -199,14 +225,22 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
 //        abilities = new Array<Ability.AbilityPrototype>(prototype.getAbilities());
 
 
-        gemsNumber = new int[]{0, 0, 0, 0, 0, 0};
+        gemsNumber = new int[]{0, 0, 0/*, 0, 0, 0*/};
 //        gemsNumber = new HashMap<User.GEM_TYPE, Integer>();
 //        gemsNumber.put(User.GEM_TYPE.RED, 0);
     }
 
     public TowerObject(ItemEnum.Tower prototype, int red, int yellow, int blue) {
         this(prototype);
-        level += (red + yellow + blue) - 1;
+//        level += (red + yellow + blue) - 1;
+        level = (red + yellow + blue) - 1;
+        if(level < 0) level = 0;
+
+        for(int i = 0; i < level; i++){
+//            addExp(exp2nextLvl[i]);
+            totalExp += exp2nextLvl[i];
+        }
+        updateExp();
         addGems(User.GEM_TYPE.RED, red);
         addGems(User.GEM_TYPE.YELLOW, yellow);
         addGems(User.GEM_TYPE.BLUE, blue);

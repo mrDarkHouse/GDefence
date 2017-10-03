@@ -42,13 +42,15 @@ public class Bash extends Ability implements Ability.IOnHit{
         private AtomicReference<Integer> bonusDmg;
 
         public P(float chance, float duration, int bonusDmg, G grader) {
-            super("Bash", "bash", grader.gemCap);
+            super(0, "Bash", "bash", grader.gemCap);
             this.chance = new AtomicReference<Float>(chance);
             this.duration = new AtomicReference<Float>(duration);
             this.bonusDmg = new AtomicReference<Integer>(bonusDmg);
             this.g = grader;
         }
 
+
+//        USE IT FOR NEW ABILITY PROTOTYPE
         public P copy(){
             P p = new P(chance.get(), duration.get(), bonusDmg.get(), g);
             p.gemBoost[0] = new BoostFloat(p.chance,     g.chanceUp,   "bash chance",
@@ -70,6 +72,10 @@ public class Bash extends Ability implements Ability.IOnHit{
         public String getTooltip() {
             return "Have [#000000ff]" + chance.get()*100 + "%[] chance to bash attacked enemy" + System.getProperty("line.separator")
                     + " for [#0ffe00ff]" + duration + "[] seconds and do [#00ffffff]" + bonusDmg + "[] bonus damage";
+        }
+        @Override
+        public String getSaveCode() {
+            return super.getSaveCode() + "z" + chance + ";" + duration + ";" + bonusDmg + ";" + g.chanceUp + ";" + g.durationUp + ";" + g.bonusDmgUp;
         }
 
 //        protected String getBoostName(User.GEM_TYPE gemType){

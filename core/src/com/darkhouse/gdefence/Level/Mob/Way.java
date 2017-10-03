@@ -42,9 +42,10 @@ public enum Way {
                 case 1:return DOWN;
                 case -1:return UP;
                 case 0:throw new IllegalArgumentException("block identy");
-                default:throw new IllegalArgumentException("blocks too far");
+                    default:return null;
+//                default:throw new IllegalArgumentException("blocks too far");
             }
-            default:throw new IllegalArgumentException("blocks too far");
+            default:return null;//throw new IllegalArgumentException("blocks too far");
         }
 
 

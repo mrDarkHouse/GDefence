@@ -249,6 +249,8 @@ public class NextWaveInfoPanel extends Table{
         mobDmg.setText(mobDmgS);
         mobBounty.setText(mobBountyS);
         add(nextWaveTimer).align(Align.left).padLeft(35);//.padBottom(10);
+
+        pack();//fix small window for big table
 //        abilities.setText(abilitiesS);
 
 //        if(nextWaveTimer.getTime() > 0){

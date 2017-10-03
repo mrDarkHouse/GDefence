@@ -19,9 +19,8 @@ import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -193,7 +192,7 @@ public class Map {
         return null;
     }
 
-    public MapTile getFirstTile(MapTile mapTile1, MapTile mapTile2, Mob.MoveType prefType){//meaning that all tiles are Walkable
+    public MapTile getFirstTile(MapTile mapTile1, MapTile mapTile2, Mob.MoveType prefType/*, int spawner*/){//meaning that all tiles are Walkable
 //        Walkable w1 = ((Walkable) mapTile1);
 //        Walkable w2 = ((Walkable) mapTile2);
 
@@ -212,9 +211,14 @@ public class Map {
             else index[0] = 99;//very very big
             if (path.contains(mapTile2, true)) index[1] = path.indexOf(mapTile2, true);
             else index[1] = 99;
+
+//            System.out.println("index " + index[0] + " " + index[1]);
 //                    if(path.indexOf(mapTile1, true) < path.indexOf(mapTile2, true)) return mapTile1;
 //                    else return mapTile2;//meaning that they different
-            if (index[0] == index[1]) throw new IllegalArgumentException("Tiles identy or dont exist on way");
+            if (index[0] == index[1] || index[0] == 99 || index[1] == 99) {
+                continue;
+//                throw new IllegalArgumentException("Tiles identy or dont exist on way");
+            }
             return index[0] < index[1] ? mapTile1 : mapTile2;
 //                }
 //            }
@@ -229,18 +233,39 @@ public class Map {
         path.add(spawner);
 
         Way manipulatedWay = null;
+//        Way prevWay = null;
         while (!(path.peek() instanceof Castle)) {
             MapTile currentTile = path.peek();
-            Walkable thisTile = ((Walkable) currentTile);
-            manipulatedWay = thisTile.manipulatePath(type, manipulatedWay);
-            int i = 1;//
-            while(manipulatedWay == null){
-                manipulatedWay = ((Walkable) path.get(path.size - 1 - i)).manipulatePath(type, manipulatedWay);//last - i
-                i++;
+//            System.out.println(currentTile);
+            WalkableMapTile thisTile = ((WalkableMapTile) currentTile);
+//            Way tmp = thisTile.manipulatePath(type, manipulatedWay);
+//            if(tmp != null) manipulatedWay = tmp;
+
+            Point p = null;
+            if (path.size > 1 && !(path.get(path.size - 2) instanceof Portal)) {//disable teleport to portal, which teleport to this (infinity tp)
+                p = thisTile.manipulateMob();
             }
-            int[] coord = Way.getCoordOffset(manipulatedWay, currentTile.getIndexX(), currentTile.getIndexY());
+            int[] coord;
+            if(p != null) {
+                coord = new int[]{p.y, p.x};//portals
+            } else {
+                Way tmp = thisTile.manipulatePath(type, manipulatedWay);
+                if(tmp != null) manipulatedWay = tmp;
+                coord = Way.getCoordOffset(manipulatedWay, currentTile.getIndexX(), currentTile.getIndexY());//simply way
+
+            }
+
+//            manipulatedWay = thisTile.manipulatePath(type, manipulatedWay);
+//            if(manipulatedWay != null) prevWay = manipulatedWay;
+//            int i = 1;//
+//            while(manipulatedWay == null){
+//                System.out.println(prevWay + " " + currentTile);
+//                manipulatedWay = ((WalkableMapTile) path.get(path.size - 1 - i)).manipulatePath(type, prevWay);//last - i
+//                i++;
+//            }
+
             MapTile checkTile = tiles[coord[0]][coord[1]];
-            if (checkTile instanceof Walkable) path.add(checkTile);
+            if (checkTile instanceof WalkableMapTile) path.add(checkTile);
             else throw new IllegalArgumentException("Path logic is wrong, bad tile is " + "x " + coord[0] + " y " + coord[1]);
         }
         GDefence.getInstance().log("End generate path for " + type.name());
@@ -326,11 +351,13 @@ public class Map {
     private void initMap(final int number){
         MapLoader ml = new MapLoader(number);
         tiles = ml.loadMap();
-        initBaseTextures();
+
         ml.loadProperties(ml.getSpawnersNumber(), false);//may do outside (in Level class)
         setIndexTiles();//
         searchSpawner();
         searchCastle();
+        initPortals();
+        initBaseTextures();
 
         initPaths(ml.getMoveTypesInLevel());
 //        normalizeTextures();
@@ -397,33 +424,36 @@ public class Map {
     public void normalizeBlocks(){
         for (int y = 0; y < tiles[0].length; y++) {
             for (int x = 0; x < tiles.length; x++) {
-                if(tiles[x][y] instanceof Road) {
+
+                if(tiles[x][y] instanceof Road || tiles[x][y] instanceof Turn || tiles[x][y] instanceof MultiTurn) {/*&& !(tiles[x][y] instanceof Castle)*/
                     Texture texture = null;
-                    Road road = ((Road) tiles[x][y]);
+                    WalkableMapTile road = ((WalkableMapTile) tiles[x][y]);
                     Way[] leastWays = Way.getLeastWays(new Way[]{});
-                    Array<MapTile> rightTiles = new Array<MapTile>();
+                    Array<WalkableMapTile> rightTiles = new Array<WalkableMapTile>();
                     for (Way leastWay : leastWays) {
                         int[] coord = Way.getCoordOffset(leastWay, x, y);
                         if (coord[0] >= 0 && coord[0] < tiles.length && coord[1] >= 0 && coord[1] < tiles[0].length) {
                             MapTile checkTile = tiles[coord[0]][coord[1]];
-                            if (checkTile != null && checkTile instanceof Walkable) {
-                                rightTiles.add(checkTile);//TODO must check and dont connect roads like ||||
+                            if (checkTile != null && checkTile instanceof WalkableMapTile) {
+                                rightTiles.add(((WalkableMapTile) checkTile));//TODO must check and dont connect roads like ||||
                             }
                         }
                     }
                     switch (rightTiles.size){
-                        case 2://turn
+                        case 2:
 //                            if(rightTiles.get(0).getIndexX() == rightTiles.get(1).getIndexX() ||
 //                                    rightTiles.get(0).getIndexY() == rightTiles.get(1).getIndexY()) {//check for line road (--- or -/n-/n- )
 ////                                break;
 //
 //                            }
                             if(rightTiles.get(0).getIndexX() == rightTiles.get(1).getIndexX()){
-                                texture = GDefence.getInstance().assetLoader.get("Path/roadVertical.png", Texture.class);//do water
+                                if(road.isSwimmable()) texture = GDefence.getInstance().assetLoader.get("Path/waterVertical.png", Texture.class);
+                                else texture = GDefence.getInstance().assetLoader.get("Path/roadVertical.png", Texture.class);
                                 break;
                             }
                             if(rightTiles.get(0).getIndexY() == rightTiles.get(1).getIndexY()){
-                                texture = GDefence.getInstance().assetLoader.get("Path/roadHorizontal.png", Texture.class);
+                                if(road.isSwimmable()) texture = GDefence.getInstance().assetLoader.get("Path/waterHorizontal.png", Texture.class);
+                                else texture = GDefence.getInstance().assetLoader.get("Path/roadHorizontal.png", Texture.class);
                                 break;
                             }
 //                            if(rightTiles.get(0).isSwimmable() && rightTiles.get(1).isSwimmable() && road.isSwimmable()){
@@ -454,7 +484,7 @@ public class Map {
                             }
                             break;
                         case 3://tripleTurn
-                            MapTile tile[] = {rightTiles.get(0), rightTiles.get(1), rightTiles.get(2)};
+                            WalkableMapTile tile[] = {rightTiles.get(0), rightTiles.get(1), rightTiles.get(2)};
                             if(tile[0].isSwimmable() && tile[1].isSwimmable() && tile[2].isSwimmable() && road.isSwimmable()){
                                 String turnCode = Turn.getTripleTurnCode(Way.invertWay(Way.getNearBlockWay(road, tile[0])),//invert need to do same names
                                         Way.getNearBlockWay(road, tile[1]), Way.getNearBlockWay(road, tile[2]));
@@ -474,7 +504,7 @@ public class Map {
 
                                 Array<MapTile> swimmable = new Array<MapTile>();
                                 Array<MapTile> noSwimmable = new Array<MapTile>();
-                                for (MapTile mt:tile){
+                                for (WalkableMapTile mt:tile){
                                     if(mt.isSwimmable())swimmable.add(mt);
                                     else noSwimmable.add(mt);
                                 }
@@ -485,53 +515,64 @@ public class Map {
                                                 Way.getNearBlockWay(road, noSwimmable.get(0)).getShortName();
                                         break;
                                     case 1:
-                                        MapTile firstNoSwimmable = getFirstTile(noSwimmable.get(0), noSwimmable.get(1), Mob.MoveType.water);
-                                        noSwimmable.removeValue(firstNoSwimmable, true);//or false
-                                        MapTile secondNoSwimmable = noSwimmable.get(0);
-                                        turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, firstNoSwimmable)),
-                                                Way.getNearBlockWay(road, swimmable.get(0))) + Way.getNearBlockWay(road, secondNoSwimmable).getShortName();
-//                                        for (int i = 0; i < noSwimmable.size; i++){
-//                                            if(Way.getNearBlockWay(road, noSwimmable.get(i)) != Way.invertWay(startWay)){
-//                                                turnCode += Way.getNearBlockWay(road, noSwimmable.get(i)).getShortName();
-//                                            }
-//                                        }
+                                        turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, noSwimmable.get(0))),
+                                                Way.getNearBlockWay(road, noSwimmable.get(1))) +
+                                                Way.getNearBlockWay(road, swimmable.get(0)).getShortName();
+//                                        MapTile firstNoSwimmable = getFirstTile(noSwimmable.get(0), noSwimmable.get(1), Mob.MoveType.ground);
+//                                        noSwimmable.removeValue(firstNoSwimmable, true);//or false
+//                                        MapTile secondNoSwimmable = noSwimmable.get(0);
+//                                        System.out.println(firstNoSwimmable + " " +  secondNoSwimmable);
+//                                        turnCode =
+//                                                Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, firstNoSwimmable)), Way.getNearBlockWay(road, swimmable.get(0))) +
+//                                                Way.getNearBlockWay(road, secondNoSwimmable).getShortName();
+//                                        System.out.println(turnCode);
+////                                        for (int i = 0; i < noSwimmable.size; i++){
+////                                            if(Way.getNearBlockWay(road, noSwimmable.get(i)) != Way.invertWay(startWay)){
+////                                                turnCode += Way.getNearBlockWay(road, noSwimmable.get(i)).getShortName();
+////                                            }
+////                                        }
                                         break;
                                 }
                                 if(turnCode!= null) {
-                                    texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turnWaterGround" + turnCode + ".png");
+                                    if(swimmable.size < noSwimmable.size) texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turnGroundWater" + turnCode + ".png");//incorrect
+                                    else texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turnWaterGround" + turnCode + ".png");
                                     break;
                                 }
-                            }
-                            if(!road.isSwimmable()) {
+                            }else/*if(!road.isSwimmable())*/ {
                                 String turnCode = null;
 
                                 Array<MapTile> noSwimmable = new Array<MapTile>();
                                 Array<MapTile> swimmable = new Array<MapTile>();
-                                for (MapTile mt:tile){
+                                for (WalkableMapTile mt:tile){
                                     if(mt.isSwimmable())swimmable.add(mt);
                                     else noSwimmable.add(mt);
                                 }
                                 switch (noSwimmable.size){
                                     case 2:
+//                                        System.out.println(noSwimmable.get(0));
                                         turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, noSwimmable.get(0))),
                                                 Way.getNearBlockWay(road, noSwimmable.get(1))) +
                                                 Way.getNearBlockWay(road, swimmable.get(0)).getShortName();
                                         break;
                                     case 1:
-                                        MapTile firstSwimmable = getFirstTile(swimmable.get(0), swimmable.get(1), Mob.MoveType.ground);
-                                        noSwimmable.removeValue(firstSwimmable, true);//or false
-                                        MapTile secondSwimmable = swimmable.get(0);
-                                        turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, firstSwimmable)),
-                                                Way.getNearBlockWay(road, noSwimmable.get(0))) + Way.getNearBlockWay(road, secondSwimmable).getShortName();
-//                                        for (int i = 0; i < noSwimmable.size; i++){
-//                                            if(Way.getNearBlockWay(road, noSwimmable.get(i)) != Way.invertWay(startWay)){
-//                                                turnCode += Way.getNearBlockWay(road, noSwimmable.get(i)).getShortName();
-//                                            }
-//                                        }
+                                        turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, swimmable.get(0))),//need check
+                                                Way.getNearBlockWay(road, swimmable.get(1))) +
+                                                Way.getNearBlockWay(road, noSwimmable.get(0)).getShortName();
+//                                        MapTile firstSwimmable = getFirstTile(swimmable.get(0), swimmable.get(1), Mob.MoveType.ground);
+//                                        noSwimmable.removeValue(firstSwimmable, true);//or false
+//                                        MapTile secondSwimmable = swimmable.get(0);
+//                                        turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, firstSwimmable)),
+//                                                Way.getNearBlockWay(road, noSwimmable.get(0))) + Way.getNearBlockWay(road, secondSwimmable).getShortName();
+////                                        for (int i = 0; i < noSwimmable.size; i++){
+////                                            if(Way.getNearBlockWay(road, noSwimmable.get(i)) != Way.invertWay(startWay)){
+////                                                turnCode += Way.getNearBlockWay(road, noSwimmable.get(i)).getShortName();
+////                                            }
+////                                        }
                                         break;
                                 }
                                 if(turnCode!= null) {
-                                    texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turnGroundWater" + turnCode + ".png");
+                                    if(swimmable.size < noSwimmable.size) texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turnGroundWater" + turnCode + ".png");//incorrect
+                                    else texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turnWaterGround" + turnCode + ".png");
                                     break;
                                 }
                             }
@@ -545,8 +586,95 @@ public class Map {
                     }
                     if(texture != null)road.setRegion(texture);
                 }
+
+                if(tiles[x][y] instanceof Portal){//combine with roads
+                    Texture texture = null;
+                    Portal portal = ((Portal) tiles[x][y]);
+                    Way[] leastWays = Way.getLeastWays(new Way[]{});
+                    Array<WalkableMapTile> rightTiles = new Array<WalkableMapTile>();
+                    for (Way leastWay : leastWays) {
+                        int[] coord = Way.getCoordOffset(leastWay, x, y);
+                        if (coord[0] >= 0 && coord[0] < tiles.length && coord[1] >= 0 && coord[1] < tiles[0].length) {
+                            MapTile checkTile = tiles[coord[0]][coord[1]];
+                            if (checkTile != null && checkTile instanceof WalkableMapTile) {
+                                rightTiles.add(((WalkableMapTile) checkTile));//TODO must check and dont connect roads like ||||
+                            }
+                        }
+                    }
+                    switch (rightTiles.size){
+                        case 1:
+                            texture = GDefence.getInstance().assetLoader.get("Path/Portal/portal" +
+                                    Way.invertWay(Way.getNearBlockWay(portal, rightTiles.get(0))).getShortName() + portal.id  + ".png");
+                    }
+                    if(texture != null)portal.setRegion(texture);
+                }
+
+//                if (tiles[x][y] instanceof Bridge){  //xz kak eto delat po moemu eto immossible
+//                    Texture texture = null;
+//                    Bridge bridge = ((Bridge) tiles[x][y]);
+//                    Way[] leastWays = Way.getLeastWays(new Way[]{});
+//                    Array<WalkableMapTile> rightTiles = new Array<WalkableMapTile>();
+//                    for (Way leastWay : leastWays) {
+//                        int[] coord = Way.getCoordOffset(leastWay, x, y);
+//                        if (coord[0] >= 0 && coord[0] < tiles.length && coord[1] >= 0 && coord[1] < tiles[0].length) {
+//                            MapTile checkTile = tiles[coord[0]][coord[1]];
+//                            if (checkTile != null && checkTile instanceof WalkableMapTile) {
+//                                rightTiles.add(((WalkableMapTile) checkTile));
+//                            }
+//                        }
+//                    }
+//
+//                    if (rightTiles.size < 3) continue;//something wrong //throw new RuntimeException();//size may be 4
+//                    WalkableMapTile tile[] = {rightTiles.get(0), rightTiles.get(1), rightTiles.get(2)};
+//                    Array<MapTile> swimmable = new Array<MapTile>();
+//                    Array<MapTile> noSwimmable = new Array<MapTile>();
+//                    for (WalkableMapTile mt:tile){
+//                        if(mt.isSwimmable())swimmable.add(mt);
+//                        else noSwimmable.add(mt);
+//                    }
+////                    Way inputWay = Way.getNearBlockWay(bridge, t)
+//
+//                    switch (swimmable.size){
+//                        case 0:
+//                            bridge.texture1 = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + inputWay.getShortName() +//Textures from identical bridges//TODO
+//                            endWay1.getShortName() + endWay2.getShortName() + "1.png", Texture.class);
+//
+//                        case 3:
+//
+//                    }
+//
+//
+//
+//                }
             }
         }
+
+
+    }
+
+    private void initPortals(){
+        ArrayList<Portal> portals = new ArrayList<Portal>();
+        for (int y = 0; y < tiles[0].length; y++){
+            for (int x = 0; x < tiles.length; x++){
+                if(tiles[x][y] instanceof Portal){
+                    portals.add(((Portal) tiles[x][y]));
+                }
+            }
+        }
+//        System.out.println(portals);
+        Collections.sort(portals);
+//        System.out.println(portals);
+        for (int i = 0; i < portals.size() - 1; i++){
+            Portal p1 = portals.get(i);
+            Portal p2 = portals.get(i + 1);
+
+            if(p1.id == p2.id){
+                p1.init(p2);
+//                System.out.println(p1.open);
+//                System.out.println(p2.open);
+            }
+        }
+
 
     }
 

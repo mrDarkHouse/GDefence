@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
@@ -89,6 +90,22 @@ public abstract class MapTile extends GDSprite{
 ////        }
 //    }
     public static MapTile generateTile(String loadCode){
+//        System.out.println(loadCode);
+        String[] tryMulty = loadCode.split("z");
+//        System.out.println(tryMulty[0]);
+
+        if(tryMulty.length > 1){
+//            String[] additional = loadCode.split("|");
+//            System.out.println(additional[0] + " " + additional[1]);
+//            additional[0] = additional[0].substring(2);//removing 23:
+//                Array<Turn> turns = new Array<Turn>();
+            Turn[] turns = new Turn[tryMulty.length];
+            for (int i = 0; i < tryMulty.length; i++){
+                turns[i] = ((Turn) generateTile(tryMulty[i]));//must be turn (20 21 22)
+            }
+            return new MultiTurn(turns);
+        }
+
         String[] info = loadCode.split(":");
         int id = Integer.parseInt(info[0]);
 
@@ -96,21 +113,56 @@ public abstract class MapTile extends GDSprite{
             case 0:
                 return new Grass();
             case 18:
-                return new Road();
+                switch (info.length){
+                    case 1: return new Road();
+                    case 2: return new Road(TargetType.values()[Integer.parseInt(info[1])]);
+                }
+//                return new Road();
+//            case 19:
+//                return new Road(TargetType.values()[Integer.parseInt(info[1])]);
 //                if(Integer.parseInt(info[1]) == 5) return new Road(null, TargetType.values()[Integer.parseInt(info[2])]);
 //                else return new Road(Way.values()[Integer.parseInt(info[1])], TargetType.values()[Integer.parseInt(info[2])]);
 //            case 19:
 //                return new Road(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])], TargetType.values()[Integer.parseInt(info[3])]);
-            case 20:
-                return new Turn(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
-                        TargetType.values()[Integer.parseInt(info[3])]);
+            case 21:
+                switch (info.length){
+                    case 3:return new Turn(null, Way.values()[Integer.parseInt(info[1])], false, TargetType.values()[Integer.parseInt(info[2])]);
+//                    case 4:return new Turn(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])], true, TargetType.values()[Integer.parseInt(info[3])]);
+                    case 6:return new Turn(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
+                            Way.values()[Integer.parseInt(info[3])], Way.values()[Integer.parseInt(info[4])], TargetType.values()[Integer.parseInt(info[5])]);
+                }
+
+//                return new Turn(null, Way.values()[Integer.parseInt(info[1])], false, TargetType.values()[Integer.parseInt(info[2])]);
+
+            case 22:
+                return new Turn(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])], true, TargetType.values()[Integer.parseInt(info[3])]);
+            case 20://23
+                return new Turn(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])], false, TargetType.values()[Integer.parseInt(info[3])]);
+            case 23://20
+//                String[] additional = loadCode.split("|");
+//                System.out.println(additional[0] + " " + additional[1]);
+//                additional[0] = additional[0].substring(2);//removing 23:
+////                Array<Turn> turns = new Array<Turn>();
+//                Turn[] turns = new Turn[additional.length];
+//                for (int i = 0; i < additional.length; i++){
+//                    turns[i] = ((Turn) generateTile(additional[i]));//must be turn (20 21 22)
+//                }
+//                return new MultiTurn(turns);
             case 24:
-                return new Bridge(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
-                        Way.values()[Integer.parseInt(info[3])], TargetType.values()[Integer.parseInt(info[4])],Integer.parseInt(info[5]));
+                switch (info.length){
+                    case 5: return new Bridge(null, Way.values()[Integer.parseInt(info[1])],//not ready now
+                            Way.values()[Integer.parseInt(info[2])], TargetType.values()[Integer.parseInt(info[3])],Integer.parseInt(info[4]));//all input ways
+                    case 6: return new Bridge(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
+                            Way.values()[Integer.parseInt(info[3])], TargetType.values()[Integer.parseInt(info[4])],Integer.parseInt(info[5]));
+                }
+//                return new Bridge(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
+//                        Way.values()[Integer.parseInt(info[3])], TargetType.values()[Integer.parseInt(info[4])],Integer.parseInt(info[5]));
 //            case 19:
 //                return new WaterRoad(Way.values()[Integer.parseInt(info[1])]);
             case 50:
                 return new Decor(Integer.parseInt(info[1]));
+            case 60:
+                return new Portal(Way.values()[Integer.parseInt(info[1])], Integer.parseInt(info[2]));
             case 80:
                 return new Spawn(Way.values()[Integer.parseInt(info[1])], TargetType.values()[Integer.parseInt(info[2])]);
             case 99:
@@ -132,7 +184,8 @@ public abstract class MapTile extends GDSprite{
 
         if(prev == null) return Way.getNearBlockWay(t, next).getShortName() + Way.getNearBlockWay(t, next).getShortName();
         if(next == null) return Way.invertWay(Way.getNearBlockWay(t, prev)).getShortName() + Way.invertWay(Way.getNearBlockWay(t, prev)).getShortName();
-        return Way.invertWay(Way.getNearBlockWay(t, prev)).getShortName() + Way.getNearBlockWay(t, next).getShortName();
+        if (Way.getNearBlockWay(t, prev) == null || Way.getNearBlockWay(t, next) == null) return null;//tiles dont connect (portals)
+        else return Way.invertWay(Way.getNearBlockWay(t, prev)).getShortName() + Way.getNearBlockWay(t, next).getShortName();
     }
 
 //    public static TileLogic getLogicById(int id){
@@ -193,7 +246,7 @@ public abstract class MapTile extends GDSprite{
 //        }
 //        throw new RuntimeException("wrong type");
 //    }
-    public abstract boolean isSwimmable();
+
 //        switch (type){
 //            case grass:
 //                return false;
@@ -263,5 +316,10 @@ public abstract class MapTile extends GDSprite{
 //        }
 
 
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " x:" + getIndexX() + " y:" + getIndexY();
     }
 }

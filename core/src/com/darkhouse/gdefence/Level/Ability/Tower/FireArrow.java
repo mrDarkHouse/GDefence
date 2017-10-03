@@ -18,12 +18,18 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
         private AtomicReference<Float> duration;
 
         public P(int damage, float delay, float duration, G grader) {
-            super("Fire Arrow", "fireArrow", grader.gemCap);
+            super(4, "Fire Arrow", "fireArrow", grader.gemCap);
             this.damage = new AtomicReference<Integer>(damage);
             this.delay = delay;
             this.duration = new AtomicReference<Float>(duration);
             this.grader = grader;
         }
+
+        @Override
+        public String getSaveCode() {
+            return null;
+        }
+
         @Override
         public AbilityPrototype copy() {
             P p = new P(damage.get(), delay, duration.get(), grader);

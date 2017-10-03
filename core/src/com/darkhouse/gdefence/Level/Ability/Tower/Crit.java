@@ -16,11 +16,17 @@ public class Crit extends Ability {
         private AtomicReference<Float> multiplayer;
 
         public P(float chance, float multiplayer, G grader) {
-            super("Crit", "crit", grader.gemCap);
+            super(2, "Crit", "crit", grader.gemCap);
             this.chance = new AtomicReference<Float>(chance);
             this.multiplayer = new AtomicReference<Float>(multiplayer);
             this.grader = grader;
         }
+
+        @Override
+        public String getSaveCode() {
+            return null;
+        }
+
         @Override
         public AbilityPrototype copy() {
             P p = new P(chance.get(), multiplayer.get(), grader);

@@ -100,7 +100,8 @@ public enum ItemEnum {;
 	public enum Tower implements Item {
 
 		//	  texturePath        textures              attackType         projSp cost glCost dmg range speed /n abilities
-		Basic(   /*"basic",*/         AttackType.projectile, 250, 10,  80,    10, 100, 23/*,
+		Basic(   /*"basic",*/         AttackType.projectile, 250, 10,  80,    10, 100, 23,
+                new Bash.P(0.2f, 1f, 20, new Bash.G(0.05f, 0.5f, 10, new int[]{3, 3, 3}))/*,
                 new SteelArrow.P(2, 300, new SteelArrow.G(1, 50, new int[]{3, 2, 0})),
                 new ShotDelay.P(1f, new ShotDelay.G(0.2f, new int[]{2, 0, 0}))*/),
 
