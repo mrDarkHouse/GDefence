@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.SlotTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 
@@ -15,7 +16,7 @@ public class DropInventoryActor extends Window{
     private Skin skin;
 
     public DropInventoryActor(Array<DropSlot> slots, Skin skin) {
-        super("Drop", skin, "description");
+        super(GDefence.getInstance().assetLoader.getWord("drop"), skin, "description");
         this.skin = skin;
 
         getTitleLabel().setAlignment(Align.center);

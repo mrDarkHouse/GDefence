@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tools.Stackable;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -18,7 +21,7 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
         private AtomicReference<Float> duration;
 
         public P(int kills, int speed, float duration, G grader) {
-            super(5, "Hunter Speed", "hunterSpeed", grader.gemCap);
+            super(5, "hunterSpeed", grader.gemCap);
             this.kills = new AtomicReference<Integer>(kills);
             this.speed = new AtomicReference<Integer>(speed);
             this.duration = new AtomicReference<Float>(duration);
@@ -32,12 +35,13 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
 
         @Override
         public AbilityPrototype copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(kills.get(), speed.get(), duration.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.speed, grader.speedUp, "attack speed gain",
+            p.gemBoost[0] = new BoostInteger(p.speed, grader.speedUp, l.getWord("hunterSpeedGrade1"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, "effect duration",
+            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, l.getWord("hunterSpeedGrade2"),
                     true, BoostFloat.FloatGradeFieldType.TIME);
-            p.gemBoost[2] = new BoostInteger(p.kills, grader.killsDown, "kills need",
+            p.gemBoost[2] = new BoostInteger(p.kills, grader.killsDown, l.getWord("hunterSpeedGrade3"),
                     false, BoostInteger.IntegerGradeFieldType.NONE);
             return p;
         }
@@ -49,8 +53,12 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
 
         @Override
         public String getTooltip() {
-            return "After killing [#00ffffff]" + kills + "[] mobs attack speed increased" + System.getProperty("line.separator")
-                    + "by [#000000ff]" + speed + "[] for [#0ffe00ff]" + duration + "[] seconds";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("hunterSpeedTooltip1") + " " + FontLoader.colorString(kills.get().toString(), 2) + " " +
+                    l.getWord("hunterSpeedTooltip2") + System.getProperty("line.separator") +
+                    l.getWord("hunterSpeedTooltip3") + " " + FontLoader.colorString(speed.get().toString(), 0) + " " +
+                    l.getWord("hunterSpeedTooltip4") + " " + FontLoader.colorString(duration.get().toString(), 1) + " " +
+                    l.getWord("hunterSpeedTooltip5");
         }
 
     }

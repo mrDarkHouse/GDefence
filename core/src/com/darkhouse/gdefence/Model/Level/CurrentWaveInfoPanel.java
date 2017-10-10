@@ -40,7 +40,7 @@ public class CurrentWaveInfoPanel extends Table{
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-//        if(timer.getTime() <= 0) {
+//        if(timer.getTimeLimit() <= 0) {
             super.draw(batch, parentAlpha);
 //        }
     }

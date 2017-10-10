@@ -31,6 +31,20 @@ public class FontLoader {
         return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();
     }
 
+    public static String colorCode(int id){
+        switch (id){
+            case 0:return "[#000000ff]";
+            case 1:return "[#0ffe00ff]";
+            case 2:return "[#00ffffff]";
+            case 3:return "[#64A619ff]";
+            case 4:return "[#CD6600ff]";
+            default:return "";
+        }
+    }
+    public static String colorString(String s, int id){
+        return colorCode(id) + s + "[]";
+    }
+
 
 
 
@@ -81,19 +95,26 @@ public class FontLoader {
         style.fontColor = fontColor;
         return style;
     }
-
-    public static String getOneColorButtonString(int index, String s, Color first, Color other){
-//        BitmapFont b1 = generateFont(size);
-//        b1.getData().markupEnabled = true;
-//        Label.LabelStyle style = new Label.LabelStyle(b1, null);
-//        style.fontColor = other;
-        return ("[#" + other.toString() + "]" + s.substring(0, index) + "[#" + first.toString() + "]" +
-                s.substring(index, index + 1) + "[#" + other.toString() + "]" + s.substring(index + 1));
+    public static Label.LabelStyle generateStyle(int size, Color fontColor, int borderSize, Color borderColor){
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = generateFont(size, Color.WHITE, borderSize, borderColor);
+        style.fontColor = fontColor;
+        return style;
     }
+    public static Label.LabelStyle generateSecondaryStyle(int size, Color fontColor){
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = generateSecondaryFont(size, Color.WHITE);
+        style.fontColor = fontColor;
+        return style;
+    }
+//    public static Label.LabelStyle generateIskoolaFont(int size, Color color, int borderSize, Color borderColor){
+//
+//    }
 
     public static BitmapFont generateFont(int size, Color color, int borderSize, Color borderColor){
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.characters = font_chars_ru;
         parameter.size = size;
         parameter.color = color;
         parameter.borderWidth = borderSize;
@@ -115,6 +136,15 @@ public class FontLoader {
         parameter.size = size;
         parameter.color = color;
         return generator.generateFont(parameter);
+    }
+
+    public static String getOneColorButtonString(int index, String s, Color first, Color other){
+//        BitmapFont b1 = generateFont(size);
+//        b1.getData().markupEnabled = true;
+//        Label.LabelStyle style = new Label.LabelStyle(b1, null);
+//        style.fontColor = other;
+        return ("[#" + other.toString() + "]" + s.substring(0, index) + "[#" + first.toString() + "]" +
+                s.substring(index, index + 1) + "[#" + other.toString() + "]" + s.substring(index + 1));
     }
 //    public static BitmapFont generateMenuFont(int size, Color color){
 //        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Iscoola.ttf"));

@@ -174,9 +174,6 @@ public class OptionScreen extends AbstractMenuScreen {
             }
         });
 
-
-
-
 //        TextButton resolution = new TextButton("Resolution", GDefence.getInstance().assetLoader.getSkin());
 //        resolution.addListener(new InputListener(){
 //            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -193,8 +190,6 @@ public class OptionScreen extends AbstractMenuScreen {
 //                return true;
 //            }
 //        });
-
-
         table.setWidth(stage.getWidth());
         table.align(Align.center|Align.top);
         table.setPosition(0, Gdx.graphics.getHeight());
@@ -222,8 +217,6 @@ public class OptionScreen extends AbstractMenuScreen {
         stage.addActor(table);
 
     }
-
-
 
 
 

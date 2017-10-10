@@ -23,12 +23,13 @@ public class NextWaveTimer extends Label{
 
     @Override
     public void act(float delta) {
+        if(delta > 30) return;
         super.act(delta);
         time = LevelMap.getLevel().getTimerTime();
         time = new BigDecimal(time).setScale(2, BigDecimal.ROUND_UP).floatValue();
 
 
-        setText("" + time);
+        setText(Float.toString(time));
     }
 
 //    @Override

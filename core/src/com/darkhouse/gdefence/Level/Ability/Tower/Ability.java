@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
 import com.darkhouse.gdefence.Level.Ability.Spell.GlobalSlow;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -31,6 +32,7 @@ public abstract class Ability {
         public String getSaveCode(){
             return id + "z" + gemsNumber[0] + ";" + gemsNumber[1] + ";" + gemsNumber[2] + ";" + gemsMax[0] + ";" + gemsMax[1] + ";" + gemsMax[2];
         }
+
         public static AbilityPrototype loadAbilityCode(String code){
             String[] info = code.split("z");
             int id = Integer.parseInt(info[0]);
@@ -47,9 +49,19 @@ public abstract class Ability {
 //            System.out.println(param[0] + " " + param[1] + " " + param[2] + " " +param[3] + " " +param[4]);
 
             switch (id){//TODO do all
-                case 0:
-                return new Bash.P(Float.parseFloat(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[2]),
-                        new Bash.G(Float.parseFloat(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap)).copy().gemCur(gemCur);
+                case 0:return new Bash.P(Float.parseFloat(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[2]),
+                              new Bash.G(Float.parseFloat(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap)).copy().gemCur(gemCur);
+                case 1:return new BuckShot.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
+                              new BuckShot.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
+                case 2:return new Crit.P(Float.parseFloat(param[0]), Float.parseFloat(param[1]),
+                              new Crit.G(Float.parseFloat(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
+                case 3:return new Desolate.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
+                              new Desolate.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
+                case 4:return new FireArrow.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Float.parseFloat(param[2]),
+                              new FireArrow.G(Integer.parseInt(param[3]), Float.parseFloat(param[4]), gemCap)).copy().gemCur(gemCur);
+                case 5:return new HunterSpeed.P(Integer.parseInt(param[0]), Integer.parseInt(param[0]), Float.parseFloat(param[1]),
+                        new HunterSpeed.G(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[0]), gemCap)).copy().gemCur(gemCur);
+
                 case 20:
                     return new GlobalSlow.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]), Float.parseFloat(param[2]), Integer.parseInt(param[3]),
                             new GlobalSlow.G(Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap))/*.copy()*/.gemCur(gemCur);
@@ -180,16 +192,16 @@ public abstract class Ability {
         abstract public AbilityPrototype copy();
 
         public String getName() {
-            return name;
+            return GDefence.getInstance().assetLoader.getWord(name);
         }
         public String getTexturePath() {
-            return texturePath;
+            return name;
         }
 
-        public AbilityPrototype(int id, String name, String texturePath, int[] gemsMax) {
+        public AbilityPrototype(int id, String name, /*String texturePath, */int[] gemsMax) {
             this.id = id;
             this.name = name;
-            this.texturePath = texturePath;
+//            this.texturePath = texturePath;
 //            this.grader = grader;
 //            this.gemsMax = grader.gemCap;
             this.gemsMax = gemsMax;

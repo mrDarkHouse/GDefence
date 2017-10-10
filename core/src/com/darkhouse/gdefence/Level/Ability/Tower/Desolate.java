@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
@@ -33,11 +36,15 @@ public class Desolate extends Ability implements Ability.IOnHit {
         private AtomicReference<Float> duration;
 
         public P(int armorReduction, float duration, G grader) {
-            super(3, "Desolate", "desolate", grader.gemCap);
+            super(3, "desolate", grader.gemCap);
             this.armorReduction = new AtomicReference<Integer>(armorReduction);
             this.duration = new AtomicReference<Float>(duration);
             this.grader = grader;
         }
+//        public P loadCode(String[] param, int[] gemCap){
+//            return new Desolate.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
+//                    new Desolate.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy();
+//        }
 
         @Override
         public String getSaveCode() {
@@ -45,19 +52,22 @@ public class Desolate extends Ability implements Ability.IOnHit {
         }
 
         @Override
-        public AbilityPrototype copy() {
+        public P copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(armorReduction.get(), duration.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.armorReduction, grader.armorReductionUp, "armor reduction",
+            p.gemBoost[0] = new BoostInteger(p.armorReduction, grader.armorReductionUp, l.getWord("desolateGrade1"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, "effect duration",
+            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, l.getWord("desolateGrade2"),
                     true, BoostFloat.FloatGradeFieldType.TIME);
             return p;
         }
 
         @Override
         public String getTooltip() {
-            return "Down attacked enemies armorReduction by [#000000ff]" + armorReduction + System.getProperty("line.separator")
-                    + "[] for [#0ffe00ff]" + duration + "[] seconds";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("desolateTooltip1") + " " + FontLoader.colorCode(0) + armorReduction
+                    + System.getProperty("line.separator") + "[] " + l.getWord("desolateTooltip2") +
+                    " " + FontLoader.colorCode(1) + duration + "[] " + l.getWord("desolateTooltip3");
         }
 
         @Override

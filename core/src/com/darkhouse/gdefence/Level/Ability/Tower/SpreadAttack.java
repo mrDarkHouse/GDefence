@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -17,7 +20,7 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
         private int shots;
 
         public P(float cdCap, int bonusAttacks, G grader) {
-            super(11, "Spread Attack", "doubleAttack", grader.gemCap);
+            super(11, "spreadAttack", grader.gemCap);
             this.cdCap = new AtomicReference<Float>(cdCap);
             this.shots = bonusAttacks;
             this.grader = grader;
@@ -30,8 +33,9 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
 
         @Override
         public AbilityPrototype copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(cdCap.get(), shots, grader);
-            p.gemBoost[0] = new BoostFloat(p.cdCap, grader.cdCapDown, "time between next spread attack",
+            p.gemBoost[0] = new BoostFloat(p.cdCap, grader.cdCapDown, l.getWord("spreadAttackGrade1"),
                     false, BoostFloat.FloatGradeFieldType.TIME);
 
             return p;
@@ -44,8 +48,11 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
 
         @Override
         public String getTooltip() {
-            return "Shot another " + shots + " projectile" + System.getProperty("line.separator") +
-                    "every [#000000ff]" + cdCap.get() + "[] seconds";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("spreadAttackTooltip1") + " " + shots + " " +
+                    l.getWord("spreadAttackTooltip2") + System.getProperty("line.separator") +
+                    l.getWord("spreadAttackTooltip3") + " " + FontLoader.colorString(cdCap.get().toString(), 0) + " " +
+                    l.getWord("spreadAttackTooltip4");
         }
 
 

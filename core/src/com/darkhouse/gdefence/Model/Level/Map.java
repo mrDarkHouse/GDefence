@@ -26,8 +26,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Map {
     private boolean isBuild = false;
+
+
     private TowerObject rangeTower;
     private DragAndDrop.Payload payload;
+
+    public enum MapType{
+        CLASSIC, INVASION, TIME
+    }
 
     public void setBuild(boolean build, TowerObject rangeTower, DragAndDrop.Payload payload) {//
         isBuild = build;
@@ -95,7 +101,7 @@ public class Map {
 //        }
 //    }
     public static Mob getNearestMob(Mob startSearch, int range){
-        float currentF = 99999;//infinity
+        float currentF = Float.MAX_VALUE;//infinity
         Mob currentMob = null;
         for (int i = 0; i < Wave.mobs.size; i++){
             Mob m = Wave.mobs.get(i);
@@ -192,7 +198,9 @@ public class Map {
         return null;
     }
 
-    public MapTile getFirstTile(MapTile mapTile1, MapTile mapTile2, Mob.MoveType prefType/*, int spawner*/){//meaning that all tiles are Walkable
+    public MapTile getFirstTile(MapTile mapTile1, MapTile mapTile2, Mob.MoveType prefType/*, int spawner*/){
+
+        //meaning that all tiles are Walkable
 //        Walkable w1 = ((Walkable) mapTile1);
 //        Walkable w2 = ((Walkable) mapTile2);
 
@@ -302,32 +310,6 @@ public class Map {
             }
         }
     }
-//    public MapTile getNextTile(MapTile tile, Way way){
-//        switch (way){
-//            case RIGHT:
-//                if(tile.indexX + 1 > tiles.length) {
-//                    return getTiles()[tile.indexX + 1][tile.indexY];
-//                }
-//                break;
-//            case LEFT:
-//                if(tile.indexX - 1 < tiles.length) {
-//                    return getTiles()[tile.indexX - 1][tile.indexY];
-//                }
-//                break;
-//            case UP:
-//                System.out.println(tile.indexY);
-//                if(tile.indexY + 1 > tiles[0].length) {
-//                    return getTiles()[tile.indexX][tile.indexY + 1];
-//                }
-//                break;
-//            case DOWN:
-//                if(tile.indexY - 1 < tiles[0].length) {
-//                    return getTiles()[tile.indexX][tile.indexY - 1];
-//                }
-//        }
-//        return null;
-//
-//    }
 
 
     public Map(final int number, int x, int y, int cellSize) {
@@ -353,13 +335,18 @@ public class Map {
         tiles = ml.loadMap();
 
         ml.loadProperties(ml.getSpawnersNumber(), false);//may do outside (in Level class)
+        MapType type = ml.getMapType();
         setIndexTiles();//
         searchSpawner();
-        searchCastle();
         initPortals();
         initBaseTextures();
+        if(type == MapType.CLASSIC) {
+            searchCastle();
+            initPaths(ml.getMoveTypesInLevel());
+        }
 
-        initPaths(ml.getMoveTypesInLevel());
+
+
 //        normalizeTextures();
 //        normalizeBlocks();
 

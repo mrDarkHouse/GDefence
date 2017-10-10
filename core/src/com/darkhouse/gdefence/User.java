@@ -577,8 +577,8 @@ public class User {
 //        maxHealth = new Gradable("Max Health", 5, 5, 5, 100, 25);
 //        maxEnergy = new Gradable("Max Energy", 5, 30, 10, 100, 25);
 
-//        openResearch(Research.Powder);
-//        openResearch(Research.Steam);
+        openResearch(Research.Powder);
+        openResearch(Research.Steam);
 //        towerInventory = new Inventory(TowerObject.class, 35);
 //        spellInventory = new Inventory(SpellObject.class, 35);
 //        detailInventory = new Inventory(DetailObject.class, 35);

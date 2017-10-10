@@ -36,11 +36,15 @@ public class HealthBar extends WidgetGroup{
         addActor(text);
         //add(text);
     }
+    public void update(){
+        healthBar.setValue(LevelMap.getLevel().getHealthNumber());
+        text.setText(LevelMap.getLevel().getHealthNumber() + "/" + LevelMap.getLevel().getMaxHP());
+    }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        healthBar.setValue(LevelMap.getLevel().getHealthNumber());
-        text.setText(LevelMap.getLevel().getHealthNumber() + "/" + LevelMap.getLevel().getMaxHP());
+//        healthBar.setValue(LevelMap.getLevel().getHealthNumber());
+//        text.setText(LevelMap.getLevel().getHealthNumber() + "/" + LevelMap.getLevel().getMaxHP());
     }
 }

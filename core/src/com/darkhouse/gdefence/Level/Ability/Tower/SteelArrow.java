@@ -3,6 +3,9 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
@@ -20,7 +23,7 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
         private AtomicReference<Integer> range;
 
         public P(int maxTargets, int range, G grader) {
-            super(12, "Steel Arrow", "steelArrow", grader.gemCap);
+            super(12, "steelArrow", grader.gemCap);
             this.maxTargets = new AtomicReference<Integer>(maxTargets);
             this.range = new AtomicReference<Integer>(range);
             this.grader = grader;
@@ -33,10 +36,11 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
 
         @Override
         public AbilityPrototype copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(maxTargets.get(), range.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.maxTargets, grader.maxTargetsUp, "max targets",
+            p.gemBoost[0] = new BoostInteger(p.maxTargets, grader.maxTargetsUp, l.getWord("steelArrowGrade1"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostInteger(p.range, grader.rangeUp, "fly range",
+            p.gemBoost[1] = new BoostInteger(p.range, grader.rangeUp, l.getWord("steelArrowGrade2"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
             return p;
         }
@@ -48,11 +52,13 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
 
         @Override
         public String getTooltip() {
-            return "After hitting projectile continue fly, " + System.getProperty("line.separator") +
-                    "hitting " + /*can do changeable */100 + "% dmg from base damage to each target "
-                    + System.getProperty("line.separator") + "After hitting max targets projectile disappear"
-                    + System.getProperty("line.separator") + "Fly range [#0ffe00ff]" + range + "[]"
-                    + System.getProperty("line.separator") + "Max targets [#000000ff]" + maxTargets + "[]";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("steelArrowTooltip1") + " " + System.getProperty("line.separator") +
+                    l.getWord("steelArrowTooltip2") + " " + /*can do changeable */100 + "%" + " " +
+                    l.getWord("steelArrowTooltip3") + System.getProperty("line.separator") +
+                    l.getWord("steelArrowTooltip4") + " " + FontLoader.colorString(maxTargets.get().toString(), 0) + " " +
+                    l.getWord("steelArrowTooltip5") + System.getProperty("line.separator") +
+                    l.getWord("steelArrowTooltip6") + " " + FontLoader.colorString(range.get().toString(), 1);
         }
     }
     public static class G extends AbilityGrader{

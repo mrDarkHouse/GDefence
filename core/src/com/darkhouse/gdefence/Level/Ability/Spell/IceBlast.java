@@ -22,7 +22,7 @@ public class IceBlast extends Spell/* implements Spell.IAoe*/{
         private AtomicReference<Integer> aoe;//feature aoe grade
 
         public P(int energyCost, int cooldown, int dmg, float slowPercent, float duration, int aoe, G grader) {
-            super(21, "Ice blast", "globalSlow", energyCost, cooldown, grader.gemCap, Mob.class);
+            super(21, "iceBlast", energyCost, cooldown, grader.gemCap, Mob.class);
             this.dmg = new AtomicReference<Integer>(dmg);
             this.slowPercent = new AtomicReference<Float>(slowPercent);
             this.duration = new AtomicReference<Float>(duration);

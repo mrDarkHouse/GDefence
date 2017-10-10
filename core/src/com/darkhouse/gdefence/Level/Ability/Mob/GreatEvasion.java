@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.Evasion;
 import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
@@ -41,7 +44,7 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
         private float cdCap;
 
         public P(float cdCap) {
-            super("Great Evasion", false);
+            super("greatEvasion", false);
             this.cdCap = cdCap;
 
         }
@@ -51,8 +54,10 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
 
         @Override
         public String getTooltip() {
-             return "Block any dmg when attacked" + System.getProperty("line.separator") +
-                    "every [#64A619ff]" + cdCap + "" + "[] seconds";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+             return l.getWord("greatEvasionTooltip1") + System.getProperty("line.separator") +
+                     l.getWord("greatEvasionTooltip2") + " " + FontLoader.colorString(Float.toString(cdCap), 3) + " " +
+                     l.getWord("greatEvasionTooltip3");
         }
     }
 

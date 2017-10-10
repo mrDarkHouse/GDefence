@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 
@@ -35,7 +38,7 @@ public class PoisonArrow extends Ability implements Ability.IOnHit {
         private AtomicReference<Float> duration;
 
         public P(float slowPercent, float duration, G grader) {
-            super(8, "Poison Arrow", "poisonArrow", grader.gemCap);
+            super(8, "poisonArrow", grader.gemCap);
             this.slowPercent = new AtomicReference<Float>(slowPercent);
             this.duration = new AtomicReference<Float>(duration);
             this.grader = grader;
@@ -48,10 +51,11 @@ public class PoisonArrow extends Ability implements Ability.IOnHit {
 
         @Override
         public AbilityPrototype copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(slowPercent.get(), duration.get(), grader);
-            p.gemBoost[0] = new BoostFloat(p.slowPercent, grader.slowPercentUp, "slow percent",
+            p.gemBoost[0] = new BoostFloat(p.slowPercent, grader.slowPercentUp, l.getWord("poisonArrowGrade1"),
                     true, BoostFloat.FloatGradeFieldType.PERCENT);
-            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, "slow duration",
+            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, l.getWord("poisonArrowGrade2"),
                     true, BoostFloat.FloatGradeFieldType.TIME);
             return p;
         }
@@ -63,7 +67,10 @@ public class PoisonArrow extends Ability implements Ability.IOnHit {
 
         @Override
         public String getTooltip() {
-            return "Slow enemies by [#000000ff]" + slowPercent.get()*100 + "%[] for [#0ffe00ff]" + duration + "[] seconds";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("poisonArrowTooltip1") + " " + FontLoader.colorString(slowPercent.get()*100 + "%", 0) + " " +
+                    l.getWord("poisonArrowTooltip2") + " " + FontLoader.colorString(duration.get().toString(), 1) + " " +
+                    l.getWord("poisonArrowTooltip3");
         }
 
     }

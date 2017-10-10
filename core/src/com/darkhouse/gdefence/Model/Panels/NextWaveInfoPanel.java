@@ -253,14 +253,14 @@ public class NextWaveInfoPanel extends Table{
         pack();//fix small window for big table
 //        abilities.setText(abilitiesS);
 
-//        if(nextWaveTimer.getTime() > 0){
+//        if(nextWaveTimer.getTimeLimit() > 0){
 //            setVisible(true);
 //        }else setVisible(false);
     }
 
 
 //    public void draw(Batch batch, float parentAlpha) {
-//        if(nextWaveTimer.getTime() > 0) {
+//        if(nextWaveTimer.getTimeLimit() > 0) {
 //            super.draw(batch, parentAlpha);
 //        }
 //    }

@@ -2,6 +2,9 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
 import com.badlogic.gdx.math.Vector2;
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.User;
@@ -19,7 +22,7 @@ public class BuckShot extends Ability implements Ability.IPreShot {
         private AtomicReference<Integer> maxTargets;//
 
         public P(int projectiles, float angle/*, int maxTargets*//*, int range*/, G grader) {
-            super(1, "BuckShot", "buckShot", grader.gemCap);
+            super(1, "buckShot", grader.gemCap);
             this.projectiles = new AtomicReference<Integer>(projectiles);
             this.angle = new AtomicReference<Float>(angle);
             this.maxTargets = new AtomicReference<Integer>(1);
@@ -34,10 +37,11 @@ public class BuckShot extends Ability implements Ability.IPreShot {
 
         @Override
         public AbilityPrototype copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(projectiles.get(), angle.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.projectiles, grader.projectilesUp, "projectiles number",
+            p.gemBoost[0] = new BoostInteger(p.projectiles, grader.projectilesUp, l.getWord("buckShotGrade1"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostFloat(p.angle, grader.angleDown, "angle between projectiles",
+            p.gemBoost[1] = new BoostFloat(p.angle, grader.angleDown, l.getWord("buckShotGrade2"),
                     false, BoostFloat.FloatGradeFieldType.ANGLE);
             return p;
         }
@@ -49,8 +53,9 @@ public class BuckShot extends Ability implements Ability.IPreShot {
 
         @Override
         public String getTooltip() {
-            return "Shot buck with [#000000ff]" + projectiles.get() + "[] bucks" + System.getProperty("line.separator") +
-                    " in [#0ffe00ff]" + angle.get().intValue() + "*[] between them";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("buckShotTooltip1") + " " + FontLoader.colorCode(0) + projectiles.get() + "[] " + l.getWord("buckShotTooltip2") + System.getProperty("line.separator") +
+                    l.getWord("buckShotTooltip3") + " " + FontLoader.colorCode(1) + angle.get().intValue() + "*[] " + l.getWord("buckShotTooltip4");
         }
     }
     public static class G extends AbilityGrader{

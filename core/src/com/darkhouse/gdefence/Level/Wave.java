@@ -5,6 +5,8 @@ import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Path.WalkableMapTile;
+import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +112,9 @@ public class Wave {
             mobsToSpawn.removeValue(mobsToSpawn.peek(), true);
 //            System.out.println(mobs.get(mobs.size - 1).getAbilities().get(0).getOwner());
             mobs.peek().spawn(spawner);
+
+            LevelMap.levelMap.mobSpawnEvent();
+
             //System.out.println("spawned " + timeSpawn);
 
             //System.out.println("spawned");

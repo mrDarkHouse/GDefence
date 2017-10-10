@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
@@ -41,8 +44,10 @@ public class WaterFeel extends MobAbility implements MobAbility.IMove{
 
         @Override
         public String getTooltip() {
-            return "Add [#64A619ff]" + speedValue + "[] move speed" + System.getProperty("line.separator") +
-                    "when swimming";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("waterFeelTooltip1") + " " + FontLoader.colorString(Integer.toString(speedValue), 3) + " " +
+                    l.getWord("waterFeelTooltip2") + System.getProperty("line.separator") +
+                    l.getWord("waterFeelTooltip3");
         }
     }
 

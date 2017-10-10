@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.BonusArmor;
 import com.darkhouse.gdefence.Level.Ability.Tools.Stackable;
@@ -49,7 +52,7 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
         private int armor;
 
         public P(int stacks, int armor) {
-            super("Layer Armor", false);
+            super("layerArmor", false);
             this.stacks = stacks;
             this.armor = armor;
         }
@@ -59,8 +62,12 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
 
         @Override
         public String getTooltip() {
-            return "Have [#64A619ff]" + stacks + "[] stacks, each add [#64A619ff]" + armor + "[] armor" + System.getProperty("line.separator") +
-                    "after getting attack [#CD6600ff]1 []stack disappear";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("layerArmorTooltip1") + " " + FontLoader.colorString(Integer.toString(stacks), 3) +
+                    l.getWord("layerArmorTooltip2") + " " + FontLoader.colorString(Integer.toString(armor), 3) + " " +
+                    l.getWord("layerArmorTooltip3") + System.getProperty("line.separator") +
+                    l.getWord("layerArmorTooltip4") + " " + FontLoader.colorString(Integer.toString(1), 4) + " " +
+                    l.getWord("layerArmorTooltip5");
         }
     }
 

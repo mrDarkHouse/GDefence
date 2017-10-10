@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Model.Level.Map;
@@ -15,7 +18,7 @@ public class Splash extends Ability implements Ability.IAfterHit{
         private AtomicReference<Integer> aoe;
 
         public P(int aoe, float aoeDmg, G grader) {
-            super(10, "Splash", "splash", grader.gemCap);
+            super(10, "splash", grader.gemCap);
             this.aoe = new AtomicReference<Integer>(aoe);
             this.aoeDmg = new AtomicReference<Float>(aoeDmg);
             this.grader = grader;
@@ -28,10 +31,11 @@ public class Splash extends Ability implements Ability.IAfterHit{
 
         @Override
         public AbilityPrototype copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(aoe.get(), aoeDmg.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.aoe, grader.aoeUp, "splash radius",
+            p.gemBoost[0] = new BoostInteger(p.aoe, grader.aoeUp, l.getWord("splashGrade1"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostFloat(p.aoeDmg, grader.aoeDmgUp, "splash damage",
+            p.gemBoost[1] = new BoostFloat(p.aoeDmg, grader.aoeDmgUp, l.getWord("splashGrade2"),
                     true, BoostFloat.FloatGradeFieldType.PERCENT);
             return p;
         }
@@ -43,8 +47,11 @@ public class Splash extends Ability implements Ability.IAfterHit{
 
         @Override
         public String getTooltip() {
-            return "Additionaly dealing [#0ffe00ff]" + aoeDmg.get()*100 + "[] dmg" + System.getProperty("line.separator")
-                    + " in [#000000ff]" + aoe + "[] range";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("splashTooltip1") + " " + FontLoader.colorString(aoeDmg.get()*100 + "%", 1) + " " +
+                    l.getWord("splashTooltip2") + System.getProperty("line.separator") +
+                    l.getWord("splashTooltip3") + " " + FontLoader.colorString(aoe.get().toString(), 0) + " " +
+                    l.getWord("splashTooltip4");
         }
 
     }

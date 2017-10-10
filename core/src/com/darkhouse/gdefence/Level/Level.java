@@ -28,6 +28,27 @@ public class Level {
     private String dropList;
     private String penaltyDropList;
 
+    private Map.MapType type;
+
+    public Map.MapType getType() {
+        return type;
+    }
+
+
+    private int mobLimit;//for non classic types
+    private float timeLimit;
+    private float roundTime = 0f;
+
+    public float getRoundTime() {
+        return roundTime;
+    }
+
+    public int getMobLimit() {
+        return mobLimit;
+    }
+    public float getTimeLimit() {
+        return timeLimit;
+    }
 
     public int getMaxEnergy() {
         return maxEnergy;
@@ -75,11 +96,13 @@ public class Level {
                 this.energyNumber = GDefence.getInstance().user.maxEnergy.getCurrentValue();
             }
         }
+        ownerScreen.energyChangeEvent();
     }
     public boolean removeEnergy(int energy) {
         if(haveEnergy(energy)) {
             this.energyNumber -= energy;
             getStatManager().energySpendAdd(energy);
+            ownerScreen.energyChangeEvent();
             return true;
         }else return false;
     }
@@ -180,12 +203,19 @@ public class Level {
         maxHP = GDefence.getInstance().user.maxHealth.getCurrentValue();
         healthNumber = startHP;
 
+        type = ml.getMapType();
+        mobLimit = ml.getMobLimit();
+        timeLimit = ml.getTimeLimit();
 
     }
     public void init(){
         for (Wave w:waves){
             w.init();
         }
+    }
+
+    public void mobDieEvent(){
+        ownerScreen.mobDieEvent();
     }
 
 
@@ -250,7 +280,7 @@ public class Level {
         //GDefence.getInstance().setScreen(new MainMenu(GDefence.getInstance()));
     }
 
-    private void looseLevel(){
+    public void looseLevel(){
         Wave.mobs.clear();
         //System.out.println("loose");
         GDefence.getInstance().setScreen(new LevelEndScreen(false, getStatManager()));
@@ -310,9 +340,14 @@ public class Level {
         drawMobs(batch);
     }
     public void physic(float delta){
+        if(delta > 30) return;
         map.physic(delta);
         if(isPaused) return;
         if(inWave){
+            roundTime += delta;
+            if(type == Map.MapType.TIME){
+                if(roundTime >= getTimeLimit()) looseLevel();
+            }
             for (int i = 0; i < map.getSpawner().size(); i++) {
                 if(currentWave + i < waves.size()) {//hotfix
                     waves.get(currentWave + i).update(delta);

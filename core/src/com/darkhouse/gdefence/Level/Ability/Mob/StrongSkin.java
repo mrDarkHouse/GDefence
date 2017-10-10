@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 
@@ -33,7 +36,7 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
         private int blockMinLimit;
 
         public P(int blockEmount, int blockMinLimit) {
-            super("Strong Skin", false);
+            super("strongSkin", false);
             this.blockEmount = blockEmount;
             this.blockMinLimit = blockMinLimit;
 
@@ -44,8 +47,11 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
 
         @Override
         public String getTooltip() {
-            return "Block [#64A619ff]" + blockEmount + "[] dmg when attacked" + System.getProperty("line.separator") +
-                    "cant block less than [#64A619ff]" + blockMinLimit + "[] dmg";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("strongSkinTooltip1") + " " + FontLoader.colorString(Integer.toString(blockEmount), 3) + " " +
+                    l.getWord("strongSkinTooltip2") + System.getProperty("line.separator") +
+                    l.getWord("strongSkinTooltip3") + " " + FontLoader.colorString(Integer.toString(blockMinLimit), 3) + " " +
+                    l.getWord("strongSkinTooltip4");
         }
     }
 

@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tools.Chance;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -42,7 +45,7 @@ public class Bash extends Ability implements Ability.IOnHit{
         private AtomicReference<Integer> bonusDmg;
 
         public P(float chance, float duration, int bonusDmg, G grader) {
-            super(0, "Bash", "bash", grader.gemCap);
+            super(0, "bash", grader.gemCap);
             this.chance = new AtomicReference<Float>(chance);
             this.duration = new AtomicReference<Float>(duration);
             this.bonusDmg = new AtomicReference<Integer>(bonusDmg);
@@ -52,14 +55,14 @@ public class Bash extends Ability implements Ability.IOnHit{
 
 //        USE IT FOR NEW ABILITY PROTOTYPE
         public P copy(){
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(chance.get(), duration.get(), bonusDmg.get(), g);
-            p.gemBoost[0] = new BoostFloat(p.chance,     g.chanceUp,   "bash chance",
+            p.gemBoost[0] = new BoostFloat(p.chance,     g.chanceUp,   l.getWord("bashGrade1"),
                     true, BoostFloat.FloatGradeFieldType.PERCENT);
-            p.gemBoost[1] = new BoostFloat(p.duration,   g.durationUp, "bash duration",
+            p.gemBoost[1] = new BoostFloat(p.duration,   g.durationUp, l.getWord("bashGrade2"),
                     true, BoostFloat.FloatGradeFieldType.TIME);
-            p.gemBoost[2] = new BoostInteger(p.bonusDmg, g.bonusDmgUp, "bonus bash damage",
+            p.gemBoost[2] = new BoostInteger(p.bonusDmg, g.bonusDmgUp, l.getWord("bashGrade3"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-
             return p;
         }
 
@@ -70,8 +73,10 @@ public class Bash extends Ability implements Ability.IOnHit{
 
         @Override
         public String getTooltip() {
-            return "Have [#000000ff]" + chance.get()*100 + "%[] chance to bash attacked enemy" + System.getProperty("line.separator")
-                    + " for [#0ffe00ff]" + duration + "[] seconds and do [#00ffffff]" + bonusDmg + "[] bonus damage";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("bashTooltip1") + " " + FontLoader.colorCode(0) + chance.get()*100 + "%[] " + l.getWord("bashTooltip2") + System.getProperty("line.separator") +
+                   l.getWord("bashTooltip3") + " " + FontLoader.colorCode(1) + duration + "[] " + l.getWord("bashTooltip4")
+                    + " " + FontLoader.colorCode(2) + bonusDmg + "[] " + l.getWord("bashTooltip5");
         }
         @Override
         public String getSaveCode() {

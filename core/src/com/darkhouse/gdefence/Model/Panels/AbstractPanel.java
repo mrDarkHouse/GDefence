@@ -17,4 +17,8 @@ public abstract class AbstractPanel extends Table{
     public AbstractPanel() {
 
     }
+
+    public void update(){
+
+    }
 }

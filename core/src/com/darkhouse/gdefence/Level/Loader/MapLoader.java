@@ -2,15 +2,13 @@ package com.darkhouse.gdefence.Level.Loader;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer;
 import com.badlogic.gdx.utils.Array;
-import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Path.Spawn;
 import com.darkhouse.gdefence.Level.Wave;
-import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.Model.Level.Map;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,8 +16,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Properties;
-import java.util.Random;
-import java.util.Scanner;
 
 
 public class MapLoader {
@@ -40,6 +36,9 @@ public class MapLoader {
     private Array<Mob.MoveType> moveTypesInLevel;
     private String dropList;
     private String penaltyDropList;
+    private Map.MapType mapType;
+    private int mobLimit;//if mapType == Invasion
+    private float timeLimit;//if mapType == TIME
 
     public int getExpFromLvl() {
         return expFromLvl;
@@ -70,6 +69,15 @@ public class MapLoader {
     }
     public String getPenaltyDropList() {
         return penaltyDropList;
+    }
+    public Map.MapType getMapType() {
+        return mapType;
+    }
+    public int getMobLimit() {
+        return mobLimit;
+    }
+    public float getTimeLimit() {
+        return timeLimit;
     }
 
     public MapLoader(int map) {
@@ -157,6 +165,20 @@ public class MapLoader {
         }
         return null;
     }
+    private void loadType(Properties prop){
+        String s = prop.getProperty("mapType");
+        if(s.equals("standart")){
+            mapType = Map.MapType.CLASSIC;
+        }else if(s.equals("invasion")){
+            mapType = Map.MapType.INVASION;
+            mobLimit = Integer.parseInt(prop.getProperty("mobLimit"));
+        }else if(s.equals("time")){
+            mapType = Map.MapType.TIME;
+            timeLimit = Float.parseFloat(prop.getProperty("timeLimit"));
+        }
+    }
+
+
     public void loadProperties(int spawners, boolean forRealMap){
         try {
             if(spawners == 0){//empty maps
@@ -165,6 +187,9 @@ public class MapLoader {
             Properties prop = new Properties();
             FileInputStream fs = new FileInputStream(loadFile);
             prop.load(fs);
+
+            loadType(prop);
+
 
 
 //            Scanner loadScanner = new Scanner(loadFile);

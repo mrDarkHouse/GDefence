@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tools.Stackable;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -37,7 +40,7 @@ public class Sadist extends MobAbility implements MobAbility.ISpawn{
         private int healEmount;
 
         public P(int attackNeed, int healEmount) {
-            super("Sadist", false);
+            super("sadist", false);
             this.attacksNeed = attackNeed;
             this.healEmount = healEmount;
         }
@@ -47,8 +50,11 @@ public class Sadist extends MobAbility implements MobAbility.ISpawn{
 
         @Override
         public String getTooltip() {
-            return "After getting [#64A619ff]" + attacksNeed + "[] attacks "  +  System.getProperty("line.separator") +
-                    "heal for [#64A619ff]" + healEmount + "[] hp and dispell all debuffs";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("sadistTooltip1") + " " + FontLoader.colorString(Integer.toString(attacksNeed), 3) + "" +
+                    l.getWord("sadistTooltip2")  +  System.getProperty("line.separator") +
+                    l.getWord("sadistTooltip3") + " " + FontLoader.colorString(Integer.toString(healEmount), 3) + " " +
+                    l.getWord("sadistTooltip4");
         }
     }
 

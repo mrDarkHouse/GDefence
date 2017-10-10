@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Chance;
 import com.darkhouse.gdefence.User;
 
@@ -16,7 +19,7 @@ public class Crit extends Ability {
         private AtomicReference<Float> multiplayer;
 
         public P(float chance, float multiplayer, G grader) {
-            super(2, "Crit", "crit", grader.gemCap);
+            super(2, "crit", grader.gemCap);
             this.chance = new AtomicReference<Float>(chance);
             this.multiplayer = new AtomicReference<Float>(multiplayer);
             this.grader = grader;
@@ -29,9 +32,12 @@ public class Crit extends Ability {
 
         @Override
         public AbilityPrototype copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(chance.get(), multiplayer.get(), grader);
-            p.gemBoost[0] = new BoostFloat(p.chance, grader.chanceUp, "crit chance", true, BoostFloat.FloatGradeFieldType.PERCENT);
-            p.gemBoost[1] = new BoostFloat(p.multiplayer, grader.multiplayerUp, "crit multiplayer", true, BoostFloat.FloatGradeFieldType.MULTIPLAYER);
+            p.gemBoost[0] = new BoostFloat(p.chance, grader.chanceUp, l.getWord("critGrade1"),
+                    true, BoostFloat.FloatGradeFieldType.PERCENT);
+            p.gemBoost[1] = new BoostFloat(p.multiplayer, grader.multiplayerUp, l.getWord("critGrade2"),
+                    true, BoostFloat.FloatGradeFieldType.MULTIPLAYER);
             return p;
         }
 
@@ -41,8 +47,9 @@ public class Crit extends Ability {
         }
         @Override
         public String getTooltip() {
-            return "Have [#000000ff]" + chance.get()*100 + " % []chance " + System.getProperty("line.separator")
-                    + "to increase dmg by for[#0ffe00ff]" + multiplayer.get().intValue() + "x []";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("critTooltip1") + " " + FontLoader.colorCode(0) + chance.get()*100 + " % []" + l.getWord("critTooltip2") + System.getProperty("line.separator")
+                    + l.getWord("critTooltip3") + " " + FontLoader.colorCode(1) + multiplayer.get().intValue() + "x []";
         }
     }
     public static class G extends AbilityGrader {

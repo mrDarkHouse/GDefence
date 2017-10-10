@@ -2,6 +2,9 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Wave;
@@ -18,7 +21,7 @@ public class MultiShot extends Ability implements Ability.IPreShot {
         private AtomicReference<Float> dmgPercent;//not work yet
 
         public P(int bonusTarget, float dmgPercent, G grader) {
-            super(6, "MultiShot", "multiShot", grader.gemCap);
+            super(6, "multiShot", grader.gemCap);
             this.bonusTarget = new AtomicReference<Integer>(bonusTarget);
             this.dmgPercent = new AtomicReference<Float>(dmgPercent);
             this.grader = grader;
@@ -31,10 +34,11 @@ public class MultiShot extends Ability implements Ability.IPreShot {
 
         @Override
         public AbilityPrototype copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(bonusTarget.get(), dmgPercent.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.bonusTarget, grader.bonusTargetUp, "bonus target",
+            p.gemBoost[0] = new BoostInteger(p.bonusTarget, grader.bonusTargetUp, l.getWord("multiShotGrade1"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostFloat(p.dmgPercent, grader.dmgPercentUp, "damage from additional projectiles",
+            p.gemBoost[1] = new BoostFloat(p.dmgPercent, grader.dmgPercentUp, l.getWord("multiShotGrade2"),
                     true, BoostFloat.FloatGradeFieldType.PERCENT);
             return p;
         }
@@ -46,8 +50,11 @@ public class MultiShot extends Ability implements Ability.IPreShot {
 
         @Override
         public String getTooltip() {
-            return "Can shot to [#000000ff]" + bonusTarget + "[] bonus targets" + System.getProperty("line.separator") +
-                    "Additional projectiles deal [#0ffe00ff]" + dmgPercent.get()*100 + "%[] damage";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("multiShotTooltip1") + " " + FontLoader.colorString(bonusTarget.get().toString(), 0) + " " +
+                    l.getWord("multiShotTooltip2") + System.getProperty("line.separator") +
+                    l.getWord("multiShotTooltip3") + " " + FontLoader.colorString(dmgPercent.get()*100 + "%", 1) + " " +
+                    l.getWord("multiShotTooltip4");
         }
 
     }

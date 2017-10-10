@@ -2,6 +2,9 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
 import com.badlogic.gdx.math.Circle;
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
@@ -44,7 +47,7 @@ public class CommandFaith extends MobAbility implements MobAbility.IDie{
         private float duration;
 
         public P(int range, int speedBoost, float duration) {
-            super("Command Faith", false);
+            super("commandFaith", false);
             this.range = range;
             this.speedBoost = speedBoost;
             this.duration = duration;
@@ -55,9 +58,12 @@ public class CommandFaith extends MobAbility implements MobAbility.IDie{
 
         @Override
         public String getTooltip() {
-            return "After die speed up allies in [#64A619ff]" + range + "[] by [#64A619ff]" + speedBoost + "[] for [#64A619ff]"
-                    + duration + "[] seconds" + System.getProperty("line.separator") +
-                    "affected allies speed up other as well";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("commandFaithTooltip1") + " " + FontLoader.colorString(Integer.toString(range), 3) + " " +
+                    l.getWord("commandFaithTooltip2") + " " + FontLoader.colorString(Integer.toString(speedBoost), 3) + " " +
+                    l.getWord("commandFaithTooltip3") + " " + FontLoader.colorString(Float.toString(duration), 3) + " " +
+                    l.getWord("commandFaithTooltip4") + System.getProperty("line.separator") +
+                    l.getWord("commandFaithTooltip5");
         }
     }
 

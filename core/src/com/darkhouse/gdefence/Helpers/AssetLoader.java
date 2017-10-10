@@ -304,7 +304,8 @@ public class AssetLoader extends AssetManager{
         load("AbilityIcons/Abilities/buckShot.png", Texture.class);
         load("AbilityIcons/Abilities/crit.png", Texture.class);
         load("AbilityIcons/Abilities/desolate.png", Texture.class);
-        load("AbilityIcons/Abilities/doubleAttack.png", Texture.class);
+//        load("AbilityIcons/Abilities/doubleAttack.png", Texture.class);
+        load("AbilityIcons/Abilities/spreadAttack.png", Texture.class);
         load("AbilityIcons/Abilities/fireArrow.png", Texture.class);
         load("AbilityIcons/Abilities/hunterSpeed.png", Texture.class);
         load("AbilityIcons/Abilities/multiShot.png", Texture.class);
@@ -638,6 +639,7 @@ public class AssetLoader extends AssetManager{
         load("Language/text", I18NBundle.class, param);
         finishLoading();
         b = get("Language/text", I18NBundle.class);
+        GDefence.getInstance().initTips();
         GDefence.getInstance().initScreens();
         GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
     }

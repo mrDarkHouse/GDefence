@@ -41,12 +41,16 @@ public class EnegryBar extends WidgetGroup{
 
         addActor(l);
     }
+    public void update(){
+        energyBar.setValue(LevelMap.getLevel().getEnergyNumber());
+        text.setText(LevelMap.getLevel().getEnergyNumber() + "/" + LevelMap.getLevel().getMaxEnergy());
+    }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        energyBar.setValue(LevelMap.getLevel().getEnergyNumber());
-        text.setText(LevelMap.getLevel().getEnergyNumber() + "/" + LevelMap.getLevel().getMaxEnergy());
+//        energyBar.setValue(LevelMap.getLevel().getEnergyNumber());
+//        text.setText(LevelMap.getLevel().getEnergyNumber() + "/" + LevelMap.getLevel().getMaxEnergy());
     }
 
 

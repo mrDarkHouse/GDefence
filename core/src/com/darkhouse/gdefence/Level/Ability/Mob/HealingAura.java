@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tools.Aura;
 import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
@@ -82,7 +85,7 @@ public class HealingAura extends MobAbility implements MobAbility.ISpawn{
         private int healEmount;
 
         public P(int range, float healDelay, int healEmount) {
-            super("Healing Aura", false);
+            super("healingAura", false);
             this.range = range;
             this.healDelay = healDelay;
             this.healEmount = healEmount;
@@ -93,8 +96,12 @@ public class HealingAura extends MobAbility implements MobAbility.ISpawn{
 
         @Override
         public String getTooltip() {
-            return "Heals [#64A619ff]" + healEmount + "[] hp to all Mobs in [#64A619ff]" + range + "[] range"
-                    + System.getProperty("line.separator") + "every [#64A619ff]" + healDelay + "[] seconds";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("healingAuraTooltip1") + " " + FontLoader.colorString(Integer.toString(healEmount), 3) + " " +
+                    l.getWord("healingAuraTooltip2") + " " + FontLoader.colorString(Integer.toString(range), 3) + " " +
+                    l.getWord("healingAuraTooltip3") + System.getProperty("line.separator") +
+                    l.getWord("healingAuraTooltip4") + " " + FontLoader.colorString(Float.toString(healDelay), 3) + " " +
+                    l.getWord("healingAuraTooltip5");
         }
     }
 

@@ -435,6 +435,7 @@ public class Mob extends Effectable{
 
     public void setDie(DamageSource source) {
         this.inGame = false;
+        LevelMap.getLevel().mobDieEvent();
         Wave.mobs.removeValue(this, true);//add "if contains this" if error
         if(source!= null){
             LevelMap.getLevel().addEnergy(getBounty());

@@ -2,6 +2,9 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Model.Level.Map;
@@ -19,7 +22,7 @@ public class Bounce extends Ability implements Ability.IAfterHit{
         private AtomicReference<Integer> maxRange;
 
         public P(int bounces, float resDmgFromEachBounce, int maxRange, G grader) {
-            super(7, "Bounce", "bounce", grader.gemCap);
+            super(7, "bounce", grader.gemCap);
             this.bounces = new AtomicReference<Integer>(bounces);
             this.resDmgFromEachBounce = new AtomicReference<Float>(resDmgFromEachBounce);
             this.maxRange = new AtomicReference<Integer>(maxRange);
@@ -33,12 +36,13 @@ public class Bounce extends Ability implements Ability.IAfterHit{
 
         @Override
         public AbilityPrototype copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(bounces.get(), resDmgFromEachBounce.get(), maxRange.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.bounces, grader.bouncesUp, "bounces number",
+            p.gemBoost[0] = new BoostInteger(p.bounces, grader.bouncesUp, l.getWord("bounceGrade1"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostFloat(p.resDmgFromEachBounce, grader.resDmgFromEachBounceDown, "damage less",
+            p.gemBoost[1] = new BoostFloat(p.resDmgFromEachBounce, grader.resDmgFromEachBounceDown, l.getWord("bounceGrade2"),
                     false, BoostFloat.FloatGradeFieldType.PERCENT);
-            p.gemBoost[2] = new BoostInteger(p.maxRange, grader.maxRangeUp, "max bounce range",
+            p.gemBoost[2] = new BoostInteger(p.maxRange, grader.maxRangeUp, l.getWord("bounceGrade3"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
             return p;
         }
@@ -50,9 +54,10 @@ public class Bounce extends Ability implements Ability.IAfterHit{
 
         @Override
         public String getTooltip() {
-            return "After dealing dmg shot bonus attack to nearby mob [#000000ff]" + bounces.get() + "[] times" + System.getProperty("line.separator") +
-                    "Each bounce deal [#0ffe00ff]" + resDmgFromEachBounce.get()*100 + "%[] less damage" + System.getProperty("line.separator") +
-                    "Bounces work only in [#00ffffff]" + maxRange.get() + "[] range";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("bounceTooltip1") + " " + FontLoader.colorCode(0) + bounces.get() + "[] " + l.getWord("bounceTooltip2") + System.getProperty("line.separator") +
+                   l.getWord("bounceTooltip3") + " " + FontLoader.colorCode(1) + resDmgFromEachBounce.get()*100 + "%[] " + l.getWord("bounceTooltip4") + System.getProperty("line.separator") +
+                   l.getWord("bounceTooltip5") + " " + FontLoader.colorCode(2) + "[] " + l.getWord("bounceTooltip6");
         }
 
 

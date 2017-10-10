@@ -20,8 +20,10 @@ import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.*;
+import com.darkhouse.gdefence.Model.Panels.InvasionPanel;
 import com.darkhouse.gdefence.Model.Panels.NextWaveInfoPanel;
 import com.darkhouse.gdefence.Model.Panels.SpellPanel;
+import com.darkhouse.gdefence.Model.Panels.TimeRushPanel;
 import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
@@ -34,6 +36,9 @@ public class LevelMap extends AbstractScreen {
 
     private boolean isPaused;
     private Dialog pauseDialog;
+    private Dialog guideDialog;
+
+
 
     private InputMultiplexer input;
 
@@ -44,6 +49,13 @@ public class LevelMap extends AbstractScreen {
     private NextWaveInfoPanel nWPanel;
     private CurrentWaveInfoPanel cWpanel;
     private PathSigner pathSigner;
+    private HealthBar healthBar;
+    private EnegryBar enegryBar;
+    private InvasionPanel invasionPanel;
+    private TimeRushPanel timeRushPanel;
+
+
+
 
     private MapTileActor[][] tileActors;
 
@@ -52,6 +64,10 @@ public class LevelMap extends AbstractScreen {
     }
 
     private static Level level;
+
+//    private Level level;//must be //TODO
+//    private Map map;
+
     public static LevelMap levelMap;//debug
     private SpellPanel spellPanel;
 
@@ -98,6 +114,52 @@ public class LevelMap extends AbstractScreen {
 
 
     }
+    private class InvasionDialog extends Dialog{
+
+        public InvasionDialog() {
+            super(GDefence.getInstance().assetLoader.getWord("invasionInfo"), GDefence.getInstance().assetLoader.getSkin(), "pause-menu");
+            getTitleLabel().setAlignment(Align.center);
+            getTitleLabel().setStyle(FontLoader.generateStyle(44, Color.WHITE, 2, Color.BLACK));
+            padTop(40);
+            text(GDefence.getInstance().assetLoader.getWord("invasionGuide1") + System.getProperty("line.separator") +
+                    GDefence.getInstance().assetLoader.getWord("invasionGuide2"), FontLoader.generateSecondaryStyle(34, Color.WHITE));
+            row();
+            button(GDefence.getInstance().assetLoader.getWord("ok"), 0);
+//            getButtonTable().row();
+
+        }
+        @Override
+        protected void result (Object object){
+            if (object.equals(0)) {
+                hide();
+                offPause();
+            }
+        }
+    }
+    private class TimeRushDialog extends Dialog{
+
+        public TimeRushDialog() {
+            super(GDefence.getInstance().assetLoader.getWord("timeRushInfo"), GDefence.getInstance().assetLoader.getSkin(), "pause-menu");
+            getTitleLabel().setAlignment(Align.center);
+            getTitleLabel().setStyle(FontLoader.generateStyle(64, Color.WHITE, 8, Color.BLACK));
+            padTop(30);
+            defaults().space(30);
+//            getButtonTable().defaults().space(20);
+            text(GDefence.getInstance().assetLoader.getWord("timeRushGuide"), FontLoader.generateSecondaryStyle(34, Color.WHITE));
+            row();
+            button(GDefence.getInstance().assetLoader.getWord("ok"), 0);
+            pack();
+//            getButtonTable().row();
+
+        }
+        @Override
+        protected void result (Object object){
+            if (object.equals(0)) {
+                hide();
+                offPause();
+            }
+        }
+    }
 
 
     public LevelMap(int number, Inventory towers, Inventory spells) {
@@ -115,6 +177,7 @@ public class LevelMap extends AbstractScreen {
         initShop(towers);
         initSpellPanel(spells);
         initPauseDialog();
+        initExtraEventPanels();
     }
 
     public void init(){
@@ -122,6 +185,21 @@ public class LevelMap extends AbstractScreen {
         input = new InputMultiplexer();
         input.addProcessor(levelInput);
         input.addProcessor(stage);
+    }
+
+
+    public void mobDieEvent(){
+        healthBar.update();
+        if(invasionPanel != null) invasionPanel.update();
+    }
+    public void mobSpawnEvent(){
+        if(level.getType() == Map.MapType.INVASION){
+            invasionPanel.update();
+            if(Wave.mobs.size > level.getMobLimit()) level.looseLevel();
+        }
+    }
+    public void energyChangeEvent(){
+        enegryBar.update();
     }
 
     private void initTextures(){
@@ -177,6 +255,10 @@ public class LevelMap extends AbstractScreen {
 //        stage = new Stage();
 //        levelMap = this;
         Gdx.input.setInputProcessor(input);
+        if(guideDialog != null) {
+            guideDialog.show(stage);
+            isPaused = true;
+        }
 //        initTextures();
 
 //        level = new Level(number, this);
@@ -223,8 +305,10 @@ public class LevelMap extends AbstractScreen {
 
     }
     private void initHpMpBar(){
-        stage.addActor(new HealthBar(Gdx.graphics.getWidth(), 55, 0, Gdx.graphics.getHeight() - 55));
-        stage.addActor(new EnegryBar(55, Gdx.graphics.getHeight() - 55, 0, 0));
+        healthBar = new HealthBar(Gdx.graphics.getWidth(), 55, 0, Gdx.graphics.getHeight() - 55);
+        enegryBar = new EnegryBar(55, Gdx.graphics.getHeight() - 55, 0, 0);
+        stage.addActor(healthBar);
+        stage.addActor(enegryBar);
     }
     private void initWavePanel(){
         nWPanel = new NextWaveInfoPanel();
@@ -233,15 +317,34 @@ public class LevelMap extends AbstractScreen {
         nWPanel.setPosition(Gdx.graphics.getWidth() - /*205*/nWPanel.getWidth() - 5, 5);
 
 
+        if(level.getType() == Map.MapType.CLASSIC) {
+            pathSigner = new PathSigner(nWPanel.getNextWaveTimer(), level.getMap().getPaths());//static
+            stage.addActor(pathSigner);
 
-        pathSigner = new PathSigner(nWPanel.getNextWaveTimer(), level.getMap().getPaths());//static
-        stage.addActor(pathSigner);
-
-        cWpanel = new CurrentWaveInfoPanel(nWPanel.getNextWaveTimer());
-        cWpanel.setVisible(false);
-        cWpanel.setPosition(Gdx.graphics.getWidth() - cWpanel.getWidth() - 5, 5);
-        stage.addActor(cWpanel);
-
+            cWpanel = new CurrentWaveInfoPanel(nWPanel.getNextWaveTimer());
+            cWpanel.setVisible(false);
+            cWpanel.setPosition(Gdx.graphics.getWidth() - cWpanel.getWidth() - 5, 5);
+            stage.addActor(cWpanel);
+        }
+    }
+    private void initExtraEventPanels(){
+        switch (level.getType()){
+            case CLASSIC: return;
+            case INVASION:
+                invasionPanel = new InvasionPanel(level.getMobLimit(), Wave.mobs);
+                invasionPanel.setVisible(false);
+                invasionPanel.setPosition(Gdx.graphics.getWidth() - invasionPanel.getWidth() - 5, 5);
+                stage.addActor(invasionPanel);
+                guideDialog = new InvasionDialog();
+                break;
+            case TIME:
+                timeRushPanel = new TimeRushPanel(level.getTimeLimit(), level);
+                timeRushPanel.setVisible(false);
+                timeRushPanel.setPosition(Gdx.graphics.getWidth() - timeRushPanel.getWidth() - 5, 5);
+                stage.addActor(timeRushPanel);
+                guideDialog = new TimeRushDialog();
+                break;
+        }
     }
     private void initShop(Inventory towers){
         shop = new LevelShopPanel(towers);
@@ -303,14 +406,26 @@ public class LevelMap extends AbstractScreen {
 
     public void updateEnd(){//when new wave is ended
         nWPanel.hasChanged();
-        cWpanel.setVisible(false);
+        switch (level.getType()){//polucshe sdelay
+            case CLASSIC:cWpanel.setVisible(false);
+                break;
+            case INVASION:invasionPanel.setVisible(false);
+                break;
+            case TIME:timeRushPanel.setVisible(false);
+        }
         nWPanel.setVisible(true);
         pathSigner.initTextures();
     }
     public void updateStart(){//when new wave is started
 //        nWPanel.hasChanged();
         nWPanel.setVisible(false);
-        cWpanel.setVisible(true);
+        switch (level.getType()){
+            case CLASSIC:cWpanel.setVisible(true);
+                break;
+            case INVASION:invasionPanel.setVisible(true);
+                break;
+            case TIME:timeRushPanel.setVisible(true);
+        }
     }
 
     @Override

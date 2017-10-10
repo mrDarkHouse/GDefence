@@ -145,7 +145,7 @@ public class GDefence extends Game {
 		initScreens();
         initTips();
 	}
-    private void initTips(){
+    public void initTips(){
         String tip2 = assetLoader.getWord("tip2_1") + " " + User.GEM_TYPE.getBoost(User.GEM_TYPE.RED) + System.getProperty("line.separator") +
                 assetLoader.getWord("tip2_2") + " " + User.GEM_TYPE.getBoost(User.GEM_TYPE.YELLOW) + System.getProperty("line.separator") +
                 assetLoader.getWord("tip2_3") + " " + User.GEM_TYPE.getBoost(User.GEM_TYPE.BLUE);

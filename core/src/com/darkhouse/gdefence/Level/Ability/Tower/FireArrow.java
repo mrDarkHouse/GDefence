@@ -1,6 +1,9 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -18,7 +21,7 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
         private AtomicReference<Float> duration;
 
         public P(int damage, float delay, float duration, G grader) {
-            super(4, "Fire Arrow", "fireArrow", grader.gemCap);
+            super(4, "fireArrow", grader.gemCap);
             this.damage = new AtomicReference<Integer>(damage);
             this.delay = delay;
             this.duration = new AtomicReference<Float>(duration);
@@ -32,9 +35,12 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
 
         @Override
         public AbilityPrototype copy() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(damage.get(), delay, duration.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.damage, grader.dmgUp, "fire dps", true, BoostInteger.IntegerGradeFieldType.DPS, delay);
-            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, "burn time", true, BoostFloat.FloatGradeFieldType.TIME);
+            p.gemBoost[0] = new BoostInteger(p.damage, grader.dmgUp, l.getWord("fireArrowGrade1"),
+                    true, BoostInteger.IntegerGradeFieldType.DPS, delay);
+            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, l.getWord("fireArrowGrade2"),
+                    true, BoostFloat.FloatGradeFieldType.TIME);
             return p;
         }
 
@@ -45,8 +51,11 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
 
         @Override
         public String getTooltip() {
-            return "After hitting burn enemy" + System.getProperty("line.separator") +
-                    "Fire deal [#000000ff]" + (int)(damage.get()*(1/delay)) + "[] dps for [#0ffe00ff]" + duration + "[] seconds";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("fireArrowTooltip1") + System.getProperty("line.separator") +
+                   l.getWord("fireArrowTooltip2") + " " + FontLoader.colorCode(0) + (int)(damage.get()*(1/delay)) + "[] " +
+                   l.getWord("fireArrowTooltip3") + " " + FontLoader.colorCode(1) + duration + "[] " +
+                   l.getWord("fireArrowTooltip4");
         }
     }
     public static class G extends AbilityGrader{

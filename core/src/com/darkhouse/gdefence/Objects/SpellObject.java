@@ -2,6 +2,8 @@ package com.darkhouse.gdefence.Objects;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
@@ -84,9 +86,9 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
         return cooldown;
     }
 
-    public SpellObject(int id, String name, String texturePath, int energyCost, int cooldown, int[] maxGems,
+    public SpellObject(int id, String name, int energyCost, int cooldown, int[] maxGems,
                        Class<? extends Effectable>... affectedTypes) {
-        super(id, name, texturePath, maxGems);
+        super(id, name, maxGems);
         this.affectedTypes = new Array<Class<? extends Effectable>>(affectedTypes);
         this.energyCost = energyCost;
         this.cooldown = cooldown;
@@ -102,7 +104,7 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
 
     @Override
     public String getName() {
-        return name + " " + getGemStat();
+        return super.getName() + " " + getGemStat();
     }
 
 //    @Override
@@ -112,12 +114,13 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
 
     @Override
     public String getTooltip() {
+        AssetLoader l = GDefence.getInstance().assetLoader;
         String s = getChildTooltip() + System.getProperty("line.separator");
         if(this instanceof Spell.IAoe){
-            s += "Radius: " + ((Spell.IAoe) this).getAoe() + System.getProperty("line.separator");
+            s += l.getWord("radius") + ": " + ((Spell.IAoe) this).getAoe() + System.getProperty("line.separator");
         }
-        s += "Energy cost: " + energyCost + System.getProperty("line.separator") +
-                "Cooldown: " + cooldown + "s";
+        s += l.getWord("energyCost") + ": " + energyCost + System.getProperty("line.separator") +
+                l.getWord("cooldown") + ": " + cooldown + "s";
         return s;
     }
 
@@ -125,8 +128,10 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
 
     @Override
     public String getGemGradeTooltip(User.GEM_TYPE gemType) {
+        AssetLoader l = GDefence.getInstance().assetLoader;
         String s = "";
-        if(level <= getGemsNumber() && super.canGrade(gemType)) s += "Up spell level to upgrade" + System.getProperty("line.separator");
+        if(level <= getGemsNumber() && super.canGrade(gemType)) s += l.getWord("gemGradeSpellTooltip") +
+                System.getProperty("line.separator");
         return s + super.getGemGradeTooltip(gemType);//TODO Max when not max
     }
 
