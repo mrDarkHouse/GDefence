@@ -44,7 +44,7 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         return null;
     }
 
-    private static int[] exp2nextLvl = {20, 30, 40, 60, 75, 90, 115, 160, 200, 250};
+    private static int[] exp2nextLvl = {40, 80, 140, 260, 640, 1280, 1280, 1280, 1280};
 //    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
 
     private ItemEnum.Tower prototype;
@@ -152,6 +152,7 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
 
 
     public void addExp(float value){
+        if (level == exp2nextLevel().length) return;//maxLevel
         totalExp += value;
         updateExp();
     }
@@ -255,8 +256,8 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
 
         AssetLoader l = GDefence.getInstance().assetLoader;
         String s = l.getWord("dmg") + ": " + getDmg() + System.getProperty("line.separator")
-                + l.getWord("range") + ": " + getRange() + System.getProperty("line.separator")
                 + l.getWord("speed") + ": " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
+                + l.getWord("range") + ": " + getRange() + System.getProperty("line.separator")
                 + l.getWord("cost") + ": " + getCost() + System.getProperty("line.separator");
 //        s += prototype.getTooltip();
         for (int i = 0; i < getAbilities().size; i++){
@@ -266,6 +267,11 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
             s += a.getGemStat();
         }
         return s;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 
     public void updateGemStat(int gemType, int value){
@@ -296,6 +302,7 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
 
         int n = 1;
         for(int i = /*level - 1*/0; tmpExp >= exp2nextLvl[i]; i++){//if max lvl throws exeption//TODO
+//            System.out.println("tmp " + tmpExp);
             tmpExp -= exp2nextLvl[i];
             n++;
         }

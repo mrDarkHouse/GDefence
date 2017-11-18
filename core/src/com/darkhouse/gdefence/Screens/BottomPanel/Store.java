@@ -26,12 +26,13 @@ public class Store extends AbstractCampainScreen{
         //init();
     }
 
-//    @Override
-//    public void show() {
-//        super.show();
+    @Override
+    public void show() {
+        super.show();
+        inventoryActor.notifyListeners();
 ////        init();
 //
-//    }
+    }
     public void init(){
         inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.getSkin()){
             @Override

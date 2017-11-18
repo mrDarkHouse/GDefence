@@ -35,6 +35,7 @@ public class RecipeButton extends TowerMapObject{
 
     public RecipeButton(final ItemEnum.Tower tower) {
         super(GDefence.getInstance().assetLoader.generateImageButtonSkin(tower.getTowerTexture()));
+//        System.out.println(tower.getTowerTexture().getMinFilter() + " " + tower.getTowerTexture().getMagFilter());
 //        this.tower = tower;
         towerRecipe = new Recipe(tower);
         tooltip = new RecipeTooltip(towerRecipe, GDefence.getInstance().assetLoader.get("skins/uiskin.json", Skin.class));

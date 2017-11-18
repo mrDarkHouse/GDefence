@@ -42,9 +42,10 @@ public class CampainChoose extends AbstractMenuScreen{
     private void loadButtons(){
         Table table = new Table();
         //ImageButton backButton = new ImageButton();
-        I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+//        I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+        AssetLoader a = GDefence.getInstance().assetLoader;
 
-        TextButton newCamp = new TextButton(b.get("new_game"), GDefence.getInstance().assetLoader.getSkin(), "rect");
+        TextButton newCamp = new TextButton(a.getWord("new_game"), GDefence.getInstance().assetLoader.getSkin(), "rect");
         newCamp.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 showDialog();
@@ -53,7 +54,7 @@ public class CampainChoose extends AbstractMenuScreen{
             }
         });
         //newCamp.setSize();
-        TextButton loadCamp = new TextButton(b.get("load_game"), GDefence.getInstance().assetLoader.getSkin(), "rect");
+        TextButton loadCamp = new TextButton(a.getWord("load_game"), GDefence.getInstance().assetLoader.getSkin(), "rect");
         File f = new File("Save/UserSave.properties");
         if(!f.exists()) {
             loadCamp.setTouchable(Touchable.disabled);
@@ -99,10 +100,11 @@ public class CampainChoose extends AbstractMenuScreen{
         d = new Dialog("", GDefence.getInstance().assetLoader.getSkin(), "dialog"){
 
             {
-                I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
-                text(b.get("campain_sure")).padTop(250);
-                button(b.get("accept"), true);
-                button(b.get("decline"), false);
+//                I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+                AssetLoader a = GDefence.getInstance().assetLoader;
+                text(a.getWord("campain_sure")).padTop(250);
+                button(a.getWord("accept"), true);
+                button(a.getWord("decline"), false);
                 //getButtonTable();//defaults().width(200);
                 Array<Cell> cells = getButtonTable().getCells();
                 Cell cell = cells.get(0);

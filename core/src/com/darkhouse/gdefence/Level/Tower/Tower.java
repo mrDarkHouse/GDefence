@@ -51,17 +51,26 @@ public class Tower extends Effectable implements DamageSource{
     private TowerTooltip tooltip;
 
     private int dmg;
+    private int bonusDmg;
 
     public int getDmg() {
         return dmg;
     }
 
+    public int getBonusDmg() {
+        return bonusDmg;
+    }
+
     private int speed;
+    private int bonusSpeed;
 
     public int getSpeed() {
         return speed;
     }
 
+    public int getBonusSpeed() {
+        return bonusSpeed;
+    }
     //    private float speedDelay;
 
     private Array<Ability> abilities;
@@ -72,9 +81,19 @@ public class Tower extends Effectable implements DamageSource{
 
 
     public void changeAttackSpeed(int value){
-        if(speed + value > 10) speed += value;
-        else speed = 10;
+        if(speed + bonusSpeed + value > 10) bonusSpeed += value;
+        else bonusSpeed = -speed + 10;
+
+//        if(speed + value > 10) speed += value;
+//        else speed = 10;
     }
+    public void changeDmg(int value){
+        if(dmg + bonusDmg + value > 0) bonusDmg += value;
+        else bonusDmg = -dmg;
+//        if (dmg + value > 0) dmg += value;
+//        else dmg = 0;
+    }
+
     public void procBuildAbilities(MapTile t){
         for (Ability a:abilities){
             if(a instanceof Ability.IOnBuild){
@@ -149,7 +168,9 @@ public class Tower extends Effectable implements DamageSource{
         this.towerPrototype = towerPrototype;
         initRange();
 
-        setRegion(towerPrototype.getPrototype().getTowerTexture());
+        Texture t = towerPrototype.getPrototype().getTowerTexture();
+//        t.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);//TODO
+        setRegion(t);
 
 
 
@@ -345,7 +366,7 @@ public class Tower extends Effectable implements DamageSource{
 //    }
 
     public int getDmg(Mob target, boolean isMain){
-        int dmg = this.dmg;
+        int dmg = this.dmg + bonusDmg;
         for (Ability a:abilities){
             if(a instanceof Ability.IOnHit && (isMain || a.isWorkOnAdditionalProjectiles())){
                 dmg = ((Ability.IOnHit) a).getDmg(target, dmg);
@@ -358,10 +379,10 @@ public class Tower extends Effectable implements DamageSource{
         }
         return dmg;
     }
-    public void hitTarget(Mob target, int dmg){
+    public void hitTarget(Mob target, float dmg){
         if(target != null) {//hotfix
-            target.hit(dmg, this);
-            getTowerPrototype().addExp(dmg / 10f);
+            float realDmg = target.hit(dmg, this);
+            getTowerPrototype().addExp((float) (Math.sqrt(realDmg + 5) / 4f));
             tooltip.hasChanged();
 //            procAfterHitAbilities(target, dmg);
         }

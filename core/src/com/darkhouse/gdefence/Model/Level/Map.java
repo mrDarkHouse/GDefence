@@ -32,7 +32,7 @@ public class Map {
     private DragAndDrop.Payload payload;
 
     public enum MapType{
-        CLASSIC, INVASION, TIME
+        CLASSIC, INVASION, KILLMADNESS, TIME
     }
 
     public void setBuild(boolean build, TowerObject rangeTower, DragAndDrop.Payload payload) {//
@@ -136,7 +136,7 @@ public class Map {
         }
         return found;
     }
-    public Array<Tower> getTowersInRange(Vector2 searchPoint, int range){
+    public Array<Tower> getTowersInRange(Vector2 searchPoint, float range){
         Array<Tower> found = new Array<Tower>();
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles[0].length; y++){
@@ -409,6 +409,7 @@ public class Map {
 //    }
 
     public void normalizeBlocks(){
+//        System.out.println(GDefence.getInstance().assetLoader.get("Path/Turn/turnLU.png", Texture.class).getMinFilter());
         for (int y = 0; y < tiles[0].length; y++) {
             for (int x = 0; x < tiles.length; x++) {
 
@@ -464,6 +465,7 @@ public class Map {
                                         turnCode + ".png");
                             }
                             if(!road.isSwimmable()){
+//                                System.out.println(rightTiles.get(1));
                                 String turnCode = Turn.getTurnCode(Way.invertWay(Way.getNearBlockWay(road, rightTiles.get(0))),
                                         Way.getNearBlockWay(road, rightTiles.get(1)));//different names
                                 texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/turn" +
@@ -571,12 +573,15 @@ public class Map {
                             texture = GDefence.getInstance().assetLoader.getTurn("Path/Turn/cross.png");
                             break;
                     }
-                    if(texture != null)road.setRegion(texture);
+                    if(texture != null){
+//                        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+                        road.setRegion(texture);
+                    }
                 }
 
-                if(tiles[x][y] instanceof Portal){//combine with roads
+                if(tiles[x][y].getLogic() == /* instanceof Portal*/MapTile.Logic.Portal){//combine with roads
                     Texture texture = null;
-                    Portal portal = ((Portal) tiles[x][y]);
+                    Portal portal = ((Portal) tiles[x][y].getInstance());
                     Way[] leastWays = Way.getLeastWays(new Way[]{});
                     Array<WalkableMapTile> rightTiles = new Array<WalkableMapTile>();
                     for (Way leastWay : leastWays) {
@@ -643,24 +648,53 @@ public class Map {
         ArrayList<Portal> portals = new ArrayList<Portal>();
         for (int y = 0; y < tiles[0].length; y++){
             for (int x = 0; x < tiles.length; x++){
-                if(tiles[x][y] instanceof Portal){
-                    portals.add(((Portal) tiles[x][y]));
+                if(tiles[x][y].getLogic() == MapTile.Logic.Portal){
+//                    portals.add(((Portal) tiles[x][y]));
+                    portals.add((Portal) tiles[x][y].getInstance());
                 }
             }
         }
-//        System.out.println(portals);
+        if(portals.isEmpty()) return;
         Collections.sort(portals);
-//        System.out.println(portals);
+        ArrayList<Portal> tmp = new ArrayList<Portal>();
         for (int i = 0; i < portals.size() - 1; i++){
             Portal p1 = portals.get(i);
             Portal p2 = portals.get(i + 1);
 
             if(p1.id == p2.id){
-                p1.init(p2);
+                tmp.add(p1);
+//                p1.init(p2);
 //                System.out.println(p1.open);
 //                System.out.println(p2.open);
+            }else {
+                tmp.add(p2);
+                for (Portal p:tmp){
+                    p.init(tmp);
+                }
+                tmp.clear();
             }
         }
+        tmp.add(portals.get(portals.size() - 1));
+        for (Portal p:tmp){
+            p.init(tmp);
+        }
+
+        tmp.clear();
+//        System.out.println(portals.size());
+//        System.out.println(portals.get(0).seconds);
+//        System.out.println(portals.get(1).seconds);
+//        System.out.println(portals.get(2).seconds);
+//        System.out.println(portals.get(3).seconds);
+//        System.out.println(portals.get(4).seconds);
+//        System.out.println(portals.get(5).seconds);
+//        System.out.println(portals.get(6).seconds);
+//        System.out.println(portals.get(7).seconds);
+//        System.out.println(portals.get(8).seconds);
+//        System.out.println(portals.get(9).seconds);
+//        System.out.println(portals.get(10).seconds);
+//        System.out.println(portals.get(11).seconds);
+//        System.out.println(portals.get(12).seconds);
+//        System.out.println(portals.get(13).seconds);
 
 
     }
@@ -669,7 +703,7 @@ public class Map {
         spawner = new ArrayList<Spawn>();
         for (int y = 0; y < tiles[0].length; y++){
             for (int x = 0; x < tiles.length; x++){
-                if(tiles[x][y] instanceof Spawn){
+                if(/*tiles[x][y].getLogic() *//*== MapTile.Logic.Spawner*/tiles[x][y] instanceof Spawn){
                     spawner.add(((Spawn) tiles[x][y]));
                 }
             }
@@ -680,7 +714,7 @@ public class Map {
         castle = new ArrayList<MapTile>();
         for (int y = 0; y < tiles[0].length; y++){
             for (int x = 0; x < tiles.length; x++){
-                if(tiles[x][y] instanceof Castle){
+                if(tiles[x][y].getLogic() == MapTile.Logic.Castle){
                     castle.add(tiles[x][y]);
                 }
             }

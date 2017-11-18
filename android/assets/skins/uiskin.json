@@ -62,6 +62,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: { background: default-slider, knob: default-slider-knob },
 	default-vertical: { background: default-slider, knob: default-round-large },
     health-bar: { background: bar-bg, knobBefore: health-bar-knob},
+    health-bar2: { background: bar-bg, knobBefore: health-bar-knob},
     energy-bar: { background: bar-bg, knobBefore: energy-bar-knob},
     exp-bar: { background: bar-bg, knobBefore: exp-bar-knob},
 },

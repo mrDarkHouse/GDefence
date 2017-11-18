@@ -10,7 +10,9 @@ import com.darkhouse.gdefence.InventorySystem.inventory.DropSlot;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.Mob.Mob;
+import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.Objects.DamageSource;
 import com.darkhouse.gdefence.Screens.LevelEndScreen;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
@@ -38,9 +40,14 @@ public class Level {
     private int mobLimit;//for non classic types
     private float timeLimit;
     private float roundTime = 0f;
+    private float timeWithoutKills = 0f;
 
     public float getRoundTime() {
         return roundTime;
+    }
+
+    public float getTimeWithoutKills() {
+        return timeWithoutKills;
     }
 
     public int getMobLimit() {
@@ -179,8 +186,9 @@ public class Level {
         this.ownerScreen = ownerScreen;
         this.number = number;
         manager = new StatManager();
-        map = new Map(number, 60, Gdx.graphics.getHeight() - 60, 45);
+        map = new Map(number, 60, Gdx.graphics.getHeight() - 60, 40);
         //this.map = map;
+//        System.out.println(map.getSpawner());
         loadProperies(map.getSpawner().size());
         init();
     }
@@ -214,8 +222,9 @@ public class Level {
         }
     }
 
-    public void mobDieEvent(){
+    public void mobDieEvent(DamageSource source){
         ownerScreen.mobDieEvent();
+        if(getType() == Map.MapType.KILLMADNESS && source instanceof Tower) timeWithoutKills = 0;
     }
 
 
@@ -268,7 +277,6 @@ public class Level {
             GDefence.getInstance().user.addExp(expFromLvl/4);
             addDrop(penaltyDropList);
         }
-
 
         GDefence.getInstance().user.setLevelCompleted(number);
         GDefence.getInstance().user.openLevel(number + 1);
@@ -345,8 +353,11 @@ public class Level {
         if(isPaused) return;
         if(inWave){
             roundTime += delta;
+            timeWithoutKills += delta;
             if(type == Map.MapType.TIME){
                 if(roundTime >= getTimeLimit()) looseLevel();
+            }else if(type == Map.MapType.KILLMADNESS){
+                if(timeWithoutKills >= getTimeLimit()) looseLevel();
             }
             for (int i = 0; i < map.getSpawner().size(); i++) {
                 if(currentWave + i < waves.size()) {//hotfix

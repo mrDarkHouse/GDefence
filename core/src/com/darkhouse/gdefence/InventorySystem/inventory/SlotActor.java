@@ -30,6 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.SlotTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 
@@ -82,7 +83,8 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 	/*public*/ static ImageButtonStyle createStyle(Skin skin, Item prototype/* slot*/) {
 		//TextureAtlas icons = LibgdxUtils.assets.get("icons/icons.atlas", TextureAtlas.class);
-		TextureAtlas icons = new TextureAtlas(Gdx.files.internal("icons/icons.atlas"));
+//		TextureAtlas icons = new TextureAtlas(Gdx.files.internal("icons/icons.atlas"));
+        TextureAtlas icons = GDefence.getInstance().assetLoader.get("icons/icons.atlas", TextureAtlas.class);
 		TextureRegion image;
 		if (/*slot.getPrototype()*/prototype != null) {
 			image = icons.findRegion(prototype.getTextureRegion());

@@ -12,6 +12,7 @@ import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Model.LevelButton;
+import com.darkhouse.gdefence.User;
 
 import java.util.Random;
 
@@ -23,7 +24,9 @@ public class LevelTooltip extends AbstractTooltip{
 
     private String waves;
     private String exp;
+    private int expValue;
     private String gold;
+    private int goldValue;
     private String hp;
     private String en;
     private String drop1;
@@ -46,9 +49,13 @@ public class LevelTooltip extends AbstractTooltip{
         MapLoader ml = new MapLoader(levelButton.getNumber());
         ml.loadMap();
         ml.loadProperties(ml.getSpawnersNumber(), false);
+        User u = GDefence.getInstance().user;
+
         waves = b.get("waves") + ": " + ml.getNumberWaves();
-        exp = b.get("exp") + " : " + ml.getExpFromLvl();
-        gold = b.get("gold") + ": " + ml.getGoldFromLvl();
+        exp = b.get("exp") + " : ";// + ml.getExpFromLvl();
+        expValue = u.getLevelCompleted(levelButton.getNumber()) ?  ml.getExpFromLvl()/4: ml.getExpFromLvl();
+        gold = b.get("gold") + ": ";// + ml.getGoldFromLvl();
+        goldValue = u.getLevelCompleted(levelButton.getNumber()) ?  ml.getGoldFromLvl()/4: ml.getGoldFromLvl();
         hp = b.get("sHealth") + ": " + (int)(ml.getStartHpPercent() * 100) + "%";
         en = b.get("sEnergy") + ": " + (int)(ml.getStartEnergyPercent() * 100) + "%";
 
@@ -74,10 +81,15 @@ public class LevelTooltip extends AbstractTooltip{
     }
 
     public void hasChanged() {
+        User u = GDefence.getInstance().user;
         String drop = GDefence.getInstance().user.getLevelCompleted(levelButton.getNumber()) ? drop2 : drop1;
+//        expValue = u.getLevelCompleted(levelButton.getNumber()) ?  ml.getExpFromLvl()/4: ml.getExpFromLvl();
+//        goldValue = u.getLevelCompleted(levelButton.getNumber()) ?  ml.getGoldFromLvl()/4: ml.getGoldFromLvl();
+        String expS = exp + (u.getLevelCompleted(levelButton.getNumber()) ? expValue/4: expValue);
+        String goldS = gold + (u.getLevelCompleted(levelButton.getNumber()) ? goldValue/4: goldValue);
         label.setText(waves + System.getProperty("line.separator") +
-                exp + System.getProperty("line.separator") +
-                gold + System.getProperty("line.separator") +
+                expS + System.getProperty("line.separator") +
+                goldS + System.getProperty("line.separator") +
                 hp + System.getProperty("line.separator") +
                 en +
                 drop);

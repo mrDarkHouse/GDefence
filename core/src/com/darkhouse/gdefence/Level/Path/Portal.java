@@ -3,26 +3,49 @@ package com.darkhouse.gdefence.Level.Path;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Portal extends WalkableMapTile implements Comparable<Portal>{
 
     public int id;
-    public Portal second;
+    public Array<Portal> seconds;
     private Way startWay;
 //    public boolean open;
 
     public Portal(Way startWay, int id) {
         this.startWay = startWay;
         this.id = id;
+        seconds = new Array<Portal>();
     }
-    public void init(Portal second){
-        this.second = second;
-        second.second = this;
+    public void init(ArrayList<Portal> portals){
+        for (Portal p:portals){
+            if(p != this) seconds.add(p);
+        }
+    }
+
+    public void init(/*Array<Portal>*/Portal second){
+//        this.second = second;
+//        for (Portal p:second){
+
+//        for (Portal p:second.seconds){
+            for (Portal a:seconds) {
+                a.seconds.add(second);
+//                p.seconds.add(this);
+//                p.seconds.add(a);
+//                a.seconds.add(p);
+            }
+//        }
+        seconds.add(second);
+            /*p.*/second.seconds.add(this);
+
+//        }
+//        second.second = this;
 //        open = true;
 //        second.open = false;
     }
@@ -39,7 +62,9 @@ public class Portal extends WalkableMapTile implements Comparable<Portal>{
 
     @Override
     public Point manipulateMob() {
-        /*if (open) */return new Point(second.getIndexY(), second.getIndexX());
+        int i = (int) (Math.random()*seconds.size);
+//        System.out.println(seconds.get(i));
+        /*if (open) */return new Point(seconds.get(i).getIndexY(), seconds.get(i).getIndexX());
 //        else return null;
 //        mob.teleport(second.getX(), second.getY());
 //        return true;
@@ -48,6 +73,11 @@ public class Portal extends WalkableMapTile implements Comparable<Portal>{
     @Override
     public boolean isSwimmable() {
         return false;
+    }
+
+    @Override
+    public Logic getLogic() {
+        return Logic.Portal;
     }
 
     @Override

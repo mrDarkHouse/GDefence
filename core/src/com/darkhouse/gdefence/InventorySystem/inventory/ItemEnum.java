@@ -100,20 +100,20 @@ public enum ItemEnum {;
 	public enum Tower implements Item {
 
 		//	  texturePath        textures              attackType         projSp cost glCost dmg range speed /n abilities
-		Basic(   /*"basic",*/         AttackType.projectile, 250, 10,  80,    10, 100, 23,
-                new Bash.P(0.2f, 1f, 20, new Bash.G(0.05f, 0.5f, 10, new int[]{3, 3, 3}))/*,
+		Basic(   /*"basic",*/         AttackType.projectile, 250, 10,  80,    10, 100, 20/*,
+                new Bash.P(0.2f, 1f, 20, new Bash.G(0.05f, 0.5f, 10, new int[]{3, 3, 3}))*//*,
                 new SteelArrow.P(2, 300, new SteelArrow.G(1, 50, new int[]{3, 2, 0})),
                 new ShotDelay.P(1f, new ShotDelay.G(0.2f, new int[]{2, 0, 0}))*/),
 
-		Rock(     /*"rock",  */        AttackType.projectile, 400, 20,  140,   25, 120,  30/*,
+		Rock(     /*"rock",  */        AttackType.projectile, 400, 20,  70,   22, 110,  25/*,
                 new BuckShot.P(5, 20f, new BuckShot.G(1, 5f, new int[]{3, 2, 0})),
                 new SpreadAttack.P(3f, 2, new SpreadAttack.G(0.5f, new int[]{2, 0, 0}))*/),
 
-		Arrow(    /*"arrow",*/         AttackType.projectile, 250, 20,  140,   15, 120, 40/*,
+		Arrow(    /*"arrow",*/         AttackType.projectile, 250, 20,  70,   15, 110, 32/*,
                 new Bash.P(0.5f, 1f, 20, new Bash.G(0.05f, 0.5f, 10, new int[]{3, 3, 3})),
                 new Crit.P(0.3f, 2f,     new Crit.G(0.05f, 0.5f,     new int[]{2, 2, 0}))*/),
 
-        Range(  /*  "range",  */       AttackType.projectile, 350, 20,  180,   15, 160, 30/*,
+        Range(  /*  "range",  */       AttackType.projectile, 350, 20,  70,   15, 135, 30/*,
                 new FireArrow.P(10, 0.2f, 2, new FireArrow.G(5, 1f, new int[]{2, 2, 0})),
                 new HunterSpeed.P(5, 30, 5, new HunterSpeed.G(10, 1, 1, new int[]{3, 3, 2}))*/),
 
@@ -165,37 +165,38 @@ public enum ItemEnum {;
 
 
         protected static void setComponents(){
-            Rock.components.add(new TowerObject(Basic, 3, 1, 1));
-            Arrow.components.add(new TowerObject(Basic, 1, 3, 1));
-            Range.components.add(new TowerObject(Basic, 1, 1, 3));
-            Short.components.add(new TowerObject(Rock, 0, 0, 0));
-            Spear.components.add(new TowerObject(Arrow, 0, 0, 0));
-            Gun.components.add(new TowerObject(Short, 0, 0, 0));
-            Gun.components.add(new TowerObject(Spear, 0, 0, 0));
-            Mountain.components.add(new TowerObject(Rock, 0, 0, 0));
-            Mountain.components.add(new TowerObject(Range, 0, 0, 0));
-            CrossBow.components.add(new TowerObject(Arrow, 0, 0, 0));
-            CrossBow.components.add(new TowerObject(Range, 0, 0, 0));
-            Rifle.components.add(new TowerObject(Gun, 0, 0, 0));
-            Catapult.components.add(new TowerObject(Mountain, 0, 0, 0));
+            Rock.components.add(new TowerObject(Basic, 2, 1, 1));
+            Arrow.components.add(new TowerObject(Basic, 1, 2, 1));
+            Range.components.add(new TowerObject(Basic, 1, 1, 2));
+            Short.components.add(new TowerObject(Rock, 1, 1, 0));
+            Spear.components.add(new TowerObject(Arrow, 2, 1, 0));
+            Gun.components.add(new TowerObject(Short, 1, 2, 1));
+            Gun.components.add(new TowerObject(Spear, 0, 1, 1));
+            Mountain.components.add(new TowerObject(Rock, 0, 1, 1));
+            Mountain.components.add(new TowerObject(Range, 2, 0, 1));
+            CrossBow.components.add(new TowerObject(Arrow, 1, 0, 1));
+            CrossBow.components.add(new TowerObject(Range, 0, 2, 1));
+            Rifle.components.add(new TowerObject(Gun, 1, 2, 2));
+            Catapult.components.add(new TowerObject(Mountain, 2, 1, 2));
             Catapult.components.add(new TowerObject(SteamMachine, 0, 0, 0));
-            Ballista.components.add(new TowerObject(CrossBow, 0, 0, 0));
+            Ballista.components.add(new TowerObject(CrossBow, 1, 2, 2));
             Ballista.components.add(new TowerObject(SteamMachine, 0, 0, 0));
-            MachineGun.components.add(new TowerObject(Rifle, 0, 0, 0));
+            MachineGun.components.add(new TowerObject(Rifle, 2, 3, 0));
             MachineGun.components.add(new TowerObject(SteamMachine, 0, 0, 0));
-            Cannon.components.add(new TowerObject(Gun, 0, 0, 0));
-            Cannon.components.add(new TowerObject(Catapult, 0, 0, 0));
-            Glaive.components.add(new TowerObject(Spear, 0, 0, 0));
-            Glaive.components.add(new TowerObject(Ballista, 0, 0, 0));
-            Rocket.components.add(new TowerObject(Cannon, 0, 0, 0));
-            MultiShot.components.add(new TowerObject(Glaive, 0, 0, 0));
-            Shotgun.components.add(new TowerObject(Gun, 0, 0, 0));
-            Shotgun.components.add(new TowerObject(MultiShot, 0, 0, 0));
-            Missle.components.add(new TowerObject(Rocket, 0, 0, 0));
-            Sniper.components.add(new TowerObject(MachineGun, 4, 0, 2));//
-            DoubleBarrel.components.add(new TowerObject(Shotgun, 0, 0, 0));
-            DoubleBarrel.components.add(new TowerObject(Rifle, 0, 0, 0));
-            SteamMachine.components.add(new TowerObject(Rock, 0, 0, 0));
+            Cannon.components.add(new TowerObject(Gun, 3, 0, 1));
+            Cannon.components.add(new TowerObject(Catapult, 1, 1, 2));
+            Glaive.components.add(new TowerObject(Spear, 2, 1, 0));
+            Glaive.components.add(new TowerObject(Ballista, 1, 3, 1));
+            Rocket.components.add(new TowerObject(Cannon, 3, 1, 1));
+            MultiShot.components.add(new TowerObject(Glaive, 0, 4, 1));
+            Shotgun.components.add(new TowerObject(Gun, 3, 1, 2));
+            Shotgun.components.add(new TowerObject(MultiShot, 3, 0, 1));
+            Missle.components.add(new TowerObject(Rocket, 2, 0, 4));
+            Missle.components.add(new TowerObject(Rifle, 3, 0, 1));
+            Sniper.components.add(new TowerObject(MachineGun, 4, 0, 2));
+            DoubleBarrel.components.add(new TowerObject(Shotgun, 5, 1, 1));
+            DoubleBarrel.components.add(new TowerObject(Rifle, 2, 2, 1));
+            SteamMachine.components.add(new TowerObject(Basic, 1, 1, 1));
 
 
             Short.researchNeed.add(User.Research.Powder);
@@ -208,7 +209,7 @@ public enum ItemEnum {;
 
         public static Tower getTower(String name){
             for (Tower t:values()){
-                if(t.getName().equals(name)){
+                if(t.name().equals(name)){
                     return t;
                 }
             }
@@ -235,11 +236,12 @@ public enum ItemEnum {;
 		private int cost;
 		private int globalCost;
 		protected Array<Ability.AbilityPrototype> abilities;
-        private Array<TowerObject> components = new Array<TowerObject>();
+        private Array<TowerObject> components;// = new Array<TowerObject>();
         private Array<User.Research> researchNeed = new Array<User.Research>();
 
 		public void setTextures(){
 			towerTexture = GDefence.getInstance().assetLoader.get("Tower/" + textureName + ".png", Texture.class);
+//            towerTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 			projectileTexture = GDefence.getInstance().assetLoader.get("Projectiles/" + textureName + ".png", Texture.class);
 		}
 
@@ -335,6 +337,8 @@ public enum ItemEnum {;
 			this.range = range;
             this.speed = speed;
 			this.abilities = new Array<Ability.AbilityPrototype>(abilities);
+
+            components = new Array<TowerObject>();
 
 //            if(attackType == AttackType.projectile){
 //                setProjectileSpeed();

@@ -31,6 +31,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
@@ -64,17 +65,20 @@ public class SlotSource extends Source {
 		payload.setObject(payloadSlot);
 
 		//TextureAtlas icons = LibgdxUtils.assets.get("icons/icons.atlas", TextureAtlas.class);
-		TextureAtlas icons = new TextureAtlas(Gdx.files.internal("icons/icons.atlas"));
+		TextureAtlas icons = /*new TextureAtlas(*//*Gdx.files.internal("icons/icons.atlas")*/GDefence.getInstance().assetLoader.get("icons/icons.atlas", TextureAtlas.class)/*)*/;
 		TextureRegion icon = icons.findRegion(payloadSlot.getPrototype().getTextureRegion());
 
 		Actor dragActor = new Image(icon);
+//        dragActor.setSize(35, 35);
 		payload.setDragActor(dragActor);
 
 		Actor validDragActor = new Image(icon);
+//        validDragActor.setSize(35, 35);
 		// validDragActor.setColor(0, 1, 0, 1);
 		payload.setValidDragActor(validDragActor);
 
 		Actor invalidDragActor = new Image(icon);
+//        invalidDragActor.setSize(35, 35);
 		// invalidDragActor.setColor(1, 0, 0, 1);
 		payload.setInvalidDragActor(invalidDragActor);
 

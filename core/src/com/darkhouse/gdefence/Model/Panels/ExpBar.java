@@ -24,7 +24,7 @@ public class ExpBar extends ProgressBar{
         setSize(expBarSize[0], expBarSize[1]);
 //        getStyle().knobBefore.setMinWidth(0.1f);
         getStyle().background.setMinHeight(height);
-        getStyle().knobBefore.setMinHeight(height - 6);
+        getStyle().knobBefore.setMinHeight(height - 2);
         // bar.setAnimateDuration(5);
 
         //setValue(7.8f);

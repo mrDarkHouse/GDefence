@@ -79,7 +79,7 @@ public class Sprint extends MobAbility implements MobAbility.ISpawn{
 //                    "[] for [#64A619ff]" + duration + "[] seconds" +  System.getProperty("line.separator") +
 //                    "every [#64A619ff]" + cdCap + "[] seconds";
             return l.getWord("sprintTooltip1") + " " + FontLoader.colorString(Integer.toString(speedBoost), 3) + System.getProperty("line.separator") +
-                    l.getWord("sprintTooltip2") + " " + FontLoader.colorString(Float.toString(duration), 3) +
+                    l.getWord("sprintTooltip2") + " " + FontLoader.colorString(Float.toString(duration), 3) + " " +
                     l.getWord("sprintTooltip3") + " " /*+ System.getProperty("line.separator")*/ +
                     l.getWord("sprintTooltip4") + " " + FontLoader.colorString(Float.toString(cdCap), 3) + " " + l.getWord("sprintTooltip3");
         }

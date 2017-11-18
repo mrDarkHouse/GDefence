@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Level.Mob;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -26,12 +27,39 @@ public class Mob extends Effectable{
     public enum Prototype{
         //           texturePath  texturePath  moveType       hp  arm spd dmg bounty       //i think it better than Builder
 //        Slime      ("Slime",      "mob",     MoveType.ground, 50,  0, 50,  1, 2),
-        Dog        ("Dog",        "mob2",    MoveType.ground, 30,  0, 70, 1, 2/*, new HealingAura.P(250, 1, 5)*/),
-        Worm       ("Worm",       "mob3",    MoveType.ground, 100, 2, 40,  2, 3, new Sprint.P(4, 2, 50)),
-        JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,  2, 110, 3, 4/*, new Sadist.P(3, 35)*/),
-        Boar       ("Boar",       "mob5",    MoveType.ground, 2500, 5, 50,  100, 7/*, new LayerArmor.P(10, 2), new StrongSkin.P(15, 2)*/),
-        Slime      ("Slime",      "mob",     MoveType.ground, 50,  0, 50,  1, 2),
-        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150, 2, 50,  2, 5, new Swimmable.P("Mobs/mob6swim.png"), new WaterFeel.P(20)/*, new WaterDefend.P(4)*/);
+        Dog        ("wolf",       "wolf",     MoveType.ground, 30,   0, 60,  1, 1/*, new HealingAura.P(250, 1, 5)*/, new ScorpionVenom.P(20, 5)),
+        Eagle      ("eagle",      "eagle",    MoveType.ground, 45,   1, 50,  1, 1),
+        Worm       ("worm",       "mob3",     MoveType.ground, 100,  2, 30,  2, 2),
+        Lynx       ("lynx",       "lynx",     MoveType.ground, 80,   3, 40,  2, 2, new Sprint.P(4, 2, 50)),
+        Boar       ("boar",       "mob5",     MoveType.ground, 750,  5, 30,  100, 7, new LayerArmor.P(10, 2), new StrongSkin.P(5, 2)),
+
+        Ant        ("ant",        "ant",      MoveType.ground, 50,   1, 70,  1,  1),
+        Snake      ("snake",      "snake",    MoveType.ground, 75,   2, 80,  2,  2),
+        Jerboa     ("jerboa",     "jerboa",   MoveType.ground, 90,   0, 60,  1,  1, new GreatEvasion.P(2f)),
+        Scorpion   ("scorpion",   "scorpion", MoveType.ground, 150,  3, 50,  1,  3, new ScorpionVenom.P(10, 2)),
+
+        Crab       ("crab",       "crab",     MoveType.water,  200,  4, 50,  3,  2, new Swimmable.P("Mobs/crab2.png")),
+        Frog       ("frog",       "frog",     MoveType.water,  150,  3, 40,  2,  1, new Swimmable.P("Mobs/frog2.png"), new WaterShield.P(0.2f, 0.5f, 3)),
+        Turtle     ("turtle",     "turtle",   MoveType.water,  350,  5, 20,  4,  4, new Swimmable.P("Mobs/turtle2.png"), new WaterDefend.P(10), new WaterFeel.P(40)),
+        Axolotl    ("axolotl",    "axolotl",  MoveType.water,  750,  10,50,  100,0, new Swimmable.P("Mobs/axolotl2.png")),
+
+        Pinguin    ("pinguin",    "pinguin",  MoveType.ground, 250,  2, 50,  1,  1),
+        PolarBear  ("polarbear",  "polarbear",MoveType.ground, 500,  6, 50,  2,  2),
+        Seal       ("seal",       "seal",     MoveType.ground, 300,  4, 60,  1,  1),
+        PolarDeer  ("polardeer",  "polardeer",MoveType.ground, 400,  3, 80,  3,  3),
+
+        Soldier    ("soldier",    "soldier",  MoveType.ground, 350,  2, 50,  1,  1),
+        Crusader   ("crusader",   "crusader", MoveType.ground, 450,  5, 75,  2,  2),
+        Medic      ("medic",      "medic",    MoveType.ground, 100,  2, 60,  2,  1, new HealingAura.P(200, 1, 5)),
+        Tank       ("tank",       "tank",     MoveType.ground, 800,  8, 50,  4,  5),
+
+        UFO        ("ufo",        "ufo",      MoveType.ground, 400,  2, 80,  2,  2),
+        Rocket     ("ufo",        "ufo",      MoveType.ground, 400,  2, 80,  2,  2);
+
+//        JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,   2, 110, 3, 4/*, new Sadist.P(3, 35)*/),
+//
+//        Slime      ("Slime",      "mob",     MoveType.ground, 50,   0, 50,  1, 2),
+//        Amphibia   ("Amphibia",   "mob6walk",MoveType.water,  150,  2, 50,  2, 5, new Swimmable.P("Mobs/mob6swim.png"), new WaterFeel.P(20)/*, new WaterDefend.P(4)*/);
         // {
 //            @Override
 //            publ ic void setAbilities() {
@@ -62,7 +90,7 @@ public class Mob extends Effectable{
         protected Array<MobAbility.AbilityPrototype> abilities;
 
         public String getName() {
-            return name;
+            return GDefence.getInstance().assetLoader.getWord(name);
         }
         public int getHealth() {
             return health;
@@ -177,6 +205,7 @@ public class Mob extends Effectable{
     protected boolean inGame = true;
     //protected int xC, yC;
     protected WalkableMapTile currentTile;
+    protected Texture[] textures;
 
     private String texturePath;
     private ProgressBar hpBar;
@@ -185,6 +214,11 @@ public class Mob extends Effectable{
     private Array<MobAbility> abilities;
 
     private Way way;
+
+    public void setWay(Way way) {
+        this.way = way;
+        setRegion(textures[way.ordinal()]);
+    }
 
     public enum State{
         normal, stunned
@@ -252,11 +286,20 @@ public class Mob extends Effectable{
         setAbilities(prototype.abilities);
 //        initAbilities();
 
-        setSize(45, 45);
+        setSize(40, 40);
         initEffectable();
 
         setState(State.normal);
-        setRegion(GDefence.getInstance().assetLoader.getMobTexture(texturePath));//
+
+        textures = new Texture[4];
+        for (int i = 0; i < 4; i++){
+            textures[i] = GDefence.getInstance().assetLoader.getMobTexture(texturePath + i);
+//            textures[i].setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//            System.out.println(textures[i].getMinFilter());
+        }
+
+//        setRegion(textures[0]);
+//        setRegion(GDefence.getInstance().assetLoader.getMobTexture(texturePath));//
 
 //        effects = new ArrayList<Effect>();
 //        effectBar = new EffectBar();
@@ -282,7 +325,23 @@ public class Mob extends Effectable{
     protected void setHealth(int health) {
         this.maxHealth = health;
         this.health = health;
-        hpBar = new ProgressBar(0, getHealth(), 1, false, GDefence.getInstance().assetLoader.getMobHpBarStyle());
+        hpBar = new ProgressBar(0, getHealth(), 1, false, GDefence.getInstance().assetLoader.getMobHpBarStyle()/*GDefence.getInstance().assetLoader.getSkin(), "health-bar2"*/);
+//        hpBar.getStyle().knob = hpBar.getStyle().knobBefore;
+
+        hpBar.getStyle().background.setMinWidth(getWidth());
+        hpBar.getStyle().knobBefore.setMinWidth(getWidth() - 2);
+//        hpBar.getStyle().background.setMinHeight(getHeight()/5);//.setSize(getWidth(), getHeight()/5);
+//        hpBar.getStyle().knobBefore.setMinHeight(getHeight()/5);
+
+//        hpBar.getStyle().background.setMinHeight(10);
+//        hpBar.getStyle().knobBefore.setMinHeight(10 - 2);
+////        hpBar.setPosition(getX(), getY());
+//        //setPosition(Gdx.graphics.getWidth() - expBarSize[0], userlevelButton.getY() - expBarSize[1] - 4);
+////        hpBar.setSize(width, height);
+//        hpBar.setValue(getHealth());
+//        hpBar.setAnimateDuration(0.5f);
+//        hpBar.pack();
+//        hpBar.
     }
     public int getArmor() {
         return armor;
@@ -383,17 +442,17 @@ public class Mob extends Effectable{
             }
         }
     }
-    private float useDefenceAbilities(/*Tower source, */float dmg){
+    private float useDefenceAbilities(DamageSource source, float dmg){
         float resistDmg = dmg;
         for (MobAbility a:abilities){
             if(a instanceof MobAbility.IGetDmg){
-                resistDmg = ((MobAbility.IGetDmg) a).getDmg(/*source, */resistDmg);
+                resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, resistDmg);
             }
         }
         CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
         for (Effect e:tmp){
             if(e instanceof MobAbility.IGetDmg){
-                resistDmg = ((MobAbility.IGetDmg) e).getDmg(/*source, */resistDmg);
+                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, resistDmg);
             }
         }
         return resistDmg;
@@ -435,7 +494,7 @@ public class Mob extends Effectable{
 
     public void setDie(DamageSource source) {
         this.inGame = false;
-        LevelMap.getLevel().mobDieEvent();
+        LevelMap.getLevel().mobDieEvent(source);
         Wave.mobs.removeValue(this, true);//add "if contains this" if error
         if(source!= null){
             LevelMap.getLevel().addEnergy(getBounty());
@@ -444,17 +503,20 @@ public class Mob extends Effectable{
         }
     }
 
-    public void hit(int dmg, DamageSource source){//tower ==> spell&tower//TODO
+    public float hit(float dmg, DamageSource source){//return really get damage
 //        System.out.println(getArmor() + " " + getArmorReduction(getArmor()));
-        float resistDmg = useDefenceAbilities(/*source, */dmg * (1 - getArmorReduction(getArmor())));
+        float resistDmg = useDefenceAbilities(source, dmg * (1 - getArmorReduction(getArmor())));
         if(resistDmg < getHealth()){
             health -= resistDmg;
+            return resistDmg;
         }else if(isInGame()){
             if(!useDieAbilities(/*source*/)) {
+                float lesshp = health;
                 health = 0;
                 setDie(source);
-            }
-        }
+                return lesshp;
+            }else return 0;
+        }else return 0;
     }
 
     public void changeSpeed(float value){
@@ -544,6 +606,7 @@ public class Mob extends Effectable{
         Point v = t.manipulateMob();
         if(v != null) {
             teleport(Level.getMap().getTiles()[v.y][v.x].getX(), Level.getMap().getTiles()[v.y][v.x].getY());
+//            System.out.println(Level.getMap().getTileContainMob(this));
             currentTile = ((WalkableMapTile) Level.getMap().getTileContainMob(this));
         }else currentTile = t;//vrode tak norm no esli che to mozet v etom problema
 
@@ -552,7 +615,7 @@ public class Mob extends Effectable{
 
 
         if(w!= null && way!= w){
-            way = w;
+            setWay(w);
             //System.out.println(way);
             //System.out.println(currentTile.getLogic());
         }
@@ -587,7 +650,7 @@ public class Mob extends Effectable{
 
         currentTile = spawner;
         Spawn spawn = ((Spawn) spawner);
-        way = spawn.manipulatePath(this.getMoveType(), null);
+        setWay(spawn.manipulatePath(this.getMoveType(), null));
 
 //        update();//some mobs must change texturePath in spawn block
         setPosition(spawner.getX(), spawner.getY());

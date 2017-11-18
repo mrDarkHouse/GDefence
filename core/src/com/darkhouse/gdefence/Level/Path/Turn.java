@@ -131,8 +131,10 @@ public class Turn extends WalkableMapTile/* implements Walkable*/{
     }
 
 
-
-
+    @Override
+    public Logic getLogic() {
+        return null;
+    }
 
     @Override
     public boolean isBuildable() {
@@ -157,6 +159,8 @@ public class Turn extends WalkableMapTile/* implements Walkable*/{
 //                return Way.invertWay(startWay);
 //            } else return null;
 //        }
+//        getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        System.out.println(getTexture().getMinFilter() + " " + getTexture().getMagFilter());
 
         if (applyMobs.isConsist(enterMobType) && (startWay == null || startWay == currentWay)) {
             return resultWay;

@@ -172,6 +172,9 @@ public class MapLoader {
         }else if(s.equals("invasion")){
             mapType = Map.MapType.INVASION;
             mobLimit = Integer.parseInt(prop.getProperty("mobLimit"));
+        }else if(s.equals("killMadness")){
+            mapType = Map.MapType.KILLMADNESS;
+            timeLimit = Integer.parseInt(prop.getProperty("timeLimit"));
         }else if(s.equals("time")){
             mapType = Map.MapType.TIME;
             timeLimit = Float.parseFloat(prop.getProperty("timeLimit"));

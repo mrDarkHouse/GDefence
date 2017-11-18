@@ -9,6 +9,8 @@ import java.awt.*;
 
 public abstract class WalkableMapTile extends MapTile{
 
+
+
     public abstract TargetType getApplyMobs();
     public abstract Way manipulatePath(Mob.MoveType enterMobType, Way currentWay);
     public Point manipulateMob(){return null;}

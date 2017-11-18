@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Model.Panels;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.User;
 
 public class GemPanel extends AbstractPanel{
@@ -31,6 +33,7 @@ public class GemPanel extends AbstractPanel{
         super(x, y, width, height);
         //this.mainClass = mainClass;
         //shape = new ShapeRenderer();
+        setBackground(GDefence.getInstance().assetLoader.getSkin().getDrawable("bar-bg"));
         load();
     }
 
@@ -55,7 +58,7 @@ public class GemPanel extends AbstractPanel{
 
         gemsLabel = new Label[6];
         for (int i = 0; i < gemsLabel.length; i++) {
-            gemsLabel[i] = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.values()[i]) + "", GDefence.getInstance().assetLoader.getSkin());
+            gemsLabel[i] = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.values()[i]) + "", /*GDefence.getInstance().assetLoader.getSkin()*/FontLoader.generateStyle(26, Color.BLACK));
         }
 //        gemsLabel[0] = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.RED) + "", AssetLoader.getSkin());
 //        gemsLabel[1] = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.YELLOW) + "", AssetLoader.getSkin());

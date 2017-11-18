@@ -7,18 +7,13 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.I18NBundle;
@@ -35,6 +30,13 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
     protected TextButton nameButton;
     private String name;
     protected final int topPadSize = 64;
+    private Texture background;
+    private Drawable bg;
+
+    public void setBackground(Texture background) {
+        this.background = background;
+//        this.bg = background.getTextureData().consumePixmap();
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -59,6 +61,7 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
 
     public AbstractCampainScreen(String name) {
         super();
+        setBackground(GDefence.getInstance().assetLoader.get("CampainBg.png", Texture.class));
         I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
         this.name = b.get(name);
         batch = new SpriteBatch();
@@ -138,7 +141,8 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        batch.draw(GDefence.getInstance().assetLoader.get("CampainBg.png", Texture.class), 0, 0);
+//        bg.draw(batch, 255f);
+        batch.draw(background, 0, 0, getStage().getWidth(), getStage().getHeight());
         batch.end();
 
         stage.act(delta);

@@ -92,7 +92,7 @@ public class Projectile extends GameActor{
         }else {
             position.set(targetV);
 //            tower.hitTarget(target, isMainProjectile);
-            tower.hitTarget(target, ((int) (tower.getDmg(target, isMainProjectile) * dmgMultiplayer)));
+            tower.hitTarget(target, /*((int) (*/tower.getDmg(target, isMainProjectile) * dmgMultiplayer)/*))*/;
             afterHit();
             Map.projectiles.remove(this);
         }

@@ -97,7 +97,7 @@ public class Recipe extends DetailObject{
         String s = "";
 //        if(getComponents().size > 0) {//
         for (int i = 0; i < getComponents().size; i++){
-            s += getComponents().get(i).getPrototype().getName() + " " + getComponents().get(0).getSimplyGemStatString();
+            s += getComponents().get(i).getPrototype().getName() + " " + getComponents().get(i).getSimplyGemStatString();
             if(i + 1 < getComponents().size) {//
                 s += System.getProperty("line.separator");
             }

@@ -9,6 +9,7 @@ import com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.Evasion;
 import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Objects.DamageSource;
 
 public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
 
@@ -27,8 +28,8 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(/*Tower source, */float dmg) {
-            if (getCooldownObject().isReady() && evasion.getDmg(/*source,*/ dmg) == 0){
+        public float getDmg(DamageSource source, float dmg) {
+            if (getCooldownObject().isReady() && evasion.getDmg(source, dmg) == 0){
                 getCooldownObject().resetCooldown();
                 return 0;
             }else return dmg;

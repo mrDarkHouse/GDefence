@@ -8,6 +8,7 @@ import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tools.Stackable;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Objects.DamageSource;
 
 public class Sadist extends MobAbility implements MobAbility.ISpawn{
     private class SadistBuff extends Effect<Mob> implements IGetDmg{
@@ -25,7 +26,7 @@ public class Sadist extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(/*Tower source, */float dmg) {
+        public float getDmg(DamageSource source, float dmg) {
             getStackableObject().addStack();
             if(getStackableObject().isMaxStacks()){
                 getStackableObject().setCurrentStacks(0);

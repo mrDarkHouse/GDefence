@@ -6,6 +6,7 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Objects.DamageSource;
 
 public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
 
@@ -20,7 +21,7 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(/*Tower source, */float dmg) {
+        public float getDmg(DamageSource source, float dmg) {
             if(dmg < blockMinLimit)return dmg;
             float newDmg = dmg - blockEmount;
             return newDmg > blockMinLimit ? newDmg:blockMinLimit;

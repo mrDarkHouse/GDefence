@@ -117,8 +117,9 @@ public class MainMenu extends AbstractMenuScreen{
 //                return true;
 //            }
 //        });
-        I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
-        TextButton campainButton = new TextButton(b.get("campain"), GDefence.getInstance().assetLoader.getSkin(), "main-menu");
+        AssetLoader a = GDefence.getInstance().assetLoader;
+//        I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+        TextButton campainButton = new TextButton(a.getWord("campain"), GDefence.getInstance().assetLoader.getSkin(), "main-menu");
         campainButton.setSize(buttonsSize[0], buttonsSize[1]);
         campainButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, Gdx.graphics.getHeight() - buttonsSize[1] - startBorder);
         campainButton.addListener(new InputListener(){
@@ -129,7 +130,7 @@ public class MainMenu extends AbstractMenuScreen{
                 return true;
             }
         });
-        TextButton optionsButton = new TextButton(b.get("options"), GDefence.getInstance().assetLoader.getSkin(), "main-menu");
+        TextButton optionsButton = new TextButton(a.getWord("options"), GDefence.getInstance().assetLoader.getSkin(), "main-menu");
         optionsButton.setSize(buttonsSize[0], buttonsSize[1]);
         optionsButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, campainButton.getY() - buttonsSize[1] - sizeBetween);
         optionsButton.addListener(new InputListener(){
@@ -139,7 +140,7 @@ public class MainMenu extends AbstractMenuScreen{
                 return true;
             }
         });
-        TextButton exitButton = new TextButton(b.get("exit"), GDefence.getInstance().assetLoader.getSkin(), "main-menu");
+        TextButton exitButton = new TextButton(a.getWord("exit"), GDefence.getInstance().assetLoader.getSkin(), "main-menu");
         exitButton.setSize(buttonsSize[0], buttonsSize[1]);
         exitButton.setPosition(Gdx.graphics.getWidth()/2 - buttonsSize[0]/2, optionsButton.getY() - buttonsSize[1] - sizeBetween);
         exitButton.addListener(new InputListener(){
@@ -175,10 +176,11 @@ public class MainMenu extends AbstractMenuScreen{
         exitDialog = new Dialog("", GDefence.getInstance().assetLoader.getSkin(), "dialog"){
 
             {
-                I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
-                text(b.get("exit_sure")).padTop(250);
-                button(b.get("accept"), true);
-                button(b.get("decline"), false);
+//                I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
+                AssetLoader a = GDefence.getInstance().assetLoader;
+                text(a.getWord("exit_sure")).padTop(250);
+                button(a.getWord("accept"), true);
+                button(a.getWord("decline"), false);
                 //getButtonTable();//defaults().width(200);
                 Array<Cell> cells = getButtonTable().getCells();
                 Cell cell = cells.get(0);

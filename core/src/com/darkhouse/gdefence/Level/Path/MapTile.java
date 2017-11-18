@@ -13,10 +13,21 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.GDSprite;
+import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
+import java.util.ArrayList;
+
 public abstract class MapTile extends GDSprite{
+
+    public enum Logic{
+        Spawner, Castle, Turn, Road, Portal
+    }
+    public Logic getLogic(){return Logic.Road;};
+
+    public MapTile getInstance(){return this;};
+
     //private int x, y, width, height;
 
     //public int getX() {
@@ -90,7 +101,6 @@ public abstract class MapTile extends GDSprite{
 ////        }
 //    }
     public static MapTile generateTile(String loadCode){
-//        System.out.println(loadCode);
         String[] tryMulty = loadCode.split("z");
 //        System.out.println(tryMulty[0]);
 
@@ -99,8 +109,21 @@ public abstract class MapTile extends GDSprite{
 //            System.out.println(additional[0] + " " + additional[1]);
 //            additional[0] = additional[0].substring(2);//removing 23:
 //                Array<Turn> turns = new Array<Turn>();
+
+            if(Integer.parseInt(tryMulty[0].substring(0, 2)) == 80){
+                Array<WalkableMapTile> m = new Array<WalkableMapTile>();
+                for (int i = 1; i < tryMulty.length; i++){
+                    m.add(((WalkableMapTile) generateTile(tryMulty[i])));//must be walkable
+                }
+                return new Spawn(TargetType.values()[Integer.parseInt(tryMulty[0].substring(3, 4))], m);
+            }
+
             Turn[] turns = new Turn[tryMulty.length];
             for (int i = 0; i < tryMulty.length; i++){
+//                String code = tryMulty[i].substring(0, 2);
+//                if(Integer.parseInt(code) == 24)
+//                MapTile m = generateTile(tryMulty[i]);
+//                if(m instanceof B)
                 turns[i] = ((Turn) generateTile(tryMulty[i]));//must be turn (20 21 22)
             }
             return new MultiTurn(turns);
@@ -110,8 +133,8 @@ public abstract class MapTile extends GDSprite{
         int id = Integer.parseInt(info[0]);
 
         switch (id){
-            case 0:
-                return new Grass();
+            case 0:case 1:case 2:case 3:
+                return new Grass(id);
             case 18:
                 switch (info.length){
                     case 1: return new Road();
@@ -151,9 +174,10 @@ public abstract class MapTile extends GDSprite{
             case 24:
                 switch (info.length){
                     case 5: return new Bridge(null, Way.values()[Integer.parseInt(info[1])],//not ready now
-                            Way.values()[Integer.parseInt(info[2])], TargetType.values()[Integer.parseInt(info[3])],Integer.parseInt(info[4]));//all input ways
+                            Way.values()[Integer.parseInt(info[2])], TargetType.values()[Integer.parseInt(info[3])], Integer.parseInt(info[4]));//all input ways
                     case 6: return new Bridge(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
-                            Way.values()[Integer.parseInt(info[3])], TargetType.values()[Integer.parseInt(info[4])],Integer.parseInt(info[5]));
+                            Way.values()[Integer.parseInt(info[3])], TargetType.values()[Integer.parseInt(info[4])], Integer.parseInt(info[5]));
+                    case 3: return new Bridge(TargetType.values()[Integer.parseInt(info[1])],Integer.parseInt(info[2]));
                 }
 //                return new Bridge(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
 //                        Way.values()[Integer.parseInt(info[3])], TargetType.values()[Integer.parseInt(info[4])],Integer.parseInt(info[5]));
@@ -164,7 +188,10 @@ public abstract class MapTile extends GDSprite{
             case 60:
                 return new Portal(Way.values()[Integer.parseInt(info[1])], Integer.parseInt(info[2]));
             case 80:
-                return new Spawn(Way.values()[Integer.parseInt(info[1])], TargetType.values()[Integer.parseInt(info[2])]);
+                switch (info.length){
+//                    case 2:return new Spawn(TargetType.values()[Integer.parseInt(info[1])]);
+                    case 3:return new Spawn(Way.values()[Integer.parseInt(info[1])], TargetType.values()[Integer.parseInt(info[2])]);
+                }
             case 99:
                 return new Castle();
             default:

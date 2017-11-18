@@ -9,6 +9,7 @@ import com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.BonusArmor;
 import com.darkhouse.gdefence.Level.Ability.Tools.Stackable;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Objects.DamageSource;
 
 public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
 
@@ -28,7 +29,7 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
         //    }
 
         @Override
-        public float getDmg(/*Tower source, */float dmg) {
+        public float getDmg(DamageSource source, float dmg) {
             owner.changeArmor(-armorPerStack);
             getStackableObject().deleteStack();
             if(getStackableObject().isZeroStacks()) dispell();
@@ -63,7 +64,7 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("layerArmorTooltip1") + " " + FontLoader.colorString(Integer.toString(stacks), 3) +
+            return l.getWord("layerArmorTooltip1") + " " + FontLoader.colorString(Integer.toString(stacks), 3) + " " +
                     l.getWord("layerArmorTooltip2") + " " + FontLoader.colorString(Integer.toString(armor), 3) + " " +
                     l.getWord("layerArmorTooltip3") + System.getProperty("line.separator") +
                     l.getWord("layerArmorTooltip4") + " " + FontLoader.colorString(Integer.toString(1), 4) + " " +

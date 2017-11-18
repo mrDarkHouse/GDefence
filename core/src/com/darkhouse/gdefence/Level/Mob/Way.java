@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Level.Mob;
 
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.Level.Path.MapTile;
+import com.darkhouse.gdefence.Level.Path.Portal;
 
 public enum Way {
     LEFT, RIGHT, UP, DOWN;
@@ -35,6 +36,9 @@ public enum Way {
         }
     }
     public static Way getNearBlockWay(MapTile tile1, MapTile tile2){//meaning that tiles init on map
+        if(Math.abs(tile2.getIndexX() - tile1.getIndexX()) > 1 || Math.abs(tile2.getIndexY() - tile1.getIndexY()) > 1){
+            return null;//blocks cant connect but can place near on one of axis (happen in portals)
+        }
         switch (tile2.getIndexX() - tile1.getIndexX()){
             case 1:return RIGHT;
             case -1:return LEFT;

@@ -91,7 +91,7 @@ public class LevelEndScreen implements Screen{
 
 //        Array<DropSlot> drop = statManager.getDrop();
         DropInventoryActor invActor = null;
-        if(isWin) {
+        if(isWin && statManager.getDrop().size != 0) {
             invActor = new DropInventoryActor(statManager.getDrop(), l.getSkin());
 
             table.add(invActor).padBottom(20);
@@ -100,18 +100,16 @@ public class LevelEndScreen implements Screen{
             table.row();
         }
 
-        table.add(continueButton).size(150, 40).align(Align.bottom);
+        table.add(continueButton).size(180, 40).align(Align.bottom);
 
 
         //stage.addActor(continueButton);
         //stage.addActor(rPanel);
 
         stage.addActor(table);
-        if(isWin) invActor.init();
-
-
-
-
+        if(isWin && invActor != null) {
+            invActor.init();
+        }
 
 
     }

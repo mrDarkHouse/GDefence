@@ -13,21 +13,21 @@ import com.darkhouse.gdefence.Level.Wave;
 public class HealingAura extends MobAbility implements MobAbility.ISpawn{
 
     private class HealingAuraBuff extends Effect<Mob>{
-        private int range;
+//        private int range;
         private int healEmount;
 
         public HealingAuraBuff(int range, float healDelay, int healEmount) {
             super(true, false, -1);
-            setAura(new Aura());
+            setAura(new Aura(range));
             setCooldownable(new Cooldown(healDelay));
-            this.range = range;
+//            this.range = range;
             this.healEmount = healEmount;
         }
 
         @Override
         public Effect setOwner(Mob owner) {
             super.setOwner(owner);
-            getAuraObject().init(owner, range);
+            getAuraObject().init(owner);
             return this;
         }
 

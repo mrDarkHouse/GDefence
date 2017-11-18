@@ -15,14 +15,20 @@ import static com.badlogic.gdx.graphics.g2d.Batch.Y4;
 
 
 public class GDSprite extends Actor{
-    private Sprite texture;
+//    private Sprite texture;
+    private Texture texture;
 
     public void setRegion(Texture texture) {
-        this.texture = new Sprite(texture);
+//        System.out.println(this + " " + texture.getMinFilter());
+//        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        System.out.println(this + " " + texture.getMinFilter());
+//        this.texture = new Sprite(texture);
+        this.texture = texture;
+        this.texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);//bad idea //TODO
     }
 
     public Texture getTexture() {
-        return texture.getTexture();
+        return texture;//.getTexture();
     }
 
 //    public void setTexture(Sprite texture) {

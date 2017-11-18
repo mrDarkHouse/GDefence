@@ -6,6 +6,7 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Path.WalkableMapTile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Objects.DamageSource;
 
 import java.io.*;
 
@@ -77,7 +78,7 @@ public abstract class MobAbility{
 //    }
 
     public interface IGetDmg extends IType {
-        float getDmg(/*Tower source, */float dmg);
+        float getDmg(DamageSource source, float dmg);
     }
     public interface IMove extends IType{
         void move(WalkableMapTile currentTile);

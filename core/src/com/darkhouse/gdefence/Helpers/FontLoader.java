@@ -107,6 +107,13 @@ public class FontLoader {
         style.fontColor = fontColor;
         return style;
     }
+    public static Label.LabelStyle generateSecondaryStyle(int size, Color fontColor, int borderSize, Color borderColor){
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = generateSecondaryFont(size, Color.WHITE, borderSize, borderColor);
+        style.fontColor = fontColor;
+        return style;
+    }
+
 //    public static Label.LabelStyle generateIskoolaFont(int size, Color color, int borderSize, Color borderColor){
 //
 //    }
@@ -121,6 +128,17 @@ public class FontLoader {
         parameter.borderColor = borderColor;
         return generator.generateFont(parameter);
     }
+    public static BitmapFont generateSecondaryFont(int size, Color color, int borderSize, Color borderColor){
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto-regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.characters = font_chars_ru;
+        parameter.size = size;
+        parameter.color = color;
+        parameter.borderWidth = borderSize;
+        parameter.borderColor = borderColor;
+        return generator.generateFont(parameter);
+    }
+
     public static BitmapFont generateFont(int size, Color color){
         generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

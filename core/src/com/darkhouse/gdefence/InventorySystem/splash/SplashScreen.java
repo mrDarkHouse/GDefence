@@ -59,7 +59,7 @@ public class SplashScreen implements Screen {
 		splash = LibgdxUtils.assets.get("textures/splash.png", Texture.class);
 
 		LibgdxUtils.assets.load("skins/uiskin.json", Skin.class);
-		LibgdxUtils.assets.load("icons/icons.atlas", TextureAtlas.class);
+//		LibgdxUtils.assets.load("icons/icons.atlas", TextureAtlas.class);
 
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(splash.getWidth(), splash.getHeight(), camera);

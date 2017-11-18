@@ -5,18 +5,23 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
+import com.darkhouse.gdefence.Model.Effectable;
 
 public class Aura {
-    private Mob owner;
+    private Effectable owner;
     private Circle rangeCircle;
+
+    private int range;
 
     public Circle getRangeCircle() {
         return rangeCircle;
     }
 
-    public Aura() {}
+    public Aura(int range) {
+        this.range = range;
+    }
 
-    public void init(Mob owner, int range){
+    public void init(Effectable owner){
         this.owner = owner;
         rangeCircle = new Circle(owner.getX(), owner.getY(), range);
     }
@@ -25,7 +30,7 @@ public class Aura {
         rangeCircle.setPosition(owner.getX(), owner.getY());
     }
 
-    public boolean isInRange(Mob other){
+    public boolean isInRange(Effectable other){
         return rangeCircle.contains(other.getX(), other.getY());
     }
 }

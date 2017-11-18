@@ -39,7 +39,7 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
 
 
     public StoreBuyPanel(/*Inventory inventory*/DragAndDrop dragAndDrop) {
-        super("Store", GDefence.getInstance().assetLoader.getSkin(), "description");
+        super(GDefence.getInstance().assetLoader.getWord("store"), GDefence.getInstance().assetLoader.getSkin(), "description");
         this.dragAndDrop = dragAndDrop;
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);

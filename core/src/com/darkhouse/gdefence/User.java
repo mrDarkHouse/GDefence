@@ -187,8 +187,8 @@ public class User {
         }
     }
 
-    public Gradable maxHealth = new Gradable("Max Health", 5, 5, 5, 100, 25);
-    public Gradable maxEnergy = new Gradable("Max Energy", 5, 30, 10, 100, 25);
+    public Gradable maxHealth = new Gradable("Max Health", 5, 5, 5, 100, 100);
+    public Gradable maxEnergy = new Gradable("Max Energy", 5, 30, 10, 100, 100);
 
     //public void upHealth(){
     //    addMaxHealth(5);
@@ -291,8 +291,8 @@ public class User {
     }
 
     public enum Research implements Item{
-        Powder("powder", "Complete 1 map" + System.getProperty("line.separator") + "to open this research"),
-        Steam("steam", "Beat boss on second map" + System.getProperty("line.separator") +  "to open this research");
+        Powder(/*"powder", "Complete 1 map" + System.getProperty("line.separator") + "to open this research"*/),
+        Steam(/*"steam", "Beat boss on second map" + System.getProperty("line.separator") +  "to open this research"*/);
 
         private String tooltip;
 //        private String texturePath;
@@ -301,21 +301,21 @@ public class User {
             return name().toLowerCase();//
         }
 
-        Research(String texturePath, String tooltip) {
+        Research(/*String texturePath, String tooltip*/) {
 //            this.texturePath = texturePath;
 //            this.tooltip = GDefence.getInstance().assetLoader.getWord(name().toLowerCase() + "_tooltip");
 //            this.tooltip = tooltip;
         }
         public static void init(){
             for (int i = 0; i < Research.values().length; i++){
-                Research.values()[i].initTooltips();
+//                Research.values()[i].initTooltips();
             }
         }
 
-        private void initTooltips(){
-            this.tooltip = GDefence.getInstance().assetLoader.getWord(name().toLowerCase() + "_tooltip") + System.getProperty("line.separator") +
-                           GDefence.getInstance().assetLoader.getWord("research_complete_need");
-        }
+//        private void initTooltips(){
+//            this.tooltip = GDefence.getInstance().assetLoader.getWord(name().toLowerCase() + "_tooltip") + System.getProperty("line.separator") +
+//                           GDefence.getInstance().assetLoader.getWord("research_complete_need");
+//        }
 
         @Override
         public String getTextureRegion() {
@@ -337,7 +337,8 @@ public class User {
         }
 
         public String getTooltip() {
-            return tooltip;
+            return GDefence.getInstance().assetLoader.getWord(name().toLowerCase() + "_tooltip") + System.getProperty("line.separator") +
+                    GDefence.getInstance().assetLoader.getWord("research_complete_need");
         }
 
 
@@ -368,6 +369,7 @@ public class User {
     public void openResearch(Research r){
         researches.put(r, true);
         if(towerMap != null) towerMap.updateTypes(); //==null when open researches in start(in debug)
+        openRecipes();//
     }
 
 
@@ -469,9 +471,9 @@ public class User {
                 case RED:
                     return 5;//dmg
                 case YELLOW:
-                    return 10;//as
+                    return 5;//as
                 case BLUE:
-                    return 20;//range
+                    return 10;//range
                 case BLACK:
                     //
                 case GREEN:
@@ -571,14 +573,15 @@ public class User {
 //        flush();
 //        this.totalExp = 0;
 //        addGold(7000);
-        addGold(7000);
+        addGold(160);
+//        addGold(11160);
         currentMap = 1;
 
 //        maxHealth = new Gradable("Max Health", 5, 5, 5, 100, 25);
 //        maxEnergy = new Gradable("Max Energy", 5, 30, 10, 100, 25);
 
-        openResearch(Research.Powder);
-        openResearch(Research.Steam);
+//        openResearch(Research.Powder);
+//        openResearch(Research.Steam);
 //        towerInventory = new Inventory(TowerObject.class, 35);
 //        spellInventory = new Inventory(SpellObject.class, 35);
 //        detailInventory = new Inventory(DetailObject.class, 35);
@@ -587,11 +590,20 @@ public class User {
         setTowerMap(GDefence.getInstance().getArsenal().getTowerMap());
         openTowerToBuy(ItemEnum.Tower.Basic);
 
+//        openResearch(Research.Powder);
+//        openResearch(Research.Steam);
+//        openRecipes();//need to init
+//        System.out.println(towerMap);
+//        System.out.println(towerMap);
+
 
 //        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
-        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
-        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
-        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
+
+//        towerInventory.store(new TowerObject(ItemEnum.Tower.Rock, 1, 0, 0));
+//        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 0, 0, 0));
+//        towerInventory.store(new TowerObject(ItemEnum.Tower.Range, 0, 1, 1));
+//        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
+//        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
 
 //        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addExp(500f);
 //        ((TowerObject) towerInventory.getSlots().get(0).getLast()).addGems(GEM_TYPE.RED, 3);
@@ -614,7 +626,7 @@ public class User {
 //        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.YELLOW, 2);
 //        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 1);
 //
-        spellInventory.store(new GlobalSlow.P(5, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
+//        spellInventory.store(new GlobalSlow.P(5, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
 //        spellInventory.store(new IceBlast.P(5, 10, 10, 0.3f, 3, 200, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
 //        spellInventory.store(new IceBlast.P(30, 10, 10, 0.3f, 3, 100, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
 
@@ -641,12 +653,12 @@ public class User {
 //        gems[4] = 9;
 //        gems[5] = 41;
 
-        addGems(GEM_TYPE.RED, 11);
-        addGems(GEM_TYPE.YELLOW, 4);
-        addGems(GEM_TYPE.BLUE, 9);
-        addGems(GEM_TYPE.WHITE, 7);
-        addGems(GEM_TYPE.GREEN, 4);
-        addGems(GEM_TYPE.BLACK, 5);
+//        addGems(GEM_TYPE.RED, 11);
+//        addGems(GEM_TYPE.YELLOW, 4);
+//        addGems(GEM_TYPE.BLUE, 9);
+//        addGems(GEM_TYPE.WHITE, 7);
+//        addGems(GEM_TYPE.GREEN, 4);
+//        addGems(GEM_TYPE.BLACK, 5);
 
         update();
 
@@ -667,19 +679,23 @@ public class User {
         openLevel(3);
         openLevel(4);
         openLevel(5);
-        openLevel(6);
-        openLevel(7);
-        openLevel(8);
-        openLevel(9);
-        openLevel(10);
-        openLevel(11);
-        openLevel(13);
-        openLevel(14);
-        openLevel(15);
-        openLevel(16);
-        openLevel(18);
-        openLevel(19);
-        openLevel(20);
+//        openLevel(6);
+//        openLevel(7);
+//        openLevel(8);
+//        openLevel(9);
+//        openLevel(10);
+//        openLevel(11);
+//        openLevel(12);
+//        openLevel(13);
+//        openLevel(14);
+//        openLevel(15);
+//        openLevel(16);
+//        openLevel(17);
+//        openLevel(18);
+//        openLevel(19);
+//        openLevel(20);
+//        openLevel(21);
+//        openLevel(22);
 //        levelsAvailable[5] = true;
 //        levelsAvailable[6] = true;
 //        levelsAvailable[4] = true;

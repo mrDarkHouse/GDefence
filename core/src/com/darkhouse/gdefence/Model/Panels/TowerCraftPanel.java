@@ -100,7 +100,7 @@ public class TowerCraftPanel extends Window{
         row();
         add();
 
-        pack();
+        pack();//delete this to do resizable
         setSize(180, 250);
 
 //        recipeSlot.setRound(true);

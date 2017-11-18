@@ -127,7 +127,7 @@ public class Smith extends AbstractCampainScreen{
         stage.addActor(upHealth);
         stage.addActor(upEnergy);
         stage.addActor(new GoldPanel(800, 500, 160, 100));
-        stage.addActor(new GemPanel(1000, 500, 270, 160));
+        stage.addActor(new GemPanel(Gdx.graphics.getWidth() - 270, Gdx.graphics.getHeight() - 160 - topPadSize, 270, 160));
     }
 
     public void notifyListeners(){

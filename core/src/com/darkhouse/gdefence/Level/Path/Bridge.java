@@ -9,11 +9,14 @@ import com.darkhouse.gdefence.Level.Mob.Way;
 public class Bridge extends WalkableMapTile/* implements Walkable*/{
     private int toAct;
     private int counter;
+    private int state;
+//    private int crossCounter;
     private Way inputWay;
     private Way endWay1;
     private Way endWay2;
-    public Texture texture1; //oh shit oh shit IT'S PUBLIC
-    public Texture texture2;
+    public Texture[] textures;
+//    public Texture texture1; //oh shit oh shit IT'S PUBLIC
+//    public Texture texture2;
     private TargetType applyMobs;
 
     @Override
@@ -26,39 +29,67 @@ public class Bridge extends WalkableMapTile/* implements Walkable*/{
         this.inputWay = inputWay;
         this.endWay1 = endWay1;
         this.endWay2 = endWay2;
+//        System.out.println("n " + endWay1 + " " + endWay2);
         this.applyMobs = applyMobs;
         this.toAct = toAct;
+        textures = new Texture[2];
 //        initTexture();
+    }
+    public Bridge(TargetType applyMobs, int toAct){//cross 4-ways
+        this.applyMobs = applyMobs;
+        this.toAct = toAct;
+        textures = new Texture[4];
+//        System.out.println("4w " + endWay1 + " " + endWay2);
     }
 
     private void updateTexture(){
-        if(counter == toAct)setRegion(texture2);
-        else setRegion(texture1);
+        setRegion(textures[state]);
+//        if(counter == toAct)setRegion(texture2);
+//        else setRegion(texture1);
     }
 
-    private String getTextureName(Way endWay1, Way endWay2){
-        if      (endWay1 == Way.DOWN && endWay2 == Way.RIGHT || endWay1 == Way.RIGHT && endWay2 == Way.DOWN){
-            return "DR";
-        }else if(endWay1 == Way.RIGHT && endWay2 == Way.UP || endWay1 == Way.UP && endWay2 == Way.RIGHT){
-            return "UR";
-        }
-        return null;
-    }
+//    private String getTextureName(Way endWay1, Way endWay2){
+//        if      (endWay1 == Way.DOWN && endWay2 == Way.RIGHT || endWay1 == Way.RIGHT && endWay2 == Way.DOWN){
+//            return "DR";
+//        }else if(endWay1 == Way.RIGHT && endWay2 == Way.UP || endWay1 == Way.UP && endWay2 == Way.RIGHT){
+//            return "UR";
+//        }else if(endWay1 == Way.DOWN && endWay2 == Way.UP || endWay1 == Way.UP && endWay2 == Way.DOWN) {
+//            return "DU";
+//        }else if(endWay1 == Way.LEFT && endWay2 == Way.RIGHT || endWay1 == Way.RIGHT && endWay2 == Way.LEFT) {
+//            return "LR";
+//        }
+//        return null;
+//    }
 
     @Override
     public void initTexture() {
 //        Texture texturePath;
         try {
+//            System.out.println("n " + endWay1 + " " + endWay2);
+            if(endWay2 == null){//endWay1
+                textures[0] = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeCrossL.png", Texture.class);
+                textures[1] = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeCrossU.png", Texture.class);
+                textures[2] = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeCrossR.png", Texture.class);
+                textures[3] = GDefence.getInstance().assetLoader.get("Path/Bridge/bridgeCrossD.png", Texture.class);
+                updateTexture();
+                return;
+            }
 //            texture1 = GDefence.getInstance().assetLoader.get("Path/roadHorizontal.png", Texture.class);
 //            texture2 = GDefence.getInstance().assetLoader.get("Path/roadHorizontal.png", Texture.class);
-            String scnd = inputWay.getShortName() + getTextureName(endWay1, endWay2);
+//            String scnd = inputWay.getShortName() + getTextureName(endWay1, endWay2);
+            String sc1 = Turn.getTurnCode(inputWay, endWay1);
+            String sc2 = Turn.getTurnCode(inputWay, endWay2);
+//            System.out.println(scnd);
             if (!isSwimmable()) {
-                texture1 = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + scnd + "1.png", Texture.class);
-                texture2 = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + scnd + "2.png", Texture.class);
+                textures[0] = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + sc1 + endWay2.getShortName() + ".png", Texture.class);
+                textures[1] = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + sc2 + endWay1.getShortName() + ".png", Texture.class);
+//                texture1 = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + scnd + "1.png", Texture.class);
+//                texture2 = GDefence.getInstance().assetLoader.get("Path/Bridge/bridge" + scnd + "2.png", Texture.class);
             }else {
-                texture1 = GDefence.getInstance().assetLoader.get("Path/Bridge/waterBridge" + scnd + "1.png", Texture.class);
-                texture2 = GDefence.getInstance().assetLoader.get("Path/Bridge/waterBridge" + scnd + "2.png", Texture.class);
+                textures[0] = GDefence.getInstance().assetLoader.get("Path/Bridge/waterBridge" + sc1 + ".png", Texture.class);
+                textures[1] = GDefence.getInstance().assetLoader.get("Path/Bridge/waterBridge" + sc2 + ".png", Texture.class);
             }
+//            System.out.println(texture2);
         }catch (IllegalArgumentException e){
             e.printStackTrace();////may not work
         }
@@ -126,9 +157,25 @@ public class Bridge extends WalkableMapTile/* implements Walkable*/{
 
 
 
-    public Way manipulatePath(Mob.MoveType enterMobType, Way currentWay){
+    public Way manipulatePath(Mob.MoveType enterMobType, Way currentWay){//endWays[] simplify this //TODO
+        if(currentWay != inputWay) return null;
         if (applyMobs == null || applyMobs.isConsist(enterMobType)) {
-            Way w = counter == toAct ? endWay1 : endWay2;//2:1 or 1:2 ???
+            if(endWay1 == null){//cross
+                Way w;// = Way.values()[crossCounter];
+                switch (state){
+                    case 0:w = Way.LEFT;break;
+                    case 1:w = Way.UP;break;
+                    case 2:w = Way.RIGHT;break;
+                    case 3:w = Way.DOWN;break;
+                    default:w = null;
+                }
+                if (state < 3) state++;
+                else state = 0;
+                setRegion(textures[state]);
+                return w;
+            }
+
+            Way w = counter == toAct ? endWay2 : endWay1;//2:1 or 1:2 ???
 
 //        switch (inputWay){
 //            case LEFT:
@@ -144,9 +191,23 @@ public class Bridge extends WalkableMapTile/* implements Walkable*/{
 //                w = counter%toAct == 0? Way.RIGHT:Way.LEFT;
 //                break;
 //        }
-            if (counter < toAct) counter++;
-            else counter = 0;
-            updateTexture();//pre level not need //TODO
+            if (counter < toAct) {
+                counter++;
+                if (counter == toAct){
+                    if (state < 1) state++;
+                    else state = 0;
+//                    setRegion(textures[state]);
+                }
+            } else {
+                counter = 0;
+                if (state < 1) state++;
+                else state = 0;
+//                setRegion(textures[state]);
+            }
+            setRegion(textures[state]);
+
+
+//            updateTexture();//pre level not need //TODO
             return w;
         }
         return null;
