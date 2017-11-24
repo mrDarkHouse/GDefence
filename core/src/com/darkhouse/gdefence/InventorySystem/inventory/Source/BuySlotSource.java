@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory.Source;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
@@ -25,15 +26,18 @@ public class BuySlotSource extends SlotSource {
 //    }
 
     @Override
-    protected void takeSlot() {
+    protected boolean takeSlot() {
         //dont take from shop
-        payloadSlot.add(TowerObject.generateStartObjects(sourceSlot.getPrototype(), 1));
+        if(Gdx.input.isButtonPressed(0)) {
+            payloadSlot.add(TowerObject.generateStartObjects(sourceSlot.getPrototype(), 1));
+            return true;
+        }else return false;
     }
 
     @Override
     protected void ifSlotTarget(DragAndDrop.Target target) {
         Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-        if (targetSlot.matches(payloadSlot) || targetSlot.getPrototype() == null) {
+        if (!targetSlot.isFull() && (targetSlot.matches(payloadSlot) || targetSlot.getPrototype() == null)) {
             Item item = sourceSlot.getPrototype();
             if(GDefence.getInstance().user.deleteGold(item.getGlobalCost())){
                 targetSlot.add(payloadSlot.takeAll());

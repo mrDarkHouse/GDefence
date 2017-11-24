@@ -38,9 +38,6 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.Objects.GameObject;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
-/**
- * @author Daniel Holderbaum
- */
 public class SlotSource extends Source {
 
 	protected Slot sourceSlot;
@@ -61,7 +58,7 @@ public class SlotSource extends Source {
 		Payload payload = new Payload();
 //		Slot payloadSlot = new Slot(sourceSlot.getPrototype(), sourceSlot.getAmount());
 		payloadSlot = new Slot(sourceSlot.getType()/*, sourceSlot.getPrototype(), 0*/);
-		takeSlot();
+		if(!takeSlot()) return null;
 		payload.setObject(payloadSlot);
 
 		//TextureAtlas icons = LibgdxUtils.assets.get("icons/icons.atlas", TextureAtlas.class);
@@ -84,8 +81,12 @@ public class SlotSource extends Source {
 
 		return payload;
 	}
-	protected void takeSlot(){
-		payloadSlot.add(sourceSlot.takeAll());
+	protected boolean takeSlot(){
+		if(Gdx.input.isButtonPressed(0)) payloadSlot.add(sourceSlot.takeAll());
+		else if(Gdx.input.isButtonPressed(1)) payloadSlot.add(sourceSlot.take(1));
+		else return false;
+
+		return true;
 	}
 
 	@Override
@@ -120,7 +121,7 @@ public class SlotSource extends Source {
 
 //			targetSlot.add(payloadSlot.takeAll());
 
-			int toMove = targetSlot.getMaxItems() - targetSlot.getAmount();
+			int toMove = targetSlot.getMaxItems() - targetSlot.getAmount();//if < 0 error with maxItems
             if(toMove == 0) {//cant swap with low possible number slots
                 ifNullTarget();
                 return;

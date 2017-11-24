@@ -311,6 +311,9 @@ public class AssetLoader extends AssetManager{
         load("spellCdTransparent.png", Texture.class);
 //        load("spellPanelFon.png", Texture.class);
         load("AbilityIcons/Spells/globalSlow.png", Texture.class);
+        load("AbilityIcons/Spells/iceBlast.png", Texture.class);
+        load("AbilityIcons/Spells/emergencyRepair.png", Texture.class);
+        load("AbilityIcons/Spells/suddenDeath.png", Texture.class);
         load("AbilityIcons/Spells/nothing.png", Texture.class);
 
 
@@ -377,7 +380,7 @@ public class AssetLoader extends AssetManager{
         load("AbilityIcons/Abilities/shotDelay.png", Texture.class);
         load("AbilityIcons/Abilities/splash.png", Texture.class);
         load("AbilityIcons/Abilities/steelArrow.png", Texture.class);
-
+        load("AbilityIcons/Abilities/steamAura.png", Texture.class);
 
 
 
@@ -501,7 +504,7 @@ public class AssetLoader extends AssetManager{
 
         load("Path/Signer/signRL.png", Texture.class);
         load("Path/Signer/signLR.png", Texture.class);
-//        load("Path/Signer/signUD.png", Texture.class);lolololol
+//        load("Path/Signer/signUD.png", Texture.class);
 
         load("AbilityIcons/Effects/swimSpeed.png", Texture.class);
         load("AbilityIcons/Effects/waterBonusArmor.png", Texture.class);
@@ -512,22 +515,49 @@ public class AssetLoader extends AssetManager{
         load("AbilityIcons/Effects/fireArrow.png", Texture.class);
         load("AbilityIcons/Effects/bash.png", Texture.class);
         load("AbilityIcons/Effects/heal.png", Texture.class);
+        load("AbilityIcons/Effects/sprint.png", Texture.class);
+        load("AbilityIcons/Effects/scorpionVenom.png", Texture.class);
+        load("AbilityIcons/Effects/greatEvasion.png", Texture.class);
+        load("AbilityIcons/Effects/waterShield.png", Texture.class);
 
-        load("Mobs/mob.png", Texture.class);
+
+//        load("Mobs/mob.png", Texture.class);
 //        load("Mobs/mob2.png", Texture.class);
         load("Mobs/wolf0.png", Texture.class);
         load("Mobs/wolf1.png", Texture.class);
         load("Mobs/wolf2.png", Texture.class);
         load("Mobs/wolf3.png", Texture.class);
-        load("Mobs/mob3.png", Texture.class);
-        load("Mobs/mob4.png", Texture.class);
-        load("Mobs/mob5.png", Texture.class);
-        load("Mobs/mob6walk.png", Texture.class);
-        load("Mobs/mob6swim.png", Texture.class);
+        load("Mobs/eagle0.png", Texture.class);
+        load("Mobs/eagle1.png", Texture.class);
+        load("Mobs/eagle2.png", Texture.class);
+        load("Mobs/eagle3.png", Texture.class);
+        load("Mobs/hedgehog0.png", Texture.class);
+        load("Mobs/hedgehog1.png", Texture.class);
+        load("Mobs/hedgehog2.png", Texture.class);
+        load("Mobs/hedgehog3.png", Texture.class);
+        load("Mobs/hedgehogBlock0.png", Texture.class);
+        load("Mobs/hedgehogBlock1.png", Texture.class);
+        load("Mobs/hedgehogBlock2.png", Texture.class);
+        load("Mobs/hedgehogBlock3.png", Texture.class);
+        load("Mobs/lynx0.png", Texture.class);
+        load("Mobs/lynx1.png", Texture.class);
+        load("Mobs/lynx2.png", Texture.class);
+        load("Mobs/lynx3.png", Texture.class);
+        load("Mobs/boar0.png", Texture.class);
+        load("Mobs/boar1.png", Texture.class);
+        load("Mobs/boar2.png", Texture.class);
+        load("Mobs/boar3.png", Texture.class);
+
+
+//        load("Mobs/mob3.png", Texture.class);
+//        load("Mobs/mob4.png", Texture.class);
+//        load("Mobs/mob5.png", Texture.class);
+//        load("Mobs/mob6walk.png", Texture.class);
+//        load("Mobs/mob6swim.png", Texture.class);
         load("Mobs/turtle.png", Texture.class);
-        load("Mobs/eagle.png", Texture.class);
-        load("Mobs/lynx.png", Texture.class);
-        load("Mobs/turtle2.png", Texture.class);
+
+//        load("Mobs/lynx.png", Texture.class);
+//        load("Mobs/turtle2.png", Texture.class);
 
 //        load("infoPanelFone.png", Texture.class);
         load("levelLooseBg.png", Texture.class);
@@ -655,14 +685,40 @@ public class AssetLoader extends AssetManager{
         unload("AbilityIcons/Effects/bash.png");
         unload("AbilityIcons/Effects/heal.png");
 
+        unload("Mobs/wolf0.png");
+        unload("Mobs/wolf1.png");
+        unload("Mobs/wolf2.png");
+        unload("Mobs/wolf3.png");
+        unload("Mobs/eagle0.png");
+        unload("Mobs/eagle1.png");
+        unload("Mobs/eagle2.png");
+        unload("Mobs/eagle3.png");
+        unload("Mobs/hedgehog0.png");
+        unload("Mobs/hedgehog1.png");
+        unload("Mobs/hedgehog2.png");
+        unload("Mobs/hedgehog3.png");
+        unload("Mobs/hedgehogBlock0.png");
+        unload("Mobs/hedgehogBlock1.png");
+        unload("Mobs/hedgehogBlock2.png");
+        unload("Mobs/hedgehogBlock3.png");
+        unload("Mobs/lynx0.png");
+        unload("Mobs/lynx1.png");
+        unload("Mobs/lynx2.png");
+        unload("Mobs/lynx3.png");
+        unload("Mobs/boar0.png");
+        unload("Mobs/boar1.png");
+        unload("Mobs/boar2.png");
+        unload("Mobs/boar3.png");
 
-        unload("Mobs/mob.png");
-//        unload("Mobs/mob2.png");
-        unload("Mobs/mob3.png");
-        unload("Mobs/mob4.png");
-        unload("Mobs/mob5.png");
-        unload("Mobs/mob6walk.png");
-        unload("Mobs/mob6swim.png");
+
+
+//        unload("Mobs/mob.png");
+////        unload("Mobs/mob2.png");
+//        unload("Mobs/mob3.png");
+//        unload("Mobs/mob4.png");
+//        unload("Mobs/mob5.png");
+//        unload("Mobs/mob6walk.png");
+//        unload("Mobs/mob6swim.png");
 
 //        unload("infoPanelFone.png");
 //        unload("levelLooseBg.png");

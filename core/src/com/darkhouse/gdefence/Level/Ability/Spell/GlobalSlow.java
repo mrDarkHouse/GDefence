@@ -94,7 +94,7 @@ public class GlobalSlow extends Spell{
         private float changeSpeed;
 
         public GlobalSlowEffect(float slowPercent, float duration) {
-            super(false, true, duration, "bash");
+            super(false, true, duration, "slow");
             this.slowPercent = slowPercent;
         }
 

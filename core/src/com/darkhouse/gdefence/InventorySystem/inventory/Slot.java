@@ -35,6 +35,9 @@ public class Slot/*<T extends GameObject>*/ extends AbstractSlot{
 	public int getMaxItems() {
 		return maxItems;
 	}
+	public boolean isFull(){
+		return itemsArray.size == maxItems;
+	}
 
 	public Class<? extends GameObject>[] getType() {
 		return type;

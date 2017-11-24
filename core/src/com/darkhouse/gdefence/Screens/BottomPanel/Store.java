@@ -34,7 +34,8 @@ public class Store extends AbstractCampainScreen{
 //
     }
     public void init(){
-        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(), GDefence.getInstance().assetLoader.getSkin()){
+        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),
+                GDefence.getInstance().assetLoader.getSkin()){
             @Override
             protected void addSourceTarget(SlotActor slotActor) {
                 dragAndDrop.addSource(new SellSlotSource(slotActor));
@@ -70,6 +71,7 @@ public class Store extends AbstractCampainScreen{
         inventoryActor.init();
         stage.addActor(storeBuyPanel);
         storeBuyPanel.init();
+        storeBuyPanel.addFastMove(inventoryActor.getInventory());
         stage.addActor(new GoldPanel(1100, 500, 100, 90));
     }
 

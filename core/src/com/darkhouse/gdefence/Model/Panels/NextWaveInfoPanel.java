@@ -77,7 +77,7 @@ public class NextWaveInfoPanel extends Table{
 
         currentWave = new Label(currentWaveS, l.getInfoPanelSkin());
         mobsNumber = new Label(mobsNumberS, l.getInfoPanelSkin());
-        mobName = new Label(mobNameS, l.getInfoPanelSkin());
+//        mobName = new Label(mobNameS, l.getInfoPanelSkin());
         mobName = new Label(mobNameS, FontLoader.generateStyle(16, null));//without color
         mobName.getStyle().font.getData().markupEnabled = true;
         mobHealth = new Label(mobHealthS, l.getInfoPanelSkin());

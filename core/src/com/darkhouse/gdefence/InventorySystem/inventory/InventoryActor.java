@@ -21,6 +21,7 @@
  */
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
@@ -72,6 +73,9 @@ public class InventoryActor extends Window {
 
 		this.inventory = inventory;
 		this.dragAndDrop = dragAndDrop;
+		this.dragAndDrop.setButton(-1);
+		this.dragAndDrop.setTapSquareSize(2);
+		this.dragAndDrop.setDragTime(30);
 		this.skin = skin;
 
 		//TextButton closeButton = new TextButton("X", skin);
@@ -80,7 +84,7 @@ public class InventoryActor extends Window {
 		//getButtonTable().add(closeButton).height(getPadTop());
 		setDefaults();
 
-		initCells(dragAndDrop, skin, inventory);//
+		initCells(/*dragAndDrop, */skin, inventory);//
 
 		pack();
 
@@ -106,7 +110,7 @@ public class InventoryActor extends Window {
 		setRowNumber(7);
 		setRows(5);
 	}
-	protected void initCells(DragAndDrop dragAndDrop, Skin skin, Inventory inventory){
+	protected void initCells(/*DragAndDrop dragAndDrop, */Skin skin, Inventory inventory){
 		beforeInitCells();
 		actorArray = new Array<SlotActor>();
 		int i = 0;
@@ -160,5 +164,10 @@ public class InventoryActor extends Window {
             anotherDragAndDrop.addTarget(new SlotTarget(s));
         }
     }
+	public void addFastMoving(Inventory toInv){
+		for(SlotActor s:getActorArray()){
+			s.addListener(new DoubleClickListener(toInv, s));
+		}
+	}
 
 }

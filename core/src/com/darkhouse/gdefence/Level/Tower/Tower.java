@@ -56,7 +56,6 @@ public class Tower extends Effectable implements DamageSource{
     public int getDmg() {
         return dmg;
     }
-
     public int getBonusDmg() {
         return bonusDmg;
     }
@@ -67,7 +66,6 @@ public class Tower extends Effectable implements DamageSource{
     public int getSpeed() {
         return speed;
     }
-
     public int getBonusSpeed() {
         return bonusSpeed;
     }
@@ -76,13 +74,15 @@ public class Tower extends Effectable implements DamageSource{
     private Array<Ability> abilities;
 //    private Array<Effect> effects;//
 
-
-    private ShapeRenderer shape;
-
+    public void addExp(float value){
+        getTowerPrototype().addExp(value);
+        tooltip.hasChanged();
+    }
 
     public void changeAttackSpeed(int value){
         if(speed + bonusSpeed + value > 10) bonusSpeed += value;
         else bonusSpeed = -speed + 10;
+        tooltip.hasChanged();
 
 //        if(speed + value > 10) speed += value;
 //        else speed = 10;
@@ -90,6 +90,7 @@ public class Tower extends Effectable implements DamageSource{
     public void changeDmg(int value){
         if(dmg + bonusDmg + value > 0) bonusDmg += value;
         else bonusDmg = -dmg;
+        tooltip.hasChanged();
 //        if (dmg + value > 0) dmg += value;
 //        else dmg = 0;
     }
@@ -98,6 +99,18 @@ public class Tower extends Effectable implements DamageSource{
         for (Ability a:abilities){
             if(a instanceof Ability.IOnBuild){
                 ((Ability.IOnBuild) a).builded(t);
+            }
+        }
+    }
+    public void procBuildOnMapAbilities(Tower other){
+        for (Ability a:abilities){
+            if(a instanceof Ability.IBuildedOnMap){
+                ((Ability.IBuildedOnMap) a).buildedOnMap(other);
+            }
+        }
+        for (Effect e:effects){
+            if(e instanceof Ability.IBuildedOnMap){
+                ((Ability.IBuildedOnMap) e).buildedOnMap(other);
             }
         }
     }
@@ -160,6 +173,7 @@ public class Tower extends Effectable implements DamageSource{
     */
 
 
+
     public Tower(TowerObject towerPrototype, float x, float y, float width, float height) {
         super();
 //        super(towerPrototype.getPrototype().getTowerTexture());
@@ -171,7 +185,6 @@ public class Tower extends Effectable implements DamageSource{
         Texture t = towerPrototype.getPrototype().getTowerTexture();
 //        t.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);//TODO
         setRegion(t);
-
 
 
         abilities = new Array<Ability>();
@@ -186,7 +199,7 @@ public class Tower extends Effectable implements DamageSource{
         this.dmg = towerPrototype.getDmg();
         this.speed = towerPrototype.getSpeed();
 
-        preShotTime = getAttackSpeedDelay(speed);//for momental shot
+        preShotTime = getAttackSpeedDelay(speed + bonusSpeed);//for momental shot
 //        this.speedDelay = getAttackSpeedDelay(speed);
     }
     public void init(){
@@ -216,8 +229,8 @@ public class Tower extends Effectable implements DamageSource{
         //attackRangeTexture = new Texture(pixmap);//not work
         //pixmap.dispose();
 
-        attackRangeTexture = GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class);
-        attackRangeTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        attackRangeTexture = GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class);
+//        attackRangeTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     public void addKill(/*Class<? extends Mob>*/Mob killedMob){
@@ -233,6 +246,7 @@ public class Tower extends Effectable implements DamageSource{
             }
         }
     }
+
 
 
     public boolean isInRange(Vector2 p){
@@ -261,6 +275,7 @@ public class Tower extends Effectable implements DamageSource{
     }
 
     private void attack(float delta){
+        if(getTowerPrototype().getPrototype().getAttackType() == AttackType.none) return;
 //        target = Mob.getMobOnMap(AttackLogic.First, this);//if !shot one target
 
         if(target == null || !isInRange(target.getCenter()) || !target.isInGame()) {
@@ -268,7 +283,7 @@ public class Tower extends Effectable implements DamageSource{
             preShotTime += delta;//fix when next attack after kill has delay
         }else {
 //            preShotTime += delta;
-            if(preShotTime >= getAttackSpeedDelay(speed)){//
+            if(preShotTime >= getAttackSpeedDelay(speed + bonusSpeed)){//
                 boolean canShotNow = true;
                 for (Ability a : abilities) {
                     if (a instanceof Ability.IPreAttack) {
@@ -382,10 +397,21 @@ public class Tower extends Effectable implements DamageSource{
     public void hitTarget(Mob target, float dmg){
         if(target != null) {//hotfix
             float realDmg = target.hit(dmg, this);
-            getTowerPrototype().addExp((float) (Math.sqrt(realDmg + 5) / 4f));
-            tooltip.hasChanged();
+            float exp = getExpFromDmg(realDmg);
+            CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+            for (Effect e:tmp){
+                if(e instanceof Ability.IOnGetExp){
+                    exp = ((Ability.IOnGetExp) e).addExp(exp);
+                }
+            }
+            addExp(exp);
 //            procAfterHitAbilities(target, dmg);
         }
+    }
+
+    private float getExpFromDmg(float dmg){
+        if(dmg == 0) return 0;  //not earn exp while hit invulnerable units
+        else return (float) (Math.sqrt(dmg + 5) / 4f);
     }
 
     @Override
@@ -422,7 +448,7 @@ public class Tower extends Effectable implements DamageSource{
         drawEffects(batch);
     }
 
-    public void drawRange(SpriteBatch batch/*, float delta*/){
+    public void drawRange(/*SpriteBatch batch*//*, float delta*/ShapeRenderer shape){
         //Image im = new Image(attackRangeTexture);
         //im.setScaling(Scaling.none);
         //im.setDebug(true);
@@ -432,9 +458,16 @@ public class Tower extends Effectable implements DamageSource{
         //im.draw(batch, 1);
 
         if(tooltip.isVisible()) {
-            batch.draw(attackRangeTexture, attackRange.x - attackRange.radius, attackRange.y - attackRange.radius,
-                    attackRange.radius * 2, attackRange.radius * 2);
+//            batch.end();
+//            shape.setAutoShapeType(true);
+//            shape.begin(/*ShapeRenderer.ShapeType.Line*/);
+            shape.circle(attackRange.x, attackRange.y, attackRange.radius, 256);
+//            shape.end();
+//            batch.draw(attackRangeTexture, attackRange.x - attackRange.radius, attackRange.y - attackRange.radius,
+//                    attackRange.radius * 2, attackRange.radius * 2);
+//            batch.begin();
         }
+
         //batch.end();
         //shape.setAutoShapeType(true);
         //shape.setColor(Color.BLACK);

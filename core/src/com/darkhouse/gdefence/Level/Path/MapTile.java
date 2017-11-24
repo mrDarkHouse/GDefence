@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
 import com.darkhouse.gdefence.Level.Tower.Tower;
@@ -324,11 +325,14 @@ public abstract class MapTile extends GDSprite{
         if(isBuildable() && buildedTower == null && LevelMap.getLevel().removeEnergy(tower.getCost())) {//tooltip "no enought enegry", "cannot build there"
             Tower t = new Tower(tower, getX(), getY(), getWidth(), getHeight());
             LevelMap.levelMap.getStage().addActor(t);//TODO
-
-            t.init();
-
-            t.procBuildAbilities(this);
             this.buildedTower = t;
+            t.init();
+            t.procBuildAbilities(this);
+            for (Tower tw: Level.getMap().getTowersOnMap()){
+                tw.procBuildOnMapAbilities(t);
+            }
+
+
 //            LevelMap.getLevel().getStatManager().energySpendAdd(tower.getCost());
             return true;
         }else return false;

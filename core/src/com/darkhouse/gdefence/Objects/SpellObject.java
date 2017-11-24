@@ -57,7 +57,7 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
 
     }
 
-    public void addExp(int value){
+    public void addExp(float value){
         totalExp += value;
         updateExp();
     }

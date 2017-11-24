@@ -129,9 +129,10 @@ public class Level {
     }
 
     public void heal(int heal) {
-        if(heal <= maxHP) {
+        if(this.healthNumber + heal <= maxHP) {
             this.healthNumber += heal;
         }else this.healthNumber = maxHP;
+        LevelMap.levelMap.hpChangeEvent();
     }
 
 
@@ -348,7 +349,7 @@ public class Level {
         drawMobs(batch);
     }
     public void physic(float delta){
-        if(delta > 30) return;
+        if(delta > 5) return;
         map.physic(delta);
         if(isPaused) return;
         if(inWave){

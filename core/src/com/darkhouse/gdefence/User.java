@@ -8,8 +8,10 @@ import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.Level.Ability.Spell.EmergencyRepair;
 import com.darkhouse.gdefence.Level.Ability.Spell.GlobalSlow;
 import com.darkhouse.gdefence.Level.Ability.Spell.IceBlast;
+import com.darkhouse.gdefence.Level.Ability.Spell.SuddenDeath;
 import com.darkhouse.gdefence.Model.Panels.StoreBuyPanel;
 import com.darkhouse.gdefence.Objects.*;
 import com.darkhouse.gdefence.Screens.BottomPanel.TowerMap;
@@ -510,7 +512,7 @@ public class User {
                     return GDefence.getInstance().assetLoader.getWord("rybGemTooltip");
                 case BLACK:case GREEN:case WHITE:
                     return GDefence.getInstance().assetLoader.getWord("bgwGemTooltip");
-                default:return "shit programmer fuck up my code";//throw wrongArgumentException
+                default:return "smth goes wrong";//throw wrongArgumentException
             }
         }
     }
@@ -573,7 +575,7 @@ public class User {
 //        flush();
 //        this.totalExp = 0;
 //        addGold(7000);
-        addGold(160);
+        addGold(5160);
 //        addGold(11160);
         currentMap = 1;
 
@@ -590,8 +592,8 @@ public class User {
         setTowerMap(GDefence.getInstance().getArsenal().getTowerMap());
         openTowerToBuy(ItemEnum.Tower.Basic);
 
-//        openResearch(Research.Powder);
-//        openResearch(Research.Steam);
+        openResearch(Research.Powder);
+        openResearch(Research.Steam);
 //        openRecipes();//need to init
 //        System.out.println(towerMap);
 //        System.out.println(towerMap);
@@ -599,7 +601,7 @@ public class User {
 
 //        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
 
-//        towerInventory.store(new TowerObject(ItemEnum.Tower.Rock, 1, 0, 0));
+        towerInventory.store(new TowerObject(ItemEnum.Tower.SteamMachine, 0, 0, 0));
 //        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 0, 0, 0));
 //        towerInventory.store(new TowerObject(ItemEnum.Tower.Range, 0, 1, 1));
 //        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
@@ -626,8 +628,10 @@ public class User {
 //        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.YELLOW, 2);
 //        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 1);
 //
-//        spellInventory.store(new GlobalSlow.P(5, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
-//        spellInventory.store(new IceBlast.P(5, 10, 10, 0.3f, 3, 200, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
+        spellInventory.store(new GlobalSlow.P(5, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
+        spellInventory.store(new IceBlast.P(5, 10, 10, 0.3f, 3, 200, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
+        spellInventory.store(new EmergencyRepair.P(5, 15, 3, new EmergencyRepair.G(2, new int[]{3, 0, 0})));
+        spellInventory.store(new SuddenDeath.P(5, 10));
 //        spellInventory.store(new IceBlast.P(30, 10, 10, 0.3f, 3, 100, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
 
 

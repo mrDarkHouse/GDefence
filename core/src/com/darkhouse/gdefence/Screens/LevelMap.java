@@ -226,6 +226,9 @@ public class LevelMap extends AbstractScreen {
     public void energyChangeEvent(){
         enegryBar.update();
     }
+    public void hpChangeEvent(){
+        healthBar.update();
+    }
 
     private void initTextures(){
 //        Level.getMap().initBaseTextures();
@@ -314,10 +317,9 @@ public class LevelMap extends AbstractScreen {
         batch.begin();
         batch.draw(GDefence.getInstance().assetLoader.get("LevelMapBg.png", Texture.class), 0, 0);
         if(!isPaused) {
-            if (delta < 30) {
+//            if (delta < 5) {
                 level.physic(delta);
-
-            }
+//            }
         }
         level.render(batch);
         //drawNextWavePanel(delta, batch);

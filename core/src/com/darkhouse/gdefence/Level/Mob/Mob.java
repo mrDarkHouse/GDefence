@@ -27,11 +27,11 @@ public class Mob extends Effectable{
     public enum Prototype{
         //           texturePath  texturePath  moveType       hp  arm spd dmg bounty       //i think it better than Builder
 //        Slime      ("Slime",      "mob",     MoveType.ground, 50,  0, 50,  1, 2),
-        Dog        ("wolf",       "wolf",     MoveType.ground, 30,   0, 60,  1, 1/*, new HealingAura.P(250, 1, 5)*/, new ScorpionVenom.P(20, 5)),
+        Dog        ("wolf",       "wolf",     MoveType.ground, 30,   0, 60,  1, 1/*, new HealingAura.P(250, 1, 5)*/, new ScorpionVenom.P(10, 5)),
         Eagle      ("eagle",      "eagle",    MoveType.ground, 45,   1, 50,  1, 1),
-        Worm       ("worm",       "mob3",     MoveType.ground, 100,  2, 30,  2, 2),
+        Hedgehog   ("hedgehog",   "hedgehog", MoveType.ground, 100,  2, 30,  2, 2, new Curdle.P(2, 0.5f, "Mobs/hedgehogBlock")),
         Lynx       ("lynx",       "lynx",     MoveType.ground, 80,   3, 40,  2, 2, new Sprint.P(4, 2, 50)),
-        Boar       ("boar",       "mob5",     MoveType.ground, 750,  5, 30,  100, 7, new LayerArmor.P(10, 2), new StrongSkin.P(5, 2)),
+        Boar       ("boar",       "boar",     MoveType.ground, 750,  5, 30,  100, 7, new LayerArmor.P(10, 2), new StrongSkin.P(5, 2)),
 
         Ant        ("ant",        "ant",      MoveType.ground, 50,   1, 70,  1,  1),
         Snake      ("snake",      "snake",    MoveType.ground, 75,   2, 80,  2,  2),
@@ -142,7 +142,7 @@ public class Mob extends Effectable{
 //            return this;
 //        }
 
-//        protected  /*abstract*/ void setAbilities(){};
+//        protected  /*abstreffe*/ void setAbilities(){};
     }
     public static float getArmorReduction(int armor){
         return (float) (0.1 * armor / (1 + 0.1 * Math.abs(armor)));
@@ -208,12 +208,21 @@ public class Mob extends Effectable{
     protected Texture[] textures;
 
     private String texturePath;
+
+    public String getTexturePath() {
+        return texturePath;
+    }
+
     private ProgressBar hpBar;
 //    private EffectBar effectBar;
 //    private ArrayList <Effect> effects;//Effect[]
     private Array<MobAbility> abilities;
 
     private Way way;
+
+    public Way getWay() {
+        return way;
+    }
 
     public void setWay(Way way) {
         this.way = way;
@@ -322,6 +331,14 @@ public class Mob extends Effectable{
     public int getHealth() {
         return health;
     }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+    public float getHealthPercent(){
+        return (float)health/maxHealth;
+    }
+
     protected void setHealth(int health) {
         this.maxHealth = health;
         this.health = health;

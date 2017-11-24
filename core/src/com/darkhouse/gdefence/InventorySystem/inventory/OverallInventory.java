@@ -21,12 +21,24 @@ public class OverallInventory extends Window{
     private DragAndDrop dragAndDrop;
 
     public Inventory getCurrentInventory(){
-        switch (currentInventory){
+        return getInventory(currentInventory);
+//        switch (currentInventory){
+//            case 0: return User.getTowerInventory();
+//            case 1: return User.getSpellInventory();
+//            case 2: return User.getDetailInventory();
+//        }
+//        return null;
+    }
+    public InventoryActor getActor(int id){
+        return actors[id];
+    }
+    public Inventory getInventory(int id){
+        switch (id){
             case 0: return User.getTowerInventory();
             case 1: return User.getSpellInventory();
             case 2: return User.getDetailInventory();
+            default: return null;
         }
-        return null;
     }
 
 

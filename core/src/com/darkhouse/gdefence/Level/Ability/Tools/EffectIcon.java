@@ -20,15 +20,15 @@ public class EffectIcon extends Actor{
         return icon;
     }
     ShapeRenderer sp;
-    private int borderSize = 1;
+    private int borderSize = 0;
 
     private Label other;
 
     public EffectIcon(Effect effect) {
         this.effect = effect;
         icon = GDefence.getInstance().assetLoader.getEffectIcon(effect.getIconPath());
-        if(effect.isBuff())color = Color.GREEN;
-        else color = Color.FIREBRICK;
+        if(effect.isBuff())color = Color.FOREST;
+        else               color = Color.FIREBRICK;
         sp = new ShapeRenderer();
 
         if(effect.isCooldownable()){
@@ -42,13 +42,13 @@ public class EffectIcon extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.end();
-        sp.setAutoShapeType(true);
-        sp.begin();
-        sp.set(ShapeRenderer.ShapeType.Line);
+        sp.begin(ShapeRenderer.ShapeType.Line);
         sp.setColor(color);
-        Gdx.gl.glLineWidth(borderSize + 1);
-        sp.rect(getX(), getY(), getWidth(), getHeight());
+        Gdx.gl.glLineWidth(borderSize + 3);
+        sp.rect(getX() - 1, getY() - 1, getWidth() + 2, getHeight() + 2);
+//        sp.rectLine(getX(), getY(), getX() + getWidth(), getY() + getHeight(), 8);
         sp.end();
+        Gdx.gl.glLineWidth(1);
 
 
 

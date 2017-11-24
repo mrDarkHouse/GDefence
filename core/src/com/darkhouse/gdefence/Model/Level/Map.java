@@ -1,8 +1,11 @@
 package com.darkhouse.gdefence.Model.Level;
 
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
@@ -26,6 +29,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Map {
     private boolean isBuild = false;
+
+    private ShapeRenderer shape;
 
 
     private TowerObject rangeTower;
@@ -151,6 +156,15 @@ public class Map {
         }
         return found;
 
+    }
+    public Array<Tower> getTowersOnMap(){
+        Array<Tower> found = new Array<Tower>();
+        for (int x = 0; x < tiles.length; x++){
+            for (int y = 0; y < tiles[0].length; y++){
+                if(tiles[x][y].getBuildedTower() != null) found.add(tiles[x][y].getBuildedTower());
+            }
+        }
+        return found;
     }
     public Array<Effectable> getUnitsInRange(Vector2 searchPoint, int range, Array<Class<? extends Effectable>> affected){
         Array<Effectable> tmp = new Array<Effectable>();
@@ -320,6 +334,7 @@ public class Map {
         this.cellSize = cellSize;
         initCells();
 
+        shape = new ShapeRenderer();
     }
     private void initCells(){
         for (int i = 0; i < tiles.length; i++){
@@ -729,13 +744,20 @@ public class Map {
                 tiles[x][y].draw(batch, 1f);
             }
         }
+        batch.end();
+        shape.setColor(Color.BLACK);
+        Gdx.gl.glLineWidth(1);
+        shape.begin(ShapeRenderer.ShapeType.Line);
         for (int y = 0; y < tiles[0].length; y++){
             for (int x = 0; x < tiles.length; x++){
                 if(tiles[x][y].getBuildedTower() != null) {
-                    tiles[x][y].getBuildedTower().drawRange(batch/*, delta*/);
+                    tiles[x][y].getBuildedTower().drawRange(shape/*, delta*/);
                 }
             }
         }
+        shape.end();
+//        Gdx.gl.glLineWidth(1);
+        batch.begin();
         List<Projectile> tmp = new CopyOnWriteArrayList<Projectile>(projectiles);
 
         for (Projectile p:tmp){
@@ -745,7 +767,14 @@ public class Map {
 
         if(isBuild){
             drawBuildGrid(batch);
-            drawTowerRange(batch);
+            batch.end();
+            shape.setColor(Color.BLACK);
+            Gdx.gl.glLineWidth(1);
+            shape.begin(ShapeRenderer.ShapeType.Line);
+            drawTowerRange(shape);
+            shape.end();
+//            Gdx.gl.glLineWidth(1);
+            batch.begin();
         }
 
     }
@@ -789,15 +818,15 @@ public class Map {
     }
 
 
-    private void drawTowerRange(SpriteBatch batch){//rework with draw in payload
+    private void drawTowerRange(/*SpriteBatch batch*/ShapeRenderer shape){//rework with draw in payload
         float x = payload.getValidDragActor().getX();
         float y = payload.getValidDragActor().getY();
         float width = payload.getValidDragActor().getWidth();
         float height = payload.getValidDragActor().getHeight();
 
-        Circle attackRange = new Circle(x + width/2, y + height/2, rangeTower.getRange());
-        batch.draw(GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class), attackRange.x - attackRange.radius, attackRange.y - attackRange.radius,
-                attackRange.radius*2, attackRange.radius*2);
-
+//        Circle attackRange = new Circle(x + width/2, y + height/2, rangeTower.getRange());
+//        batch.draw(GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class), attackRange.x - attackRange.radius, attackRange.y - attackRange.radius,
+//                attackRange.radius*2, attackRange.radius*2);
+        shape.circle(x + width/2, y + height/2, rangeTower.getRange());
     }
 }

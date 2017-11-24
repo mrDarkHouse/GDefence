@@ -2,6 +2,8 @@ package com.darkhouse.gdefence.Level.Ability.Spell;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
@@ -28,19 +30,21 @@ public class IceBlast extends Spell/* implements Spell.IAoe*/{
             this.duration = new AtomicReference<Float>(duration);
             this.aoe = new AtomicReference<Integer>(aoe);
 
-            gemBoost[0] = new BoostInteger(this.dmg, grader.dmgUp, "Blast damage",
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            gemBoost[0] = new BoostInteger(this.dmg, grader.dmgUp, l.getWord("iceBlastGrade1"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-            gemBoost[1] = new BoostFloat(this.slowPercent, grader.slowPercentUp, "Slow percent",
+            gemBoost[1] = new BoostFloat(this.slowPercent, grader.slowPercentUp, l.getWord("iceBlastGrade2"),
                     true, BoostFloat.FloatGradeFieldType.PERCENT);
-            gemBoost[2] = new BoostFloat(this.duration, grader.durationUp, "Slow duration",
+            gemBoost[2] = new BoostFloat(this.duration, grader.durationUp, l.getWord("iceBlastGrade3"),
                     true, BoostFloat.FloatGradeFieldType.TIME);
         }
 
         @Override
         protected String getChildTooltip() {
-            return "Damage targeted mobs by " + dmg + System.getProperty("line.separator") +
-                    "and slow them by " + (int)(slowPercent.get()*100) + "%" + System.getProperty("line.separator") +
-                    "for " + duration.get().intValue() + " seconds";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            return l.getWord("iceBlastTooltip1") + " " + dmg + System.getProperty("line.separator") +
+                    l.getWord("iceBlastTooltip2") + " " + (int)(slowPercent.get()*100) + "%" + System.getProperty("line.separator") +
+                    l.getWord("iceBlastTooltip3") + " " + duration.get().intValue() + " " + l.getWord("iceBlastTooltip4");
         }
 
         @Override

@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Model.Panels;
 
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
@@ -33,6 +34,8 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
     private Table container;
     private VerticalGroup items;
     private VerticalGroup costs;
+
+    private Inventory fastInventory;
 
     private DragAndDrop dragAndDrop;
 
@@ -256,6 +259,12 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
         dragAndDrop.addSource(new BuySlotSource(a));
 
         items.addActor(a);
+        a.addListener(new DoubleClickListener(fastInventory, a){//fastInventory can be null in loading, check it //TODO
+            @Override
+            protected void move() {
+                toInventory.store(TowerObject.generateStartObjects(owner.getSlot().getPrototype(), 1));
+            }
+        });
         Label l = new Label(a.getSlot().getPrototype().getGlobalCost() + "$", FontLoader.generateStyle(28, Color.BLACK)){
             @Override
             public float getPrefWidth() {
@@ -343,6 +352,18 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
 //        super.add(cost[i]);
 //        //}
 //    }
+
+    public void addFastMove(Inventory toInv){
+        fastInventory = toInv;
+        for (Actor a:items.getChildren()){
+            a.addListener(new DoubleClickListener(toInv, ((SlotActor) a)){//think that all items can be only slotActor
+                @Override
+                protected void move() {
+                    toInventory.store(TowerObject.generateStartObjects(owner.getSlot().getPrototype(), 1));
+                }
+            });
+        }
+    }
 
 
 }

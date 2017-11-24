@@ -49,9 +49,14 @@ public enum ItemEnum {;
             case 1:case 2:case 3:case 4:case 5:case 6:{
                 user.addGems(User.GEM_TYPE.values()[id - 1], count);
                 break;
-            }case 120:case 121:
+            }case 120:case 121: {
                 user.openResearch(User.Research.values()[id - 120]);
                 break;
+            }case 150:case 151:case 152:case 153:{
+
+                break;
+            }
+
 
         }
     }
@@ -94,26 +99,29 @@ public enum ItemEnum {;
 
 
     }
+    private void addSpell(int id){
+
+    }
 
 
 
 	public enum Tower implements Item {
 
 		//	  texturePath        textures              attackType         projSp cost glCost dmg range speed /n abilities
-		Basic(   /*"basic",*/         AttackType.projectile, 250, 10,  80,    10, 100, 20/*,
+		Basic(   /*"basic",*/         AttackType.projectile, 250, 10,  80,    10, 80, 20/*,
                 new Bash.P(0.2f, 1f, 20, new Bash.G(0.05f, 0.5f, 10, new int[]{3, 3, 3}))*//*,
                 new SteelArrow.P(2, 300, new SteelArrow.G(1, 50, new int[]{3, 2, 0})),
                 new ShotDelay.P(1f, new ShotDelay.G(0.2f, new int[]{2, 0, 0}))*/),
 
-		Rock(     /*"rock",  */        AttackType.projectile, 400, 20,  70,   22, 110,  25/*,
+		Rock(     /*"rock",  */        AttackType.projectile, 400, 20,  70,   22, 90,  25/*,
                 new BuckShot.P(5, 20f, new BuckShot.G(1, 5f, new int[]{3, 2, 0})),
                 new SpreadAttack.P(3f, 2, new SpreadAttack.G(0.5f, new int[]{2, 0, 0}))*/),
 
-		Arrow(    /*"arrow",*/         AttackType.projectile, 250, 20,  70,   15, 110, 32/*,
+		Arrow(    /*"arrow",*/         AttackType.projectile, 250, 20,  70,   15, 90, 32/*,
                 new Bash.P(0.5f, 1f, 20, new Bash.G(0.05f, 0.5f, 10, new int[]{3, 3, 3})),
                 new Crit.P(0.3f, 2f,     new Crit.G(0.05f, 0.5f,     new int[]{2, 2, 0}))*/),
 
-        Range(  /*  "range",  */       AttackType.projectile, 350, 20,  70,   15, 135, 30/*,
+        Range(  /*  "range",  */       AttackType.projectile, 350, 20,  70,   15, 115, 30/*,
                 new FireArrow.P(10, 0.2f, 2, new FireArrow.G(5, 1f, new int[]{2, 2, 0})),
                 new HunterSpeed.P(5, 30, 5, new HunterSpeed.G(10, 1, 1, new int[]{3, 3, 2}))*/),
 
@@ -161,7 +169,7 @@ public enum ItemEnum {;
         MultiShot( /*"range",  */   AttackType.projectile, 250, 25,  240,   20, 180, 40,
                 new MultiShot.P(2, 0.8f, new MultiShot.G(1, 0.1f, new int[]{3, 2, 0}))),
 
-        SteamMachine(/*,"range",*/ AttackType.none, 250, 25,  240,   20, 180, 40);
+        SteamMachine(/*,"range",*/ AttackType.none, 250, 10,  240,   5, 60, 10, new SteamAura.P());
 
 
         protected static void setComponents(){
@@ -361,8 +369,10 @@ public enum ItemEnum {;
 	}
 
     public enum Spell implements Item{
-        GlobalSlow("Global Slow", "rock", 200),
-        IceBlast("Ice blast", "range", 200);
+        GlobalSlow("Global Slow", "globalSlow", 200),
+        IceBlast("Ice blast", "iceBlast", 200),
+        EmergencyRepair("Emergency Repair", "emergencyRepair", 200),
+        SuddenDeath("Sudden Death", "suddenDeath", 200);
 
 
         private String name;

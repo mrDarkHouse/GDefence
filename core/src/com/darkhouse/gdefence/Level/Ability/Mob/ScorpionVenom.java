@@ -21,7 +21,7 @@ public class ScorpionVenom extends MobAbility implements MobAbility.ISpawn{
         private float duration;
 
         public ScorpionVenomBuff(float duration, int asSlow) {
-            super(true, true, -1, "bonusArmor");
+            super(true, true, -1);
             this.duration = duration;
             this.asSlow = asSlow;
         }
@@ -44,7 +44,7 @@ public class ScorpionVenom extends MobAbility implements MobAbility.ISpawn{
         private int asSlow;
 
         public ScorpionVenomEffect(float duration, int asSlow) {
-            super(false, true, duration, "slow");
+            super(false, true, duration, "scorpionVenom");
             this.asSlow = asSlow;
         }
 
@@ -78,7 +78,7 @@ public class ScorpionVenom extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("scorpionVenomTooltip1") + " " + FontLoader.colorString(Integer.toString(asSlow), 3) + "" +
+            return l.getWord("scorpionVenomTooltip1") + " " + FontLoader.colorString(Integer.toString(asSlow), 3) + " " +
                     l.getWord("scorpionVenomTooltip2") + " " + System.getProperty("line.separator") +
                     l.getWord("scorpionVenomTooltip3");
         }

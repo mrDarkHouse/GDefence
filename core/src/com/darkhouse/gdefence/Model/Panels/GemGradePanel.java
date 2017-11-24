@@ -197,6 +197,7 @@ public class GemGradePanel extends Window{
 
         for (int ab = 1; ab < t.getAbilities().size + 1; ab++){
             final Ability.AbilityPrototype p = t.getAbilities().get(ab - 1);
+//            if(!p.isGradable()) continue;
             GemGradeButton[] a = new GemGradeButton[3];
             g[ab].setVisible(true);
             ImageButton demoAbility = new ImageButton(loader.generateImageButtonSkin(loader.getAbilityIcon(p.getTexturePath()))){
@@ -214,7 +215,6 @@ public class GemGradePanel extends Window{
             demoAbility.addListener(new TooltipListener(new AbilityDemoTooltip(getStage(), p,
                     loader.get("skins/uiskin.json", Skin.class)), true));
             g[ab].addActor(demoAbility);
-
             for (int i = 0; i < b.length; i++) {
                 final int finalI = i + 3;
                 a[i] = new GemGradeButton(p, User.GEM_TYPE.values()[finalI]);

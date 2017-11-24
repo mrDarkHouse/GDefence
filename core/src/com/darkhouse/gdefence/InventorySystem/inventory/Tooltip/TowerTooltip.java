@@ -39,6 +39,7 @@ public class TowerTooltip extends AbstractTooltip{
         getTitleLabel().setText(tower.getTowerPrototype().getName());
 
         info = new Label("", skin, "description");
+        info.getStyle().font.getData().markupEnabled = true;
         level = new Label("", skin, "description");
 
         levelString = GDefence.getInstance().assetLoader.getWord("level") + " ";
@@ -80,12 +81,12 @@ public class TowerTooltip extends AbstractTooltip{
 //        s += tower.getName() + "/n";
         AssetLoader l = GDefence.getInstance().assetLoader;
         String bonusDmg = tower.getBonusDmg() == 0 ? "" : tower.getBonusDmg() > 0 ?
-                "+" + FontLoader.colorString(tower.getBonusDmg() + "", 1): FontLoader.colorString(tower.getBonusDmg() + "", 1);
+                FontLoader.colorString("+" + tower.getBonusDmg(), 1): FontLoader.colorString(tower.getBonusDmg() + "", 5);
         String bonusAs = tower.getBonusSpeed() == 0 ? "" : tower.getBonusSpeed() > 0 ?
-                "+" + FontLoader.colorString(tower.getBonusSpeed() + "", 1): FontLoader.colorString(tower.getBonusSpeed() + "", 1);
+                FontLoader.colorString("+" + tower.getBonusSpeed() + "", 1): FontLoader.colorString(tower.getBonusSpeed() + "", 5);
 
-        s += l.getWord("dmg") + ": " + tower.getDmg() + bonusDmg + System.getProperty("line.separator");
-        s += l.getWord("speed") + ": " + tower.getSpeed() + bonusAs + "(" + Tower.getAttackSpeedDelay(tower.getSpeed()) + ")" + System.getProperty("line.separator");
+        s += l.getWord("dmg") + ": " + tower.getDmg() + " " + bonusDmg + System.getProperty("line.separator");
+        s += l.getWord("speed") + ": " + tower.getSpeed() + " " + bonusAs + "(" + Tower.getAttackSpeedDelay(tower.getSpeed() + tower.getBonusSpeed()) + ")" + System.getProperty("line.separator");
         s += l.getWord("range") + ": " + tower.getTowerPrototype().getRange() + System.getProperty("line.separator");
         for (int i = 0; i < tower.getTowerPrototype().getAbilities().size; i++){
             s += System.getProperty("line.separator");

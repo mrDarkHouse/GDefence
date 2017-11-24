@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.InventorySystem.inventory.DoubleClickListener;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.InventoryActor;
 import com.darkhouse.gdefence.InventorySystem.inventory.OverallInventory;
@@ -61,6 +62,8 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         inventoryActor.init();
         preparationTowerInventoryActor = new PreparationTowerInventoryActor(new DragAndDrop(),
                 GDefence.getInstance().assetLoader.getSkin());
+
+        inventoryActor.getActor(0).addFastMoving(preparationTowerInventoryActor.getInventory());
         preparationTowerInventoryActor.setPosition(700, 250);
         inventoryActor.addTarget(preparationTowerInventoryActor);
         inventoryActor.addSlotAsTarget(preparationTowerInventoryActor.getDragAndDrop());
@@ -74,6 +77,7 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
 
         preparationSpellInventoryActor = new PreparationSpellInventoryActor(new DragAndDrop(),
                 GDefence.getInstance().assetLoader.getSkin());
+        inventoryActor.getActor(1).addFastMoving(preparationSpellInventoryActor.getInventory());
         preparationSpellInventoryActor.setPosition(700, 100);
         inventoryActor.addTarget(preparationSpellInventoryActor);
         inventoryActor.addSlotAsTarget(preparationSpellInventoryActor.getDragAndDrop());

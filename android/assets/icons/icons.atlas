@@ -75,35 +75,35 @@ mountain
   index: 48
 spear
   rotate: false
-  xy: 151, 1
+  xy: 101, 101
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 crossbow
   rotate: false
-  xy: 151, 1
+  xy: 51, 101
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 gun
   rotate: false
-  xy: 151, 1
+  xy: 151, 101
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 rifle
   rotate: false
-  xy: 151, 1
+  xy: 1, 151
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 machinegun
   rotate: false
-  xy: 151, 1
+  xy: 51, 151
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -131,56 +131,56 @@ doublebarrel
   index: 48
 cannon
   rotate: false
-  xy: 151, 1
+  xy: 101, 151
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 rocket
   rotate: false
-  xy: 151, 1
+  xy: 1, 201
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 missle
   rotate: false
-  xy: 151, 1
+  xy: 51, 201
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 glaive
   rotate: false
-  xy: 151, 1
+  xy: 151, 151
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 multishot
   rotate: false
-  xy: 151, 1
+  xy: 101, 201
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 steammachine
   rotate: false
-  xy: 151, 1
+  xy: 151, 201
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 nothing
   rotate: false
-  xy: 201, 51
+  xy: 201, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 steam
   rotate: false
-  xy: 151, 301
+  xy: 151, 351
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -209,6 +209,34 @@ yellowGem
 blueGem
   rotate: false
   xy: 101, 301
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+globalSlow
+  rotate: false
+  xy: 0, 451
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+iceBlast
+  rotate: false
+  xy: 51, 451
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+emergencyRepair
+  rotate: false
+  xy: 101, 451
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+suddenDeath
+  rotate: false
+  xy: 151, 451
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

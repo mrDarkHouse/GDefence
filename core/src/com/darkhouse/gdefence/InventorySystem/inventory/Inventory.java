@@ -28,9 +28,6 @@ import com.darkhouse.gdefence.Objects.TowerObject;
 
 import java.util.HashMap;
 
-/**
- * @author Daniel Holderbaum
- */
 public class Inventory {
 
 	protected Array<Slot> slots;
@@ -139,7 +136,7 @@ public class Inventory {
     }
     public boolean store(GameObject object) {
         Slot itemSlot = firstSlotWithItem(object.getPrototype());
-        if (itemSlot != null && !(object instanceof Recipe)) {//
+        if (itemSlot != null && !(object instanceof Recipe)) {//it was hotfix before adding slot num limit TODO
             itemSlot.add(object);
             return true;
         } else {
@@ -191,7 +188,7 @@ public class Inventory {
 
 	protected Slot firstSlotWithItem(Item item) {
 		for (Slot slot : slots) {
-			if (slot.getPrototype() == item) {
+			if (slot.getPrototype() == item && !slot.isFull()) {
 				return slot;
 			}
 		}

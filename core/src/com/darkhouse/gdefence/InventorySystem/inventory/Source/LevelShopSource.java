@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory.Source;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -42,8 +43,11 @@ public class LevelShopSource extends SlotSource {
     }
 
     @Override
-    protected void takeSlot() {
-        payloadSlot.add(sourceSlot.take(1));
+    protected boolean takeSlot() {
+        if(Gdx.input.isButtonPressed(0)) {
+            payloadSlot.add(sourceSlot.take(1));
+            return true;
+        }else return false;
     }
 
     @Override
@@ -61,7 +65,7 @@ public class LevelShopSource extends SlotSource {
 //                    }
                 }else {
                     sourceSlot.add(payloadSlot.takeAll());
-                    return;
+//                    return;
                 }
             }
         }

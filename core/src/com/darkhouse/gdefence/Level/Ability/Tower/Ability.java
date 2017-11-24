@@ -211,6 +211,9 @@ public abstract class Ability {
             if(gemsNumber[t.ordinal() - 3] + 1 <= gemsMax[t.ordinal() - 3]) return true;
             else return false;
         }
+        public boolean isGradable(){
+            return !(gemsMax[0] == 0 && gemsMax[1] == 0 && gemsMax[2] == 0);
+        }
 
         public void addGem(User.GEM_TYPE t){
             if(canGrade(t)){
@@ -249,7 +252,8 @@ public abstract class Ability {
             }else return false;
         }
         public String getGemStat(){
-            return "{" + gemsNumber[0] + ", " + gemsNumber[1] + ", " + gemsNumber[2] + "}";
+            if(isGradable()) return "{" + gemsNumber[0] + ", " + gemsNumber[1] + ", " + gemsNumber[2] + "}";
+            else return "";
         }
 
         abstract public Ability getAbility();
@@ -281,9 +285,14 @@ public abstract class Ability {
     public interface IOnBuild {
         void builded(MapTile tile);
     }
-
+    public interface IBuildedOnMap{
+        void buildedOnMap(Tower builded);
+    }
     public interface IOnKilled {
         void killed(Mob killedMob);
+    }
+    public interface IOnGetExp {
+        float addExp(float exp);
     }
 
     protected abstract void init();

@@ -13,7 +13,7 @@ public class Sprint extends MobAbility implements MobAbility.ISpawn{
         private int value;
 
         public SprintBuff(float cdCap, float duration, int value) {
-            super(true, true, duration, "swimSpeed");
+            super(true, true, duration, "sprint");
             this.value = value;
             setCooldownable(new Cooldown(cdCap));
         }

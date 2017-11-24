@@ -34,10 +34,11 @@ public class FontLoader {
     public static String colorCode(int id){
         switch (id){
             case 0:return "[#000000ff]";
-            case 1:return "[#0ffe00ff]";
+            case 1:return "[#0ffe00ff]";//green
             case 2:return "[#00ffffff]";
             case 3:return "[#64A619ff]";
             case 4:return "[#CD6600ff]";
+            case 5:return "[#8B0000ff]";
             default:return "";
         }
     }
