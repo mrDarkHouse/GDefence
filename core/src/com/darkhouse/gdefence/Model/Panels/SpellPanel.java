@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Model.Panels;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -21,6 +22,8 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Level.Ability.Spell.Spell;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Effectable;
+import com.darkhouse.gdefence.Model.ShapeCircle;
+import com.darkhouse.gdefence.Model.ShapeTarget;
 import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
@@ -33,21 +36,23 @@ public class SpellPanel extends Table{
             public class AoeTargeter extends InputListener {
                 private int aoe;
                 private Array<Class<? extends Effectable>> targetTypes;
-                private Image image;
+//                private Image image;
+                private ShapeCircle circle;
 
                 public AoeTargeter(final int aoe, Array<Class<? extends Effectable>> targetTypes) {
                     //            super(GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class));
                     this.aoe = aoe;
                     this.targetTypes = targetTypes;
-                    image = new Image(GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class));
-                    image.setSize(aoe, aoe);
-                    SpellThrower.this.stage.addActor(image);
+//                    image = new Image(GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class));
+//                    image.setSize(aoe, aoe);
+                    circle = new ShapeCircle(new ShapeRenderer(), aoe/2);
+                    SpellThrower.this.stage.addActor(circle);
                     isTargeting = true;
                 }
 
                 @Override
                 public boolean mouseMoved(InputEvent event, float x, float y) {
-                    image.setPosition(event.getStageX() - aoe/2, event.getStageY() - aoe/2);
+                    circle.setPosition(event.getStageX() - aoe/4, event.getStageY() - aoe/4);
                     return true;
                 }
 
@@ -66,7 +71,7 @@ public class SpellPanel extends Table{
                     //
 
 
-                    Vector2 center = new Vector2(image.getX() + image.getWidth()/2, image.getY() + image.getHeight()/2);
+                    Vector2 center = new Vector2(circle.getX() + circle.getWidth()/2, circle.getY() + circle.getHeight()/2);
                     return LevelMap.getLevel().getMap().getUnitsInRange(center, aoe/2, targetTypes);
                     //            return tmp;
                 }
@@ -74,7 +79,7 @@ public class SpellPanel extends Table{
                 private void use(){
                 /*SpellThrower.this.*/spell.use(getTargets());
                 /*SpellThrower.this.*/stage.removeListener(this);
-                    image.remove();
+                    circle.remove();
                     isTargeting = false;
                     LevelMap.getLevel().removeEnergy(spell.getEnergyCost());
 //                    spell.getCooldownObject().resetCooldown();
@@ -86,10 +91,19 @@ public class SpellPanel extends Table{
 
             public class SoloTargeter extends InputListener{
                 private Array<Class<? extends Effectable>> targetTypes;
+                private ShapeTarget circle;
 
                 public SoloTargeter(Array<Class<? extends Effectable>> targetTypes) {
                     this.targetTypes = targetTypes;
+                    circle = new ShapeTarget(new ShapeRenderer(), 20);
+                    SpellThrower.this.stage.addActor(circle);
                     isTargeting = true;
+                }
+
+                @Override
+                public boolean mouseMoved(InputEvent event, float x, float y) {
+                    circle.setPosition(event.getStageX() - 10, event.getStageY() - 10);
+                    return true;
                 }
 
                 @Override
@@ -112,11 +126,12 @@ public class SpellPanel extends Table{
                     if(target != null) {
                         spell.use(target);
                         stage.removeListener(this);
-                        isTargeting = false;
                         LevelMap.getLevel().removeEnergy(spell.getEnergyCost());
 //                        spell.getCooldownObject().resetCooldown();
                         resetCooldown(spell);
                     }
+                    isTargeting = false;
+                    circle.remove();
                 }
             }
 

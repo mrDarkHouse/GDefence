@@ -548,13 +548,72 @@ public class AssetLoader extends AssetManager{
         load("Mobs/boar2.png", Texture.class);
         load("Mobs/boar3.png", Texture.class);
 
+        load("Mobs/ant0.png", Texture.class);
+        load("Mobs/ant1.png", Texture.class);
+        load("Mobs/ant2.png", Texture.class);
+        load("Mobs/ant3.png", Texture.class);
+        load("Mobs/jerboa0.png", Texture.class);
+        load("Mobs/jerboa1.png", Texture.class);
+        load("Mobs/jerboa2.png", Texture.class);
+        load("Mobs/jerboa3.png", Texture.class);
+        load("Mobs/scorpion0.png", Texture.class);
+        load("Mobs/scorpion1.png", Texture.class);
+        load("Mobs/scorpion2.png", Texture.class);
+        load("Mobs/scorpion3.png", Texture.class);
+        load("Mobs/snake0.png", Texture.class);
+        load("Mobs/snake1.png", Texture.class);
+        load("Mobs/snake2.png", Texture.class);
+        load("Mobs/snake3.png", Texture.class);
+
+        load("Mobs/crab0.png", Texture.class);
+        load("Mobs/crab1.png", Texture.class);
+        load("Mobs/crab2.png", Texture.class);
+        load("Mobs/crab3.png", Texture.class);
+        load("Mobs/frog0.png", Texture.class);
+        load("Mobs/frog1.png", Texture.class);
+        load("Mobs/frog2.png", Texture.class);
+        load("Mobs/frog3.png", Texture.class);
+        load("Mobs/turtle0.png", Texture.class);
+        load("Mobs/turtle1.png", Texture.class);
+        load("Mobs/turtle2.png", Texture.class);
+        load("Mobs/turtle3.png", Texture.class);
+
+        load("Mobs/ufo0.png", Texture.class);
+        load("Mobs/ufo1.png", Texture.class);
+        load("Mobs/ufo2.png", Texture.class);
+        load("Mobs/ufo3.png", Texture.class);
+        load("Mobs/spaceShip0.png", Texture.class);
+        load("Mobs/spaceShip1.png", Texture.class);
+        load("Mobs/spaceShip2.png", Texture.class);
+        load("Mobs/spaceShip3.png", Texture.class);
+        load("Mobs/energySphere0.png", Texture.class);
+        load("Mobs/energySphere1.png", Texture.class);
+        load("Mobs/energySphere2.png", Texture.class);
+        load("Mobs/energySphere3.png", Texture.class);
+        load("Mobs/galaxyLordFirst0.png", Texture.class);
+        load("Mobs/galaxyLordFirst1.png", Texture.class);
+        load("Mobs/galaxyLordFirst2.png", Texture.class);
+        load("Mobs/galaxyLordFirst3.png", Texture.class);
+        load("Mobs/galaxyLordSecond0.png", Texture.class);
+        load("Mobs/galaxyLordSecond1.png", Texture.class);
+        load("Mobs/galaxyLordSecond2.png", Texture.class);
+        load("Mobs/galaxyLordSecond3.png", Texture.class);
+        load("Mobs/galaxyLordThird0.png", Texture.class);
+        load("Mobs/galaxyLordThird1.png", Texture.class);
+        load("Mobs/galaxyLordThird2.png", Texture.class);
+        load("Mobs/galaxyLordThird3.png", Texture.class);
+        load("Mobs/galaxyLordLast0.png", Texture.class);
+        load("Mobs/galaxyLordLast1.png", Texture.class);
+        load("Mobs/galaxyLordLast2.png", Texture.class);
+        load("Mobs/galaxyLordLast3.png", Texture.class);
+
 
 //        load("Mobs/mob3.png", Texture.class);
 //        load("Mobs/mob4.png", Texture.class);
 //        load("Mobs/mob5.png", Texture.class);
 //        load("Mobs/mob6walk.png", Texture.class);
 //        load("Mobs/mob6swim.png", Texture.class);
-        load("Mobs/turtle.png", Texture.class);
+//        load("Mobs/turtle.png", Texture.class);
 
 //        load("Mobs/lynx.png", Texture.class);
 //        load("Mobs/turtle2.png", Texture.class);
@@ -709,6 +768,65 @@ public class AssetLoader extends AssetManager{
         unload("Mobs/boar1.png");
         unload("Mobs/boar2.png");
         unload("Mobs/boar3.png");
+
+        unload("Mobs/ant0.png");
+        unload("Mobs/ant1.png");
+        unload("Mobs/ant2.png");
+        unload("Mobs/ant3.png");
+        unload("Mobs/jerboa0.png");
+        unload("Mobs/jerboa1.png");
+        unload("Mobs/jerboa2.png");
+        unload("Mobs/jerboa3.png");
+        unload("Mobs/scorpion0.png");
+        unload("Mobs/scorpion1.png");
+        unload("Mobs/scorpion2.png");
+        unload("Mobs/scorpion3.png");
+        unload("Mobs/snake0.png");
+        unload("Mobs/snake1.png");
+        unload("Mobs/snake2.png");
+        unload("Mobs/snake3.png");
+
+        unload("Mobs/crab0.png");
+        unload("Mobs/crab1.png");
+        unload("Mobs/crab2.png");
+        unload("Mobs/crab3.png");
+        unload("Mobs/frog0.png");
+        unload("Mobs/frog1.png");
+        unload("Mobs/frog2.png");
+        unload("Mobs/frog3.png");
+        unload("Mobs/turtle0.png");
+        unload("Mobs/turtle1.png");
+        unload("Mobs/turtle2.png");
+        unload("Mobs/turtle3.png");
+
+        unload("Mobs/ufo0.png");
+        unload("Mobs/ufo1.png");
+        unload("Mobs/ufo2.png");
+        unload("Mobs/ufo3.png");
+        unload("Mobs/spaceShip0.png");
+        unload("Mobs/spaceShip1.png");
+        unload("Mobs/spaceShip2.png");
+        unload("Mobs/spaceShip3.png");
+        unload("Mobs/energySphere0.png");
+        unload("Mobs/energySphere1.png");
+        unload("Mobs/energySphere2.png");
+        unload("Mobs/energySphere3.png");
+        unload("Mobs/galaxyLordFirst0.png");
+        unload("Mobs/galaxyLordFirst1.png");
+        unload("Mobs/galaxyLordFirst2.png");
+        unload("Mobs/galaxyLordFirst3.png");
+        unload("Mobs/galaxyLordSecond0.png");
+        unload("Mobs/galaxyLordSecond1.png");
+        unload("Mobs/galaxyLordSecond2.png");
+        unload("Mobs/galaxyLordSecond3.png");
+        unload("Mobs/galaxyLordThird0.png");
+        unload("Mobs/galaxyLordThird1.png");
+        unload("Mobs/galaxyLordThird2.png");
+        unload("Mobs/galaxyLordThird3.png");
+        unload("Mobs/galaxyLordLast0.png");
+        unload("Mobs/galaxyLordLast1.png");
+        unload("Mobs/galaxyLordLast2.png");
+        unload("Mobs/galaxyLordLast3.png");
 
 
 

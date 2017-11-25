@@ -650,12 +650,12 @@ public class User {
 
 //        initOpenedTowers();
 
-//        gems[0] = 3;
-//        gems[1] = 2;
-//        gems[2] = 4;
-//        gems[3] = 1;
-//        gems[4] = 9;
-//        gems[5] = 41;
+        gems[0] = 7;
+        gems[1] = 7;
+        gems[2] = 8;
+        gems[3] = 10;
+        gems[4] = 9;
+        gems[5] = 41;
 
 //        addGems(GEM_TYPE.RED, 11);
 //        addGems(GEM_TYPE.YELLOW, 4);

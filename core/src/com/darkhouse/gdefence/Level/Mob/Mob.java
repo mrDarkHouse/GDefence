@@ -27,34 +27,36 @@ public class Mob extends Effectable{
     public enum Prototype{
         //           texturePath  texturePath  moveType       hp  arm spd dmg bounty       //i think it better than Builder
 //        Slime      ("Slime",      "mob",     MoveType.ground, 50,  0, 50,  1, 2),
-        Dog        ("wolf",       "wolf",     MoveType.ground, 30,   0, 60,  1, 1/*, new HealingAura.P(250, 1, 5)*/, new ScorpionVenom.P(10, 5)),
-        Eagle      ("eagle",      "eagle",    MoveType.ground, 45,   1, 50,  1, 1),
-        Hedgehog   ("hedgehog",   "hedgehog", MoveType.ground, 100,  2, 30,  2, 2, new Curdle.P(2, 0.5f, "Mobs/hedgehogBlock")),
-        Lynx       ("lynx",       "lynx",     MoveType.ground, 80,   3, 40,  2, 2, new Sprint.P(4, 2, 50)),
-        Boar       ("boar",       "boar",     MoveType.ground, 750,  5, 30,  100, 7, new LayerArmor.P(10, 2), new StrongSkin.P(5, 2)),
+        Dog         ("wolf",           MoveType.ground, 30,   0, 60,  1, 1/*, new HealingAura.P(250, 1, 5)*/, new ScorpionVenom.P(10, 5)),
+        Eagle       ("eagle",          MoveType.ground, 45,   1, 50,  1, 1),
+        Hedgehog    ("hedgehog",       MoveType.ground, 100,  2, 30,  2, 2, new Curdle.P(2, 0.5f, "Mobs/hedgehogBlock")),
+        Lynx        ("lynx",           MoveType.ground, 80,   3, 40,  2, 2, new Sprint.P(4, 2, 50)),
+        Boar        ("boar",           MoveType.ground, 750,  5, 30,  100, 7, new LayerArmor.P(10, 2), new StrongSkin.P(5, 2)),
 
-        Ant        ("ant",        "ant",      MoveType.ground, 50,   1, 70,  1,  1),
-        Snake      ("snake",      "snake",    MoveType.ground, 75,   2, 80,  2,  2),
-        Jerboa     ("jerboa",     "jerboa",   MoveType.ground, 90,   0, 60,  1,  1, new GreatEvasion.P(2f)),
-        Scorpion   ("scorpion",   "scorpion", MoveType.ground, 150,  3, 50,  1,  3, new ScorpionVenom.P(10, 2)),
+        Ant         ("ant",            MoveType.ground, 50,   1, 70,  1,  1),
+        Snake       ("snake",          MoveType.ground, 75,   2, 80,  2,  2),
+        Jerboa      ("jerboa",         MoveType.ground, 90,   0, 60,  1,  1, new GreatEvasion.P(2f)),
+        Scorpion    ("scorpion",       MoveType.ground, 150,  3, 50,  1,  3, new ScorpionVenom.P(10, 2)),
 
-        Crab       ("crab",       "crab",     MoveType.water,  200,  4, 50,  3,  2, new Swimmable.P("Mobs/crab2.png")),
-        Frog       ("frog",       "frog",     MoveType.water,  150,  3, 40,  2,  1, new Swimmable.P("Mobs/frog2.png"), new WaterShield.P(0.2f, 0.5f, 3)),
-        Turtle     ("turtle",     "turtle",   MoveType.water,  350,  5, 20,  4,  4, new Swimmable.P("Mobs/turtle2.png"), new WaterDefend.P(10), new WaterFeel.P(40)),
-        Axolotl    ("axolotl",    "axolotl",  MoveType.water,  750,  10,50,  100,0, new Swimmable.P("Mobs/axolotl2.png")),
+        Crab        ("crab",           MoveType.water,  200,  4, 50,  3,  2, new Swimmable.P("Mobs/crab.png")),
+        Frog        ("frog",           MoveType.water,  150,  3, 40,  2,  1, new Swimmable.P("Mobs/frog.png"), new WaterShield.P(0.2f, 0.5f, 3)),
+        Turtle      ("turtle",         MoveType.water,  350,  5, 20,  4,  4, new Swimmable.P("Mobs/turtle.png"), new WaterDefend.P(10), new WaterFeel.P(40)),
+//        Axolotl    ("axolotl",    "axolotl",  MoveType.water,  750,  10,50,  100,0, new Swimmable.P("Mobs/axolotl2.png")),
 
-        Pinguin    ("pinguin",    "pinguin",  MoveType.ground, 250,  2, 50,  1,  1),
-        PolarBear  ("polarbear",  "polarbear",MoveType.ground, 500,  6, 50,  2,  2),
-        Seal       ("seal",       "seal",     MoveType.ground, 300,  4, 60,  1,  1),
-        PolarDeer  ("polardeer",  "polardeer",MoveType.ground, 400,  3, 80,  3,  3),
+//        Pinguin    ("pinguin",    MoveType.ground, 250,  2, 50,  1,  1),
+//        PolarBear  ("polarbear",  MoveType.ground, 500,  6, 50,  2,  2),
+//        Seal       ("seal",       MoveType.ground, 300,  4, 60,  1,  1),
+//        PolarDeer  ("polardeer",  MoveType.ground, 400,  3, 80,  3,  3),
+//
+//        Soldier    ("soldier",    MoveType.ground, 350,  2, 50,  1,  1),
+//        Crusader   ("crusader",   MoveType.ground, 450,  5, 75,  2,  2),
+//        Medic      ("medic",      MoveType.ground, 100,  2, 60,  2,  1, new HealingAura.P(200, 1, 5)),
+//        Tank       ("tank",       MoveType.ground, 800,  8, 50,  4,  5),
 
-        Soldier    ("soldier",    "soldier",  MoveType.ground, 350,  2, 50,  1,  1),
-        Crusader   ("crusader",   "crusader", MoveType.ground, 450,  5, 75,  2,  2),
-        Medic      ("medic",      "medic",    MoveType.ground, 100,  2, 60,  2,  1, new HealingAura.P(200, 1, 5)),
-        Tank       ("tank",       "tank",     MoveType.ground, 800,  8, 50,  4,  5),
-
-        UFO        ("ufo",        "ufo",      MoveType.ground, 400,  2, 80,  2,  2),
-        Rocket     ("ufo",        "ufo",      MoveType.ground, 400,  2, 80,  2,  2);
+        UFO         ("ufo",           MoveType.ground, 400,  2, 80,  2,  2),
+        SpaceShip   ("spaceShip",     MoveType.ground, 400,  2, 80,  2,  2),
+        EnergySphere("energySphere",  MoveType.ground, 400,  2, 8,   2,  2),
+        SpaceLord   ("spaceLordFirst",MoveType.ground, 10000,2, 2,   2,  1000);
 
 //        JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,   2, 110, 3, 4/*, new Sadist.P(3, 35)*/),
 //
@@ -67,8 +69,8 @@ public class Mob extends Effectable{
 //            }
 //        };
 
-        Prototype(String name, String regionPath, MoveType moveType, int health, int armor,  float speed, int dmg, int bounty, MobAbility.AbilityPrototype... abilities) {
-            this.texturePath = regionPath;
+        Prototype(String name, /*String regionPath, */MoveType moveType, int health, int armor,  float speed, int dmg, int bounty, MobAbility.AbilityPrototype... abilities) {
+//            this.texturePath = regionPath;
             this.name = name;
             this.health = health;
             this.armor = armor;
@@ -79,7 +81,7 @@ public class Mob extends Effectable{
             this.abilities = new Array<MobAbility.AbilityPrototype>(abilities);
         }
 
-        protected String texturePath;
+//        protected String texturePath;
         protected String name;
         protected int health;
         protected int armor;
@@ -285,7 +287,7 @@ public class Mob extends Effectable{
         super();
         setName(prototype.name);
 //        setRegion(prototype.texturePath);
-        texturePath = prototype.texturePath;
+//        texturePath = prototype.name;
         setMoveType(prototype.moveType);
         setHealth(prototype.health);
         setArmor(prototype.armor);
@@ -302,7 +304,7 @@ public class Mob extends Effectable{
 
         textures = new Texture[4];
         for (int i = 0; i < 4; i++){
-            textures[i] = GDefence.getInstance().assetLoader.getMobTexture(texturePath + i);
+            textures[i] = GDefence.getInstance().assetLoader.getMobTexture(prototype.name + i);
 //            textures[i].setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 //            System.out.println(textures[i].getMinFilter());
         }
