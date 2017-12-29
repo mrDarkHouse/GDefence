@@ -4,6 +4,9 @@ package com.darkhouse.gdefence.InventorySystem.inventory;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.Objects.GameObject;
+import com.darkhouse.gdefence.Objects.TowerObject;
 
 public class DoubleClickListener extends ClickListener{
 
@@ -30,11 +33,29 @@ public class DoubleClickListener extends ClickListener{
 
     @Override
     public void clicked(InputEvent event, float x, float y) {
-        if(/*button == 0 && */getTapCount() == 2) {
+        if(/*button == 0 && */getTapCount() % 2 == 0) {//2, 4, 6, 8... etc
             move();
         }
     }
     protected void move(){
-        toInventory.store(owner.getSlot().takeAll());
+        Slot s;// = toInventory.firstSlotWithItem(owner.getSlot().getPrototype());
+//        if(toInventory.firstSlotWithItem(null) == null) {
+////            s = toInventory.firstSlotWithItem(owner.getSlot().getPrototype());
+//            if(s == null) return;
+//        }
+//
+        while (!owner.getSlot().isEmpty()) {
+            s = toInventory.firstSlotWithItem(owner.getSlot().getPrototype());
+            if (s == null) s = toInventory.firstSlotWithItem(null);
+            if (s == null) return;//toInventory full (no free slots and all slots with this prototype are full)
+
+            int toMove = s.getMaxItems() - s.getAmount();
+            if(owner.getSlot().getAmount() > toMove) {
+                toInventory.store(owner.getSlot().take(toMove));
+            }else {
+                toInventory.store(owner.getSlot().takeAll());
+            }
+        }
+
     }
 }

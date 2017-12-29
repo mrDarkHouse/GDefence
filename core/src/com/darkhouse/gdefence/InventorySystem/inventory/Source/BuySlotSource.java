@@ -42,7 +42,7 @@ public class BuySlotSource extends SlotSource {
             if(GDefence.getInstance().user.deleteGold(item.getGlobalCost())){
                 targetSlot.add(payloadSlot.takeAll());
             } else {
-//                System.out.println("No enought money");
+//                System.out.println("No enough money");
             }
         } else {
             //dont swap items

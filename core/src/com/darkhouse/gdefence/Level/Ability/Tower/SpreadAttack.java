@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class SpreadAttack extends Ability implements Ability.IOnBuild{
 
     public static class P extends AbilityPrototype {
-        private G grader;
+        private G g;
         private AtomicReference<Float> cdCap;
         private int shots;
 
@@ -23,19 +23,19 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
             super(11, "spreadAttack", grader.gemCap);
             this.cdCap = new AtomicReference<Float>(cdCap);
             this.shots = bonusAttacks;
-            this.grader = grader;
+            this.g = grader;
         }
 
         @Override
         public String getSaveCode() {
-            return null;
+            return super.getSaveCode() + "z" + cdCap.get() + ";" + shots + ";" + g.cdCapDown;
         }
 
         @Override
         public AbilityPrototype copy() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            P p = new P(cdCap.get(), shots, grader);
-            p.gemBoost[0] = new BoostFloat(p.cdCap, grader.cdCapDown, l.getWord("spreadAttackGrade1"),
+            P p = new P(cdCap.get(), shots, g);
+            p.gemBoost[0] = new BoostFloat(p.cdCap, g.cdCapDown, l.getWord("spreadAttackGrade1"),
                     false, BoostFloat.FloatGradeFieldType.TIME);
 
             return p;
@@ -129,13 +129,14 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
         public void use(Mob target) {//if before attack (must implement IPreAttack)
             if (getCooldownObject().isReady()) {
                 owner.addEffect(new TargetShooter(target, shots).setOwner(owner));
+                getCooldownObject().resetCooldown();
 //                this.target = target;
 //                currentDelayTime = 0;
             }
         }
     }
     private class TargetShooter extends Effect<Tower>{//this need to work for each target
-        private float delay = 0.2f;
+        private float delay = 0.1f;
         private float currentDelayTime = 0;
 
         private Mob target;

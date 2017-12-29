@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Splash extends Ability implements Ability.IAfterHit{
 
     public static class P extends AbilityPrototype {
-        private G grader;
+        private G g;
         private AtomicReference<Float> aoeDmg;
         private AtomicReference<Integer> aoe;
 
@@ -21,21 +21,21 @@ public class Splash extends Ability implements Ability.IAfterHit{
             super(10, "splash", grader.gemCap);
             this.aoe = new AtomicReference<Integer>(aoe);
             this.aoeDmg = new AtomicReference<Float>(aoeDmg);
-            this.grader = grader;
+            this.g = grader;
         }
 
         @Override
         public String getSaveCode() {
-            return null;
+            return super.getSaveCode() + "z" + aoe + ";" + aoeDmg + ";" + g.aoeUp + ";" + g.aoeDmgUp;
         }
 
         @Override
         public AbilityPrototype copy() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            P p = new P(aoe.get(), aoeDmg.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.aoe, grader.aoeUp, l.getWord("splashGrade1"),
+            P p = new P(aoe.get(), aoeDmg.get(), g);
+            p.gemBoost[0] = new BoostInteger(p.aoe, g.aoeUp, l.getWord("splashGrade1"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostFloat(p.aoeDmg, grader.aoeDmgUp, l.getWord("splashGrade2"),
+            p.gemBoost[1] = new BoostFloat(p.aoeDmg, g.aoeDmgUp, l.getWord("splashGrade2"),
                     true, BoostFloat.FloatGradeFieldType.PERCENT);
             return p;
         }

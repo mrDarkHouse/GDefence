@@ -60,9 +60,10 @@ public abstract class Spell implements DamageSource{
         //add exp from killedMob
 
     }
-    public void hitMob(Mob m, int dmg){
-        m.hit(dmg, this);
-        getPrototype().addExp(dmg/5);
+    public float hitMob(Mob m, int dmg){
+        float getDmg = m.hit(dmg, this);
+        getPrototype().addExp(getDmg/10);
+        return getDmg;
     }
 
     abstract public void use(Array<? extends Effectable> targets);

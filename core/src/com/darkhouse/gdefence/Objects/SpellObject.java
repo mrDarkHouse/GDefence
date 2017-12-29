@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Objects;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
@@ -14,7 +15,7 @@ import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.User;
 
 public abstract class SpellObject extends Ability.AbilityPrototype implements ExpEarner, GameObject, GemGradable{
-    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
+//    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
     //                                 30  100 230  420  660  800  1230 1760
 
     public static SpellObject loadSaveCode(String s) {
@@ -22,7 +23,8 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
         Ability.AbilityPrototype a = Ability.AbilityPrototype.loadAbilityCode(info[1]);
         if (a instanceof SpellObject) {
             SpellObject sp = ((SpellObject) a);
-            sp.totalExp = Float.parseFloat(info[0]);
+            sp.addExp(Float.parseFloat(info[0]));
+//            sp.totalExp = Float.parseFloat(info[0]);
             return sp;
         }
         else throw new RuntimeException("che ti loadish daun eto ne spell save");
@@ -30,7 +32,9 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
 
     @Override
     public String getSaveCode() {
-        return totalExp + "-" + super.getSaveCode() + "z" + energyCost + ";" + cooldown;
+        String s = totalExp + "-" + super.getSaveCode() + "z" + energyCost + ";" + cooldown;
+        if(this instanceof Spell.IAoe) s += ";" + ((Spell.IAoe) this).getAoe();
+        return s;
     }
 
 
@@ -63,8 +67,8 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
     }
     public void updateExp(){
         currentExp = getTotalExp();
-        for(int i = level - 1; currentExp >= exp2nextLvl[i]; i++){//if max lvl throws exeption
-            currentExp -= exp2nextLvl[i];
+        for(int i = level - 1; currentExp >= exp2nextLevel()[i]; i++){//if max lvl throws exeption
+            currentExp -= exp2nextLevel()[i];
             level++;
         }
     }
@@ -117,10 +121,10 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
         AssetLoader l = GDefence.getInstance().assetLoader;
         String s = getChildTooltip() + System.getProperty("line.separator");
         if(this instanceof Spell.IAoe){
-            s += l.getWord("radius") + ": " + ((Spell.IAoe) this).getAoe() + System.getProperty("line.separator");
+            s += FontLoader.colorString(l.getWord("radius"), 9) + ": " + ((Spell.IAoe) this).getAoe() + System.getProperty("line.separator");
         }
-        s += l.getWord("energyCost") + ": " + energyCost + System.getProperty("line.separator") +
-                l.getWord("cooldown") + ": " + cooldown + "s";
+        s += FontLoader.colorString(l.getWord("energyCost"), 6) + ": " + energyCost + System.getProperty("line.separator") +
+                FontLoader.colorString(l.getWord("cooldown"), 8) + ": " + cooldown + "s";
         return s;
     }
 

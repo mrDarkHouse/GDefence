@@ -3,7 +3,9 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
+import com.darkhouse.gdefence.Level.Ability.Spell.EchoSmash;
 import com.darkhouse.gdefence.Level.Ability.Spell.GlobalSlow;
+import com.darkhouse.gdefence.Level.Ability.Spell.SuddenDeath;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
@@ -11,6 +13,7 @@ import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.User;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class Ability {
@@ -45,7 +48,9 @@ public abstract class Ability {
             for (int i = 3; i < gemCap.length*2; i++){
                 gemCap[i - 3] = Integer.parseInt(tmp[i]);
             }
-            String[] param = info[2].split(";");
+
+            String[] param = info.length >= 3 ? info[2].split(";") : new String[]{""};//need for empty param abilities like steam aura
+//            System.out.println(Arrays.toString(param));
 //            System.out.println(param[0] + " " + param[1] + " " + param[2] + " " +param[3] + " " +param[4]);
 
             switch (id){//TODO do all
@@ -59,10 +64,26 @@ public abstract class Ability {
                               new Desolate.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
                 case 4:return new FireArrow.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Float.parseFloat(param[2]),
                               new FireArrow.G(Integer.parseInt(param[3]), Float.parseFloat(param[4]), gemCap)).copy().gemCur(gemCur);
-                case 5:return new HunterSpeed.P(Integer.parseInt(param[0]), Integer.parseInt(param[0]), Float.parseFloat(param[1]),
-                        new HunterSpeed.G(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[0]), gemCap)).copy().gemCur(gemCur);
+                case 5:return new HunterSpeed.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]), Float.parseFloat(param[2]),
+                        new HunterSpeed.G(Integer.parseInt(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap)).copy().gemCur(gemCur);
+
+
+                case 9:return new ShotDelay.P(Float.parseFloat(param[0]),
+                        new ShotDelay.G(Float.parseFloat(param[1]), gemCap)).copy().gemCur(gemCur);
+                case 10:return new Splash.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
+                        new Splash.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
+                case 11:return new SpreadAttack.P(Float.parseFloat(param[0]), Integer.parseInt(param[1]),
+                        new SpreadAttack.G(Float.parseFloat(param[2]), gemCap)).copy().gemCur(gemCur);
+                case 13:return new SteamAura.P().copy();
+
+
 
                 case 20:
+                    return new EchoSmash.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]), Integer.parseInt(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[2]),
+                            new EchoSmash.G(Integer.parseInt(param[5]), Float.parseFloat(param[6]), Integer.parseInt(param[7]), gemCap))/*.addExp()*/.gemCur(gemCur);
+                case 21:
+                    return new SuddenDeath.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]));
+                case 24:
                     return new GlobalSlow.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]), Float.parseFloat(param[2]), Integer.parseInt(param[3]),
                             new GlobalSlow.G(Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap))/*.copy()*/.gemCur(gemCur);
 //                case 21:

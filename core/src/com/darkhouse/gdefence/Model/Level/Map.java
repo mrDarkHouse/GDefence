@@ -105,6 +105,10 @@ public class Map {
 //                return null;
 //        }
 //    }
+    public boolean inMapBounds(float x, float y){
+        return (this.x <= x && x <= this.x + (tiles.length * tiles[0][0].getWidth())) && (this.y >= y && y >= this.y - tiles[0].length * tiles[0][0].getHeight());
+    }
+
     public static Mob getNearestMob(Mob startSearch, int range){
         float currentF = Float.MAX_VALUE;//infinity
         Mob currentMob = null;
@@ -141,6 +145,18 @@ public class Map {
         }
         return found;
     }
+    public static Array<Mob> getMobsMaskInRange(Vector2 searchPoint, int range){
+        Array<Mob> found = new Array<Mob>();
+        for (int i = 0; i < Wave.mobs.size; i++){
+            Mob m = Wave.mobs.get(i);
+            float dst = m.getCenter().dst(searchPoint) - m.getWidth()/2;
+            if(dst <= range){
+                found.add(m);
+            }
+        }
+        return found;
+    }
+
     public Array<Tower> getTowersInRange(Vector2 searchPoint, float range){
         Array<Tower> found = new Array<Tower>();
         for (int x = 0; x < tiles.length; x++){
@@ -166,16 +182,18 @@ public class Map {
         }
         return found;
     }
-    public Array<Effectable> getUnitsInRange(Vector2 searchPoint, int range, Array<Class<? extends Effectable>> affected){
+    public Array<Effectable> getUnitsInRange(Vector2 searchPoint, int range, Array<Class<? extends Effectable>> affected, boolean centerSearch){
         Array<Effectable> tmp = new Array<Effectable>();
         if(affected.contains(Mob.class, true)) {
-            tmp.addAll(getMobsInRange(searchPoint, range));
+            if(centerSearch) tmp.addAll(getMobsInRange(searchPoint, range));
+            else             tmp.addAll(getMobsMaskInRange(searchPoint, range));
         }
         if(affected.contains(Tower.class, true)){
             tmp.addAll(getTowersInRange(searchPoint, range));
         }
         return tmp;
     }
+
     public Effectable getTargetUnit(Vector2 searchPoint, Array<Class<? extends Effectable>> affected){//those all method very bad need rework// TODO
         if(affected.contains(Mob.class, true)) {
             for (int i = 0; i < Wave.mobs.size; i++){

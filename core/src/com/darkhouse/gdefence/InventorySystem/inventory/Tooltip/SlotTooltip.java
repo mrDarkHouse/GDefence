@@ -71,7 +71,8 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
         getTitleLabel().setText(slot.getTitle());
 //        getTitleLabel().setAlignment(Align.center);
         clear();
-        Label label = new Label(slot.getTooltip(), skin, "description");
+        Label label = new Label(slot.getTooltip(), skin, "spell");
+        label.getStyle().font.getData().markupEnabled = true;
 //        label.setAlignment(Align.center);
         add(label).row();//row can bad
 

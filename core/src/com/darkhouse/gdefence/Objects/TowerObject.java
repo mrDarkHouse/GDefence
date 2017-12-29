@@ -1,16 +1,19 @@
 package com.darkhouse.gdefence.Objects;
 
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
-import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.User;
+
+import java.util.Arrays;
 
 public class TowerObject implements ExpEarner, GameObject, GemGradable{
 
@@ -44,8 +47,24 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         return null;
     }
 
-    private static int[] exp2nextLvl = {40, 80, 140, 260, 640, 1280, 1280, 1280, 1280};
-//    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
+    @Override
+    public int[] exp2nextLevel() {
+        return exp2nextLevel;
+    }
+
+//    public int getExp2NextLvl(int lvl){
+//        return exp2nextLevel[lvl];
+//    }
+    private void initExp2nextLvl(int cost){
+        exp2nextLevel = new int[startExp2nextLvl.length];
+        for (int i = 0; i < exp2nextLevel.length; i++){
+            exp2nextLevel[i] = startExp2nextLvl[i] * cost;
+        }
+    }
+//    private static int[] startExp2nextLvl = {40, 80, 140, 260, 640, 1280, 1280, 1280, 1280};
+    private int[] exp2nextLevel;
+    private static int[] startExp2nextLvl = {4, 8, 14, 26, 64, 80, 92, 102, 128};
+//    public static int[] startExp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
 
     private ItemEnum.Tower prototype;
     private int level;
@@ -212,15 +231,18 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
     public TowerObject(ItemEnum.Tower prototype) {
 //        super(prototype);
         this.prototype = prototype;
-        level = 1;
-        totalExp = 0;
-        updateExp();
 
         dmg = prototype.getDmg();
         range = prototype.getRange();
         speed = prototype.getSpeed();
         cost = prototype.getCost();
         globalCost = prototype.getGlobalCost();
+
+        initExp2nextLvl(getCost());
+
+        level = 1;
+        totalExp = 0;
+        updateExp();
 
         copyAbilities(prototype.getAbilities());
 //        abilities = new Array<Ability.AbilityPrototype>(prototype.getAbilities());
@@ -238,8 +260,8 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         if(level < 0) level = 0;
 
         for(int i = 0; i < level; i++){
-//            addExp(exp2nextLvl[i]);
-            totalExp += exp2nextLvl[i];
+//            addExp(startExp2nextLvl[i]);
+            totalExp += /*startExp2nextLvl[i];*/exp2nextLevel()[i];
         }
         updateExp();
         addGems(User.GEM_TYPE.RED, red);
@@ -259,6 +281,13 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
                 + l.getWord("speed") + ": " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
                 + l.getWord("range") + ": " + getRange() + System.getProperty("line.separator")
                 + l.getWord("cost") + ": " + getCost() + System.getProperty("line.separator");
+
+//        String s = FontLoader.getOneColorButtonString(0, l.getWord("dmg"), FontLoader.RED, Color.WHITE) + ": " + getDmg() + System.getProperty("line.separator")
+//                + FontLoader.getOneColorButtonString(0, l.getWord("speed"), FontLoader.YELLOW, Color.WHITE) + ": " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
+//                + FontLoader.getOneColorButtonString(0, l.getWord("range"), FontLoader.BLUE, Color.WHITE) + ": " + getRange() + System.getProperty("line.separator")
+//                + l.getWord("cost") + ": " + getCost() + System.getProperty("line.separator");
+
+
 //        s += prototype.getTooltip();
         for (int i = 0; i < getAbilities().size; i++){
             s += System.getProperty("line.separator");
@@ -301,9 +330,10 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         float tmpExp = getTotalExp();
 
         int n = 1;
-        for(int i = /*level - 1*/0; tmpExp >= exp2nextLvl[i]; i++){//if max lvl throws exeption//TODO
+//        System.out.println(Arrays.toString(exp2nextLevel()));
+        for(int i = /*level - 1*/0; tmpExp >= exp2nextLevel()[i]; i++){//if max lvl throws exeption//TODO
 //            System.out.println("tmp " + tmpExp);
-            tmpExp -= exp2nextLvl[i];
+            tmpExp -= /*startExp2nextLvl[i];*/exp2nextLevel()[i];
             n++;
         }
         level = n;
@@ -311,10 +341,7 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         currentExp = tmpExp;
     }
 
-    @Override
-    public int[] exp2nextLevel() {
-        return exp2nextLvl;
-    }
+
 
     public boolean equalsOrHigher(TowerObject anotherTower){
         int[] first = getSimplyGemStat();

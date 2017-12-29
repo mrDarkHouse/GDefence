@@ -98,7 +98,7 @@ public class SteamAura extends Ability implements Ability.IOnBuild{
             if(getAuraObject().isInRange(builded)){
                 builded.addEffect(new SteamAuraBuff(-1, owner.getTowerPrototype().getDmg(),
                         owner.getTowerPrototype().getSpeed()).setOwner(builded));
-                builded.addEffect(new ExpTether(-1, owner, 0.5f));
+                builded.addEffect(new ExpTether(-1, owner, 0.3f));//30% of buffed towers earned exp get as own
             }
         }
 
@@ -109,7 +109,7 @@ public class SteamAura extends Ability implements Ability.IOnBuild{
                 if(ts.get(i) == owner) continue;
                 ts.get(i).addEffect(new SteamAuraBuff(-1, owner.getTowerPrototype().getDmg(),
                         owner.getTowerPrototype().getSpeed()).setOwner(ts.get(i)));
-                ts.get(i).addEffect(new ExpTether(-1, owner, 0.5f));
+                ts.get(i).addEffect(new ExpTether(-1, owner, 0.3f));
             }
         }
     }

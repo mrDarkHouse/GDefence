@@ -26,9 +26,19 @@ public class FontLoader {
 
     public static BitmapFont impact_Ru;
 
+    public static final Color RED =   new Color(0xff0000ff);
+    public static final Color YELLOW= new Color(0xffff00ff);
+    public static final Color BLUE =  new Color(0x0000ffff);
+    public static final Color BLACK = new Color(0x00000000);
+    public static final Color GREEN = new Color(0x009900ff);
+    public static final Color WHITE = new Color(0x66ffffff);
+
 
     public static String firstCapitalLetter(String s){
         return s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();
+    }
+    public static String firstLowerLetter(String s){
+        return s.substring(0, 1).toLowerCase() + s.substring(1).replaceAll(" ", "");
     }
 
     public static String colorCode(int id){
@@ -39,12 +49,20 @@ public class FontLoader {
             case 3:return "[#64A619ff]";
             case 4:return "[#CD6600ff]";
             case 5:return "[#8B0000ff]";
+            case 6:return "[#4169E1ff]";//royalBlue
+            case 7:return "[#CCCC00ff]";//darkYellow
+            case 8:return "[#00886Bff]";//observatory green
+            case 9:return "[#F09135ff]";//orange
             default:return "";
         }
+    }
+    public static String colorCode(Color c){
+        return "[#" + c.toString() + "]";
     }
     public static String colorString(String s, int id){
         return colorCode(id) + s + "[]";
     }
+
 
 
 
@@ -165,6 +183,15 @@ public class FontLoader {
         return ("[#" + other.toString() + "]" + s.substring(0, index) + "[#" + first.toString() + "]" +
                 s.substring(index, index + 1) + "[#" + other.toString() + "]" + s.substring(index + 1));
     }
+    public static String getOneColorButtonString(int index, String s, int first, int other){
+//        BitmapFont b1 = generateFont(size);
+//        b1.getData().markupEnabled = true;
+//        Label.LabelStyle style = new Label.LabelStyle(b1, null);
+//        style.fontColor = other;
+        return (colorCode(other) + s.substring(0, index)  + colorCode(first) +
+                s.substring(index, index + 1) + colorCode(other) +  s.substring(index + 1));
+    }
+
 //    public static BitmapFont generateMenuFont(int size, Color color){
 //        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Iscoola.ttf"));
 //        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

@@ -18,7 +18,7 @@ public class SuddenDeath extends Spell{
     public static class P extends SpellObject implements Spell.ITarget {
 
         public P(int energyCost, int cooldown) {
-            super(20, "suddenDeath", energyCost, cooldown, new int[]{0, 0, 0}, Mob.class);
+            super(21, "suddenDeath", energyCost, cooldown, new int[]{0, 0, 0}, Mob.class);
         }
 
         @Override

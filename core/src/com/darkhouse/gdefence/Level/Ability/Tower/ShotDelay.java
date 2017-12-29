@@ -13,25 +13,25 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ShotDelay extends Ability implements Ability.IPreAttack {
 
     public static class P extends AbilityPrototype {
-        private G grader;
+        private G g;
         private AtomicReference<Float> delay;
 
         public P(float delay, G grader) {
             super(9, "shotDelay", grader.gemCap);
             this.delay = new AtomicReference<Float>(delay);
-            this.grader = grader;
+            this.g = grader;
         }
 
         @Override
         public String getSaveCode() {
-            return null;
+            return super.getSaveCode() + "z" + delay.get() + ";" + g.delayDown;
         }
 
         @Override
         public AbilityPrototype copy() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            P p = new P(delay.get(), grader);
-            p.gemBoost[0] = new BoostFloat(p.delay, grader.delayDown, l.getWord("shotDelayGrade1"),
+            P p = new P(delay.get(), g);
+            p.gemBoost[0] = new BoostFloat(p.delay, g.delayDown, l.getWord("shotDelayGrade1"),
                     false, BoostFloat.FloatGradeFieldType.TIME);
             return p;
         }
@@ -57,25 +57,28 @@ public class ShotDelay extends Ability implements Ability.IPreAttack {
         }
     }
 
-    private class AttackBlocker extends Effect<Tower>{
-        public AttackBlocker(float duration) {
+    private class HeatChecker extends Effect<Tower>{
+        public HeatChecker(float duration) {
             super(true, false, duration, "swimSpeed");
         }
 
         @Override
         public void apply() {
-            owner.setCanAttack(false);
+//            owner.setCanAttack(false);
         }
 
         @Override
         public void dispell() {
-            if(!owner.isCanAttack()) owner.setCanAttack(true);//this dispell other disarm
+            heat = false;
+//            if(!owner.isCanAttack()) owner.setCanAttack(true);//this dispell other disarm
             super.dispell();
         }
     }
 
     private float delay;
+    private float heatOffTime = 5f;
     private float currentTime;
+    private boolean heat;
 
     public ShotDelay(P prototype) {
         this.delay = prototype.delay.get();
@@ -83,11 +86,25 @@ public class ShotDelay extends Ability implements Ability.IPreAttack {
 
     @Override
     public boolean use(float delta) {
-        currentTime += delta;
-        if(currentTime >= delay) {
-            currentTime = 0;
+        if(!heat){
+            currentTime += delta;
+            if(currentTime >= delay) {
+                currentTime = 0;
+                heat = true;
+                owner.addEffect(new HeatChecker(heatOffTime).setOwner(owner));
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            owner.addEffect(new HeatChecker(heatOffTime).setOwner(owner));
             return true;
-        }else return false;
+        }
+//        currentTime += delta;
+//        if(currentTime >= delay) {
+//            currentTime = 0;
+//            return true;
+//        }else return false;
 //        owner.addEffect(new AttackBlocker(delay).setOwner(owner));
 //        return true;
     }

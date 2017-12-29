@@ -23,7 +23,7 @@ public class GlobalSlow extends Spell{
         private G g;
 
         public P(int energyCost, int cooldown, float slowPercent, int duration, G grader) {
-            super(20, "globalSlow", energyCost, cooldown, grader.gemCap, Mob.class);
+            super(24, "globalSlow", energyCost, cooldown, grader.gemCap, Mob.class);
             this.slowPercent = new AtomicReference<Float>(slowPercent);
             this.duration = new AtomicReference<Integer>(duration);
             this.g = grader;

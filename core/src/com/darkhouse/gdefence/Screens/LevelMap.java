@@ -318,7 +318,9 @@ public class LevelMap extends AbstractScreen {
         batch.draw(GDefence.getInstance().assetLoader.get("LevelMapBg.png", Texture.class), 0, 0);
         if(!isPaused) {
 //            if (delta < 5) {
-                level.physic(delta);
+            level.physic(delta);
+            spellPanel.physic(delta);
+//            stage.act(delta);
 //            }
         }
         level.render(batch);
@@ -391,16 +393,24 @@ public class LevelMap extends AbstractScreen {
     }
     private void initSpellPanel(Inventory spells){
         Array<SpellObject> a = new Array<SpellObject>();
+//        SpellObject[] ar = new SpellObject[4];
+//        for (int i = 0; i < spells.getSlots().size; i++){
+//            if(!spells.getSlots().get(i).isEmpty() && TowerObject.isMatches(spells.getSlots().get(i).getLast().getClass(), SpellObject.class)){
+//                ar[i] = ((SpellObject) spells.getSlots().get(i).getLast());
+//            }
+//        }
         for (Slot s:spells.getSlots()){
             if(!s.isEmpty() && TowerObject.isMatches(s.getLast().getClass(), SpellObject.class)){
                 a.add(((SpellObject) s.getLast()));
+            }else {
+                a.add(null);
             }
         }
 
 
         spellPanel = new SpellPanel(a);
 
-        spellPanel.setPosition(1180, 330);
+        spellPanel.setPosition(1080, 330);//1180, 330
         stage.addActor(spellPanel);
         spellPanel.init();
 

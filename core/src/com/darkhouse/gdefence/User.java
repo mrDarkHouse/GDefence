@@ -8,13 +8,11 @@ import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
-import com.darkhouse.gdefence.Level.Ability.Spell.EmergencyRepair;
-import com.darkhouse.gdefence.Level.Ability.Spell.GlobalSlow;
-import com.darkhouse.gdefence.Level.Ability.Spell.IceBlast;
-import com.darkhouse.gdefence.Level.Ability.Spell.SuddenDeath;
+import com.darkhouse.gdefence.Level.Ability.Spell.*;
 import com.darkhouse.gdefence.Model.Panels.StoreBuyPanel;
 import com.darkhouse.gdefence.Objects.*;
 import com.darkhouse.gdefence.Screens.BottomPanel.TowerMap;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.io.*;
 import java.util.HashMap;
@@ -189,8 +187,8 @@ public class User {
         }
     }
 
-    public Gradable maxHealth = new Gradable("Max Health", 5, 5, 5, 100, 100);
-    public Gradable maxEnergy = new Gradable("Max Energy", 5, 30, 10, 100, 100);
+    public Gradable maxHealth = new Gradable("Max Health", 10, 5, 5, 100, 100);
+    public Gradable maxEnergy = new Gradable("Max Energy", 10, 30, 10, 100, 100);
 
     //public void upHealth(){
     //    addMaxHealth(5);
@@ -243,6 +241,13 @@ public class User {
 
     private int[] craftedTowers;//need to know how many towers are crafted
 
+    private void loadCraftedTowers(){//TODO
+
+    }
+    private String saveCratedTowers(){
+        return "";
+    }
+
     public void craftTower(ItemEnum.Tower t){
         getTowerInventory().store(TowerObject.generateStartObjects(t, 1));
         craftedTowers[t.ordinal()]++;
@@ -281,6 +286,14 @@ public class User {
         for (String type:towersTypes){
             String[] s = type.split("-");//s[0] = key, s[1] = value
             openedTowers.put(ItemEnum.Tower.valueOf(s[0]), RecipeType.valueOf(s[1]));
+        }
+    }
+    private void loadOpenedResearches(String savecode){
+        String[] towersTypes = savecode.split("/");
+        for (String type:towersTypes){
+            String[] s = type.split("-");
+//            System.out.println(s[0] + " ");
+            researches.put(Research.valueOf(s[0]), Boolean.valueOf(s[1]));
         }
     }
 
@@ -372,6 +385,13 @@ public class User {
         researches.put(r, true);
         if(towerMap != null) towerMap.updateTypes(); //==null when open researches in start(in debug)
         openRecipes();//
+    }
+    private String getResearchCode(){
+        String save = "";
+        for (Map.Entry<Research, Boolean> entry: researches.entrySet()){
+            save += entry.getKey().name() + "-" + entry.getValue().toString() + "/";
+        }
+        return save;
     }
 
 
@@ -569,13 +589,15 @@ public class User {
 //        else initNewUser();
 //    }
 
+    public boolean isDebug = true;
+
     public void initNewUser(){
         GDefence.getInstance().log("Init new User");
 //        GDefence.getInstance().user = new User();
 //        flush();
 //        this.totalExp = 0;
 //        addGold(7000);
-        addGold(5160);
+        addGold(160);
 //        addGold(11160);
         currentMap = 1;
 
@@ -592,8 +614,34 @@ public class User {
         setTowerMap(GDefence.getInstance().getArsenal().getTowerMap());
         openTowerToBuy(ItemEnum.Tower.Basic);
 
-        openResearch(Research.Powder);
-        openResearch(Research.Steam);
+        if(isDebug) {
+            addGold(51160);
+            openResearch(Research.Powder);
+            openResearch(Research.Steam);
+            towerInventory.store(new TowerObject(ItemEnum.Tower.SteamMachine, 0, 0, 0));
+            gems[0] = 7;
+            gems[1] = 7;
+            gems[2] = 8;
+            gems[3] = 10;
+            gems[4] = 9;
+            gems[5] = 41;
+            openLevel(2);
+            openLevel(3);
+            openLevel(4);
+            openLevel(5);
+
+//            spellInventory.store(new EchoSmash.P(5, 5, 5, 2f, 100, new EchoSmash.G(5, 1f, new int[]{2, 2, 2})));
+            spellInventory.store(new GlobalSlow.P(5, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
+            spellInventory.store(new IceBlast.P(5, 10, 10, 0.3f, 3, 200, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
+            spellInventory.store(new EmergencyRepair.P(5, 15, 3, new EmergencyRepair.G(2, new int[]{3, 0, 0})));
+            spellInventory.store(new SuddenDeath.P(5, 10));
+
+
+        }
+
+
+
+
 //        openRecipes();//need to init
 //        System.out.println(towerMap);
 //        System.out.println(towerMap);
@@ -601,7 +649,7 @@ public class User {
 
 //        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
 
-        towerInventory.store(new TowerObject(ItemEnum.Tower.SteamMachine, 0, 0, 0));
+
 //        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 0, 0, 0));
 //        towerInventory.store(new TowerObject(ItemEnum.Tower.Range, 0, 1, 1));
 //        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 3, 1, 1));
@@ -628,11 +676,10 @@ public class User {
 //        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.YELLOW, 2);
 //        ((TowerObject) towerInventory.getSlots().get(3).getLast()).addGems(GEM_TYPE.BLUE, 1);
 //
-        spellInventory.store(new GlobalSlow.P(5, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
-        spellInventory.store(new IceBlast.P(5, 10, 10, 0.3f, 3, 200, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
-        spellInventory.store(new EmergencyRepair.P(5, 15, 3, new EmergencyRepair.G(2, new int[]{3, 0, 0})));
-        spellInventory.store(new SuddenDeath.P(5, 10));
-//        spellInventory.store(new IceBlast.P(30, 10, 10, 0.3f, 3, 100, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
+//        spellInventory.store(new GlobalSlow.P(5, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
+//        spellInventory.store(new IceBlast.P(5, 10, 10, 0.3f, 3, 200, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
+//        spellInventory.store(new EmergencyRepair.P(5, 15, 3, new EmergencyRepair.G(2, new int[]{3, 0, 0})));
+//        spellInventory.store(new SuddenDeath.P(5, 10));
 
 
 //        storePanel.store(ItemEnum.Tower.Basic);
@@ -650,12 +697,7 @@ public class User {
 
 //        initOpenedTowers();
 
-        gems[0] = 7;
-        gems[1] = 7;
-        gems[2] = 8;
-        gems[3] = 10;
-        gems[4] = 9;
-        gems[5] = 41;
+
 
 //        addGems(GEM_TYPE.RED, 11);
 //        addGems(GEM_TYPE.YELLOW, 4);
@@ -679,10 +721,10 @@ public class User {
 //        storePanel.store(ItemEnum.Tower.Arrow);
 
         openLevel(1);
-        openLevel(2);
-        openLevel(3);
-        openLevel(4);
-        openLevel(5);
+//        openLevel(2);
+//        openLevel(3);
+//        openLevel(4);
+//        openLevel(5);
 //        openLevel(6);
 //        openLevel(7);
 //        openLevel(8);
@@ -818,6 +860,7 @@ public class User {
             prop.put("detailInventory", getDetailInventory().getSave());
             prop.put("openedTowers", getOpenedTowersSavecode());
             prop.put("gems", getGemsSavecode());
+            prop.put("researches", getResearchCode());
             prop.put("levelsCompleted", getLevelsCompletedSavecode());
             prop.put("levelAvailable", getLevelAvailableSavecode());
             prop.put("gradable", getGradableCode());
@@ -882,6 +925,7 @@ public class User {
 
             }
             loadOpenedTowers(prop.getProperty("openedTowers"));
+            loadOpenedResearches(prop.getProperty("researches"));
             String[] gemsSave = prop.getProperty("gems").split("-");
             for (int i = 0; i < gems.length; i++){
                 gems[i] = Integer.parseInt(gemsSave[i]);

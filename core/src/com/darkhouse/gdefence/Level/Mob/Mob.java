@@ -25,22 +25,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Mob extends Effectable{
 
     public enum Prototype{
-        //           texturePath  texturePath  moveType       hp  arm spd dmg bounty       //i think it better than Builder
-//        Slime      ("Slime",      "mob",     MoveType.ground, 50,  0, 50,  1, 2),
-        Dog         ("wolf",           MoveType.ground, 30,   0, 60,  1, 1/*, new HealingAura.P(250, 1, 5)*/, new ScorpionVenom.P(10, 5)),
-        Eagle       ("eagle",          MoveType.ground, 45,   1, 50,  1, 1),
-        Hedgehog    ("hedgehog",       MoveType.ground, 100,  2, 30,  2, 2, new Curdle.P(2, 0.5f, "Mobs/hedgehogBlock")),
+        //           texturePath  texturePath  moveType hp  arm spd dmg bounty       //i think it better than Builder
+//        Slime      ("Slime",         MoveType.ground, 50,  0, 50,  1, 2),
+        Dog         ("wolf",           MoveType.ground, 30,   0, 60,  1, 1/*, new HealingAura.P(250, 1, 5)*//*, new ScorpionVenom.P(10, 5)*/),
+        Eagle       ("eagle",          MoveType.ground, 45,   1, 45,  1, 1),
+        Hedgehog    ("hedgehog",       MoveType.ground, 100,  0, 30,  2, 2, new Curdle.P(2, 0.5f, "Mobs/hedgehogBlock")),
         Lynx        ("lynx",           MoveType.ground, 80,   3, 40,  2, 2, new Sprint.P(4, 2, 50)),
-        Boar        ("boar",           MoveType.ground, 750,  5, 30,  100, 7, new LayerArmor.P(10, 2), new StrongSkin.P(5, 2)),
+        Boar        ("boar",           MoveType.ground, 1000, 5, 30,100, 7, new LayerArmor.P(10, 1), new StrongSkin.P(5, 2)),
 
-        Ant         ("ant",            MoveType.ground, 50,   1, 70,  1,  1),
-        Snake       ("snake",          MoveType.ground, 75,   2, 80,  2,  2),
-        Jerboa      ("jerboa",         MoveType.ground, 90,   0, 60,  1,  1, new GreatEvasion.P(2f)),
-        Scorpion    ("scorpion",       MoveType.ground, 150,  3, 50,  1,  3, new ScorpionVenom.P(10, 2)),
+        Ant         ("ant",            MoveType.ground, 70,   1, 80,  1,  1),
+        Snake       ("snake",          MoveType.ground, 125,  2, 70,  1,  1),
+        Jerboa      ("jerboa",         MoveType.ground, 280,  0, 60,  2,  2, new GreatEvasion.P(2f)),
+        Scorpion    ("scorpion",       MoveType.ground, 400,  3, 50,  3,  3, new ScorpionVenom.P(15, 2)),
 
-        Crab        ("crab",           MoveType.water,  200,  4, 50,  3,  2, new Swimmable.P("Mobs/crab.png")),
-        Frog        ("frog",           MoveType.water,  150,  3, 40,  2,  1, new Swimmable.P("Mobs/frog.png"), new WaterShield.P(0.2f, 0.5f, 3)),
-        Turtle      ("turtle",         MoveType.water,  350,  5, 20,  4,  4, new Swimmable.P("Mobs/turtle.png"), new WaterDefend.P(10), new WaterFeel.P(40)),
+        Crab        ("crab",           MoveType.water,  250,  4, 50,  2,  2/*, new Swimmable.P("Mobs/crab.png")*/),
+        Frog        ("frog",           MoveType.water,  400,  0, 60,  2,  1/*, new Swimmable.P("Mobs/frog.png")*/, new WaterShield.P(0.2f, 0.5f, 3)),
+        Turtle      ("turtle",         MoveType.water,  350,  5, 20,  4,  4/*, new Swimmable.P("Mobs/turtle.png")*/, new WaterDefend.P(10), new WaterFeel.P(40)),
 //        Axolotl    ("axolotl",    "axolotl",  MoveType.water,  750,  10,50,  100,0, new Swimmable.P("Mobs/axolotl2.png")),
 
 //        Pinguin    ("pinguin",    MoveType.ground, 250,  2, 50,  1,  1),

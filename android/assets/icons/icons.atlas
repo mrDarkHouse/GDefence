@@ -213,9 +213,30 @@ blueGem
   orig: 48, 48
   offset: 0, 0
   index: 48
+blackGem
+  rotate: false
+  xy: 1, 351
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+greenGem
+  rotate: false
+  xy: 51, 351
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+whiteGem
+  rotate: false
+  xy: 101, 351
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
 globalSlow
   rotate: false
-  xy: 0, 451
+  xy: 1, 451
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -237,6 +258,13 @@ emergencyRepair
 suddenDeath
   rotate: false
   xy: 151, 451
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 48
+echoSmash
+  rotate: false
+  xy: 2, 501
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

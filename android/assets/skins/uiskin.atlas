@@ -18,6 +18,14 @@ default-window
   orig: 27, 29
   offset: 0, 0
   index: -1
+tower-tooltip-window
+  rotate: false
+  xy: 180, 20
+  size: 27, 29
+  split: 4, 3, 20, 3
+  orig: 27, 29
+  offset: 0, 0
+  index: -1
 default-select
   rotate: false
   xy: 29, 29
@@ -260,6 +268,7 @@ exp-bar-knob
   orig: 1, 1
   offset: 0, 0
   index: -1
+
 
 
 

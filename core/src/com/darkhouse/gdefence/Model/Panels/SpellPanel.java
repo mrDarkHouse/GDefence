@@ -1,6 +1,8 @@
 package com.darkhouse.gdefence.Model.Panels;
 
 
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,9 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.AbstractTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Level.Ability.Spell.Spell;
+import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.Model.ShapeCircle;
@@ -39,20 +43,27 @@ public class SpellPanel extends Table{
 //                private Image image;
                 private ShapeCircle circle;
 
-                public AoeTargeter(final int aoe, Array<Class<? extends Effectable>> targetTypes) {
+                public AoeTargeter(final int aoe, Array<Class<? extends Effectable>> targetTypes, Vector2 startCoord) {
                     //            super(GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class));
                     this.aoe = aoe;
                     this.targetTypes = targetTypes;
 //                    image = new Image(GDefence.getInstance().assetLoader.get("towerRangeTexture.png", Texture.class));
 //                    image.setSize(aoe, aoe);
                     circle = new ShapeCircle(new ShapeRenderer(), aoe/2);
+                    circle.setPosition(startCoord.x - aoe/4, startCoord.y - aoe/4);
                     SpellThrower.this.stage.addActor(circle);
                     isTargeting = true;
                 }
 
+                public void cancel(){
+                    stage.removeListener(this);
+                    isTargeting = false;
+                    circle.remove();
+                }
+
                 @Override
                 public boolean mouseMoved(InputEvent event, float x, float y) {
-                    circle.setPosition(event.getStageX() - aoe/4, event.getStageY() - aoe/4);
+                    /*if(Level.getMap().inMapBounds(x, y))*/ circle.setPosition(event.getStageX() - aoe/4, event.getStageY() - aoe/4);
                     return true;
                 }
 
@@ -63,8 +74,19 @@ public class SpellPanel extends Table{
 
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    use();
+                    if(button == 0) use();
+                    else cancel();
                 }
+
+//                @Override
+//                public boolean keyDown(InputEvent event, int keycode) {
+////                    return super.keyUp(event, keycode);
+////                    System.out.println(event + " " + keycode);
+//                    if(keycode == Input.Keys.ESCAPE){
+//                        cancel();
+//                        return true;
+//                    }else return false;
+//                }
 
                 private Array<? extends Effectable> getTargets(){
                     //            Array<? extends Effectable> tmp = new Array<Effectable>();
@@ -72,18 +94,20 @@ public class SpellPanel extends Table{
 
 
                     Vector2 center = new Vector2(circle.getX() + circle.getWidth()/2, circle.getY() + circle.getHeight()/2);
-                    return LevelMap.getLevel().getMap().getUnitsInRange(center, aoe/2, targetTypes);
+                    return LevelMap.getLevel().getMap().getUnitsInRange(center, aoe/2, targetTypes, false);
                     //            return tmp;
                 }
 
                 private void use(){
                 /*SpellThrower.this.*/spell.use(getTargets());
-                /*SpellThrower.this.*/stage.removeListener(this);
-                    circle.remove();
-                    isTargeting = false;
+//                /*SpellThrower.this.*/stage.removeListener(this);
+//                    circle.remove();
+//                    isTargeting = false;
+
                     LevelMap.getLevel().removeEnergy(spell.getEnergyCost());
 //                    spell.getCooldownObject().resetCooldown();
                     resetCooldown(spell);
+                    cancel();
                 }
 
 
@@ -93,11 +117,18 @@ public class SpellPanel extends Table{
                 private Array<Class<? extends Effectable>> targetTypes;
                 private ShapeTarget circle;
 
-                public SoloTargeter(Array<Class<? extends Effectable>> targetTypes) {
+                public SoloTargeter(Array<Class<? extends Effectable>> targetTypes, Vector2 startCoord) {
                     this.targetTypes = targetTypes;
                     circle = new ShapeTarget(new ShapeRenderer(), 20);
+                    circle.setPosition(startCoord.x - 10, startCoord.y - 10);
                     SpellThrower.this.stage.addActor(circle);
                     isTargeting = true;
+                }
+
+                public void cancel(){
+                    stage.removeListener(this);
+                    isTargeting = false;
+                    circle.remove();
                 }
 
                 @Override
@@ -112,7 +143,17 @@ public class SpellPanel extends Table{
                 }
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    use(new Vector2(x, y));
+                    if(button == 0) use(new Vector2(x, y));
+                    else cancel();
+                }
+
+                @Override
+                public boolean keyDown(InputEvent event, int keycode) {
+//                    return super.keyUp(event, keycode);
+                    if(keycode == Input.Keys.ESCAPE){
+                        cancel();
+                        return true;
+                    }else return false;
                 }
 
                 private Array<? extends Effectable> getTarget(Vector2 point){
@@ -125,13 +166,15 @@ public class SpellPanel extends Table{
                     Array<? extends Effectable> target = getTarget(point);
                     if(target != null) {
                         spell.use(target);
-                        stage.removeListener(this);
+
                         LevelMap.getLevel().removeEnergy(spell.getEnergyCost());
 //                        spell.getCooldownObject().resetCooldown();
                         resetCooldown(spell);
                     }
-                    isTargeting = false;
-                    circle.remove();
+                    cancel();
+//                    stage.removeListener(this);
+//                    isTargeting = false;
+//                    circle.remove();
                 }
             }
 
@@ -140,7 +183,7 @@ public class SpellPanel extends Table{
                 super.touchUp(event, x, y, pointer, button);
 
                 if(LevelMap.getLevel().haveEnergy(spell.getEnergyCost()) && spell.getCooldownObject().isReady()) {
-                    use();
+                    use(new Vector2(event.getStageX(), event.getStageY()));
                 }
             }
 
@@ -153,17 +196,19 @@ public class SpellPanel extends Table{
             public void init(Stage stage){
                 this.stage = stage;
             }
-            private void use(){
+            private void use(Vector2 useCoord){
+                //
                 if (spell.getPrototype() instanceof Spell.INonTarget){
                     spell.use(Wave.mobs);
                     LevelMap.getLevel().removeEnergy(spell.getEnergyCost());
                     resetCooldown(spell);
 //                    spell.getCooldownObject().resetCooldown();
                 }else if(spell.getPrototype() instanceof Spell.IAoe){
-                    stage.addListener(new AoeTargeter(((Spell.IAoe) spell.getPrototype()).getAoe(), spell.getAffectedTypes()));
+                    stage.addListener(new AoeTargeter(((Spell.IAoe) spell.getPrototype()).getAoe(), spell.getAffectedTypes(), useCoord));
+//                    stage.addListener(new )
 //                    isTargeting = true;
                 }else if(spell.getPrototype() instanceof Spell.ITarget){
-                    stage.addListener(new SoloTargeter(spell.getAffectedTypes()));
+                    stage.addListener(new SoloTargeter(spell.getAffectedTypes(), useCoord));
                 }
             }
 
@@ -184,16 +229,22 @@ public class SpellPanel extends Table{
 
             public SpellTooltip(Skin skin) {
                 super(SpellButton.this.spell.getPrototype().getName(), skin);
+                getTitleLabel().setStyle(FontLoader.generateSecondaryStyle(14, Color.WHITE));
 //                getTitleLabel().setAlignment(Align.center);
-                tooltipLabel = new Label(SpellButton.this.spell.getPrototype().getTooltip(), skin, "description");
+                tooltipLabel = new Label(SpellButton.this.spell.getPrototype().getTooltip(), skin, "spell");
+//                tooltipLabel.getStyle().font = FontLoader.generateSecondaryFont(12, Color.WHITE);
+                tooltipLabel.getStyle().font.getData().markupEnabled = true;
 //                cooldown = new TextButton(SpellButton.this.spell.getPrototype().getCooldown() + "", skin);
 
+                setVisible(false);
                 add(tooltipLabel);
 //                add(cooldown).align(Align.right);
 
                 pack();
 
-                setVisible(false);
+//                setKeepWithinStage(false);
+
+
             }
             public void init(Stage stage){
                 stage.addActor(this);
@@ -247,7 +298,10 @@ public class SpellPanel extends Table{
 
 //            cdText = new Label("", FontLoader.generateStyle(19, Color.BLACK));
 //            cdText.setAlignment(Align.center);
-            addListener(new TooltipListener(new SpellTooltip(GDefence.getInstance().assetLoader.getSkin()), true));
+            TooltipListener t = new TooltipListener(new SpellTooltip(GDefence.getInstance().assetLoader.getSkin()), true);
+//            t.setOffset(-50, -40);
+            addListener(t);
+//            System.out.println(this.getListeners());
             addListener(new SpellThrower(spell));//
 
 
@@ -304,6 +358,12 @@ public class SpellPanel extends Table{
 //                cdText.draw(batch, parentAlpha);
             }
         }
+
+//        @Override
+//        public void act(float delta) {
+////            super.act(delta);
+//
+//        }
     }
 
     private SpellButton[] buttons;
@@ -311,7 +371,8 @@ public class SpellPanel extends Table{
     public SpellButton[] getButtons() {
         return buttons;
     }
-    public void act(float delta){
+
+    public void physic(float delta){
         super.act(delta);
         for (SpellButton s:getButtons()){
             Spell a = s.getSpell();
@@ -332,7 +393,7 @@ public class SpellPanel extends Table{
         defaults().space(8);
 
         for (int i = 0; i < 4; i++){
-            if(i < spells.size) {
+            if(/*i < spells.size*/spells.get(i) != null) {
                 buttons[i] = new SpellButton(spells.get(i).createSpell());
             }
             else buttons[i] = new SpellButton();

@@ -331,7 +331,9 @@ public class Level {
                 break;
             case 3:
                 Random chance = new Random();
-                if (chance.nextFloat() > 1 - Float.parseFloat(curr[2])) {
+                float f = chance.nextFloat();
+                System.out.println(f);
+                if (f <= Float.parseFloat(curr[2])) {
 //                currentDrop.add();
                     ItemEnum.addItemById(Integer.parseInt(curr[0]), Integer.parseInt(curr[1]), GDefence.getInstance().user);
                     drop.add(new DropSlot(ItemEnum.getItemById(Integer.parseInt(curr[0])), 1));

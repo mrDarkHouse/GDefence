@@ -55,8 +55,10 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: { titleFont: default-font, background: default-window, titleFontColor: white },
     description: { titleFont: secondaryFont, background: default-window, titleFontColor: white },
+    towerDescription: { titleFont: secondaryFont, background: tower-tooltip-window, titleFontColor: white },
 	dialog: { titleFont: default-font, titleFontColor: white, stageBackground: dialogDim },
     pause-menu: { titleFont: iskoola, titleFontColor: white, stageBackground: pauseDim }
+
 },
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: { background: default-slider, knob: default-slider-knob },
@@ -71,8 +73,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-vertical: { background: default-slider, knob: default-round-large }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	default: { font: default-font, fontColor: white }
-    description: { font: secondaryFont, fontColor: white }
+	default: { font: default-font, fontColor: white },
+    description: { font: secondaryFont, fontColor: white },
+    spell: { font: spellFont, fontColor: white }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor }

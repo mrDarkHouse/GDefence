@@ -262,7 +262,11 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
         a.addListener(new DoubleClickListener(fastInventory, a){//fastInventory can be null in loading, check it //TODO
             @Override
             protected void move() {
-                toInventory.store(TowerObject.generateStartObjects(owner.getSlot().getPrototype(), 1));
+                if(GDefence.getInstance().user.deleteGold(owner.getSlot().getPrototype().getGlobalCost())) {
+                        toInventory.store(TowerObject.generateStartObjects(owner.getSlot().getPrototype(), 1));
+                    }else {
+                        //tooltip no enough money
+                    }
             }
         });
         Label l = new Label(a.getSlot().getPrototype().getGlobalCost() + "$", FontLoader.generateStyle(28, Color.BLACK)){
@@ -359,7 +363,12 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
             a.addListener(new DoubleClickListener(toInv, ((SlotActor) a)){//think that all items can be only slotActor
                 @Override
                 protected void move() {
-                    toInventory.store(TowerObject.generateStartObjects(owner.getSlot().getPrototype(), 1));
+                    System.out.println(owner.getSlot().getPrototype().getGlobalCost());
+                    if(GDefence.getInstance().user.deleteGold(owner.getSlot().getPrototype().getGlobalCost())) {
+                        toInventory.store(TowerObject.generateStartObjects(owner.getSlot().getPrototype(), 1));
+                    }else {
+                        //tooltip no enough money
+                    }
                 }
             });
         }

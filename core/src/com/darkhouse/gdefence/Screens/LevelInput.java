@@ -23,7 +23,7 @@ public class LevelInput implements InputProcessor {
             if(!screen.isPaused()) screen.setPause();
             else screen.offPause();
         }
-        return true;
+        return true;//false if need other listeners
     }
 
     @Override

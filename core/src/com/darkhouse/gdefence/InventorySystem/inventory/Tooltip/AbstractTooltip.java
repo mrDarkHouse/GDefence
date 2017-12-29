@@ -11,6 +11,11 @@ public abstract class AbstractTooltip extends Window{
         getTitleLabel().setAlignment(Align.center);
     }
 
+    public AbstractTooltip(String title, Skin skin, String styleName) {
+        super(title, skin, styleName);
+        getTitleLabel().setAlignment(Align.center);
+    }
+
     public abstract void hasChanged();
 //    public abstract void init();//adding to stage
 }

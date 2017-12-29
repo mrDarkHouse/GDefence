@@ -28,7 +28,7 @@ public class TowerTooltip extends AbstractTooltip{
     private int levelNum;
 
     public TowerTooltip(Tower tower, Skin skin) {
-        super("Tower...", skin);
+        super("Tower...", skin, "towerDescription");
         this.tower = tower;
         this.skin = skin;
 
@@ -123,6 +123,8 @@ public class TowerTooltip extends AbstractTooltip{
 
         levelNum = tower.getTowerPrototype().getLevel();
         level.setText(levelString + levelNum);
+
+        pack();
     }
 
 }

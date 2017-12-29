@@ -314,6 +314,7 @@ public class AssetLoader extends AssetManager{
         load("AbilityIcons/Spells/iceBlast.png", Texture.class);
         load("AbilityIcons/Spells/emergencyRepair.png", Texture.class);
         load("AbilityIcons/Spells/suddenDeath.png", Texture.class);
+        load("AbilityIcons/Spells/echoSmash.png", Texture.class);
         load("AbilityIcons/Spells/nothing.png", Texture.class);
 
 
@@ -333,6 +334,7 @@ public class AssetLoader extends AssetManager{
         fontMap.put("default-font", FontLoader.generateFont(26, Color.BLACK));
         fontMap.put("default-font48", FontLoader.generateFont(48, Color.BLACK));
         fontMap.put("secondaryFont", FontLoader.generateSecondaryFont(16, Color.WHITE));
+        fontMap.put("spellFont", FontLoader.generateSecondaryFont(14, Color.WHITE));
 
 
         SkinLoader.SkinParameter parameter = new SkinLoader.SkinParameter(fontMap);
