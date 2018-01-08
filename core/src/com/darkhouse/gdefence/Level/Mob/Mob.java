@@ -40,7 +40,8 @@ public class Mob extends Effectable{
 
         Crab        ("crab",           MoveType.water,  250,  4, 50,  2,  2/*, new Swimmable.P("Mobs/crab.png")*/),
         Frog        ("frog",           MoveType.water,  400,  0, 60,  2,  1/*, new Swimmable.P("Mobs/frog.png")*/, new WaterShield.P(0.2f, 0.5f, 3)),
-        Turtle      ("turtle",         MoveType.water,  350,  5, 20,  4,  4/*, new Swimmable.P("Mobs/turtle.png")*/, new WaterDefend.P(10), new WaterFeel.P(40)),
+        Turtle      ("turtle",         MoveType.water,  350,  5, 20,  4,  4, new Swimmable.P("Mobs/turtleSwim"), new WaterDefend.P(10), new WaterFeel.P(40)),
+        Crocodile   ("crocodile",      MoveType.water,  350,  5, 20,  4,  4, new Swimmable.P("Mobs/crocodileSwim")),
 //        Axolotl    ("axolotl",    "axolotl",  MoveType.water,  750,  10,50,  100,0, new Swimmable.P("Mobs/axolotl2.png")),
 
 //        Pinguin    ("pinguin",    MoveType.ground, 250,  2, 50,  1,  1),

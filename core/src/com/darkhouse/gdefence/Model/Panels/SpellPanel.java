@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -15,15 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.AbstractTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Level.Ability.Spell.Spell;
-import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.Model.ShapeCircle;
@@ -55,7 +51,7 @@ public class SpellPanel extends Table{
                     isTargeting = true;
                 }
 
-                public void cancel(){
+                public void cancelTargeting(){
                     stage.removeListener(this);
                     isTargeting = false;
                     circle.remove();
@@ -75,18 +71,18 @@ public class SpellPanel extends Table{
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     if(button == 0) use();
-                    else cancel();
+                    else cancelTargeting();
                 }
 
-//                @Override
-//                public boolean keyDown(InputEvent event, int keycode) {
-////                    return super.keyUp(event, keycode);
-////                    System.out.println(event + " " + keycode);
-//                    if(keycode == Input.Keys.ESCAPE){
-//                        cancel();
-//                        return true;
-//                    }else return false;
-//                }
+                @Override
+                public boolean keyDown(InputEvent event, int keycode) {
+//                    return super.keyUp(event, keycode);
+//                    System.out.println(event + " " + keycode);
+                    if(keycode == Input.Keys.ESCAPE){
+                        cancelTargeting();
+                        return true;
+                    }else return false;
+                }
 
                 private Array<? extends Effectable> getTargets(){
                     //            Array<? extends Effectable> tmp = new Array<Effectable>();
@@ -107,7 +103,7 @@ public class SpellPanel extends Table{
                     LevelMap.getLevel().removeEnergy(spell.getEnergyCost());
 //                    spell.getCooldownObject().resetCooldown();
                     resetCooldown(spell);
-                    cancel();
+                    cancelTargeting();
                 }
 
 
@@ -125,7 +121,7 @@ public class SpellPanel extends Table{
                     isTargeting = true;
                 }
 
-                public void cancel(){
+                public void cancelTargeting(){
                     stage.removeListener(this);
                     isTargeting = false;
                     circle.remove();
@@ -144,14 +140,14 @@ public class SpellPanel extends Table{
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     if(button == 0) use(new Vector2(x, y));
-                    else cancel();
+                    else cancelTargeting();
                 }
 
                 @Override
                 public boolean keyDown(InputEvent event, int keycode) {
 //                    return super.keyUp(event, keycode);
                     if(keycode == Input.Keys.ESCAPE){
-                        cancel();
+                        cancelTargeting();
                         return true;
                     }else return false;
                 }
@@ -171,7 +167,7 @@ public class SpellPanel extends Table{
 //                        spell.getCooldownObject().resetCooldown();
                         resetCooldown(spell);
                     }
-                    cancel();
+                    cancelTargeting();
 //                    stage.removeListener(this);
 //                    isTargeting = false;
 //                    circle.remove();
@@ -332,6 +328,13 @@ public class SpellPanel extends Table{
                 }
             }
         }
+        private void resetTargeting(){
+            for (EventListener l:getListeners()) {
+                if(l instanceof SpellButton.SpellThrower){
+//                    ((SpellButton.SpellThrower) l);
+                }
+            }
+        }
 
         @Override
         public void draw(Batch batch, float parentAlpha) {
@@ -404,6 +407,11 @@ public class SpellPanel extends Table{
 //        debug();
 
         pack();
+    }
+    public void cancelTargeting(){
+        for (EventListener e:getListeners()){
+//            if(e instanceof )
+        }
     }
 
     public void init(){

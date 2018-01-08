@@ -579,6 +579,18 @@ public class AssetLoader extends AssetManager{
         load("Mobs/turtle1.png", Texture.class);
         load("Mobs/turtle2.png", Texture.class);
         load("Mobs/turtle3.png", Texture.class);
+        load("Mobs/turtleSwim0.png", Texture.class);
+        load("Mobs/turtleSwim1.png", Texture.class);
+        load("Mobs/turtleSwim2.png", Texture.class);
+        load("Mobs/turtleSwim3.png", Texture.class);
+        load("Mobs/crocodile0.png", Texture.class);
+        load("Mobs/crocodile1.png", Texture.class);
+        load("Mobs/crocodile2.png", Texture.class);
+        load("Mobs/crocodile3.png", Texture.class);
+        load("Mobs/crocodileSwim0.png", Texture.class);
+        load("Mobs/crocodileSwim1.png", Texture.class);
+        load("Mobs/crocodileSwim2.png", Texture.class);
+        load("Mobs/crocodileSwim3.png", Texture.class);
 
         load("Mobs/ufo0.png", Texture.class);
         load("Mobs/ufo1.png", Texture.class);
