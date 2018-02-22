@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.Evasion;
 import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
@@ -13,7 +14,7 @@ import com.darkhouse.gdefence.Objects.DamageSource;
 
 public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
 
-    private static class GreatEvasionBuff extends Effect<Mob> implements IGetDmg{
+    private static class GreatEvasionBuff extends Effect<Mob> implements IGetDmg, IListener{
         private Evasion evasion;
 
         public GreatEvasionBuff(float cdCap) {
@@ -28,8 +29,8 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(DamageSource source, float dmg) {
-            if (getCooldownObject().isReady() && evasion.getDmg(source, dmg) == 0){
+        public float getDmg(DamageSource source, DamageType type, float dmg) {
+            if (getCooldownObject().isReady() && type == DamageType.Physic && evasion.getDmg(source, type,  dmg) == 0){
                 getCooldownObject().resetCooldown();
                 return 0;
             }else return dmg;
@@ -65,6 +66,7 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
     private GreatEvasionBuff buff;
 
     public GreatEvasion(P prototype) {
+        super(prototype);
 //        super("Great Evasion", false);
         buff = new GreatEvasionBuff(prototype.cdCap);
     }

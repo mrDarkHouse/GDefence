@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Level;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.darkhouse.gdefence.Level.Ability.Mob.BossResist;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Path.WalkableMapTile;
@@ -21,6 +22,12 @@ public class Wave {
 
     private float timeSpawn;
     private int mobID;
+
+    private Mob boss;
+
+    public Mob getBoss() {
+        return boss;
+    }
 
     public int getMobID() {
         return mobID;
@@ -79,7 +86,12 @@ public class Wave {
 
     private void initMobsToSpawn(){
         for (int i = 0; i < numberMobs; i++) {
-            mobsToSpawn.add(Mob.createMob(Mob.getMobById(mobID)));
+            Mob m = Mob.createMob(Mob.getMobById(mobID));
+            if(m.haveAbility(BossResist.class)) {
+                boss = m;
+//                System.out.println("boss " + m);
+            }
+            mobsToSpawn.add(m);
         }
     }
 
@@ -113,7 +125,7 @@ public class Wave {
 //            System.out.println(mobs.get(mobs.size - 1).getAbilities().get(0).getOwner());
             mobs.peek().spawn(spawner);
 
-            LevelMap.levelMap.mobSpawnEvent();
+            LevelMap.levelMap.mobSpawnEvent(mobs.peek());
 
             //System.out.println("spawned " + timeSpawn);
 

@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
 import com.darkhouse.gdefence.Level.Ability.Spell.EchoSmash;
@@ -13,6 +14,7 @@ import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.User;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -31,15 +33,29 @@ public abstract class Ability {
             gemsNumber = gems;
             return this;
         }
+        public AbilityPrototype addGems(int[] gems){
+            for (int i = 0; i < gems.length; i++){
+                for (int a = 0; a < gems[i]; a++){
+                    addGem(User.GEM_TYPE.values()[i + 3]);
+                }
+            }
+            return this;
+        }
+        public abstract Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft();
+
+        public int[] getGemCur(){
+            return gemsNumber;
+        }
 
         public String getSaveCode(){
-            return id + "z" + gemsNumber[0] + ";" + gemsNumber[1] + ";" + gemsNumber[2] + ";" + gemsMax[0] + ";" + gemsMax[1] + ";" + gemsMax[2];
+            return id + "z" + gemsNumber[0] + ";" + gemsNumber[1] + ";" + gemsNumber[2];
         }
 
         public static AbilityPrototype loadAbilityCode(String code){
             String[] info = code.split("z");
             int id = Integer.parseInt(info[0]);
             String[] tmp = info[1].split(";");
+//            System.out.println(Arrays.toString(tmp));
             int[] gemCur = new int[3];
             int[] gemCap = new int[3];
             for (int i = 0; i < gemCap.length; i++){
@@ -52,7 +68,8 @@ public abstract class Ability {
             String[] param = info.length >= 3 ? info[2].split(";") : new String[]{""};//need for empty param abilities like steam aura
 //            System.out.println(Arrays.toString(param));
 //            System.out.println(param[0] + " " + param[1] + " " + param[2] + " " +param[3] + " " +param[4]);
-
+//            System.out.println(Arrays.toString(param));
+//            System.out.println(code);
             switch (id){//TODO do all
                 case 0:return new Bash.P(Float.parseFloat(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[2]),
                               new Bash.G(Float.parseFloat(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap)).copy().gemCur(gemCur);
@@ -68,24 +85,25 @@ public abstract class Ability {
                         new HunterSpeed.G(Integer.parseInt(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap)).copy().gemCur(gemCur);
 
 
-                case 9:return new ShotDelay.P(Float.parseFloat(param[0]),
-                        new ShotDelay.G(Float.parseFloat(param[1]), gemCap)).copy().gemCur(gemCur);
+                case 9:return new ShotDelay.P(Float.parseFloat(param[0]), Boolean.parseBoolean(param[1]),
+                        new ShotDelay.G(Float.parseFloat(param[2]), gemCap)).copy().gemCur(gemCur);
                 case 10:return new Splash.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
                         new Splash.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
-                case 11:return new SpreadAttack.P(Float.parseFloat(param[0]), Integer.parseInt(param[1]),
-                        new SpreadAttack.G(Float.parseFloat(param[2]), gemCap)).copy().gemCur(gemCur);
+                case 11:return new SpreadAttack.P(Float.parseFloat(param[0]), Integer.parseInt(param[1]), Float.parseFloat(param[2]),
+                        new SpreadAttack.G(Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
                 case 13:return new SteamAura.P().copy();
 
 
 
                 case 20:
-                    return new EchoSmash.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]), Integer.parseInt(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[2]),
+                    return new EchoSmash.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[2]),
                             new EchoSmash.G(Integer.parseInt(param[5]), Float.parseFloat(param[6]), Integer.parseInt(param[7]), gemCap))/*.addExp()*/.gemCur(gemCur);
                 case 21:
-                    return new SuddenDeath.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]));
+                    return new SuddenDeath.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Float.parseFloat(param[2]), Float.parseFloat(param[3]), Float.parseFloat(param[4]),
+                            new SuddenDeath.G(Float.parseFloat(param[5]), Float.parseFloat(param[6]), Float.parseFloat(param[7]), gemCap)).gemCur(gemCur);
                 case 24:
-                    return new GlobalSlow.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]), Float.parseFloat(param[2]), Integer.parseInt(param[3]),
-                            new GlobalSlow.G(Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap))/*.copy()*/.gemCur(gemCur);
+                    return new GlobalSlow.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Float.parseFloat(param[2]), Float.parseFloat(param[3]), Float.parseFloat(param[4]),
+                            new GlobalSlow.G(Float.parseFloat(param[5]), Float.parseFloat(param[6]), Float.parseFloat(param[7]),gemCap))/*.copy()*/.gemCur(gemCur);
 //                case 21:
 //                  return
                 default:return null;
@@ -177,8 +195,8 @@ public abstract class Ability {
 
             private String configurate(float f){
                 switch (type){
-                    case PERCENT: return f*100 + "%";
-                    case TIME: return f + "s";
+                    case PERCENT: return Float.toString(new BigDecimal(f*100).setScale(2, RoundingMode.HALF_UP).floatValue());//(int)(f*100f) + "%";//
+                    case TIME: return Float.toString(new BigDecimal(f).setScale(2, RoundingMode.HALF_UP).floatValue()) + "s";//fix 20.0000001 bug
                     case MULTIPLAYER: return f + "x";
                     case ANGLE: return ((int) f) + "*";
                     case NONE: return f + "";
@@ -197,8 +215,9 @@ public abstract class Ability {
                 else return configurate(boostField.get() - boostUp);
             }
             public void grade() {
-                if(positive) boostField.set(new BigDecimal(boostField.get() + boostUp).setScale(2, BigDecimal.ROUND_FLOOR).floatValue());
-                else         boostField.set(new BigDecimal(boostField.get() - boostUp).setScale(2, BigDecimal.ROUND_FLOOR).floatValue());
+//                System.out.println(boostField + " " + boostUp + " " + new BigDecimal(boostField.get() + boostUp).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
+                if(positive) boostField.set(new BigDecimal(boostField.get() + boostUp).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());//TODO 0.1+0.1=0.21 (when ROUND_CEILING)
+                else         boostField.set(new BigDecimal(boostField.get() - boostUp).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue());
             }
 
             public BoostFloat(AtomicReference<Float> boostField, float boostUp, String name, boolean positive, FloatGradeFieldType type) {

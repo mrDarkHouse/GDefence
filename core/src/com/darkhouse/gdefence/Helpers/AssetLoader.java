@@ -331,10 +331,11 @@ public class AssetLoader extends AssetManager{
 
 
         ObjectMap<String, Object> fontMap = new ObjectMap<String, Object>();
-        fontMap.put("default-font", FontLoader.generateFont(26, Color.BLACK));
-        fontMap.put("default-font48", FontLoader.generateFont(48, Color.BLACK));
-        fontMap.put("secondaryFont", FontLoader.generateSecondaryFont(16, Color.WHITE));
-        fontMap.put("spellFont", FontLoader.generateSecondaryFont(14, Color.WHITE));
+        fontMap.put("default-font", FontLoader.generateFont(0, 26, Color.BLACK));
+        fontMap.put("default-font48", FontLoader.generateFont(0, 48, Color.BLACK));
+        fontMap.put("secondaryFont", FontLoader.generateFont(1, 16, Color.WHITE));
+        fontMap.put("spellFont", FontLoader.generateFont(2, 14, Color.WHITE));
+        fontMap.put("iskoola", FontLoader.generateFont(3, 64, Color.BLACK, 2, Color.WHITE));
 
 
         SkinLoader.SkinParameter parameter = new SkinLoader.SkinParameter(fontMap);
@@ -375,6 +376,8 @@ public class AssetLoader extends AssetManager{
         load("AbilityIcons/Abilities/desolate.png", Texture.class);
 //        load("AbilityIcons/Abilities/doubleAttack.png", Texture.class);
         load("AbilityIcons/Abilities/spreadAttack.png", Texture.class);
+        load("AbilityIcons/Abilities/spreadAttack2.png", Texture.class);
+        load("AbilityIcons/Abilities/spreadAttack3.png", Texture.class);
         load("AbilityIcons/Abilities/fireArrow.png", Texture.class);
         load("AbilityIcons/Abilities/hunterSpeed.png", Texture.class);
         load("AbilityIcons/Abilities/multiShot.png", Texture.class);
@@ -431,6 +434,8 @@ public class AssetLoader extends AssetManager{
         load("Path/Bridge/waterBridgeDDR2.png", Texture.class);
         load("Path/Bridge/waterBridgeUUR1.png", Texture.class);
         load("Path/Bridge/waterBridgeUUR2.png", Texture.class);
+        load("Path/Bridge/waterBridgeLD.png", Texture.class);
+        load("Path/Bridge/waterBridgeUU.png", Texture.class);
 
         load("Path/Turn/bridgeLnoArrows.png", Texture.class);
         load("Path/Turn/bridgeRnoArrows.png", Texture.class);
@@ -924,14 +929,24 @@ public class AssetLoader extends AssetManager{
         return b.getLocale().getLanguage();
     }
     public void changeLang(String locale){
-        unload("Language/text");
         I18NBundleLoader.I18NBundleParameter param = new I18NBundleLoader.I18NBundleParameter(new Locale(locale), "UTF-8");
+        System.out.println(param.locale);
+        unload("Language/text");
+//        System.out.println(get("Language/text"));
         load("Language/text", I18NBundle.class, param);
-        finishLoading();
+//        System.out.println(isLoaded("Language/text"));
+        finishLoadingAsset("Language/text");
+//        finishLoading();
+        System.out.println(isLoaded("Language/text"));
+//        b = null;
         b = get("Language/text", I18NBundle.class);
+//        System.out.println(b.getLocale());
         GDefence.getInstance().initTips();
         GDefence.getInstance().initScreens();
         GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
+
+        System.out.println(get("Language/text", I18NBundle.class).getLocale());
+//        System.out.println(getLanguage());
     }
     public void initLang(String locale){
         I18NBundleLoader.I18NBundleParameter param = new I18NBundleLoader.I18NBundleParameter(new Locale(locale), "UTF-8");
@@ -967,9 +982,10 @@ public class AssetLoader extends AssetManager{
     }
     public Texture getLockedTowerTexture(User.RecipeType t){
         switch (t){
-            case opened: return get("openedTower.png", Texture.class);
-            case canOpen: return get("canOpenTower.png", Texture.class);
-            case locked: return get("lockedTower.png", Texture.class);
+            case opened: return   get("openedTower.png", Texture.class);
+            case available:return get("openedTower.png", Texture.class);
+            case canOpen: return  get("canOpenTower.png", Texture.class);
+            case locked: return   get("lockedTower.png", Texture.class);
             default: return null;
         }
     }
@@ -1017,7 +1033,7 @@ public class AssetLoader extends AssetManager{
         s.up = new TextureRegionDrawable(new TextureRegion(get("spellCdTransparent.png", Texture.class)));
         s.over = new TextureRegionDrawable(new TextureRegion(get("spellCdTransparent.png", Texture.class)));
         s.down = new TextureRegionDrawable(new TextureRegion(get("spellCdTransparent.png", Texture.class)));
-        s.font = FontLoader.generateFont(30, Color.WHITE, 4, Color.BLACK);
+        s.font = FontLoader.generateFont(0, 30, Color.WHITE, 4, Color.BLACK);
         return s;
     }
 
@@ -1083,7 +1099,7 @@ public class AssetLoader extends AssetManager{
         TextButton.TextButtonStyle s = new TextButton.TextButtonStyle();
 
         s.up = new TextureRegionDrawable(new TextureRegion(get("cell.png", Texture.class)));
-        s.font = FontLoader.generateFont(52, Color.WHITE);
+        s.font = FontLoader.generateFont(0, 52, Color.WHITE);
         s.fontColor = Color.BLACK;
 
         return s;
@@ -1164,25 +1180,25 @@ public class AssetLoader extends AssetManager{
 //        Label.LabelStyle l = new Label.LabelStyle();
 //        l.font = FontLoader.impact24;
 //        l.fontColor = Color.BLACK;
-        return FontLoader.generateStyle(24, Color.BLACK);
+        return FontLoader.generateStyle(0, 24, Color.BLACK);
     }
     public Label.LabelStyle getInfoPanelSkin(){
 //        Label.LabelStyle l = new Label.LabelStyle();
 //        l.font = FontLoader.impact16;
 //        l.fontColor = Color.BLACK;
-        return FontLoader.generateStyle(16, Color.BLACK);
+        return FontLoader.generateStyle(0, 16, Color.BLACK);
     }
     public Label.LabelStyle getCurrentInfoPanelSkin(){
 //        Label.LabelStyle l = new Label.LabelStyle();
 //        l.font = FontLoader.impact24;
 //        l.fontColor = Color.BLACK;
-        return FontLoader.generateStyle(20, Color.BLACK);
+        return FontLoader.generateStyle(0, 20, Color.BLACK);
     }
     public Label.LabelStyle getLevelEndResultSkin(){
 //        Label.LabelStyle l = new Label.LabelStyle();
 //        l.font = FontLoader.impact36;
 //        l.fontColor = Color.BLACK;
-        return FontLoader.generateStyle(36, Color.BLACK);
+        return FontLoader.generateStyle(0, 36, Color.BLACK);
     }
 
 //    public ImageButton.ImageButtonStyle getTowerCellSkin(ItemEnum.Tower tower){//reworked

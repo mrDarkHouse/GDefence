@@ -5,10 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
-import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
-import com.darkhouse.gdefence.InventorySystem.inventory.Target.GemGradeTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SellTarget;
-import com.darkhouse.gdefence.InventorySystem.inventory.Target.TowerCraftTarget;
 
 public class SellSlotSource extends SlotSource {
     public SellSlotSource(SlotActor actor) {

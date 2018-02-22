@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Helpers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -53,6 +54,9 @@ public class FontLoader {
             case 7:return "[#CCCC00ff]";//darkYellow
             case 8:return "[#00886Bff]";//observatory green
             case 9:return "[#F09135ff]";//orange
+            case 10:return "[#000033ff]";//Obsidian
+            case 11:return "[#009900ff]";//Emerald
+            case 12:return "[#66ffffff]";//Diamond
             default:return "";
         }
     }
@@ -104,51 +108,38 @@ public class FontLoader {
 
 
     }
-    public static Label.LabelStyle generateStyle(int size, Color fontColor){
+    public static Label.LabelStyle generateStyle(int type, int size, Color fontColor){
         Label.LabelStyle style = new Label.LabelStyle();
-//        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
-//        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-//        parameter.size = size;
-        style.font = generateFont(size, Color.WHITE);
-                //generator.generateFont(parameter);
+        style.font = generateFont(type, size, Color.WHITE);
         style.fontColor = fontColor;
         return style;
     }
-    public static Label.LabelStyle generateStyle(int size, Color fontColor, int borderSize, Color borderColor){
+    public static Label.LabelStyle generateStyle(int type, int size, Color fontColor, int borderSize, Color borderColor){
         Label.LabelStyle style = new Label.LabelStyle();
-        style.font = generateFont(size, Color.WHITE, borderSize, borderColor);
+        style.font = generateFont(type, size, Color.WHITE, borderSize, borderColor);
         style.fontColor = fontColor;
         return style;
     }
-    public static Label.LabelStyle generateSecondaryStyle(int size, Color fontColor){
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = generateSecondaryFont(size, Color.WHITE);
-        style.fontColor = fontColor;
-        return style;
-    }
-    public static Label.LabelStyle generateSecondaryStyle(int size, Color fontColor, int borderSize, Color borderColor){
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = generateSecondaryFont(size, Color.WHITE, borderSize, borderColor);
-        style.fontColor = fontColor;
-        return style;
-    }
+//    public static Label.LabelStyle generateSecondaryStyle(int size, Color fontColor){
+//        Label.LabelStyle style = new Label.LabelStyle();
+//        style.font = generateSecondaryFont(size, Color.WHITE);
+//        style.fontColor = fontColor;
+//        return style;
+//    }
+//    public static Label.LabelStyle generateRobotoStyle(int size, Color fontColor){
+//        Label.LabelStyle style = new Label.LabelStyle();
+//        style.font = generateSecondaryFont(size, Color.WHITE);
+//        style.fontColor = fontColor;
+//        return style;
+//    }
 
 //    public static Label.LabelStyle generateIskoolaFont(int size, Color color, int borderSize, Color borderColor){
 //
 //    }
 
-    public static BitmapFont generateFont(int size, Color color, int borderSize, Color borderColor){
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.characters = font_chars_ru;
-        parameter.size = size;
-        parameter.color = color;
-        parameter.borderWidth = borderSize;
-        parameter.borderColor = borderColor;
-        return generator.generateFont(parameter);
-    }
-    public static BitmapFont generateSecondaryFont(int size, Color color, int borderSize, Color borderColor){
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto-regular.ttf"));
+
+    private static BitmapFont generateDefaultBorderFont(int size, Color color, int borderSize, Color borderColor, FileHandle f){
+        generator = new FreeTypeFontGenerator(f);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.characters = font_chars_ru;
         parameter.size = size;
@@ -158,22 +149,58 @@ public class FontLoader {
         return generator.generateFont(parameter);
     }
 
-    public static BitmapFont generateFont(int size, Color color){
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
+    public static BitmapFont generateFont(int type, int size, Color color, int borderSize, Color borderColor){
+        FileHandle f;
+        switch (type){
+            case 0:f = Gdx.files.internal("Fonts/Impact.ttf");
+                break;
+            case 1:f = Gdx.files.internal("Fonts/roboto-regular.ttf");
+                break;
+            case 2:f = Gdx.files.internal("Fonts/Roboto-Medium.ttf");
+                break;
+            case 3:f = Gdx.files.internal("Fonts/11434.ttf");
+                break;
+            default:throw new IllegalArgumentException("cant find font with type " + type);
+        }
+        return generateDefaultBorderFont(size, color, borderSize, borderColor, f);
+    }
+//    public static BitmapFont generateSecondaryFont(int size, Color color, int borderSize, Color borderColor){
+//        return generateDefaultBorderFont(size, color, borderSize, borderColor, Gdx.files.internal("Fonts/roboto-regular.ttf"));
+//    }
+//    public static BitmapFont generateRobotoMedium(int size, Color color, int borderSize, Color borderColor){
+//        return generateDefaultBorderFont(size, color, borderSize, borderColor, Gdx.files.internal("Fonts/Roboto-Medium.ttf"));
+//    }
+
+    private static BitmapFont generateDefaultFont(int size, Color color, FileHandle f){
+        generator = new FreeTypeFontGenerator(f);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.characters = font_chars_ru;
         parameter.size = size;
         parameter.color = color;
         return generator.generateFont(parameter);
     }
-    public static BitmapFont generateSecondaryFont(int size, Color color){
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/roboto-regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.characters = font_chars_ru;
-        parameter.size = size;
-        parameter.color = color;
-        return generator.generateFont(parameter);
+
+    public static BitmapFont generateFont(int type, int size, Color color){
+        FileHandle f;
+        switch (type){
+            case 0:f = Gdx.files.internal("Fonts/Impact.ttf");
+                break;
+            case 1:f = Gdx.files.internal("Fonts/roboto-regular.ttf");
+                break;
+            case 2:f = Gdx.files.internal("Fonts/Roboto-Medium.ttf");
+                break;
+            default:throw new IllegalArgumentException("cant find font with type " + type);
+        }
+        return generateDefaultFont(size, color, f);
     }
+//    public static BitmapFont generateSecondaryFont(int size, Color color){
+//
+//        return generateDefaultFont(size, color, Gdx.files.internal("Fonts/roboto-regular.ttf"));
+//    }
+//    public static BitmapFont generateRobotoMedium(int size, Color color){
+//
+//        return generateDefaultFont(size, color, Gdx.files.internal("Fonts/Roboto-Medium.ttf"));
+//    }
 
     public static String getOneColorButtonString(int index, String s, Color first, Color other){
 //        BitmapFont b1 = generateFont(size);

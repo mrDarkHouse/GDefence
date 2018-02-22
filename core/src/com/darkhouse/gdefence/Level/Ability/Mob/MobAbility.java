@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 
 
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Path.WalkableMapTile;
@@ -76,9 +77,17 @@ public abstract class MobAbility{
 //    public enum procType{
 //        onSpawn, getDmg, move, die
 //    }
+    public interface IListener{}
 
+    public interface IStrong extends IType{}
+//    public interface IStrongGetDmg extends IGetDmg {
+//        float getDmg(DamageSource source, DamageType type, float dmg);
+//    }
+    public interface IAfterGetDmg extends IType {
+        void afterGetDmg();// IGetDmg cant return dmg and than do smth
+    }
     public interface IGetDmg extends IType {
-        float getDmg(DamageSource source, float dmg);
+        float getDmg(DamageSource source, DamageType type, float dmg);
     }
     public interface IMove extends IType{
         void move(WalkableMapTile currentTile);
@@ -100,6 +109,15 @@ public abstract class MobAbility{
     }
 
     protected Mob owner;
+    protected AbilityPrototype prototype;
+
+    public AbilityPrototype getPrototype() {
+        return prototype;
+    }
+
+    public MobAbility(AbilityPrototype prototype) {
+        this.prototype = prototype;
+    }
 
     public void setOwner(Mob owner) {
         this.owner = owner;

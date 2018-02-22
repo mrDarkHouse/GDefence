@@ -186,7 +186,7 @@ public class Inventory {
 		return slots;
 	}
 
-	protected Slot firstSlotWithItem(Item item) {
+	public Slot firstSlotWithItem(Item item) {
 		for (Slot slot : slots) {
 			if (slot.getPrototype() == item && !slot.isFull()) {
 				return slot;

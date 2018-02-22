@@ -187,7 +187,10 @@ public abstract class MapTile extends GDSprite{
             case 50:
                 return new Decor(Integer.parseInt(info[1]));
             case 60:
-                return new Portal(Way.values()[Integer.parseInt(info[1])], Integer.parseInt(info[2]));
+                switch (info.length) {
+                    case 3:return new Portal(Way.values()[Integer.parseInt(info[1])], Integer.parseInt(info[2]));
+                    case 5:return new Portal(Way.values()[Integer.parseInt(info[1])], Integer.parseInt(info[2]), Integer.parseInt(info[3]), Integer.parseInt(info[4]));
+                }
             case 80:
                 switch (info.length){
 //                    case 2:return new Spawn(TargetType.values()[Integer.parseInt(info[1])]);

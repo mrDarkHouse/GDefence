@@ -64,7 +64,7 @@ public class TooltipListener extends ClickListener {
 	public boolean mouseMoved(InputEvent event, float x, float y) {
 		if (inside && followCursor) {
 			event.getListenerActor().localToStageCoordinates(tmp.set(x, y));
-			tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
+            tooltip.setPosition(tmp.x + position.x + offset.x, tmp.y + position.y + offset.y);
 		}
 		return false;
 	}
@@ -72,7 +72,7 @@ public class TooltipListener extends ClickListener {
 	@Override
 	public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 		super.enter(event, x, y, pointer, fromActor);
-		inside = true;
+        inside = true;
 		tooltip.setVisible(true);
 		tmp.set(x, y);
 		event.getListenerActor().localToStageCoordinates(tmp);
@@ -83,7 +83,7 @@ public class TooltipListener extends ClickListener {
 	@Override
 	public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
 		super.exit(event, x, y, pointer, toActor);
-		if(/*toActor == null*/pointer == -1) {
+        if(/*toActor == null*/pointer == -1) {
 			inside = false;
 			tooltip.setVisible(false);
 			//System.out.println(toActor);

@@ -67,7 +67,7 @@ public class NextWaveInfoPanel extends Table{
         pad(10);
         //setFillParent(false);
         abilities = new Array<Label>();
-        abilities.add(new Label(abilitiesS, FontLoader.generateStyle(16, null)));
+        abilities.add(new Label(abilitiesS, FontLoader.generateStyle(0, 16, null)));
         abilities.get(0).getStyle().font.getData().markupEnabled = true;
         Array<Label> abilitiesLabels = initString(Level.getMap().getSpawner().size());
         for (Label label:abilitiesLabels){
@@ -78,7 +78,7 @@ public class NextWaveInfoPanel extends Table{
         currentWave = new Label(currentWaveS, l.getInfoPanelSkin());
         mobsNumber = new Label(mobsNumberS, l.getInfoPanelSkin());
 //        mobName = new Label(mobNameS, l.getInfoPanelSkin());
-        mobName = new Label(mobNameS, FontLoader.generateStyle(16, null));//without color
+        mobName = new Label(mobNameS, FontLoader.generateStyle(0, 16, null));//without color
         mobName.getStyle().font.getData().markupEnabled = true;
         mobHealth = new Label(mobHealthS, l.getInfoPanelSkin());
         mobArmor = new Label(mobArmorS, l.getInfoPanelSkin());

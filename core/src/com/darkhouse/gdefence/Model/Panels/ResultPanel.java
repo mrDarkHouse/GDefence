@@ -35,11 +35,11 @@ public class ResultPanel extends AbstractPanel{
 
         Label mobsKilledLabel = new Label(mobsKilled, l.getTimerSkin());
         Label hpLooseLabel = new Label(hpLoose, l.getTimerSkin());
-        Label mobeySpendLabel = new Label(moneySpend, l.getTimerSkin());
+        Label moneySpendLabel = new Label(moneySpend, l.getTimerSkin());
 
         add(mobsKilledLabel).align(Align.left).row();
         add(hpLooseLabel).align(Align.left).row();
-        add(mobeySpendLabel).align(Align.left).row();
+        add(moneySpendLabel).align(Align.left).row();
 
 
 

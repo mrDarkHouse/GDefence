@@ -76,7 +76,7 @@ public class TowerMap extends Window{
             linkTowers(sr, buttons.get(9), buttons.get(13));
             linkTowers(sr, buttons.get(12), buttons.get(13));
 
-            linkTowers(sr, buttons.get(8), buttons.get(14));
+            linkTowers(sr, buttons.get(4), buttons.get(14));
             linkTowers(sr, buttons.get(10), buttons.get(14));
 
             linkTowers(sr, buttons.get(5), buttons.get(15));

@@ -146,18 +146,29 @@ public class GDefence extends Game {
         initTips();
 	}
     public void initTips(){
-        String tip2 = assetLoader.getWord("tip2_1") + " " + User.GEM_TYPE.getBoost(User.GEM_TYPE.RED) + System.getProperty("line.separator") +
+//        String[] tips;
+        tips = new String[9];
+        tips[0] = assetLoader.getWord("tip1");
+        tips[1] = assetLoader.getWord("tip2_1") + " " + User.GEM_TYPE.getBoost(User.GEM_TYPE.RED) + System.getProperty("line.separator") +
                 assetLoader.getWord("tip2_2") + " " + User.GEM_TYPE.getBoost(User.GEM_TYPE.YELLOW) + System.getProperty("line.separator") +
                 assetLoader.getWord("tip2_3") + " " + User.GEM_TYPE.getBoost(User.GEM_TYPE.BLUE);
-        String tip3 = assetLoader.getWord("tip3_1") + System.getProperty("line.separator") +
+        tips[2] = assetLoader.getWord("tip3_1") + System.getProperty("line.separator") +
                 assetLoader.getWord("tip3_2");
-        String tip4 = assetLoader.getWord("tip4_1") + System.getProperty("line.separator") +
-                assetLoader.getWord("tip4_2");
-        String tip5 = assetLoader.getWord("tip5_1") + System.getProperty("line.separator") +
-                assetLoader.getWord("tip5_2") + System.getProperty("line.separator") +
-                assetLoader.getWord("tip5_3");
+        tips[3] = assetLoader.getWord("tip4_1") + System.getProperty("line.separator") +
+                assetLoader.getWord("tip4_2")+ System.getProperty("line.separator") +
+                assetLoader.getWord("tip4_3");
+        tips[4] = assetLoader.getWord("tip5");
+        tips[5] = assetLoader.getWord("tip6_1") + System.getProperty("line.separator") +
+                assetLoader.getWord("tip6_2");
+        tips[6] = assetLoader.getWord("tip7_1") + System.getProperty("line.separator") +
+                assetLoader.getWord("tip7_2") + System.getProperty("line.separator") +
+                assetLoader.getWord("tip7_3");
+        tips[7] = assetLoader.getWord("tip8_1") + System.getProperty("line.separator") +
+                assetLoader.getWord("tip8_2");
+        tips[8] = assetLoader.getWord("tip9");
 
-        tips = new String[]{assetLoader.getWord("tip1"), tip2, tip3, tip4, tip5, assetLoader.getWord("tip6"),};
+
+//        tips = new String[]{, tip2, tip3, tip4, tip5 ,tip6, tip7, tip8, tip9};
     }
 
     public void initCampainMap(){

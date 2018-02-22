@@ -88,6 +88,7 @@ public class Sprint extends MobAbility implements MobAbility.ISpawn{
     private SprintBuff effect;
 
     public Sprint(P prototype) {
+        super(prototype);
         effect = new SprintBuff(prototype.cdCap, prototype.duration, prototype.speedBoost);
     }
 

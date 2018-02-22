@@ -180,7 +180,7 @@ public class CampainMap extends AbstractCampainScreen {
             this.firstButtonInt = firstButton;
 
             this.text = text;
-            name = new Label(GDefence.getInstance().assetLoader.getWord(text), FontLoader.generateStyle(70, Color.GRAY, 5, Color.BLACK));
+            name = new Label(GDefence.getInstance().assetLoader.getWord(text), FontLoader.generateStyle(0, 70, Color.GRAY, 5, Color.BLACK));
 
             levels = new LevelButton[buttons];
             int borderSize = Gdx.graphics.getWidth()/8;
@@ -224,7 +224,11 @@ public class CampainMap extends AbstractCampainScreen {
 //        }
     }
     private PagedMap pagedMap;
+    private UserPanel userPanel;
 
+    public UserPanel getUserPanel() {
+        return userPanel;
+    }
 
     //private GDefence mainClass;
 
@@ -269,8 +273,9 @@ public class CampainMap extends AbstractCampainScreen {
         int goldPanelSize[] = {60, userPanelSize[1]};
         stage.addActor(new GoldPanel(Gdx.graphics.getWidth() - userPanelSize[0] - goldPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] -
                 topPadSize, goldPanelSize[0], goldPanelSize[1]));
-        stage.addActor(new UserPanel(Gdx.graphics.getWidth() - userPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize,
-                userPanelSize[0], userPanelSize[1]));
+        userPanel = new UserPanel(Gdx.graphics.getWidth() - userPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize,
+                userPanelSize[0], userPanelSize[1]);
+        stage.addActor(userPanel);
         //System.out.println(Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize);
         stage.addActor(new GemPanel(0, Gdx.graphics.getHeight() - 140 - topPadSize, 200, 140));
 
@@ -347,6 +352,7 @@ public class CampainMap extends AbstractCampainScreen {
     private void update(){
         pagedMap.update();
         pagedMap.updateTooltips();
+        userPanel.update();
     }
 
 

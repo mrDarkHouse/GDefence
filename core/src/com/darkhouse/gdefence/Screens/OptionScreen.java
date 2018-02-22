@@ -155,11 +155,19 @@ public class OptionScreen extends AbstractMenuScreen {
 
                     switch (language.getSelectedIndex()){
                         case 0: {
-                            if(!l.getLanguage().equals("en")) l.changeLang("en");
-                        } break;
+                            if(!l.getLanguage().equals("en")) {
+                                l.changeLang("en");
+
+                            }
+                        }break;
                         case 1: {
-                            if(!l.getLanguage().equals("ru")) l.changeLang("ru");
-                        } break;
+                            if(!l.getLanguage().equals("ru")) {
+                                l.changeLang("ru");
+
+//                                System.out.println(l.getLanguage());
+//                                System.out.println(language.getSelected());
+                            }
+                        }break;
                     }
                 } catch (LWJGLException e) {
                     e.printStackTrace();

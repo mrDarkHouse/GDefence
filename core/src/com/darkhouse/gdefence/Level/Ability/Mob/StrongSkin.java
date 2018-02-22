@@ -4,13 +4,15 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Objects.DamageSource;
 
 public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
 
-    private static class BlockDmg extends Effect implements IGetDmg{
+    private static class BlockDmg extends Effect<Mob> implements IGetDmg, IListener{
         private int blockEmount;
         private int blockMinLimit;
 
@@ -21,10 +23,12 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(DamageSource source, float dmg) {
-            if(dmg < blockMinLimit)return dmg;
-            float newDmg = dmg - blockEmount;
-            return newDmg > blockMinLimit ? newDmg:blockMinLimit;
+        public float getDmg(DamageSource source, DamageType type, float dmg) {
+            if(type == DamageType.Physic) {
+                if (dmg < blockMinLimit) return dmg;
+                float newDmg = dmg - blockEmount;
+                return newDmg > blockMinLimit ? newDmg : blockMinLimit;
+            }else return dmg;
         }
 
         @Override
@@ -59,6 +63,7 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
     private BlockDmg effect;
 
     public StrongSkin(P prototype) {
+        super(prototype);
         effect = new BlockDmg(-1, prototype.blockEmount, prototype.blockMinLimit);
     }
 

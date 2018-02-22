@@ -15,6 +15,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Objects.GameObject;
 import com.darkhouse.gdefence.Objects.Recipe;
 import com.darkhouse.gdefence.Objects.SpellObject;
@@ -203,6 +204,7 @@ public class TowerCraftPanel extends Window{
         Array<TowerObject> needComponents = r.getComponents();//nullPointer
         Array<TowerObject> currentComponents = new Array<TowerObject>();
 
+
         for (SlotActor a:componentSlots){
             if(!a.getSlot().isEmpty()){
                 currentComponents.add(((TowerObject) a.getSlot().getLast()));
@@ -217,7 +219,35 @@ public class TowerCraftPanel extends Window{
             }
         }
         if(contains == needComponents.size){
-            resultSlot.getSlot().add(TowerObject.generateStartObjects(r.getTower(), 1));//create new tower
+            Array<Ability.AbilityPrototype> spellMatch = new Array<Ability.AbilityPrototype>();
+            for (Ability.AbilityPrototype ap:r.getTower().getAbilities()) {
+                for (TowerObject at : currentComponents) {
+                    for (Ability.AbilityPrototype so : at.getAbilities()) {
+                        for (Class<? extends Ability.AbilityPrototype> a:ap.getAbilitiesToSaveOnCraft()){
+                            if(a == so.getClass()){
+                                spellMatch.add(so);
+                            }
+                        }
+//                        if (ap.getClass() == so.getClass()){
+//                            spellMatch.add(so);
+//                        }
+                    }
+
+                }
+            }
+            Array<? extends GameObject> t = TowerObject.generateStartObjects(r.getTower(), 1);
+            Array<Ability.AbilityPrototype> att = ((TowerObject) t.get(0)).getAbilities();
+            for (Ability.AbilityPrototype at:att){
+                for (Ability.AbilityPrototype ap:spellMatch){
+                    if(at.getClass() == ap.getClass()) {
+                        at.gemCur(ap.getGemCur());
+                    }
+                }
+            }
+
+
+            resultSlot.getSlot().add(t);//create new tower
+
         }else{
             if(!resultSlot.getSlot().isEmpty()){
 //                resultSlot.getSlot().removeListener(resultListener);//kostil'
@@ -247,7 +277,7 @@ public class TowerCraftPanel extends Window{
 
 
 
-        GDefence.getInstance().user.craftTower((ItemEnum.Tower) resultSlot.getSlot().getLast().getPrototype());//
+        GDefence.getInstance().user.craftTower(/*(ItemEnum.Tower)*/ (TowerObject) resultSlot.getSlot().getLast()/*.getPrototype()*/);//
 //        TowerObject.generateStartObjects(r.getTower(), 1);
 //        User.getTowerInventory().store(resultSlot.getSlot().take(1));
 

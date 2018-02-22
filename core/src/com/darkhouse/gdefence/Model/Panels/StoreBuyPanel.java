@@ -11,7 +11,6 @@ import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.BuySlotSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SellTarget;
-import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.SlotTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Objects.TowerObject;
@@ -269,7 +268,7 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
                     }
             }
         });
-        Label l = new Label(a.getSlot().getPrototype().getGlobalCost() + "$", FontLoader.generateStyle(28, Color.BLACK)){
+        Label l = new Label(a.getSlot().getPrototype().getGlobalCost() + "$", FontLoader.generateStyle(0, 28, Color.BLACK)){
             @Override
             public float getPrefWidth() {
                 return 60;
@@ -305,7 +304,7 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
 //        for (int i = 0; i < getInventory().getSlots().size; i++){
 //            Item item = getInventory().getSlots().get(i).getPrototype();//TowerObject can be instead prototype
 //            if(item!= null){
-//                cost[i].setText("$" + item.getGlobalCost());
+//                cost[i].setText("$" + item.getRecipeCost());
 //            }
 //
 //        }
@@ -363,7 +362,6 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
             a.addListener(new DoubleClickListener(toInv, ((SlotActor) a)){//think that all items can be only slotActor
                 @Override
                 protected void move() {
-                    System.out.println(owner.getSlot().getPrototype().getGlobalCost());
                     if(GDefence.getInstance().user.deleteGold(owner.getSlot().getPrototype().getGlobalCost())) {
                         toInventory.store(TowerObject.generateStartObjects(owner.getSlot().getPrototype(), 1));
                     }else {

@@ -21,6 +21,7 @@ public class LevelTooltip extends AbstractTooltip{
     private Skin skin;
 
     private Label label;
+    private Label dropLable;
 
     private String waves;
     private String exp;
@@ -75,8 +76,16 @@ public class LevelTooltip extends AbstractTooltip{
                 hp + System.getProperty("line.separator") +
                 en +
                 drop*/, skin, "description");
+
+        add(label).row();
+        Label la = new Label("", skin, "description");
+        la.getStyle().font.getData().markupEnabled = true;
+        la.setText("[#F09135ff]" + b.get("drop")  +"[]:");
+        la.setAlignment(Align.center);
+        add(la).row();
+        dropLable = new Label("", skin, "description");
+        add(dropLable);
         hasChanged();
-        add(label);
 //        pack();
     }
 
@@ -91,8 +100,9 @@ public class LevelTooltip extends AbstractTooltip{
                 expS + System.getProperty("line.separator") +
                 goldS + System.getProperty("line.separator") +
                 hp + System.getProperty("line.separator") +
-                en +
-                drop);
+                en /*+ System.getProperty("line.separator") + *//*"[#F09135ff] Drop[]" +*//*
+                drop*/);
+        dropLable.setText(drop);
         pack();
     }
 
@@ -100,9 +110,11 @@ public class LevelTooltip extends AbstractTooltip{
         String tooltip = "";
         if(dropCode == null)return tooltip;
         String[] objects = dropCode.split("/");
+        boolean first = true;
 
         for (String s:objects){
-            tooltip += System.getProperty("line.separator");
+            if(!first) tooltip += System.getProperty("line.separator");
+            else first = false;
             String[] curr = s.split(":");
             tooltip += ItemEnum.getItemById(Integer.parseInt(curr[0])).getName();
 //            tooltip += ItemEnum.getItemNameById(Integer.parseInt(curr[0]));

@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
@@ -47,9 +48,14 @@ public class Desolate extends Ability implements Ability.IOnHit {
 //        }
 
         @Override
-        public String getSaveCode() {
-            return null;
+        public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return new Array<Class<? extends AbilityPrototype>>();
         }
+
+//        @Override
+//        public String getSaveCode() {
+//            return null;
+//        }
 
         @Override
         public P copy() {

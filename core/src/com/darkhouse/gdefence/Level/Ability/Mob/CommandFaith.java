@@ -73,6 +73,7 @@ public class CommandFaith extends MobAbility implements MobAbility.IDie{
     private float duration;
 
     public CommandFaith(P prototype) {
+        super(prototype);
         this.aoeRange = prototype.range;
         this.speedBoost = prototype.speedBoost;
         this.duration = prototype.duration;

@@ -58,7 +58,7 @@ public class GemPanel extends AbstractPanel{
 
         gemsLabel = new Label[6];
         for (int i = 0; i < gemsLabel.length; i++) {
-            gemsLabel[i] = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.values()[i]) + "", /*GDefence.getInstance().assetLoader.getSkin()*/FontLoader.generateStyle(26, Color.BLACK));
+            gemsLabel[i] = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.values()[i]) + "", /*GDefence.getInstance().assetLoader.getSkin()*/FontLoader.generateStyle(0, 26, Color.BLACK));
         }
 //        gemsLabel[0] = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.RED) + "", AssetLoader.getSkin());
 //        gemsLabel[1] = new Label(GDefence.getInstance().user.getGemNumber(User.GEM_TYPE.YELLOW) + "", AssetLoader.getSkin());

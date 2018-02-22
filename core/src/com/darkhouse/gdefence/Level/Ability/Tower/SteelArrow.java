@@ -30,9 +30,14 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
         }
 
         @Override
-        public String getSaveCode() {
-            return null;
+        public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return new Array<Class<? extends AbilityPrototype>>();
         }
+
+//        @Override
+//        public String getSaveCode() {
+//            return null;
+//        }
 
         @Override
         public AbilityPrototype copy() {

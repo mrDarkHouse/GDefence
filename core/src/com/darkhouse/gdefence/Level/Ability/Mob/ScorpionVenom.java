@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tools.Stackable;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
@@ -32,7 +33,7 @@ public class ScorpionVenom extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(DamageSource source, float dmg) {
+        public float getDmg(DamageSource source, DamageType type, float dmg) {
             if (source instanceof Tower) {//tower
                 Tower t = ((Tower) source);
                 t.addEffect(new ScorpionVenomEffect(duration, asSlow).setOwner(t));
@@ -42,6 +43,7 @@ public class ScorpionVenom extends MobAbility implements MobAbility.ISpawn{
     }
     private class ScorpionVenomEffect extends Effect<Tower>{
         private int asSlow;
+        private int currentSlow;
 
         public ScorpionVenomEffect(float duration, int asSlow) {
             super(false, true, duration, "scorpionVenom");
@@ -50,12 +52,13 @@ public class ScorpionVenom extends MobAbility implements MobAbility.ISpawn{
 
         @Override
         public void apply() {
-            owner.changeAttackSpeed(-asSlow);
+            currentSlow = owner.changeAttackSpeed(-asSlow);
+//            System.out.println(currentSlow);//TODO double sout
         }
 
         @Override
         public void dispell() {
-            owner.changeAttackSpeed(asSlow);
+            owner.changeAttackSpeed(-currentSlow);
             super.dispell();
         }
     }
@@ -87,6 +90,7 @@ public class ScorpionVenom extends MobAbility implements MobAbility.ISpawn{
     private ScorpionVenomBuff effect;
 
     public ScorpionVenom(P prototype) {
+        super(prototype);
         effect = new ScorpionVenomBuff(prototype.duration, prototype.asSlow);
     }
 

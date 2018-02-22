@@ -1,9 +1,11 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tools.Chance;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -78,10 +80,16 @@ public class Bash extends Ability implements Ability.IOnHit{
                    l.getWord("bashTooltip3") + " " + FontLoader.colorCode(1) + duration + "[] " + l.getWord("bashTooltip4")
                     + " " + FontLoader.colorCode(2) + bonusDmg + "[] " + l.getWord("bashTooltip5");
         }
+
         @Override
-        public String getSaveCode() {
-            return super.getSaveCode() + "z" + chance + ";" + duration + ";" + bonusDmg + ";" + g.chanceUp + ";" + g.durationUp + ";" + g.bonusDmgUp;
+        public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return new Array<Class<? extends AbilityPrototype>>();
         }
+
+//        @Override
+//        public String getSaveCode() {
+//            return super.getSaveCode() + "z" + chance + ";" + duration + ";" + bonusDmg + ";" + g.chanceUp + ";" + g.durationUp + ";" + g.bonusDmgUp;
+//        }
 
 //        protected String getBoostName(User.GEM_TYPE gemType){
 //            switch (gemType) {
@@ -146,7 +154,7 @@ public class Bash extends Ability implements Ability.IOnHit{
     public int getDmg(Mob target, int startDmg) {
         if(Chance.proc(chance)) {
             target.addEffect(new BashEffect(duration).setOwner(target));
-            target.hit(bonusDmg, owner);
+            target.hit(bonusDmg, DamageType.Magic, owner);
         }
         return startDmg;
     }

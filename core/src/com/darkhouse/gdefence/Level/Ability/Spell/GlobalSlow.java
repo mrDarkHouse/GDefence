@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Level.Ability.Spell;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
@@ -19,21 +20,43 @@ public class GlobalSlow extends Spell{
 
     public static class P extends SpellObject implements Spell.INonTarget{
         private AtomicReference<Float> slowPercent;
-        private AtomicReference<Integer> duration;//Float
+        private AtomicReference<Float> duration;//Float
+        private AtomicReference<Float> cooldownDown;
         private G g;
 
-        public P(int energyCost, int cooldown, float slowPercent, int duration, G grader) {
-            super(24, "globalSlow", energyCost, cooldown, grader.gemCap, Mob.class);
+        public P(int energyCost, float cooldown, float slowPercent, float duration, final float cooldownDown, final G grader) {
+            super(154, "globalSlow", energyCost, cooldown, grader.gemCap, Mob.class);
+            this.cooldownDown = new AtomicReference<Float>(cooldownDown);
             this.slowPercent = new AtomicReference<Float>(slowPercent);
-            this.duration = new AtomicReference<Integer>(duration);
+            this.duration = new AtomicReference<Float>(duration);
             this.g = grader;
 
 
             AssetLoader l = GDefence.getInstance().assetLoader;
             gemBoost[0] = new Ability.AbilityPrototype.BoostFloat(this.slowPercent, grader.slowPercentUp, l.getWord("globalSlowGrade1"),
                     true, Ability.AbilityPrototype.BoostFloat.FloatGradeFieldType.PERCENT);
-            gemBoost[1] = new Ability.AbilityPrototype.BoostInteger(this.duration, grader.durationUp, l.getWord("globalSlowGrade2"),
-                    true, Ability.AbilityPrototype.BoostInteger.IntegerGradeFieldType.NONE);
+            gemBoost[1] = new Ability.AbilityPrototype.BoostFloat(this.duration, grader.durationUp, l.getWord("globalSlowGrade2"),
+                    true, BoostFloat.FloatGradeFieldType.TIME);
+            gemBoost[2] = new BoostFloat(this.cooldownDown, grader.cooldownDown, l.getWord("globalSlowGrade3"),
+                    false, BoostFloat.FloatGradeFieldType.TIME){
+                @Override
+                public String boostField() {
+//                    return super.boostField();
+                    return (getCooldown()) + "s";
+                }
+
+                @Override
+                public String concate() {
+//                    return super.concate();
+                    return (getCooldown() - grader.cooldownDown) + "s";
+                }
+
+                @Override
+                public void grade() {
+//                    super.grade();
+                    P.super.setCooldown(P.super.cooldown - grader.cooldownDown);
+                }
+            };
         }
 
         @Override
@@ -44,25 +67,33 @@ public class GlobalSlow extends Spell{
         @Override
         protected String getChildTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("globalSlowTooltip1") + " " + (int)(slowPercent.get()*100) + "%" + System.getProperty("line.separator") +
-                    l.getWord("globalSlowTooltip2") + " " + duration + " " + l.getWord("globalSlowTooltip3");
+            return l.getWord("globalSlowTooltip1") + " " + System.getProperty("line.separator") +
+                    l.getWord("globalSlowTooltip2") + " " + FontLoader.colorString(Integer.toString((int)(slowPercent.get()*100)) + "%", 10) +
+                    System.getProperty("line.separator") + l.getWord("globalSlowTooltip3") + " " +
+                    FontLoader.colorString(duration + "", 11) + " " + l.getWord("globalSlowTooltip4");
+        }
+
+        @Override
+        public Array<Class<? extends Ability.AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return null;
         }
 
         @Override
         public String getSaveCode() {
-            return super.getSaveCode() + ";" + slowPercent + ";" + duration + ";" + g.slowPercentUp + ";" + g.durationUp;
+            return super.getSaveCode() + ";" + slowPercent + ";" + duration + ";" + cooldownDown + ";" + g.slowPercentUp + ";" + g.durationUp + ";" + g.cooldownDown;
         }
 
         @Override
         public Ability.AbilityPrototype copy() {
-            AssetLoader l = GDefence.getInstance().assetLoader;
-            P p = new P(energyCost, cooldown, slowPercent.get(), duration.get(), g);
-//            p.gemBoost[0] = new BoostFloat();
-            p.gemBoost[0] = new Ability.AbilityPrototype.BoostFloat(this.slowPercent, g.slowPercentUp, l.getWord("globalSlowGrade1"),
-                    true, Ability.AbilityPrototype.BoostFloat.FloatGradeFieldType.PERCENT);
-            p.gemBoost[1] = new Ability.AbilityPrototype.BoostInteger(this.duration, g.durationUp, l.getWord("globalSlowGrade2"),
-                    true, Ability.AbilityPrototype.BoostInteger.IntegerGradeFieldType.NONE);
-            return p;
+            return null;
+//            AssetLoader l = GDefence.getInstance().assetLoader;
+//            P p = new P(energyCost, cooldown, slowPercent.get(), duration.get(), g);
+////            p.gemBoost[0] = new BoostFloat();
+//            p.gemBoost[0] = new Ability.AbilityPrototype.BoostFloat(this.slowPercent, g.slowPercentUp, l.getWord("globalSlowGrade1"),
+//                    true, Ability.AbilityPrototype.BoostFloat.FloatGradeFieldType.PERCENT);
+//            p.gemBoost[1] = new Ability.AbilityPrototype.BoostInteger(this.duration, g.durationUp, l.getWord("globalSlowGrade2"),
+//                    true, Ability.AbilityPrototype.BoostInteger.IntegerGradeFieldType.NONE);
+//            return p;
         }
 
 
@@ -73,17 +104,19 @@ public class GlobalSlow extends Spell{
 
         @Override
         public int[] exp2nextLevel() {
-            return new int[]{20, 30, 40, 50, 60};
+                return new int[]{150, 350, 500, 800, 1000, 1400, 2000};
         }
     }
     public static class G extends Ability.AbilityGrader{
         private float slowPercentUp;
-        private int durationUp;
+        private float durationUp;
+        private float cooldownDown;
 
-        public G(float slowPercentUp, int durationUp, int[] gemMax) {
-            super(gemMax);
+        public G(float slowPercentUp, float durationUp, float cooldownDown, int[] gemCap) {
+            super(gemCap);
             this.slowPercentUp = slowPercentUp;
             this.durationUp = durationUp;
+            this.cooldownDown = cooldownDown;
         }
     }
 
@@ -108,13 +141,20 @@ public class GlobalSlow extends Spell{
             owner.changeSpeed(changeSpeed);
             super.dispell();
         }
+
+        @Override
+        public void act(float delta) {
+            super.act(delta);
+            getPrototype().addExp(slowPercent/10);
+//            System.out.println(getPrototype().getTotalExp());
+        }
     }
 
 
 
 //    private G grader;
     private float slowPercent;
-    private int duration;
+    private float duration;
 
 
 

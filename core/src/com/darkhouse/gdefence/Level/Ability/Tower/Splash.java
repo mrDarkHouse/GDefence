@@ -1,13 +1,17 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Model.Level.Map;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Splash extends Ability implements Ability.IAfterHit{
@@ -25,9 +29,16 @@ public class Splash extends Ability implements Ability.IAfterHit{
         }
 
         @Override
-        public String getSaveCode() {
-            return super.getSaveCode() + "z" + aoe + ";" + aoeDmg + ";" + g.aoeUp + ";" + g.aoeDmgUp;
+        public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            Array<Class<? extends AbilityPrototype>> a = new Array<Class<? extends AbilityPrototype>>();
+            a.add(Splash.P.class);
+            return a;
         }
+
+//        @Override
+//        public String getSaveCode() {
+//            return super.getSaveCode() + "z" + aoe + ";" + aoeDmg + ";" + g.aoeUp + ";" + g.aoeDmgUp;
+//        }
 
         @Override
         public AbilityPrototype copy() {
@@ -48,7 +59,7 @@ public class Splash extends Ability implements Ability.IAfterHit{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("splashTooltip1") + " " + FontLoader.colorString(aoeDmg.get()*100 + "%", 1) + " " +
+            return l.getWord("splashTooltip1") + " " + FontLoader.colorString(new BigDecimal(aoeDmg.get() * 100).setScale(2, RoundingMode.HALF_UP).floatValue() + "%", 1) + " " +
                     l.getWord("splashTooltip2") + System.getProperty("line.separator") +
                     l.getWord("splashTooltip3") + " " + FontLoader.colorString(aoe.get().toString(), 0) + " " +
                     l.getWord("splashTooltip4");
@@ -80,7 +91,12 @@ public class Splash extends Ability implements Ability.IAfterHit{
 //
 //        }
         for (Mob m:Map.getMobsInRange(target, aoe)){
-            owner.hitTarget(m, (int) (dmg*aoeDmg));
+            if(m != target) {//no splash damage to main target
+//                owner.hitTarget(m, (int) (dmg * aoeDmg));
+                float damaged = m.hit(dmg*aoeDmg, DamageType.PhysicNoContact, owner);
+//                System.out.println(m + " " + damaged);
+                owner.addExp(owner.getExpFromDmg(damaged));
+            }
         }
     }
 

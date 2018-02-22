@@ -33,8 +33,8 @@ public class KillMadnessPanel extends AbstractPanel{
         AssetLoader l = GDefence.getInstance().assetLoader;
         pad(10);
         setBackground(l.getSkin().getDrawable("info-panel"));
-        info = new Label(l.getWord("killMadnessInfo"), FontLoader.generateStyle(28, Color.BLACK));
-        time = new Label("0.00" + "/" + timeLimit, FontLoader.generateStyle(24, Color.BLACK));
+        info = new Label(l.getWord("killMadnessInfo"), FontLoader.generateStyle(0, 28, Color.BLACK));
+        time = new Label("0.00" + "/" + timeLimit, FontLoader.generateStyle(0, 24, Color.BLACK));
         add(info).row();
         add(time);
         pack();

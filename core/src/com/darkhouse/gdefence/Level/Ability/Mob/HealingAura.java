@@ -12,7 +12,7 @@ import com.darkhouse.gdefence.Level.Wave;
 
 public class HealingAura extends MobAbility implements MobAbility.ISpawn{
 
-    private class HealingAuraBuff extends Effect<Mob>{
+    private class HealingAuraBuff extends Effect<Mob> implements IListener{
 //        private int range;
         private int healEmount;
 
@@ -108,6 +108,7 @@ public class HealingAura extends MobAbility implements MobAbility.ISpawn{
     private HealingAuraBuff buff;
 
     public HealingAura(P prototype) {
+        super(prototype);
         buff = new HealingAuraBuff(prototype.range, prototype.healDelay, prototype.healEmount);
     }
 

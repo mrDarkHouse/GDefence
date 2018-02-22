@@ -7,7 +7,8 @@ public interface Item {
 
     String getTextureRegion();
     //String getTooltip();
-    int getGlobalCost();
+    int getRecipeCost();//open in towerMap
+    int getGlobalCost();//buy/sell in store
     int getID();
     String getName();
     String getTooltip();

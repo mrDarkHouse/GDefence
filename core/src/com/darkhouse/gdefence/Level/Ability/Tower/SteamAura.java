@@ -30,6 +30,11 @@ public class SteamAura extends Ability implements Ability.IOnBuild{
         }
 
         @Override
+        public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return new Array<Class<? extends AbilityPrototype>>();
+        }
+
+        @Override
         public AbilityPrototype copy() {
             P p = new P();
             //p.

@@ -1,11 +1,9 @@
 package com.darkhouse.gdefence.Objects;
 
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
-import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.User;
 
 public class Recipe extends DetailObject{
@@ -17,14 +15,14 @@ public class Recipe extends DetailObject{
 
     private Array <TowerObject> components;
     private Array <User.Research> researches;
-    private int globalCost;
+    private int recipeCost;
 
     public static Recipe loadSaveCode(String savecode){
         return new Recipe(ItemEnum.Tower.valueOf(savecode));
     }
 
-    public int getGlobalCost() {
-        return globalCost;
+    public int getRecipeCost() {
+        return recipeCost;
     }
 
     public Array<TowerObject> getComponents() {
@@ -47,7 +45,7 @@ public class Recipe extends DetailObject{
 
     private void initComponents(ItemEnum.Tower t){//
         components = t.getComponents();
-        globalCost = t.getGlobalCost();
+        recipeCost = t.getRecipeCost();
         researches = t.getResearchNeed();
 
 //        TowerObject o;//

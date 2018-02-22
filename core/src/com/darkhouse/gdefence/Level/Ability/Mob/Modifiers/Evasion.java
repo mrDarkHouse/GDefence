@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob.Modifiers;
 
 
 import com.darkhouse.gdefence.Level.Ability.Mob.MobAbility;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Objects.DamageSource;
 
@@ -17,7 +18,7 @@ public class Evasion extends Modifier implements MobAbility.IGetDmg{
     }
 
     @Override
-    public float getDmg(DamageSource source, float dmg) {
+    public float getDmg(DamageSource source, DamageType type, float dmg) {
         if(chance > r.nextFloat()) {
             return 0;
         }

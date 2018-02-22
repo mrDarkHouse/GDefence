@@ -19,7 +19,7 @@ public class EmergencyRepair extends Spell{
         private AtomicReference<Integer> healAmount;
         private G g;
 
-        public P(int energyCost, int cooldown, int healAmount, G grader) {
+        public P(int energyCost, float cooldown, int healAmount, G grader) {
             super(22, "emergencyRepair", energyCost, cooldown, grader.gemCap);
             this.healAmount = new AtomicReference<Integer>(healAmount);
             this.g = grader;
@@ -33,6 +33,11 @@ public class EmergencyRepair extends Spell{
         protected String getChildTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
             return l.getWord("emergencyRepairTooltip1") + " " + healAmount.get() + " " + l.getWord("emergencyRepairTooltip2");
+        }
+
+        @Override
+        public Array<Class<? extends Ability.AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return null;
         }
 
         @Override

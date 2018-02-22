@@ -63,6 +63,7 @@ public class WaterFeel extends MobAbility implements MobAbility.IMove{
 
 
     public WaterFeel(P prototype) {
+        super(prototype);
         buff = new SwimSpeed(-1, prototype.speedValue);
     }
 

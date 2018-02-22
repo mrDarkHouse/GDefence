@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
@@ -32,10 +33,10 @@ public class EffectIcon extends Actor{
         sp = new ShapeRenderer();
 
         if(effect.isCooldownable()){
-            other = new Label(((int) effect.getCooldownObject().getCooldown()) + "", FontLoader.generateStyle(14, Color.BLACK));
+            other = new Label(((int) effect.getCooldownObject().getCooldown()) + "", FontLoader.generateStyle(0, 14, Color.WHITE, 1, Color.BLACK));
         }
         if(effect.isStackable()){
-            other = new Label(effect.getStackableObject().getStacks() + "", FontLoader.generateStyle(15, Color.BLACK));
+            other = new Label(effect.getStackableObject().getStacks() + "", FontLoader.generateStyle(0, 12, Color.WHITE, 1, Color.BLACK));
         }
     }
 
@@ -45,7 +46,8 @@ public class EffectIcon extends Actor{
         sp.begin(ShapeRenderer.ShapeType.Line);
         sp.setColor(color);
         Gdx.gl.glLineWidth(borderSize + 3);
-        sp.rect(getX() - 1, getY() - 1, getWidth() + 2, getHeight() + 2);
+        Vector2 a = localToStageCoordinates(new Vector2(getX(), getY()));
+        sp.rect(a.x - /*getX()*/ + 1 - getX(), a.y/*getY()*/ - 1, getWidth() + 2, getHeight() + 2);
 //        sp.rectLine(getX(), getY(), getX() + getWidth(), getY() + getHeight(), 8);
         sp.end();
         Gdx.gl.glLineWidth(1);
@@ -62,6 +64,7 @@ public class EffectIcon extends Actor{
 //        batch.getColor().a *= 0.4f;
 //        Color tmp = batch.getColor();
 //        batch.setColor(tmp.r, tmp.g, tmp.b, tmp.a *= 0.8);
+
         batch.draw(icon, getX() + borderSize, getY() + borderSize, getWidth() - borderSize*2, getHeight() - borderSize*2);
 //
 //

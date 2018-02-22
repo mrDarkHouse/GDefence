@@ -1,11 +1,9 @@
 package com.darkhouse.gdefence.Objects;
 
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
-import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
@@ -46,6 +44,9 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         }
         return null;
     }
+    public static TowerObject generateClearTower(ItemEnum.Tower prototype){
+        return new TowerObject(prototype, 0, 0, 0);
+    }
 
     @Override
     public int[] exp2nextLevel() {
@@ -63,7 +64,7 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
     }
 //    private static int[] startExp2nextLvl = {40, 80, 140, 260, 640, 1280, 1280, 1280, 1280};
     private int[] exp2nextLevel;
-    private static int[] startExp2nextLvl = {4, 8, 14, 26, 64, 80, 92, 102, 128};
+    private static int[] startExp2nextLvl = {4, 8, 14, 26, 64, 80, 92, 102, 128, 154};//max 10 levels
 //    public static int[] startExp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
 
     private ItemEnum.Tower prototype;
@@ -75,7 +76,7 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
     private int dmg;
     private int speed;
     private int cost;
-    private int globalCost;
+//    private int globalCost;
     protected Array<Ability.AbilityPrototype> abilities;
 
 
@@ -94,7 +95,7 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         for (int i = 0; i < abilities.size; i++){
             abilitiesCode += abilities.get(i).getSaveCode();
             if(i!= abilities.size - 1){//may be unnecessary
-                abilitiesCode+= "a";
+                abilitiesCode+= "x";
             }
         }
         return prototype.name() + "-" + totalExp + "-" + gemsCode + "-" + abilitiesCode;
@@ -115,14 +116,17 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         }
 
 
+//        t.abilities.clear();//TODO without it bug when after each load add additional ability for infinitely (creating clear abilities for new towers)
         if(info.length == 4){
-            String[] abi = info[3].split("a");
+            String[] abi = info[3].split("x");
             for (int i = 0; i < abi.length; i++){
+//                System.out.println(abi[i]);
 //                System.out.println(i);
 //                System.out.println(abi[i]);
 //                System.out.println(t.abilities);
-                t.abilities.clear();//wut//TODO without it bug when after each load add additional ability for infinitely
-                t.abilities.add(Ability.AbilityPrototype.loadAbilityCode(abi[i]));
+                String[] gem = abi[i].split("z");//gem[0] is a ability id. Now it ignored
+                t.abilities.get(i).addGems(SpellObject.loadGemCode(gem[1]));
+//                t.abilities.add(Ability.AbilityPrototype.loadAbilityCode(abi[i]));
             }
         }
 //
@@ -130,10 +134,9 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
 //            t.abilities.add(Ability.AbilityPrototype.loadAbilityCode(abi[i]));
 //        }
 
-
-
         return t;
     }
+
 
     public Array<Ability.AbilityPrototype> getAbilities() {
         return abilities;
@@ -152,9 +155,9 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
     public int getCost() {
         return cost;
     }
-    public int getGlobalCost() {
-        return globalCost;
-    }
+//    public int getGlobalCost() {
+//        return globalCost;
+//    }
     public int getDmg() {
         return dmg;
     }
@@ -226,6 +229,22 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
             abilities.add(a.copy());
         }
     }
+    public TowerObject addAbilitiesGems(TowerObject other){
+        if(other.getPrototype() == this.getPrototype()){
+            for (Ability.AbilityPrototype ap:getAbilities()){
+                for (Ability.AbilityPrototype at:other.getAbilities()){
+//                    ap.gemCur(at.getGemCur());
+                    for (int i = 0; i < at.getGemCur().length; i++){
+                        for (int a = 0; a < at.getGemCur()[i]; a++) {
+                            ap.addGem(User.GEM_TYPE.values()[i + 3]);
+                        }
+                    }
+                    return this;
+                }
+            }
+        }
+        return other;
+    }
 
 
     public TowerObject(ItemEnum.Tower prototype) {
@@ -236,7 +255,7 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         range = prototype.getRange();
         speed = prototype.getSpeed();
         cost = prototype.getCost();
-        globalCost = prototype.getGlobalCost();
+//        globalCost = prototype.getGlobalCost();
 
         initExp2nextLvl(getCost());
 

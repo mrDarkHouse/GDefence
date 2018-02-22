@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Level.Ability.Spell;
 
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Effectable;
@@ -57,11 +58,11 @@ public abstract class Spell implements DamageSource{
     }
 
     public void addKill(/*Class<? extends Mob>*/Mob killedMob){
-        //add exp from killedMob
-
+//        //stat manager
+//
     }
-    public float hitMob(Mob m, int dmg){
-        float getDmg = m.hit(dmg, this);
+    public float hitMob(Mob m, DamageType type, int dmg){
+        float getDmg = m.hit(dmg, type, this);
         getPrototype().addExp(getDmg/10);
         return getDmg;
     }

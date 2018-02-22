@@ -46,7 +46,7 @@ public class RecipeButton extends TowerMapObject{
         addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(type != User.RecipeType.locked && tower != ItemEnum.Tower.Basic){
-                    if(GDefence.getInstance().user.deleteGold(towerRecipe.getGlobalCost())){
+                    if(GDefence.getInstance().user.deleteGold(towerRecipe.getRecipeCost())){
                         GDefence.getInstance().user.buyTowerRecipe(tower);
                         owner.updateTypes();//if owner != null
                     }
@@ -80,7 +80,7 @@ public class RecipeButton extends TowerMapObject{
     public void draw(Batch batch, float parentAlpha) {//rework
 //        Sprite s;
         s.setBounds(getX(), getY(), getWidth(), getHeight());
-        if(type == User.RecipeType.opened) {
+        if(type == User.RecipeType.opened || type == User.RecipeType.available) {
 //            s = new Sprite(GDefence.getInstance().assetLoader.get("openedTower.png", Texture.class));
             s.draw(batch, 0.2f);
             super.draw(batch, parentAlpha);

@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Level.Ability.Mob.SpellImmune;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.Path.*;
@@ -128,7 +129,7 @@ public class Map {
         for (int i = 0; i < Wave.mobs.size; i++){
             Mob m = Wave.mobs.get(i);
             float dst = m.getCenter().dst(searchMob.getCenter());
-            if(dst <= range){
+            if(dst <= range&& targetMob(m)){
                 found.add(m);
             }
         }
@@ -139,22 +140,26 @@ public class Map {
         for (int i = 0; i < Wave.mobs.size; i++){
             Mob m = Wave.mobs.get(i);
             float dst = m.getCenter().dst(searchPoint);
-            if(dst <= range){
+            if(dst <= range && targetMob(m)){
                 found.add(m);
             }
         }
         return found;
     }
+
     public static Array<Mob> getMobsMaskInRange(Vector2 searchPoint, int range){
         Array<Mob> found = new Array<Mob>();
         for (int i = 0; i < Wave.mobs.size; i++){
             Mob m = Wave.mobs.get(i);
             float dst = m.getCenter().dst(searchPoint) - m.getWidth()/2;
-            if(dst <= range){
+            if(dst <= range && targetMob(m)){
                 found.add(m);
             }
         }
         return found;
+    }
+    private static boolean targetMob(Mob m){//mob can target to use spell on him (target/aoe/non target)
+        return !m.haveEffect(SpellImmune.SpellImmuneBuff.class);
     }
 
     public Array<Tower> getTowersInRange(Vector2 searchPoint, float range){
@@ -198,7 +203,7 @@ public class Map {
         if(affected.contains(Mob.class, true)) {
             for (int i = 0; i < Wave.mobs.size; i++){
                 Mob m = Wave.mobs.get(i);
-                if(m.contains(searchPoint)) return m;
+                if(targetMob(m) && m.contains(searchPoint)) return m;
             }
         }
         if(affected.contains(Tower.class, true)){
@@ -283,6 +288,7 @@ public class Map {
 
             Point p = null;
             if (path.size > 1 && !(path.get(path.size - 2) instanceof Portal)) {//disable teleport to portal, which teleport to this (infinity tp)
+//                System.out.println(thisTile);
                 p = thisTile.manipulateMob();
             }
             int[] coord;
@@ -678,11 +684,11 @@ public class Map {
     }
 
     private void initPortals(){
+        GDefence.getInstance().log("Init portals");
         ArrayList<Portal> portals = new ArrayList<Portal>();
         for (int y = 0; y < tiles[0].length; y++){
             for (int x = 0; x < tiles.length; x++){
                 if(tiles[x][y].getLogic() == MapTile.Logic.Portal){
-//                    portals.add(((Portal) tiles[x][y]));
                     portals.add((Portal) tiles[x][y].getInstance());
                 }
             }
@@ -693,43 +699,26 @@ public class Map {
         for (int i = 0; i < portals.size() - 1; i++){
             Portal p1 = portals.get(i);
             Portal p2 = portals.get(i + 1);
-
             if(p1.id == p2.id){
-                tmp.add(p1);
-//                p1.init(p2);
-//                System.out.println(p1.open);
-//                System.out.println(p2.open);
+                if(!tmp.contains(p1)) tmp.add(p1);
+                if(!tmp.contains(p2)) tmp.add(p2);
             }else {
-                tmp.add(p2);
                 for (Portal p:tmp){
                     p.init(tmp);
                 }
                 tmp.clear();
             }
         }
-        tmp.add(portals.get(portals.size() - 1));
+        Portal pLast = portals.get(portals.size() - 1);
+        if(!tmp.contains(pLast)) tmp.add(pLast);
         for (Portal p:tmp){
             p.init(tmp);
         }
 
         tmp.clear();
-//        System.out.println(portals.size());
-//        System.out.println(portals.get(0).seconds);
-//        System.out.println(portals.get(1).seconds);
-//        System.out.println(portals.get(2).seconds);
-//        System.out.println(portals.get(3).seconds);
-//        System.out.println(portals.get(4).seconds);
-//        System.out.println(portals.get(5).seconds);
-//        System.out.println(portals.get(6).seconds);
-//        System.out.println(portals.get(7).seconds);
-//        System.out.println(portals.get(8).seconds);
-//        System.out.println(portals.get(9).seconds);
-//        System.out.println(portals.get(10).seconds);
-//        System.out.println(portals.get(11).seconds);
-//        System.out.println(portals.get(12).seconds);
-//        System.out.println(portals.get(13).seconds);
-
-
+//        for (int i = 0; i < portals.size(); i++){//22 map portals debug
+//            System.out.println("S " + portals.get(i).toString() + "|" + portals.get(i).seconds.size);
+//        }
     }
 
     private void searchSpawner(){

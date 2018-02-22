@@ -14,20 +14,36 @@ import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.User;
 
+import java.util.Arrays;
+
 public abstract class SpellObject extends Ability.AbilityPrototype implements ExpEarner, GameObject, GemGradable{
 //    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
     //                                 30  100 230  420  660  800  1230 1760
 
     public static SpellObject loadSaveCode(String s) {
         String[] info = s.split("-");
-        Ability.AbilityPrototype a = Ability.AbilityPrototype.loadAbilityCode(info[1]);
-        if (a instanceof SpellObject) {
-            SpellObject sp = ((SpellObject) a);
-            sp.addExp(Float.parseFloat(info[0]));
+//        System.out.println(Arrays.toS tring(info));
+        String[] ids = info[1].split("z");
+//        String[] gems = ids[1].split(";");
+        int id = Integer.parseInt(ids[0]);
+//        ItemEnum.addItemById(id, 1, GDefence.getInstance().user);
+        SpellObject sp = ItemEnum.getSpellById(id);
+//        Ability.AbilityPrototype a
+//        Ability.AbilityPrototype a = Ability.AbilityPrototype.loadAbilityCode(info[1]);
+//        System.out.println(a);
+//        if (a instanceof SpellObject) {
+//            SpellObject sp = ((SpellObject) a);
+        sp.addExp(Float.parseFloat(info[0]));
+        sp.addGems(loadGemCode(ids[1]));
 //            sp.totalExp = Float.parseFloat(info[0]);
             return sp;
-        }
-        else throw new RuntimeException("che ti loadish daun eto ne spell save");
+//        }
+//        else throw new RuntimeException("che ti loadish daun eto ne spell save");
+    }
+    public static int[] loadGemCode(String s){
+//        String[] tmp = s.split("z");
+        String[] gem = s.split(";");
+        return new int[]{Integer.parseInt(gem[0]), Integer.parseInt(gem[1]), Integer.parseInt(gem[2])};
     }
 
     @Override
@@ -66,6 +82,7 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
         updateExp();
     }
     public void updateExp(){
+        level = 1;
         currentExp = getTotalExp();
         for(int i = level - 1; currentExp >= exp2nextLevel()[i]; i++){//if max lvl throws exeption
             currentExp -= exp2nextLevel()[i];
@@ -74,7 +91,7 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
     }
 
     protected int energyCost;
-    protected int cooldown;
+    protected float cooldown;
 
     private Array<Class<? extends Effectable>> affectedTypes;
 
@@ -86,11 +103,15 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
         return energyCost;
     }
 
-    public int getCooldown() {
+    public float getCooldown() {
         return cooldown;
     }
 
-    public SpellObject(int id, String name, int energyCost, int cooldown, int[] maxGems,
+    public void setCooldown(float cooldown) {
+        this.cooldown = cooldown;
+    }
+
+    public SpellObject(int id, String name, int energyCost, float cooldown, int[] maxGems,
                        Class<? extends Effectable>... affectedTypes) {
         super(id, name, maxGems);
         this.affectedTypes = new Array<Class<? extends Effectable>>(affectedTypes);

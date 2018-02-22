@@ -8,14 +8,27 @@ import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class HealthBar extends WidgetGroup{
-    private ProgressBar healthBar;
-    private Label text;
+    protected ProgressBar healthBar;
+    protected Label text;
+
+    private int width;
+    private int height;
+    private int x;
+    private int y;
 
     public HealthBar(int width, int height, int x, int y) {
-        healthBar = new ProgressBar(0, LevelMap.getLevel().getMaxHP(), 0.5f, false, /*GDefence.getInstance().assetLoader.getExpBarSkin()*/GDefence.getInstance().assetLoader.getSkin(), "health-bar");
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+    }
+
+    public void init(){
+        initBar();
         healthBar.getStyle().background.setMinHeight(height);
         healthBar.getStyle().knobBefore.setMinHeight(height - 2);
         healthBar.setPosition(x, y);
@@ -27,10 +40,14 @@ public class HealthBar extends WidgetGroup{
         //add(healthBar);
         initLabel();
     }
+    protected void initBar(){
+        healthBar = new ProgressBar(0, LevelMap.getLevel().getMaxHP(), 0.5f, false,
+                /*GDefence.getInstance().assetLoader.getExpBarSkin()*/GDefence.getInstance().assetLoader.getSkin(), "health-bar");
+    }
 
-    private void initLabel(){
+    protected void initLabel(){
         text = new Label(LevelMap.getLevel().getHealthNumber() + "/" + LevelMap.getLevel().getMaxHP(),
-                FontLoader.generateStyle(30, Color.BLACK));
+                FontLoader.generateStyle(0, 30, Color.BLACK));
         text.setPosition(healthBar.getX() + healthBar.getWidth()/2 - text.getWidth()/2,
                 healthBar.getY() + healthBar.getHeight()/2 - text.getHeight()/2);
         addActor(text);

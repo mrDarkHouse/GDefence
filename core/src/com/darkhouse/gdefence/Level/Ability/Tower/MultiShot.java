@@ -28,9 +28,14 @@ public class MultiShot extends Ability implements Ability.IPreShot {
         }
 
         @Override
-        public String getSaveCode() {
-            return null;
+        public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return new Array<Class<? extends AbilityPrototype>>();
         }
+
+//        @Override
+//        public String getSaveCode() {
+//            return null;
+//        }
 
         @Override
         public AbilityPrototype copy() {

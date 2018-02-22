@@ -5,6 +5,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.PseudoRandom;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -28,8 +29,10 @@ public class WaterShield extends MobAbility implements MobAbility.IGetDmg{
         }
 
         @Override
-        public float getDmg(DamageSource source, float dmg) {
-            return dmg*(1 - dmgReduction);
+        public float getDmg(DamageSource source, DamageType type, float dmg) {
+//            if(type == DamageType.Physic) {
+                return dmg * (1 - dmgReduction);
+//            }
         }
     }
     public static class P extends AbilityPrototype{
@@ -64,10 +67,11 @@ public class WaterShield extends MobAbility implements MobAbility.IGetDmg{
     private float duration;
     private float dmgAbsorb;
 
-    public WaterShield(P p) {
-        this.duration = p.duration;
-        this.dmgAbsorb = p.dmgAbsorb;
-        r = new PseudoRandom(p.chance);
+    public WaterShield(P prototype) {
+        super(prototype);
+        this.duration = prototype.duration;
+        this.dmgAbsorb = prototype.dmgAbsorb;
+        r = new PseudoRandom(prototype.chance);
     }
 
     @Override
@@ -76,9 +80,11 @@ public class WaterShield extends MobAbility implements MobAbility.IGetDmg{
     }
 
     @Override
-    public float getDmg(DamageSource source, float dmg) {
+    public float getDmg(DamageSource source, DamageType type, float dmg) {
         if (owner.haveEffect(WaterShield.class)) return dmg;//dont refresh effect
-        if (r.proc()) owner.addEffect(new WaterShieldEffect(duration, dmgAbsorb).setOwner(owner));
+        if (type == DamageType.Physic) {
+            if (r.proc()) owner.addEffect(new WaterShieldEffect(duration, dmgAbsorb).setOwner(owner));
+        }
         return dmg;
     }
 }

@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -15,9 +16,11 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.Level.Level;
+import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.*;
 import com.darkhouse.gdefence.Model.Panels.AbstractPanel;
+import com.darkhouse.gdefence.Model.Panels.ModPanels.BossStatusPanel;
 import com.darkhouse.gdefence.Model.Panels.ModPanels.InvasionPanel;
 import com.darkhouse.gdefence.Model.Panels.ModPanels.KillMadnessPanel;
 import com.darkhouse.gdefence.Model.Panels.NextWaveInfoPanel;
@@ -49,14 +52,19 @@ public class LevelMap extends AbstractScreen {
     private CurrentWaveInfoPanel cWpanel;
     private PathSigner pathSigner;
     private HealthBar healthBar;
+    public void updateHealth(){
+        healthBar.update();
+    }
     private EnegryBar enegryBar;
 //    private AbstractPanel
     private InvasionPanel invasionPanel;
     private TimeRushPanel timeRushPanel;
     private KillMadnessPanel killMadnessPanel;
+    private BossStatusPanel bossStatusPanel;
 
-
-
+    public BossStatusPanel getBossStatusPanel() {
+        return bossStatusPanel;
+    }
 
     private MapTileActor[][] tileActors;
 
@@ -65,6 +73,7 @@ public class LevelMap extends AbstractScreen {
     }
 
     private static Level level;
+    FPSLogger logger;
 
 //    private Level level;//must be //TODO
 //    private Map map;
@@ -119,11 +128,11 @@ public class LevelMap extends AbstractScreen {
         public InvasionDialog() {
             super(GDefence.getInstance().assetLoader.getWord("invasionInfo"), GDefence.getInstance().assetLoader.getSkin(), "pause-menu");
             getTitleLabel().setAlignment(Align.center);
-            getTitleLabel().setStyle(FontLoader.generateStyle(44, Color.WHITE, 2, Color.BLACK));
+            getTitleLabel().setStyle(FontLoader.generateStyle(0, 44, Color.WHITE, 2, Color.BLACK));
             padTop(40);
 //            getButtonTable().defaults().align(Align.center);
             Label l = new Label(GDefence.getInstance().assetLoader.getWord("invasionGuide1") + System.getProperty("line.separator") +
-                    GDefence.getInstance().assetLoader.getWord("invasionGuide2"), FontLoader.generateSecondaryStyle(34, Color.WHITE));
+                    GDefence.getInstance().assetLoader.getWord("invasionGuide2"), FontLoader.generateStyle(1, 34, Color.WHITE));
             l.setAlignment(Align.center);
             getButtonTable().add(l).row();
 //            text(GDefence.getInstance().assetLoader.getWord("invasionGuide1") + System.getProperty("line.separator") +
@@ -146,9 +155,9 @@ public class LevelMap extends AbstractScreen {
         public TimeRushDialog() {
             super(GDefence.getInstance().assetLoader.getWord("timeRushInfo"), GDefence.getInstance().assetLoader.getSkin(), "pause-menu");
             getTitleLabel().setAlignment(Align.center);
-            getTitleLabel().setStyle(FontLoader.generateStyle(44, Color.WHITE, 2, Color.BLACK));
+            getTitleLabel().setStyle(FontLoader.generateStyle(0, 44, Color.WHITE, 2, Color.BLACK));
             padTop(40);
-            Label l = new Label(GDefence.getInstance().assetLoader.getWord("timeRushGuide") , FontLoader.generateSecondaryStyle(34, Color.WHITE));
+            Label l = new Label(GDefence.getInstance().assetLoader.getWord("timeRushGuide") , FontLoader.generateStyle(1, 34, Color.WHITE));
             l.setAlignment(Align.center);
             getButtonTable().add(l).row();
             button(GDefence.getInstance().assetLoader.getWord("ok"), 0, getSkin().get("rect", TextButton.TextButtonStyle.class));
@@ -168,10 +177,10 @@ public class LevelMap extends AbstractScreen {
         public KillMadnessDialog() {
             super(GDefence.getInstance().assetLoader.getWord("killMadnessInfo"), GDefence.getInstance().assetLoader.getSkin(), "pause-menu");
             getTitleLabel().setAlignment(Align.center);
-            getTitleLabel().setStyle(FontLoader.generateStyle(44, Color.WHITE, 2, Color.BLACK));
+            getTitleLabel().setStyle(FontLoader.generateStyle(0, 44, Color.WHITE, 2, Color.BLACK));
             padTop(40);
             Label l = new Label(GDefence.getInstance().assetLoader.getWord("killMadnessGuide1") + System.getProperty("line.separator") +
-                    GDefence.getInstance().assetLoader.getWord("killMadnessGuide2"), FontLoader.generateSecondaryStyle(34, Color.WHITE));
+                    GDefence.getInstance().assetLoader.getWord("killMadnessGuide2"), FontLoader.generateStyle(1, 34, Color.WHITE));
             l.setAlignment(Align.center);
             getButtonTable().add(l).row();
             button(GDefence.getInstance().assetLoader.getWord("ok"), 0, getSkin().get("rect", TextButton.TextButtonStyle.class));
@@ -202,6 +211,8 @@ public class LevelMap extends AbstractScreen {
         initSpellPanel(spells);
         initPauseDialog();
         initExtraEventPanels();
+
+        logger = new FPSLogger();
     }
 
     public void init(){
@@ -217,11 +228,16 @@ public class LevelMap extends AbstractScreen {
         if(/*invasionPanel != null*/level.getType() == Map.MapType.INVASION) invasionPanel.update();
 //        if(level.getType() == Map.MapType.KILLMADNESS) ;
     }
-    public void mobSpawnEvent(){
+    public void mobSpawnEvent(Mob m){
         if(level.getType() == Map.MapType.INVASION){
             invasionPanel.update();
             if(Wave.mobs.size >= level.getMobLimit()) level.looseLevel();
         }
+//        if(level.getType() == Map.MapType.TIME){
+//            if(m.getPrototype() == Mob.Prototype.SpaceLord){
+//                bossStatusPanel.init(m);
+//            }
+//        }
     }
     public void energyChangeEvent(){
         enegryBar.update();
@@ -323,6 +339,7 @@ public class LevelMap extends AbstractScreen {
 //            stage.act(delta);
 //            }
         }
+        logger.log();
         level.render(batch);
         //drawNextWavePanel(delta, batch);
         //drawHpMpBar();
@@ -334,10 +351,17 @@ public class LevelMap extends AbstractScreen {
 
     }
     private void initHpMpBar(){
-        healthBar = new HealthBar(Gdx.graphics.getWidth(), 55, 0, Gdx.graphics.getHeight() - 55);
+        if(level.getType() == Map.MapType.TIME) {
+            healthBar = new BossHealth(Gdx.graphics.getWidth(), 55, 0, Gdx.graphics.getHeight() - 55, level.getCurrentWave().getBoss());
+        }else {
+            healthBar = new HealthBar(Gdx.graphics.getWidth(), 55, 0, Gdx.graphics.getHeight() - 55);
+        }
+        healthBar.init();
+        healthBar.update();
         enegryBar = new EnegryBar(55, Gdx.graphics.getHeight() - 55, 0, 0);
         stage.addActor(healthBar);
         stage.addActor(enegryBar);
+
     }
     private void initWavePanel(){
         nWPanel = new NextWaveInfoPanel();
@@ -374,11 +398,22 @@ public class LevelMap extends AbstractScreen {
                 guideDialog = new KillMadnessDialog();
                 break;
             case TIME:
+                Table t = new Table();
                 timeRushPanel = new TimeRushPanel(level.getTimeLimit(), level);
                 timeRushPanel.setVisible(false);
-                timeRushPanel.setPosition(Gdx.graphics.getWidth() - timeRushPanel.getWidth() - 5, 5);
-                stage.addActor(timeRushPanel);
+//                timeRushPanel.setPosition(Gdx.graphics.getWidth() - timeRushPanel.getWidth() - 5, 5);
+//                stage.addActor(timeRushPanel);
                 guideDialog = new TimeRushDialog();
+                bossStatusPanel = new BossStatusPanel(timeRushPanel.getWidth());
+                bossStatusPanel.setVisible(false);
+//                bossStatusPanel.setPosition(Gdx.graphics.getWidth() - timeRushPanel.getWidth() - 5, timeRushPanel.getHeight() + 5);
+//                stage.addActor(bossStatusPanel);
+                t.add(bossStatusPanel).row();
+                t.add(timeRushPanel);
+                t.setPosition(Gdx.graphics.getWidth() - timeRushPanel.getWidth() - 5, timeRushPanel.getHeight()/2 + 10);
+                t.pack();
+                stage.addActor(t);
+                bossStatusPanel.init(level.getCurrentWave().getBoss());//must be after add (tooltip adding)
                 break;
         }
     }
@@ -466,7 +501,10 @@ public class LevelMap extends AbstractScreen {
             case CLASSIC:cWpanel.setVisible(true); break;
             case INVASION:invasionPanel.setVisible(true); break;
             case KILLMADNESS:killMadnessPanel.setVisible(true);break;
-            case TIME:timeRushPanel.setVisible(true);
+            case TIME:{
+                timeRushPanel.setVisible(true);
+                bossStatusPanel.setVisible(true);
+            }
         }
     }
 

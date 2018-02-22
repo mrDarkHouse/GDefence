@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.darkhouse.gdefence.GDefence;
@@ -13,6 +14,8 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 
 public class UserPanel extends AbstractPanel {
     private ImageTextButton userlevelButton;
+    private ExpBar expBar;
+    private int expBarSize[];
 
     public UserPanel(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -32,12 +35,12 @@ public class UserPanel extends AbstractPanel {
 //        );
 
 
-        int expBarSize[] = {width, height - userLevelSize[1]};
-        ExpBar bar = new ExpBar(expBarSize[0], expBarSize[1]);
+        expBarSize = new int[]{width, height - userLevelSize[1]};
+        expBar = new ExpBar(expBarSize[0], expBarSize[1]);
 
         //add(new GoldPanel(mainClass)).width(width/6*2).height(height);
         add(userlevelButton).width(userLevelSize[0]).height(userLevelSize[1]).row();
-        add(bar);
+        add(expBar);
 
         //System.out.println(getY());
 
@@ -49,7 +52,19 @@ public class UserPanel extends AbstractPanel {
     @Override
     public void act(float delta) {
         super.act(delta);
+//        userlevelButton.setText("" + GDefence.getInstance().user.getLevel());
+    }
+
+    @Override
+    public void update() {
+        GDefence.getInstance().user.update();
         userlevelButton.setText("" + GDefence.getInstance().user.getLevel());
+        Cell c = getCell(expBar);
+        expBar = new ExpBar(expBarSize[0], expBarSize[1]);
+        c.setActor(expBar);
+//        System.out.println(GDefence.getInstance().user.getTotalExp() + "|" + GDefence.getInstance().user.getCurrentExp());
+//        System.out.println(expBar.getMaxValue() + "|" + expBar.getValue());
+//        add(expBar);
     }
 
     @Override

@@ -29,12 +29,23 @@ public class ExpBar extends ProgressBar{
 
         //setValue(7.8f);
         setValue(GDefence.getInstance().user.getCurrentExp());
+
+        pack();
+//
+//        System.out.println(GDefence.getInstance().user.getMaxExpThisLvl() + "|" + GDefence.getInstance().user.getCurrentExp());
+//        System.out.println(getMaxValue() + "|" + getValue());
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        setValue(GDefence.getInstance().user.getCurrentExp());
+//        setValue(GDefence.getInstance().user.getCurrentExp());
+    }
+    public void update(){
+
+//        setValue(GDefence.getInstance().user.getCurrentExp());
+//        System.out.println(GDefence.getInstance().user.getTotalExp());
+//        System.out.println(getMaxValue() + "|" + getValue());
     }
 
 

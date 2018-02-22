@@ -32,7 +32,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen{
         this.level = level;
         this.towers = towers;
         this.spells = spells;
-        tipsLabel = new Label(GDefence.getInstance().getTip(), FontLoader.generateStyle(24, Color.BLACK));
+        tipsLabel = new Label(GDefence.getInstance().getTip(), FontLoader.generateStyle(0, 24, Color.BLACK));
         tipsLabel.setAlignment(Align.center);
         tipsTable = new Table();
         tipsTable.align(Align.center|Align.bottom);

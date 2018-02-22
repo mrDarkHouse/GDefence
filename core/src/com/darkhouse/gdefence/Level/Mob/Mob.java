@@ -8,7 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Mob.*;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Path.*;
 import com.darkhouse.gdefence.Level.Tower.AttackLogic;
@@ -31,17 +33,17 @@ public class Mob extends Effectable{
         Eagle       ("eagle",          MoveType.ground, 45,   1, 45,  1, 1),
         Hedgehog    ("hedgehog",       MoveType.ground, 100,  0, 30,  2, 2, new Curdle.P(2, 0.5f, "Mobs/hedgehogBlock")),
         Lynx        ("lynx",           MoveType.ground, 80,   3, 40,  2, 2, new Sprint.P(4, 2, 50)),
-        Boar        ("boar",           MoveType.ground, 1000, 5, 30,100, 7, new LayerArmor.P(10, 1), new StrongSkin.P(5, 2)),
+        Boar        ("boar",           MoveType.ground, 1000, 5, 30,100, 7, new LayerArmor.P(10, 1), new StrongSkin.P(5, 2), new BossResist.P()),
 
         Ant         ("ant",            MoveType.ground, 70,   1, 80,  1,  1),
         Snake       ("snake",          MoveType.ground, 125,  2, 70,  1,  1),
         Jerboa      ("jerboa",         MoveType.ground, 280,  0, 60,  2,  2, new GreatEvasion.P(2f)),
-        Scorpion    ("scorpion",       MoveType.ground, 400,  3, 50,  3,  3, new ScorpionVenom.P(15, 2)),
+        Scorpion    ("scorpion",       MoveType.ground, 400,  3, 50,  3,  3, new ScorpionVenom.P(20, 2)),
 
-        Crab        ("crab",           MoveType.water,  250,  4, 50,  2,  2/*, new Swimmable.P("Mobs/crab.png")*/),
-        Frog        ("frog",           MoveType.water,  400,  0, 60,  2,  1/*, new Swimmable.P("Mobs/frog.png")*/, new WaterShield.P(0.2f, 0.5f, 3)),
-        Turtle      ("turtle",         MoveType.water,  350,  5, 20,  4,  4, new Swimmable.P("Mobs/turtleSwim"), new WaterDefend.P(10), new WaterFeel.P(40)),
-        Crocodile   ("crocodile",      MoveType.water,  350,  5, 20,  4,  4, new Swimmable.P("Mobs/crocodileSwim")),
+        Crab        ("crab",           MoveType.water,  250,  2, 70,  2,  1, new Swimmable.P("Mobs/crab")),
+        Frog        ("frog",           MoveType.water,  500,  0, 60,  2,  3, new Swimmable.P("Mobs/frog"), new WaterShield.P(0.2f, 0.5f, 3)),
+        Turtle      ("turtle",         MoveType.water,  750,  5, 35,  3,  5, new Swimmable.P("Mobs/turtleSwim"), new WaterDefend.P(10), new WaterFeel.P(40)),
+        Crocodile   ("crocodile",      MoveType.water,  1250,  3, 50,  4,  5, new Swimmable.P("Mobs/crocodileSwim"), new WaterFeel.P(20)),
 //        Axolotl    ("axolotl",    "axolotl",  MoveType.water,  750,  10,50,  100,0, new Swimmable.P("Mobs/axolotl2.png")),
 
 //        Pinguin    ("pinguin",    MoveType.ground, 250,  2, 50,  1,  1),
@@ -54,10 +56,16 @@ public class Mob extends Effectable{
 //        Medic      ("medic",      MoveType.ground, 100,  2, 60,  2,  1, new HealingAura.P(200, 1, 5)),
 //        Tank       ("tank",       MoveType.ground, 800,  8, 50,  4,  5),
 
-        UFO         ("ufo",           MoveType.ground, 400,  2, 80,  2,  2),
-        SpaceShip   ("spaceShip",     MoveType.ground, 400,  2, 80,  2,  2),
-        EnergySphere("energySphere",  MoveType.ground, 400,  2, 8,   2,  2),
-        SpaceLord   ("spaceLordFirst",MoveType.ground, 10000,2, 2,   2,  1000);
+        UFO         ("ufo",           MoveType.ground, 500,  3, 80,  2,  2, new SpellImmune.P()),
+        SpaceShip   ("spaceShip",     MoveType.ground, 650,  7, 50,  3,  3, new Sprint.P(7, 3, 40)),
+        EnergySphere("energySphere",  MoveType.ground, 1000, 0, 60,  2,  4, new Sadist.P(5, 400)),
+        SpaceLord   ("galaxyLordFirst",MoveType.ground,50000,10, 50,  0,  0, new BossResist.P(),
+                new StagedAbilities.P(4, new String[]{"galaxyLordFirst", "galaxyLordSecond", "galaxyLordThird", "galaxyLordLast"}, new float[]{0.6f, 0.3f, 0.1f},
+                        new MobAbility.AbilityPrototype[][]{{new BossResist.P(), new LayerArmor.P(40, 20)},
+                                                            {new BossResist.P(), new Sadist.P(3, 300), /*new WaterShield.P(0.2f, 0.2f, 5)*/},
+                                                            {new BossResist.P(), new SpellImmune.P(), new StrongSkin.P(40, 5)},
+                                                            {new BossResist.P(), new SpellImmune.P(), new Evasion.P(0.8f)}
+                        }));
 
 //        JungleBat  ("Jungle Bat", "mob4",    MoveType.ground, 85,   2, 110, 3, 4/*, new Sadist.P(3, 35)*/),
 //
@@ -195,11 +203,12 @@ public class Mob extends Effectable{
         ground, water, flying
     }
 
-    //public int healthSpace = 3, healthHeight = 5;
+    protected Prototype prototype;
     protected String name;
     protected int health;
     private int maxHealth;
     protected int armor;
+    protected int bonusArmor;
     protected MoveType moveType;
     protected float speed;
     protected int dmg;
@@ -214,6 +223,10 @@ public class Mob extends Effectable{
 
     public String getTexturePath() {
         return texturePath;
+    }
+
+    public Prototype getPrototype() {
+        return prototype;
     }
 
     private ProgressBar hpBar;
@@ -286,6 +299,7 @@ public class Mob extends Effectable{
 
     public Mob(Prototype prototype) {
         super();
+        this.prototype = prototype;
         setName(prototype.name);
 //        setRegion(prototype.texturePath);
 //        texturePath = prototype.name;
@@ -296,6 +310,7 @@ public class Mob extends Effectable{
         setDmg(prototype.dmg);
         setBounty(prototype.bounty);
         setAbilities(prototype.abilities);
+//        System.out.println(prototype.abilities);
 //        initAbilities();
 
         setSize(40, 40);
@@ -304,11 +319,12 @@ public class Mob extends Effectable{
         setState(State.normal);
 
         textures = new Texture[4];
-        for (int i = 0; i < 4; i++){
-            textures[i] = GDefence.getInstance().assetLoader.getMobTexture(prototype.name + i);
-//            textures[i].setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-//            System.out.println(textures[i].getMinFilter());
-        }
+        initTextures(prototype.name);
+//        for (int i = 0; i < 4; i++){
+//            textures[i] = GDefence.getInstance().assetLoader.getMobTexture(prototype.name + i);
+////            textures[i].setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+////            System.out.println(textures[i].getMinFilter());
+//        }
 
 //        setRegion(textures[0]);
 //        setRegion(GDefence.getInstance().assetLoader.getMobTexture(texturePath));//
@@ -322,6 +338,11 @@ public class Mob extends Effectable{
 //        System.out.println(abilities);
 
 //        setRegion(texturePath);
+    }
+    public void initTextures(String name){
+        for (int i = 0; i < 4; i++) {
+            textures[i] = GDefence.getInstance().assetLoader.getMobTexture(name + i);
+        }
     }
 
 
@@ -363,8 +384,14 @@ public class Mob extends Effectable{
 //        hpBar.pack();
 //        hpBar.
     }
-    public int getArmor() {
+    public int getOwnArmor(){
         return armor;
+    }
+    public int getBonusArmor(){
+        return bonusArmor;
+    }
+    public int getArmor() {
+        return armor + bonusArmor;
     }
     public void setArmor(int armor) {
         this.armor = armor;
@@ -402,8 +429,24 @@ public class Mob extends Effectable{
         }
 //        this.abilities = new Array<MobAbility>(abilities);
     }
+    public void setAbilities(MobAbility.AbilityPrototype[] abilities) {
+        this.abilities = new Array<MobAbility>();
+        for (MobAbility.AbilityPrototype a:abilities){
+            this.abilities.add(a.getAbility());
+        }
+    }
+
+
     public Array<MobAbility> getAbilities() {
         return abilities;
+    }
+    public boolean haveAbility(Class d){
+        for (MobAbility db: abilities){
+            if(db.getClass() == d){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isInGame() {
@@ -462,17 +505,46 @@ public class Mob extends Effectable{
             }
         }
     }
-    private float useDefenceAbilities(DamageSource source, float dmg){
+    private void useAfterHitAbilities(){
+        for (MobAbility a:abilities){
+            if(a instanceof MobAbility.IAfterGetDmg){
+                ((MobAbility.IAfterGetDmg) a).afterGetDmg();
+//                System.out.println(a);
+            }
+        }
+        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+        for (Effect e:tmp){
+            if(e instanceof MobAbility.IAfterGetDmg){
+                ((MobAbility.IAfterGetDmg) e).afterGetDmg();
+            }
+        }
+    }
+    private float useStrongDefenceAbilities(DamageSource source, DamageType type, float dmg){
+        float resistDmg = dmg;
+        for (MobAbility a:abilities){
+            if((a instanceof MobAbility.IGetDmg) && (a instanceof MobAbility.IStrong)){
+                resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, type, resistDmg);
+            }
+        }
+        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+        for (Effect e:tmp){
+            if((e instanceof MobAbility.IGetDmg) && (e instanceof MobAbility.IStrong)){
+                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, type, resistDmg);
+            }
+        }
+        return resistDmg;
+    }
+    private float useDefenceAbilities(DamageSource source, DamageType type, float dmg){
         float resistDmg = dmg;
         for (MobAbility a:abilities){
             if(a instanceof MobAbility.IGetDmg){
-                resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, resistDmg);
+                resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, type, resistDmg);
             }
         }
         CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
         for (Effect e:tmp){
             if(e instanceof MobAbility.IGetDmg){
-                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, resistDmg);
+                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, type, resistDmg);
             }
         }
         return resistDmg;
@@ -523,11 +595,35 @@ public class Mob extends Effectable{
         }
     }
 
-    public float hit(float dmg, DamageSource source){//return really get damage
+    public float hit(float dmg, DamageType type, DamageSource source){//return really get damage
 //        System.out.println(getArmor() + " " + getArmorReduction(getArmor()));
-        float resistDmg = useDefenceAbilities(source, dmg * (1 - getArmorReduction(getArmor())));
+        float resistDmg = 0;
+//        System.out.println("ahh, hitted");
+        switch (type){
+            case Pure:
+                resistDmg = useStrongDefenceAbilities(source, type, dmg);
+                break;
+            case Magic:
+                resistDmg = useDefenceAbilities(source, type, dmg);
+                break;
+            case Physic:
+                resistDmg = useDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));
+                break;
+            case PhysicNoContact:
+                resistDmg = useStrongDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));//sadist, etc
+        }
+//        if(type == DamageType.Pure) {
+//            resistDmg = dmg;
+//        }else if(type == DamageType.Magic){
+//            resistDmg = useDefenceAbilities(source, type, dmg);
+//        }else if(type == DamageType.Physic){
+//            resistDmg = useDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));
+//        }
+
+
         if(resistDmg < getHealth()){
             health -= resistDmg;
+            useAfterHitAbilities();
             return resistDmg;
         }else if(isInGame()){
             if(!useDieAbilities(/*source*/)) {
@@ -545,7 +641,7 @@ public class Mob extends Effectable{
         else speed = 5;
     }
     public void changeArmor(int value){
-        armor += value;
+        bonusArmor += value;
     }
     public void heal(int value){
         if(health + value < maxHealth) health+=value;
@@ -561,6 +657,14 @@ public class Mob extends Effectable{
         CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
         for (Effect e:tmpEffects){
             if(e.isBuff() && e.isDispellable()) e.dispell();
+        }
+    }
+    public void removeBuffsListeners(){//used by staged abilities to remove old abilities listeners
+        CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
+        for (Effect e:tmpEffects){
+            if(e.isBuff() && e instanceof MobAbility.IListener) {
+                e.dispell();
+            }
         }
     }
 

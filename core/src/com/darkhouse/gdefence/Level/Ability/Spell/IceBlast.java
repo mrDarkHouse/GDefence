@@ -6,6 +6,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -65,6 +66,11 @@ public class IceBlast extends Spell/* implements Spell.IAoe*/{
         @Override
         public int[] exp2nextLevel() {
             return new int[]{20, 30, 40, 50, 60};
+        }
+
+        @Override
+        public Array<Class<? extends Ability.AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return null;
         }
 
         @Override
@@ -129,7 +135,7 @@ public class IceBlast extends Spell/* implements Spell.IAoe*/{
     @Override
     public void use(Array<? extends Effectable> targets) {
         for (Effectable m:targets){
-            hitMob(((Mob) m), dmg);
+            hitMob(((Mob) m), DamageType.Magic, dmg);
             m.addEffect(new IceBlastEffect(slowPercent, duration).setOwner(((Mob) m)));
         }
     }

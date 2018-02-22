@@ -92,8 +92,9 @@ public class Projectile extends GameActor{
         }else {
             position.set(targetV);
 //            tower.hitTarget(target, isMainProjectile);
-            tower.hitTarget(target, /*((int) (*/tower.getDmg(target, isMainProjectile) * dmgMultiplayer)/*))*/;
-            afterHit();
+            if(tower.hitTarget(target, /*((int) (*/tower.getDmg(target, isMainProjectile) * dmgMultiplayer)/*))*/){
+                afterHit();
+            }
             Map.projectiles.remove(this);
         }
         setRotation(dir.angle());

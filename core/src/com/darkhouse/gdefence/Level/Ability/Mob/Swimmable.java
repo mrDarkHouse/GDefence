@@ -31,6 +31,7 @@ public class Swimmable extends MobAbility implements MobAbility.IMove{
     }
 
     public Swimmable(P prototype) {
+        super(prototype);
         this.pathTexture = prototype.path;
     }
 

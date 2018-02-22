@@ -4,6 +4,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.BonusArmor;
 import com.darkhouse.gdefence.Level.Ability.Tools.Stackable;
@@ -29,7 +30,7 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
         //    }
 
         @Override
-        public float getDmg(DamageSource source, float dmg) {
+        public float getDmg(DamageSource source, DamageType type, float dmg) {
             owner.changeArmor(-armorPerStack);
             getStackableObject().deleteStack();
             if(getStackableObject().isZeroStacks()) dispell();
@@ -75,6 +76,7 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
     private LayerArmorBuff buff;
 
     public LayerArmor(P prototype) {
+        super(prototype);
         buff = new LayerArmorBuff(prototype.stacks, prototype.armor);
     }
 

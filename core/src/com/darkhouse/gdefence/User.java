@@ -15,6 +15,7 @@ import com.darkhouse.gdefence.Screens.BottomPanel.TowerMap;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -241,22 +242,40 @@ public class User {
 
     private int[] craftedTowers;//need to know how many towers are crafted
 
-    private void loadCraftedTowers(){//TODO
-
+    private String getCraftedTowersCode(){
+        String s = "";
+        for (int i = 0; i < craftedTowers.length; i++){
+            s += craftedTowers[i] + "/";
+        }
+        return s;
     }
-    private String saveCratedTowers(){
-        return "";
+    private void loadCraftedTowersCode(String s){
+        String[] crafted = s.split("/");
+        for (int i = 0; i < crafted.length; i++){
+            craftedTowers[i] = Integer.parseInt(crafted[i]);
+        }
+//        System.out.println(Arrays.toString(craftedTowers));
     }
 
-    public void craftTower(ItemEnum.Tower t){
-        getTowerInventory().store(TowerObject.generateStartObjects(t, 1));
-        craftedTowers[t.ordinal()]++;
-        if(craftedTowers[t.ordinal()] >= 3){//3 = NUMBER TO AVAILABLE TOWER
+    public void craftTower(/*ItemEnum.Tower t*/TowerObject t){
+        getTowerInventory().store(/*TowerObject.generateStartObjects(t.getPrototype(), 1)*/TowerObject.generateClearTower(t.getPrototype()).addAbilitiesGems(t));
+        craftedTowers[t.getPrototype().ordinal()]++;
+        if(craftedTowers[t.getPrototype().ordinal()] >= 3){//3 = NUMBER TO AVAILABLE TOWER
 //            if(getOpenType(t) != RecipeType.available){
-                setAvailableTower(t);
+                setAvailableTower(t.getPrototype());
 //            }
 //            openTowerToBuy(t);//
         }
+    }
+    public void loadAvailableTowers(){//TODO sort by tower id/tier(cost)
+        for (Map.Entry<ItemEnum.Tower, RecipeType> entry: openedTowers.entrySet()){
+            if(entry.getValue() == RecipeType.available){
+                storePanel.store(entry.getKey());
+            }
+        }
+//        for (int i = 0; i < openedTowers.entrySet(); i++){
+//
+//        }
     }
 
     public static Inventory getTowerInventory() {
@@ -316,6 +335,8 @@ public class User {
             return name().toLowerCase();//
         }
 
+
+
         Research(/*String texturePath, String tooltip*/) {
 //            this.texturePath = texturePath;
 //            this.tooltip = GDefence.getInstance().assetLoader.getWord(name().toLowerCase() + "_tooltip");
@@ -335,6 +356,10 @@ public class User {
         @Override
         public String getTextureRegion() {
             return getTexturePath();
+        }
+
+        public int getRecipeCost() {
+            return 0;
         }
 
         @Override
@@ -425,7 +450,7 @@ public class User {
         return openedTowers.get(t);
     }
     private boolean isOpened(ItemEnum.Tower t){
-        return getOpenType(t) == RecipeType.opened;
+        return getOpenType(t) == RecipeType.opened || getOpenType(t) == RecipeType.available;
     }
     public void buyTowerRecipe(ItemEnum.Tower t){
 //        if(t == ItemEnum.Tower.Range) openTowerToBuy(ItemEnum.Tower.Range);//debug tool
@@ -483,7 +508,6 @@ public class User {
             this.texturePath = texturePath;
         }
 
-
         public static boolean isTowerGem(GEM_TYPE g){
             return g == RED || g == YELLOW || g == BLUE;
         }
@@ -511,10 +535,15 @@ public class User {
             return texturePath;
         }
 
+        public int getRecipeCost() {
+            return 0;
+        }
+
         @Override
         public int getGlobalCost() {
             return 0;
         }
+
 
         @Override
         public int getID() {
@@ -529,8 +558,10 @@ public class User {
         public String getTooltip() {
             switch (this){
                 case RED:case YELLOW:case BLUE:
+//                    System.out.println("a");// + GDefence.getInstance().assetLoader.getWord("rybGemTooltip"));
                     return GDefence.getInstance().assetLoader.getWord("rybGemTooltip");
                 case BLACK:case GREEN:case WHITE:
+//                    System.out.println("b");// + GDefence.getInstance().assetLoader.getWord("bgwGemTooltip"));
                     return GDefence.getInstance().assetLoader.getWord("bgwGemTooltip");
                 default:return "smth goes wrong";//throw wrongArgumentException
             }
@@ -589,7 +620,7 @@ public class User {
 //        else initNewUser();
 //    }
 
-    public boolean isDebug = true;
+    public boolean isDebug = false;
 
     public void initNewUser(){
         GDefence.getInstance().log("Init new User");
@@ -614,6 +645,7 @@ public class User {
         setTowerMap(GDefence.getInstance().getArsenal().getTowerMap());
         openTowerToBuy(ItemEnum.Tower.Basic);
 
+
         if(isDebug) {
             addGold(51160);
             openResearch(Research.Powder);
@@ -630,11 +662,12 @@ public class User {
             openLevel(4);
             openLevel(5);
 
+
 //            spellInventory.store(new EchoSmash.P(5, 5, 5, 2f, 100, new EchoSmash.G(5, 1f, new int[]{2, 2, 2})));
-            spellInventory.store(new GlobalSlow.P(5, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, new int[]{3, 3, 0})));
+//            spellInventory.store(new GlobalSlow.P(5, 15, 0.3f, 5, new GlobalSlow.G(0.1f, 1, 4, new int[]{3, 3, 0})));
             spellInventory.store(new IceBlast.P(5, 10, 10, 0.3f, 3, 200, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3})));
             spellInventory.store(new EmergencyRepair.P(5, 15, 3, new EmergencyRepair.G(2, new int[]{3, 0, 0})));
-            spellInventory.store(new SuddenDeath.P(5, 10));
+//            spellInventory.store(new SuddenDeath.P(5, 10));
 
 
         }
@@ -766,10 +799,13 @@ public class User {
 //            System.out.println(level + " " + currentExp);
 //            addLevel();
 //        }
+        level = 0;
         int i = 0;
 //        System.out.println(totalExp);
-        while (totalExp >= Value.needExp2Lvl[i]){
+        int t = totalExp;
+        while (t >= Value.needExp2Lvl[i]){
             i++;
+            t -= Value.needExp2Lvl[i];
         }
         int newLevel = 0;
         if(i != 0) {
@@ -778,10 +814,10 @@ public class User {
         }else {
             currentExp = totalExp;
         }
-        for (int j = 0; j <= newLevel - getLevel(); j++){
+        for (int j = 0; j <= newLevel/* - getLevel()*/; j++){
             addLevel();
         }
-//        System.out.println(getLevel());
+//        System.out.println(getLevel() + "|" + currentExp);
 
 
     }
@@ -792,11 +828,11 @@ public class User {
     }
     public int getMaxExpThisLvl(){
         int exp;
-        if (level < 2){
+//        if (level < 2){
             exp = Value.needExp2Lvl[level - 1];
-        }else {
-            exp = Value.needExp2Lvl[level - 1] - Value.needExp2Lvl[level - 2];
-        }
+//        }else {
+//            exp = Value.needExp2Lvl[level - 1]/* - Value.needExp2Lvl[level - 2]*/;
+//        }
 
         return exp;
     }
@@ -864,6 +900,7 @@ public class User {
             prop.put("levelsCompleted", getLevelsCompletedSavecode());
             prop.put("levelAvailable", getLevelAvailableSavecode());
             prop.put("gradable", getGradableCode());
+            prop.put("craftedTowers", getCraftedTowersCode());
 
 
 
@@ -884,6 +921,7 @@ public class User {
         maxHealth.setCurrentLevel(Integer.parseInt(grades[0]));
         maxEnergy.setCurrentLevel(Integer.parseInt(grades[1]));
     }
+
 
     public boolean load(){
         GDefence.getInstance().log("Loading");
@@ -933,10 +971,16 @@ public class User {
             loadLevelsCompleted(prop.getProperty("levelsCompleted"));
             loadLevelsAvailable(prop.getProperty("levelAvailable"));
             loadGradableCode(prop.getProperty("gradable"));
+            loadCraftedTowersCode(prop.getProperty("craftedTowers"));
+            loadAvailableTowers();
 
+
+//            getTowerInventory().store(new TowerObject(ItemEnum.Tower.Rifle, 2, 1, 1));
 //            System.out.println(gold + " " + totalExp);
 
-
+//            openLevel(19);
+//            openLevel(20);
+//            openLevel(21);
 
 //            gold = sc.nextInt();
 //            totalExp = sc.nextInt();

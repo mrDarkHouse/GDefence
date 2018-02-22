@@ -10,6 +10,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.SlotTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TowerTooltip;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -79,10 +80,17 @@ public class Tower extends Effectable implements DamageSource{
         tooltip.hasChanged();
     }
 
-    public void changeAttackSpeed(int value){
-        if(speed + bonusSpeed + value > 10) bonusSpeed += value;
-        else bonusSpeed = -speed + 10;
-        tooltip.hasChanged();
+    public int changeAttackSpeed(int value){
+        if(speed + bonusSpeed + value > 10) {
+            bonusSpeed += value;
+            tooltip.hasChanged();
+            return value;
+        } else {
+            bonusSpeed = -speed + 10;
+            tooltip.hasChanged();
+            return -10;
+        }
+//        tooltip.hasChanged();
 
 //        if(speed + value > 10) speed += value;
 //        else speed = 10;
@@ -94,85 +102,6 @@ public class Tower extends Effectable implements DamageSource{
 //        if (dmg + value > 0) dmg += value;
 //        else dmg = 0;
     }
-
-    public void procBuildAbilities(MapTile t){
-        for (Ability a:abilities){
-            if(a instanceof Ability.IOnBuild){
-                ((Ability.IOnBuild) a).builded(t);
-            }
-        }
-    }
-    public void procBuildOnMapAbilities(Tower other){
-        for (Ability a:abilities){
-            if(a instanceof Ability.IBuildedOnMap){
-                ((Ability.IBuildedOnMap) a).buildedOnMap(other);
-            }
-        }
-        for (Effect e:effects){
-            if(e instanceof Ability.IBuildedOnMap){
-                ((Ability.IBuildedOnMap) e).buildedOnMap(other);
-            }
-        }
-    }
-
-
-
-    /*
-    //protected TowerType ID;
-    protected String texturePath;
-    protected AttackType attackType;
-    protected int dmg;
-    //protected int speed;
-    protected float speedDelay;
-    protected int cost;
-    protected ArrayList<Ability> abilities;
-
-   // public TowerType getID() {
-    //    return ID;
-   // }
-   // public void setID(TowerType ID) {
-    //    this.ID = ID;
-    //}
-    public ArrayList<Ability> getAbilities() {
-        return abilities;
-    }
-    public void setAbilities(ArrayList<Ability> abilities) {
-        this.abilities = abilities;
-    }
-    public AttackType getAttackType() {
-        return attackType;
-    }
-    public void setAttackType(AttackType attackType) {
-        this.attackType = attackType;
-    }
-    public int getCost() {
-        return cost;
-    }
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-    public int getDmg() {
-        return dmg;
-    }
-    public void setDmg(int dmg) {
-        this.dmg = dmg;
-    }
-    public String getName() {
-        return texturePath;
-    }
-    public void setName(String texturePath) {
-        this.texturePath = texturePath;
-    }
-    public float getSpeedDelay() {
-        return speedDelay;
-    }
-    public void setSpeedDelay(float speedDelay) {
-        this.speedDelay = speedDelay;
-    }
-
-    */
-
-
 
     public Tower(TowerObject towerPrototype, float x, float y, float width, float height) {
         super();
@@ -238,14 +167,7 @@ public class Tower extends Effectable implements DamageSource{
         procKillAbilities(killedMob);
     }
 
-    private void procKillAbilities(Mob killedMob){
-        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-        for (Effect e:tmp){
-            if(e instanceof Ability.IOnKilled){
-                ((Ability.IOnKilled) e).killed(killedMob);
-            }
-        }
-    }
+
 
 
 
@@ -284,51 +206,122 @@ public class Tower extends Effectable implements DamageSource{
         }else {
 //            preShotTime += delta;
             if(preShotTime >= getAttackSpeedDelay(speed + bonusSpeed)){//
-                boolean canShotNow = true;
-                for (Ability a : abilities) {
-                    if (a instanceof Ability.IPreAttack) {
-                        if(!((Ability.IPreAttack) a).use(delta)) canShotNow = false;
-                    }
-                }
-                for (Effect e : effects) {
-                    if (e instanceof Ability.IPreAttack) {
-                        if(!((Ability.IPreAttack) e).use(delta)) canShotNow = false;
-                    }
-                }
-                if(canShotNow) {
+                if(procPreAttackAbilities(delta)) {
                     shotProjectile(target, true);
-                    for (Ability a : abilities) {
-                        if (a instanceof Ability.IPostAttack) {
-                            ((Ability.IPostAttack) a).use(target);
-                        }
-                    }
-                    CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-                    for (Effect e : tmp) {//concurrent
-                        if (e instanceof Ability.IPostAttack) {
-                            ((Ability.IPostAttack) e).use(target);
-                        }
-                    }
+                    procPostAttackAbilities();
                 }
             }else preShotTime += delta;
         }
 
 
     }
-    public void shotProjectile(Mob target, boolean followMainShots){
+
+
+    public void procBuildAbilities(MapTile t){
+        for (Ability a:abilities){
+            if(a instanceof Ability.IOnBuild){
+                ((Ability.IOnBuild) a).builded(t);
+            }
+        }
+    }
+    public void procBuildOnMapAbilities(Tower other){
+        for (Ability a:abilities){
+            if(a instanceof Ability.IBuildedOnMap){
+                ((Ability.IBuildedOnMap) a).buildedOnMap(other);
+            }
+        }
+        for (Effect e:effects){
+            if(e instanceof Ability.IBuildedOnMap){
+                ((Ability.IBuildedOnMap) e).buildedOnMap(other);
+            }
+        }
+    }
+    private void procKillAbilities(Mob killedMob){
+        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+        for (Effect e:tmp){
+            if(e instanceof Ability.IOnKilled){
+                ((Ability.IOnKilled) e).killed(killedMob);
+            }
+        }
+    }
+    private boolean usePreshotAbilities(){
         boolean shotMainProjectile = true;
+        for (Ability a : abilities) {
+            if (a instanceof Ability.IPreShot) {
+                if (!((Ability.IPreShot) a).use(target)) shotMainProjectile = false;
+            }
+        }
+        for (Effect e : effects) {
+            if (e instanceof Ability.IPreShot) {
+                if (!((Ability.IPreShot) e).use(target)) shotMainProjectile = false;
+            }
+        }
+        return shotMainProjectile;
+    }
+    private boolean procPreAttackAbilities(float delta){
+        boolean canShotNow = true;
+        for (Ability a : abilities) {
+            if (a instanceof Ability.IPreAttack) {
+                if(!((Ability.IPreAttack) a).use(delta)) canShotNow = false;
+            }
+        }
+        for (Effect e : effects) {
+            if (e instanceof Ability.IPreAttack) {
+                if(!((Ability.IPreAttack) e).use(delta)) canShotNow = false;
+            }
+        }
+        return canShotNow;
+    }
+    private void procPostAttackAbilities(){
+        for (Ability a : abilities) {
+            if (a instanceof Ability.IPostAttack) {
+                ((Ability.IPostAttack) a).use(target);
+            }
+        }
+        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+        for (Effect e : tmp) {//concurrent
+            if (e instanceof Ability.IPostAttack) {
+                ((Ability.IPostAttack) e).use(target);
+            }
+        }
+    }
+    private int procOnHitAbilities(int dmg, Mob target, boolean isMain){
+        for (Ability a:abilities){
+            if(a instanceof Ability.IOnHit && (isMain || a.isWorkOnAdditionalProjectiles())){
+                dmg = ((Ability.IOnHit) a).getDmg(target, dmg);
+            }
+        }
+        for (Effect e:effects){
+            if(e instanceof Ability.IOnHit && (isMain || e.isWorkOnAdditionalProjectiles())){
+                dmg = ((Ability.IOnHit) e).getDmg(target, dmg);
+            }
+        }
+        return dmg;
+    }
+    private Projectile procAfteHitAbilities(Projectile p){
+        for (Ability a:abilities){
+            if(a instanceof Ability.IAfterHit){
+                p.addAbilities(((Ability.IAfterHit) a));
+            }
+        }
+        return p;
+    }
+    private float procOnGetExp(float realDmg){
+        float exp = getExpFromDmg(realDmg);
+        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+        for (Effect e:tmp){
+            if(e instanceof Ability.IOnGetExp){
+                exp = ((Ability.IOnGetExp) e).addExp(exp);
+            }
+        }
+        return exp;
+    }
+
+    public void shotProjectile(Mob target, boolean followMainShots){
+//        boolean shotMainProjectile;
         if(canAttack) {
-//                preShotTime = 0;
-            for (Ability a : abilities) {
-                if (a instanceof Ability.IPreShot) {
-                    if (!((Ability.IPreShot) a).use(target)) shotMainProjectile = false;
-                }
-            }
-            for (Effect e : effects) {
-                if (e instanceof Ability.IPreShot) {
-                    if (!((Ability.IPreShot) e).use(target)) shotMainProjectile = false;
-                }
-            }
-            if (shotMainProjectile) {
+//            shotMainProjectile = usePreshotAbilities();
+            if (usePreshotAbilities()) {
                 shot(target);
             }
             if(followMainShots) preShotTime = 0;//if true, timer to next attack dont go before shot fired
@@ -337,28 +330,10 @@ public class Tower extends Effectable implements DamageSource{
     }
 
 
-//    private void procAbility(Ability.UseType type){
-//        switch (type){
-//            case preattack:
-//
-//                break;
-//            case onHit:
-//
-//
-//                break;
-//
-//        }
-//    }
     private void shot(Mob target){
         //target.hit(towerPrototype.getDmg());
         Projectile p = new Projectile(this, this.getCenter(), target, true);
-        for (Ability a:abilities){
-            if(a instanceof Ability.IAfterHit){
-                p.addAbilities(((Ability.IAfterHit) a));
-            }
-        }
-        Map.projectiles.add(p);
-
+        Map.projectiles.add(procAfteHitAbilities(p));
     }
 
 //    public void hitTarget(Mob target, boolean isMain){
@@ -382,21 +357,11 @@ public class Tower extends Effectable implements DamageSource{
 
     public int getDmg(Mob target, boolean isMain){
         int dmg = this.dmg + bonusDmg;
-        for (Ability a:abilities){
-            if(a instanceof Ability.IOnHit && (isMain || a.isWorkOnAdditionalProjectiles())){
-                dmg = ((Ability.IOnHit) a).getDmg(target, dmg);
-            }
-        }
-        for (Effect e:effects){
-            if(e instanceof Ability.IOnHit && (isMain || e.isWorkOnAdditionalProjectiles())){
-                dmg = ((Ability.IOnHit) e).getDmg(target, dmg);
-            }
-        }
-        return dmg;
+        return procOnHitAbilities(dmg, target, isMain);
     }
-    public void hitTarget(Mob target, float dmg){
+    public boolean hitTarget(Mob target, float dmg){
         if(target != null) {//hotfix
-            float realDmg = target.hit(dmg, this);
+            float realDmg = target.hit(dmg, DamageType.Physic, this);
             float exp = getExpFromDmg(realDmg);
             CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
             for (Effect e:tmp){
@@ -404,12 +369,13 @@ public class Tower extends Effectable implements DamageSource{
                     exp = ((Ability.IOnGetExp) e).addExp(exp);
                 }
             }
-            addExp(exp);
+            addExp(procOnGetExp(realDmg));
+            return realDmg != 0;
 //            procAfterHitAbilities(target, dmg);
-        }
+        }else return false;
     }
 
-    private float getExpFromDmg(float dmg){
+    public float getExpFromDmg(float dmg){
         if(dmg == 0) return 0;  //not earn exp while hit invulnerable units
         else return (float) (Math.sqrt(dmg + 5) / 4f);
     }

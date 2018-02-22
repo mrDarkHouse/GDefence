@@ -19,6 +19,8 @@ public class DropInventoryActor extends Window{
         super(GDefence.getInstance().assetLoader.getWord("drop"), skin, "description");
         this.skin = skin;
 
+//        System.out.println("started:" + slots);
+
         getTitleLabel().setAlignment(Align.center);
         setMovable(false);
 
@@ -46,10 +48,12 @@ public class DropInventoryActor extends Window{
         add(table);
     }
     public void init(){//init must be after stage.add(InventoryActor)
+//        System.out.println("actors:" + actorArray);
         for(DropSlotActor s: actorArray) {
             SlotTooltip tooltip = new SlotTooltip(s.getStage(), s.getSlot(), skin);
             tooltip.setTouchable(Touchable.disabled);
             s.addListener(new TooltipListener(tooltip, true));
+//            System.out.println(s);
         }
 
     }

@@ -225,7 +225,7 @@ public class Level {
 
     public void mobDieEvent(DamageSource source){
         ownerScreen.mobDieEvent();
-        if(getType() == Map.MapType.KILLMADNESS && source instanceof Tower) timeWithoutKills = 0;
+        if(getType() == Map.MapType.KILLMADNESS /*&& source instanceof Tower*/) timeWithoutKills = 0;
     }
 
 
@@ -332,7 +332,7 @@ public class Level {
             case 3:
                 Random chance = new Random();
                 float f = chance.nextFloat();
-                System.out.println(f);
+//                System.out.println(f);
                 if (f <= Float.parseFloat(curr[2])) {
 //                currentDrop.add();
                     ItemEnum.addItemById(Integer.parseInt(curr[0]), Integer.parseInt(curr[1]), GDefence.getInstance().user);

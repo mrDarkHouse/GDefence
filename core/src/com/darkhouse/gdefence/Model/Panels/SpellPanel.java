@@ -225,7 +225,7 @@ public class SpellPanel extends Table{
 
             public SpellTooltip(Skin skin) {
                 super(SpellButton.this.spell.getPrototype().getName(), skin);
-                getTitleLabel().setStyle(FontLoader.generateSecondaryStyle(14, Color.WHITE));
+                getTitleLabel().setStyle(FontLoader.generateStyle(1, 14, Color.WHITE));
 //                getTitleLabel().setAlignment(Align.center);
                 tooltipLabel = new Label(SpellButton.this.spell.getPrototype().getTooltip(), skin, "spell");
 //                tooltipLabel.getStyle().font = FontLoader.generateSecondaryFont(12, Color.WHITE);
@@ -234,6 +234,8 @@ public class SpellPanel extends Table{
 
                 setVisible(false);
                 add(tooltipLabel);
+                setKeepWithinStage(true);
+
 //                add(cooldown).align(Align.right);
 
                 pack();

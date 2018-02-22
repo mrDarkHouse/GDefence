@@ -31,7 +31,7 @@ public class EnegryBar extends WidgetGroup{
 
     private void initLabel(){
         text = new Label(LevelMap.getLevel().getEnergyNumber() + "/" + LevelMap.getLevel().getMaxEnergy(),
-                FontLoader.generateStyle(26, Color.BLACK));
+                FontLoader.generateStyle(0, 26, Color.BLACK));
         Container l = new Container(text);
         l.setPosition(energyBar.getX() + energyBar.getWidth()/2,
                 energyBar.getY() + energyBar.getHeight()/2);

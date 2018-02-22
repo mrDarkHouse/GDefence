@@ -3,7 +3,6 @@ package com.darkhouse.gdefence.InventorySystem.inventory.Tooltip;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Objects.Recipe;
@@ -46,7 +45,7 @@ public class RecipeTooltip extends AbstractTooltip{
 //                add(components).row();
 //            }
 //        }
-        Label cost = new Label(recipe.getGlobalCost() + " " + GDefence.getInstance().assetLoader.getWord("gold2"), skin, "description");
+        Label cost = new Label(recipe.getRecipeCost() + " " + GDefence.getInstance().assetLoader.getWord("gold2"), skin, "description");
         add(cost);
         pack();
     }

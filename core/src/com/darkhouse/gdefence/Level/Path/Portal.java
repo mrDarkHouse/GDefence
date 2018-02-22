@@ -16,6 +16,8 @@ public class Portal extends WalkableMapTile implements Comparable<Portal>{
     public int id;
     public Array<Portal> seconds;
     private Way startWay;
+//    private Portal ;
+    private Vector2 exeption;
 //    public boolean open;
 
     public Portal(Way startWay, int id) {
@@ -23,32 +25,42 @@ public class Portal extends WalkableMapTile implements Comparable<Portal>{
         this.id = id;
         seconds = new Array<Portal>();
     }
+    public Portal(Way startWay, int id, int xEception, int yExeption){
+        this(startWay, id);
+        exeption = new Vector2(xEception, yExeption);
+    }
+
+    private boolean checkExeption(Portal p){
+        if(exeption == null) return false;
+        return p.getIndexX() == exeption.x && p.getIndexY() == exeption.y;
+    }
     public void init(ArrayList<Portal> portals){
         for (Portal p:portals){
-            if(p != this) seconds.add(p);
+            if(p != this && !checkExeption(p)) seconds.add(p);
         }
+//        System.out.println("P " + seconds);
     }
 
-    public void init(/*Array<Portal>*/Portal second){
-//        this.second = second;
-//        for (Portal p:second){
-
-//        for (Portal p:second.seconds){
-            for (Portal a:seconds) {
-                a.seconds.add(second);
-//                p.seconds.add(this);
-//                p.seconds.add(a);
-//                a.seconds.add(p);
-            }
-//        }
-        seconds.add(second);
-            /*p.*/second.seconds.add(this);
-
-//        }
-//        second.second = this;
-//        open = true;
-//        second.open = false;
-    }
+//    public void init(/*Array<Portal>*/Portal second){
+////        this.second = second;
+////        for (Portal p:second){
+//
+////        for (Portal p:second.seconds){
+//            for (Portal a:seconds) {
+//                a.seconds.add(second);
+////                p.seconds.add(this);
+////                p.seconds.add(a);
+////                a.seconds.add(p);
+//            }
+////        }
+//        seconds.add(second);
+//            /*p.*/second.seconds.add(this);
+//
+////        }
+////        second.second = this;
+////        open = true;
+////        second.open = false;
+//    }
 
     @Override
     public TargetType getApplyMobs() {
@@ -63,7 +75,7 @@ public class Portal extends WalkableMapTile implements Comparable<Portal>{
     @Override
     public Point manipulateMob() {
         int i = (int) (Math.random()*seconds.size);
-//        System.out.println(seconds.get(i));
+//        System.out.println(seconds);
         /*if (open) */return new Point(seconds.get(i).getIndexY(), seconds.get(i).getIndexX());
 //        else return null;
 //        mob.teleport(second.getX(), second.getY());

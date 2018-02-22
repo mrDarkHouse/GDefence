@@ -46,17 +46,54 @@ public class PathSigner extends WidgetGroup{
     public void initTextures(){
         clear();
         Level lvl = LevelMap.getLevel();
-        Array<Path> typePaths = paths.get(Mob.getMobById(lvl.getCurrentWave().getMobID()).getMoveType());
+//        System.out.println(paths);
+        int spawners = lvl.getMap().getSpawner().size();
+        int ground = 0;
+        int water = 0;
+
+        /*for (int i = 0; i < spawners; i++){
+            System.out.println(lvl.getWave(lvl.currentWave + 1 + i));
+            if(Mob.getMobById(lvl.getWave(lvl.currentWave + 1 + i).getMobID()).getMoveType() == Mob.MoveType.ground){
+                ground++;
+            }else water++;
+        }*/
+//        System.out.println(ground + " " + water);
+
+//        Array<Path> typePaths = paths.get(Mob.getMobById(lvl.getCurrentWave().getMobID()).getMoveType());
+//        System.out.println(typePaths);
 //        Mob.MoveType[] moveTypes = paths.keySet().toArray(new Mob.MoveType[]{});
 //        arrows = new Array<Array<Texture>>();
 //        for (int i = 0; i < moveTypes.length; i++){
 //            arrows.add(new Array<Array<Texture>>());
 //            for (int k = 0; k < paths.get(moveTypes[i]).size; k++){
 //        for (int spawnI = 0; spawnI < typePaths.size; spawnI++) {
-            for (int k = 0; k < typePaths.size; k++) {
+
+
+            for (int k = 0; k < /*typePaths.size*/spawners; k++) {
 //                arrows.add(new Array<Texture>());
-                for (int j = 0; j < typePaths.get(k).size; j++) {
-                    Path currPath = typePaths.get(k);
+
+                Color color = Color.WHITE;//default color()
+//                    System.out.println(Mob.getMobById(lvl.getCurrentWave().getMobID()));
+                Path currPath;
+                switch (Mob.getMobById(/*lvl.getCurrentWave().getMobID()*/lvl.getWave(lvl.currentWave + 1 + k).getMobID()).getMoveType()) {
+                    case ground:
+                        if (/*currPath.getSpawnIndex()*/ground == 0) color = Color.FIREBRICK;
+                        if (/*currPath.getSpawnIndex()*/ground == 1) color = Color.FOREST;
+                        if (/*currPath.getSpawnIndex()*/ground == 2) color = Color.BROWN;
+                        ground++;
+                        currPath = paths.get(Mob.MoveType.ground).get(k);
+                        break;
+                    case water:
+                        if (/*currPath.getSpawnIndex()*/water == 0) color = Color.BLUE;
+                        if (/*currPath.getSpawnIndex()*/water == 1) color = Color.CYAN;
+                        if (/*currPath.getSpawnIndex()*/water == 2) color = Color.CORAL;
+                        water++;
+                        currPath = paths.get(Mob.MoveType.water).get(k);
+                        break;
+                    default:throw new IllegalArgumentException("move type dont support by PathSigner");
+                }
+                for (int j = 0; j < currPath.size/*.get(k).size*/; j++) {
+//                    Path currPath = /*typePaths.get(k)*/paths.get(Mob.getMobById(lvl.getCurrentWave().getMobID()).getMoveType()).get(0);
                     String signCode;
                     if (j - 1 < 0) signCode = MapTile.getSignerCode(null, currPath.get(j), currPath.get(j + 1));
                     else if (j + 1 >= currPath.size) continue;
@@ -70,19 +107,7 @@ public class PathSigner extends WidgetGroup{
                     data.prepare();
                     Pixmap p = (signerTexture.getTextureData().consumePixmap());
 
-                    Color color = Color.WHITE;//default color()
-                    switch (Mob.getMobById(lvl.getCurrentWave().getMobID()).getMoveType()) {
-                        case ground:
-                            if (currPath.getSpawnIndex() == 0) color = Color.FIREBRICK;
-                            if (currPath.getSpawnIndex() == 1) color = Color.FOREST;
-                            if (currPath.getSpawnIndex() == 2) color = Color.BROWN;
-                            break;
-                        case water:
-                            if (currPath.getSpawnIndex() == 0) color = Color.BLUE;
-                            if (currPath.getSpawnIndex() == 1) color = Color.CYAN;
-                            if (currPath.getSpawnIndex() == 2) color = Color.CORAL;
-                            break;
-                    }
+
                     for (int x = 0; x < p.getWidth(); x++) {
                         for (int y = 0; y < p.getHeight(); y++) {
                             int findColor = p.getPixel(x, y);

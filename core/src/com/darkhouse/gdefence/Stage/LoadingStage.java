@@ -38,7 +38,7 @@ public class LoadingStage extends Stage{
         loadBar.setPosition(Gdx.graphics.getWidth()/2 - loadBar.getWidth()/2, Gdx.graphics.getHeight()/2 - loadBar.getHeight()/2);
         addActor(loadBar);
         I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
-        Label loading = new Label(b.get("loading"), FontLoader.generateStyle(34, Color.BLACK));//
+        Label loading = new Label(b.get("loading"), FontLoader.generateStyle(0, 34, Color.BLACK));//
         loading.setPosition(loadBar.getX() + loadBar.getWidth()/2 - loading.getWidth()/2,
                             loadBar.getY() - loadBar.getHeight());
         addActor(loading);

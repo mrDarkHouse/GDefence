@@ -34,7 +34,7 @@ public class AbilityTooltip extends AbstractTooltip{
     }
     private void init(){
 //        skin.getFont().
-        label = new Label(text, FontLoader.generateStyle(15, Color.LIGHT_GRAY));
+        label = new Label(text, FontLoader.generateStyle(2, 15, Color.LIGHT_GRAY));
         label.getStyle().font.getData().markupEnabled = true;
         label.setAlignment(Align.center);
         add(label);

@@ -54,6 +54,7 @@ public class WaterDefend extends MobAbility implements MobAbility.IMove{
     private WaterBonusArmor buff;
 
     public WaterDefend(P prototype) {
+        super(prototype);
         buff = new WaterBonusArmor(-1, prototype.armor);
     }
 

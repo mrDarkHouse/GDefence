@@ -1,10 +1,12 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
@@ -29,9 +31,14 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
         }
 
         @Override
-        public String getSaveCode() {
-            return null;
+        public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return new Array<Class<? extends AbilityPrototype>>();
         }
+
+//        @Override
+//        public String getSaveCode() {
+//            return null;
+//        }
 
         @Override
         public AbilityPrototype copy() {
@@ -91,7 +98,7 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
             super.act(delta);
 
             if(getCooldownObject().isReady()){
-                owner.hit(damage, source);
+                owner.hit(damage, DamageType.Magic, source);
                 getCooldownObject().resetCooldown();
             }
 

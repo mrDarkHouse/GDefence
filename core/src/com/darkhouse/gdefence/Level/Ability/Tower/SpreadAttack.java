@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Level.Ability.Tower;
 
 
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
@@ -18,23 +19,38 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
         private G g;
         private AtomicReference<Float> cdCap;
         private int shots;
+        private float delay;
 
-        public P(float cdCap, int bonusAttacks, G grader) {
-            super(11, "spreadAttack", grader.gemCap);
+        public P(float cdCap, int bonusAttacks, float delay, G grader) {
+            super(11, /*getName(bonusAttacks)*/"spreadAttack", grader.gemCap);
+            this.name = getName(bonusAttacks);
             this.cdCap = new AtomicReference<Float>(cdCap);
             this.shots = bonusAttacks;
             this.g = grader;
+            this.delay = delay;
+        }
+        private String getName(int bonusAttacks){
+            switch (bonusAttacks){
+                case 1:return "spreadAttack2";
+                case 2:return "spreadAttack3";
+                default:return "spreadAttack";
+            }
         }
 
         @Override
-        public String getSaveCode() {
-            return super.getSaveCode() + "z" + cdCap.get() + ";" + shots + ";" + g.cdCapDown;
+        public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return new Array<Class<? extends AbilityPrototype>>();
         }
+
+//        @Override
+//        public String getSaveCode() {
+//            return super.getSaveCode() + "z" + cdCap.get() + ";" + shots + ";" + delay + ";" + g.cdCapDown;
+//        }
 
         @Override
         public AbilityPrototype copy() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            P p = new P(cdCap.get(), shots, g);
+            P p = new P(cdCap.get(), shots, delay, g);
             p.gemBoost[0] = new BoostFloat(p.cdCap, g.cdCapDown, l.getWord("spreadAttackGrade1"),
                     false, BoostFloat.FloatGradeFieldType.TIME);
 
@@ -70,13 +86,15 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
 //        private float delay = 0.2f;
 //        private float currentDelayTime = -1;
         private int shots;
+        private float delay;
 
 //        private Mob target;
 
-        public DoubleShotEffect(float cdCap, int shots) {
+        public DoubleShotEffect(float cdCap, int shots, float delay) {
             super(true, false, -1, "bonusArmor");
             setCooldownable(new Cooldown(cdCap));
             this.shots = shots;
+            this.delay = delay;
         }
 
         @Override
@@ -128,7 +146,7 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
         @Override
         public void use(Mob target) {//if before attack (must implement IPreAttack)
             if (getCooldownObject().isReady()) {
-                owner.addEffect(new TargetShooter(target, shots).setOwner(owner));
+                owner.addEffect(new TargetShooter(target, shots, delay).setOwner(owner));
                 getCooldownObject().resetCooldown();
 //                this.target = target;
 //                currentDelayTime = 0;
@@ -136,16 +154,19 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
         }
     }
     private class TargetShooter extends Effect<Tower>{//this need to work for each target
-        private float delay = 0.1f;
+        private float delay;// = 0.1f;
         private float currentDelayTime = 0;
 
         private Mob target;
         private int lessShots;
 
-        public TargetShooter(Mob target, int shots) {
+        public TargetShooter(Mob target, int shots, float delay) {
             super(true, false, -1, "swimSpeed");
             this.target = target;
             lessShots = shots;
+            this.delay = delay;
+//            if(shots == 1) delay = 0.3f;//missle (need for better animation)
+//            else           delay = 0.1f;//rifle
         }
 
         @Override
@@ -177,7 +198,7 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
 
 
     public SpreadAttack(P prototype) {
-        buff = new DoubleShotEffect(prototype.cdCap.get(), prototype.shots);
+        buff = new DoubleShotEffect(prototype.cdCap.get(), prototype.shots, prototype.delay);
     }
 
     @Override

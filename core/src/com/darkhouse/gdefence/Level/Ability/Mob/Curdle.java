@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Objects.DamageSource;
@@ -49,7 +50,7 @@ public class Curdle extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(DamageSource source, float dmg) {
+        public float getDmg(DamageSource source, DamageType type, float dmg) {
             return 0;
         }
 
@@ -84,7 +85,7 @@ public class Curdle extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(DamageSource source, float dmg) {
+        public float getDmg(DamageSource source, DamageType type, float dmg) {
             if(owner.getHealthPercent() < threshold) {
                 owner.addEffect(new CurdleInvulnerable(duration, curdleTexture).setOwner(owner));
                 owner.deleteEffect(CurdleBuff.class);//once usable
@@ -98,6 +99,7 @@ public class Curdle extends MobAbility implements MobAbility.ISpawn{
     private CurdleBuff effect;
 
     public Curdle(P prototype) {
+        super(prototype);
         Texture[] curdleTexture = new Texture[4];
         for (int i = 0; i < 4; i++){
             curdleTexture[i] = GDefence.getInstance().assetLoader.get(prototype.texturePath + i + ".png");

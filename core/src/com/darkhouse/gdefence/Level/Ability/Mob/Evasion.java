@@ -5,6 +5,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Cooldown;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Objects.DamageSource;
@@ -15,7 +16,7 @@ public class Evasion extends MobAbility implements MobAbility.ISpawn{
         private com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.Evasion evasion;
 
         public EvasionBuff(float chance) {
-            super(true, false, -1);
+            super(true, false, -1, "greatEvasion");
             evasion = new com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.Evasion(chance);
         }
 
@@ -25,8 +26,10 @@ public class Evasion extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(DamageSource source, float dmg) {
-            return evasion.getDmg(source, dmg);
+        public float getDmg(DamageSource source, DamageType type, float dmg) {
+            if(type == DamageType.Physic) {
+                return evasion.getDmg(source, type, dmg);
+            }else return dmg;
         }
 
 //        @Override
@@ -39,7 +42,7 @@ public class Evasion extends MobAbility implements MobAbility.ISpawn{
         private float chance;
 
         public P(float chance) {
-            super("greatEvasion", false);
+            super("evasion", false);
             this.chance = chance;
 
         }
@@ -50,7 +53,8 @@ public class Evasion extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return "";
+            return l.getWord("evasionTooltip1") + " " + FontLoader.colorString((chance*100 + "%"), 3) +
+                    System.getProperty("line.separator") + l.getWord("evasionTooltip2");
 //            return l.getWord("greatEvasionTooltip1") + System.getProperty("line.separator") +
 //                    l.getWord("greatEvasionTooltip2") + " " + FontLoader.colorString(Float.toString(cdCap), 3) + " " +
 //                    l.getWord("greatEvasionTooltip3");
@@ -60,6 +64,7 @@ public class Evasion extends MobAbility implements MobAbility.ISpawn{
     private EvasionBuff buff;
 
     public Evasion(Evasion.P prototype) {
+        super(prototype);
 //        super("Great Evasion", false);
         buff = new EvasionBuff(prototype.chance);
     }

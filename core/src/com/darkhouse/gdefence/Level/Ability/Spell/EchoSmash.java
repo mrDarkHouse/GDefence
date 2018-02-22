@@ -4,8 +4,10 @@ package com.darkhouse.gdefence.Level.Ability.Spell;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
@@ -23,8 +25,8 @@ public class EchoSmash extends Spell{
 
         private AtomicReference<Integer> aoe;
 
-        public P(int energyCost, int cooldown, int dmg, float stunDuration, int aoe, G grader) {
-            super(20, "echoSmash", energyCost, cooldown, grader.gemCap, Mob.class);
+        public P(int energyCost, float cooldown, int dmg, float stunDuration, int aoe, G grader) {
+            super(150, "echoSmash", energyCost, cooldown, grader.gemCap, Mob.class);
             this.dmg = new AtomicReference<Integer>(dmg);
             this.stunDuration = new AtomicReference<Float>(stunDuration);
             this.aoe = new AtomicReference<Integer>(aoe);
@@ -35,7 +37,7 @@ public class EchoSmash extends Spell{
                     true, BoostInteger.IntegerGradeFieldType.NONE);
             gemBoost[1] = new BoostFloat(this.stunDuration, grader.stunDurationUp, l.getWord("echoSmashGrade2"),
                     true, BoostFloat.FloatGradeFieldType.TIME);
-            gemBoost[2] = new BoostInteger(this.aoe, g.aoeUp, l.getWord("echoSmashGrade3"),
+            gemBoost[2] = new BoostInteger(this.aoe, grader.aoeUp, l.getWord("echoSmashGrade3"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
         }
 
@@ -49,10 +51,15 @@ public class EchoSmash extends Spell{
             AssetLoader l = GDefence.getInstance().assetLoader;
             return l.getWord("echoSmashTooltip1") + System.getProperty("line.separator") +
                     l.getWord("echoSmashTooltip2") + System.getProperty("line.separator") +
-                    "(" + (dmg.get() + l.getWord("echoSmashTooltip3")) + " " +
+                    "(" + (FontLoader.colorString(dmg.get().toString(), 10) + l.getWord("echoSmashTooltip3")) + " " +
                     l.getWord("echoSmashTooltip4") + ") " + System.getProperty("line.separator") +
-                    l.getWord("echoSmashTooltip5") + " " + stunDuration.get() + " " +
+                    l.getWord("echoSmashTooltip5") + " " + FontLoader.colorString(stunDuration.get().toString(), 11) + " " +
                     l.getWord("echoSmashTooltip6");
+        }
+
+        @Override
+        public Array<Class<? extends Ability.AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            return null;
         }
 
         @Override
@@ -131,7 +138,7 @@ public class EchoSmash extends Spell{
     public void use(Array<? extends Effectable> targets) {
         int d = dmg*targets.size;
         for (Effectable m:targets){
-            hitMob(((Mob) m), d);
+            hitMob(((Mob) m), DamageType.Magic, d);
 //            getPrototype().addExp(d/2f);
             m.addEffect(new EchoSmashStun(duration).setOwner(((Mob) m)));
         }
