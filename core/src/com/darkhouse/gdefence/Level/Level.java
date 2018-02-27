@@ -79,7 +79,7 @@ public class Level {
 
     private void setInWave(boolean inWave) {
         this.inWave = inWave;
-        if(inWave)waveStartEvent();
+        if(inWave)waveStartEvent();//slow
         else waveEndEvent();
     }
 

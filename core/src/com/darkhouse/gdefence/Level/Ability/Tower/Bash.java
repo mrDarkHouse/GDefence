@@ -9,6 +9,7 @@ import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tools.Chance;
 import com.darkhouse.gdefence.Level.Mob.Mob;
+import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.User;
 
 import java.math.BigDecimal;
@@ -47,7 +48,7 @@ public class Bash extends Ability implements Ability.IOnHit{
         private AtomicReference<Integer> bonusDmg;
 
         public P(float chance, float duration, int bonusDmg, G grader) {
-            super(0, "bash", grader.gemCap);
+            super(0, "bash", grader.gemCap, IOnHit.class);
             this.chance = new AtomicReference<Float>(chance);
             this.duration = new AtomicReference<Float>(duration);
             this.bonusDmg = new AtomicReference<Integer>(bonusDmg);
@@ -160,7 +161,7 @@ public class Bash extends Ability implements Ability.IOnHit{
     }
 
     @Override
-    protected void init() {
+    protected void init(Map map) {
 
     }
 }

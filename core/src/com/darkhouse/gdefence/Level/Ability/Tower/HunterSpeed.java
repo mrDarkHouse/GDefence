@@ -10,6 +10,7 @@ import com.darkhouse.gdefence.Level.Ability.Tools.Stackable;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Model.Level.Map;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -22,7 +23,7 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
         private AtomicReference<Float> duration;
 
         public P(int kills, int speed, float duration, G grader) {
-            super(5, "hunterSpeed", grader.gemCap);
+            super(5, "hunterSpeed", grader.gemCap, IOnBuild.class);
             this.kills = new AtomicReference<Integer>(kills);
             this.speed = new AtomicReference<Integer>(speed);
             this.duration = new AtomicReference<Float>(duration);
@@ -140,7 +141,7 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
     }
 
     @Override
-    protected void init() {
+    protected void init(Map map) {
         buff.setOwner(owner);
     }
 

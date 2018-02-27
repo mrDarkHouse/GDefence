@@ -345,6 +345,7 @@ public class Map {
         for (int y = 0; y < tiles[0].length; y++){
             for (int x = 0; x < tiles.length; x++){
                 tiles[x][y].setIndex(x, y);
+                tiles[x][y].setOwner(this);
             }
         }
     }

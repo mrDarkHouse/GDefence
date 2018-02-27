@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Level.Ability.Tools;
 
 
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Model.Effectable;
 
 public abstract class Effect<T extends Effectable>{
@@ -26,7 +27,12 @@ public abstract class Effect<T extends Effectable>{
         return iconPath;
     }
     protected T owner;
+    private Class<? extends Ability.IAbilityType> type;
 
+
+    public Class<? extends Ability.IAbilityType> getType() {
+        return type;
+    }
 
     public Effect setOwner(T owner) {
         this.owner = owner;
@@ -86,27 +92,42 @@ public abstract class Effect<T extends Effectable>{
 //        void move(MapTile currentTile);
 //    }
 
-    public Effect(boolean positive, boolean isDispellable,/* Mob owner,*/ float duration, String effectIconPath/*32x32*/) {
-        this.isHidden = false;
-        this.isBuff = positive;
-        this.isDispellable = isDispellable;
-//        this.owner = owner;
-        this.duration = duration;
-        currentTime = duration;
-        this.iconPath = effectIconPath;
-//        if(effectIconPath.equals("")) iconPath = GDefence.getInstance().assetLoader.get("", Texture.class);
-//        else iconPath = GDefence.getInstance().assetLoader.get("AbilityIcons/Effects/" + effectIconPath + ".png", Texture.class);
-//        group = new WidgetGroup();
-//        group.addActor(iconPath);
-    }
-    public Effect(boolean positive, boolean isDispellable, float duration){
+    public Effect(Class<? extends Ability.IAbilityType> type, boolean positive,
+                  boolean isDispellable, float duration){
+        this.type = type;
         this.isHidden = true;
         this.isBuff = positive;
         this.isDispellable = isDispellable;
-//        this.owner = owner;
         this.duration = duration;
         currentTime = duration;
     }
+
+    public Effect(Class<? extends Ability.IAbilityType> type, boolean positive,
+                  boolean isDispellable,/* Mob owner,*/ float duration, String effectIconPath/*32x32*/) {
+        this(type, positive, isDispellable, duration);
+//        this.type = type;
+//        this.isHidden = false;
+//        this.isBuff = positive;
+//        this.isDispellable = isDispellable;
+//        this.duration = duration;
+//        currentTime = duration;
+        this.iconPath = effectIconPath;
+    }
+
+    public Effect(boolean positive, boolean isDispellable,
+                  /* Mob owner,*/ float duration, String effectIconPath/*32x32*/){
+        this(Ability.INone.class, positive, isDispellable, duration, effectIconPath);
+    }
+    public Effect(boolean positive, boolean isDispellable,
+                  /* Mob owner,*/ float duration){
+        this(Ability.INone.class, positive, isDispellable, duration);
+    }
+
+
+
+
+
+
 
     public abstract void apply();
 

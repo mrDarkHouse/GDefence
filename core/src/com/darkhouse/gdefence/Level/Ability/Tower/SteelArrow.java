@@ -11,7 +11,6 @@ import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.Map;
-import com.darkhouse.gdefence.User;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -23,7 +22,7 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
         private AtomicReference<Integer> range;
 
         public P(int maxTargets, int range, G grader) {
-            super(12, "steelArrow", grader.gemCap);
+            super(12, "steelArrow", grader.gemCap, IAfterHit.class);
             this.maxTargets = new AtomicReference<Integer>(maxTargets);
             this.range = new AtomicReference<Integer>(range);
             this.grader = grader;
@@ -136,7 +135,7 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
         }
 
         @Override
-        protected void init() {
+        protected void init(Map map) {
 
         }
 
@@ -161,7 +160,7 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
     }
 
     @Override
-    protected void init() {
+    protected void init(Map map) {
 
     }
 

@@ -110,21 +110,21 @@ machinegun
   index: 48
 sniper
   rotate: false
-  xy: 151, 1
+  xy: 1, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 shotgun
   rotate: false
-  xy: 151, 1
+  xy: 51, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 48
 doublebarrel
   rotate: false
-  xy: 151, 1
+  xy: 101, 251
   size: 48, 48
   orig: 48, 48
   offset: 0, 0

@@ -367,7 +367,7 @@ public class AssetLoader extends AssetManager{
         load("Tower/steammachine.png", Texture.class);
 
         load("Researches/powder.png", Texture.class);
-        load("Researches/steam.png", Texture.class);
+        load("Researches/mech.png", Texture.class);
 
         load("AbilityIcons/Abilities/bash.png", Texture.class);
         load("AbilityIcons/Abilities/bounce.png", Texture.class);

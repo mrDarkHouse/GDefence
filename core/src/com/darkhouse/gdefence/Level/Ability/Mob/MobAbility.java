@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Path.WalkableMapTile;
@@ -71,7 +72,7 @@ public abstract class MobAbility{
 //    public abstract String getTooltip();
     public abstract void init();
 
-    public interface IType{
+    public interface IType extends Ability.IAbilityType{
     }
 
 //    public enum procType{

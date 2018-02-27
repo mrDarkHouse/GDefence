@@ -7,6 +7,7 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
+import com.darkhouse.gdefence.Model.Level.Map;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -39,7 +40,7 @@ public class PoisonArrow extends Ability implements Ability.IOnHit {
         private AtomicReference<Float> duration;
 
         public P(float slowPercent, float duration, G grader) {
-            super(8, "poisonArrow", grader.gemCap);
+            super(8, "poisonArrow", grader.gemCap, IOnHit.class);
             this.slowPercent = new AtomicReference<Float>(slowPercent);
             this.duration = new AtomicReference<Float>(duration);
             this.grader = grader;
@@ -119,7 +120,7 @@ public class PoisonArrow extends Ability implements Ability.IOnHit {
     }
 
     @Override
-    protected void init() {
+    protected void init(Map map) {
 
     }
 

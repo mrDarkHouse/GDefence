@@ -22,6 +22,8 @@ import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Tower extends Effectable implements DamageSource{
@@ -50,6 +52,7 @@ public class Tower extends Effectable implements DamageSource{
     private Texture attackRangeTexture;
 
     private TowerTooltip tooltip;
+    private Map map;
 
     private int dmg;
     private int bonusDmg;
@@ -72,7 +75,18 @@ public class Tower extends Effectable implements DamageSource{
     }
     //    private float speedDelay;
 
-    private Array<Ability> abilities;
+//    private Array<Ability> abilities;
+    private HashMap<Class<? extends Ability.ITowerAbilityType> , Array<Ability>> abilities;
+
+    private Array<Ability> getAbilities(){
+        Array<Ability> a = new Array<Ability>();
+        for (java.util.Map.Entry<Class<? extends Ability.ITowerAbilityType> , Array<Ability>> e:abilities.entrySet()){
+            for (Ability ab:e.getValue()){
+                a.add(ab);
+            }
+        }
+        return a;
+    }
 //    private Array<Effect> effects;//
 
     public void addExp(float value){
@@ -116,9 +130,18 @@ public class Tower extends Effectable implements DamageSource{
         setRegion(t);
 
 
-        abilities = new Array<Ability>();
+        abilities = new HashMap<Class<? extends Ability.ITowerAbilityType>, Array<Ability>>();
+//        abilities = new Array<Ability>();
         for (Ability.AbilityPrototype p:towerPrototype.getAbilities()){
-            abilities.add(p.getAbility());
+            if(abilities.containsKey(p.getAbilityType())){
+                abilities.get(p.getAbilityType()).add(p.getAbility());
+            }else {
+                Array<Ability> arr = new Array<Ability>(){};
+                arr.add(p.getAbility());
+                abilities.put(p.getAbilityType(), arr);
+            }
+//            abilities.put(p.getAbilityType(), p.getAbility());
+//            abilities.add(p.getAbility());
         }
 
 //        for (Ability a:towerPrototype.getAbilities()) {
@@ -131,16 +154,17 @@ public class Tower extends Effectable implements DamageSource{
         preShotTime = getAttackSpeedDelay(speed + bonusSpeed);//for momental shot
 //        this.speedDelay = getAttackSpeedDelay(speed);
     }
-    public void init(){
+    public void init(Map map){
         //
+        this.map = map;
         initAbilities();
         tooltip = new TowerTooltip(this, GDefence.getInstance().assetLoader.getSkin());
         addListener(new TooltipListener(tooltip, true));
     }
 
     private void initAbilities(){
-        for (Ability a:abilities){
-            a.setOwner(this);
+        for (Ability a:getAbilities()){
+            a.setOwner(this, map);
         }
     }
 
@@ -191,8 +215,9 @@ public class Tower extends Effectable implements DamageSource{
     }
 
     public void actEffects(float delta){
-        for (int i = 0; i < effects.size(); i++){
-            effects.get(i).act(delta);
+        Array<Effect> ar = getEffects();
+        for (int i = 0; i < ar.size; i++){
+            ar.get(i).act(delta);
         }
     }
 
@@ -218,102 +243,156 @@ public class Tower extends Effectable implements DamageSource{
 
 
     public void procBuildAbilities(MapTile t){
-        for (Ability a:abilities){
-            if(a instanceof Ability.IOnBuild){
+        if(abilities.containsKey(Ability.IOnBuild.class)){
+            for (Ability a : abilities.get(Ability.IOnBuild.class)) {
+////            if(a instanceof Ability.IOnBuild){
                 ((Ability.IOnBuild) a).builded(t);
+////            }
             }
         }
     }
     public void procBuildOnMapAbilities(Tower other){
-        for (Ability a:abilities){
-            if(a instanceof Ability.IBuildedOnMap){
+        if(abilities.containsKey(Ability.IBuildedOnMap.class)) {
+            for (Ability a : abilities.get(Ability.IBuildedOnMap.class)) {
+////            if(a instanceof Ability.IBuildedOnMap){
                 ((Ability.IBuildedOnMap) a).buildedOnMap(other);
+////            }
             }
         }
-        for (Effect e:effects){
-            if(e instanceof Ability.IBuildedOnMap){
+        if(effects.containsKey(Ability.IBuildedOnMap.class)) {
+            for (Effect e : effects.get(Ability.IBuildedOnMap.class)) {
                 ((Ability.IBuildedOnMap) e).buildedOnMap(other);
             }
         }
+//        for (Effect e:effects){
+//            if(e instanceof Ability.IBuildedOnMap){
+//                ((Ability.IBuildedOnMap) e).buildedOnMap(other);
+//            }
+//        }
     }
     private void procKillAbilities(Mob killedMob){
-        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-        for (Effect e:tmp){
-            if(e instanceof Ability.IOnKilled){
+        if(effects.containsKey(Ability.IOnKilled.class)) {
+            for (Effect e : effects.get(Ability.IOnKilled.class)) {
                 ((Ability.IOnKilled) e).killed(killedMob);
             }
         }
+//        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+//        for (Effect e:tmp){
+//            if(e instanceof Ability.IOnKilled){
+//                ((Ability.IOnKilled) e).killed(killedMob);
+//            }
+//        }
     }
     private boolean usePreshotAbilities(){
         boolean shotMainProjectile = true;
-        for (Ability a : abilities) {
-            if (a instanceof Ability.IPreShot) {
+        if(abilities.containsKey(Ability.IPreShot.class)){
+            for (Ability a : abilities.get(Ability.IPreShot.class)) {
+//            if (a instanceof Ability.IPreShot) {
                 if (!((Ability.IPreShot) a).use(target)) shotMainProjectile = false;
+//            }
             }
         }
-        for (Effect e : effects) {
-            if (e instanceof Ability.IPreShot) {
-                if (!((Ability.IPreShot) e).use(target)) shotMainProjectile = false;
+        if(effects.containsKey(Ability.IPreShot.class)) {
+            for (Effect e : effects.get(Ability.IPreShot.class)) {
+                if(!((Ability.IPreShot) e).use(target)) shotMainProjectile = false;
             }
         }
+//        for (Effect e : effects) {
+//            if (e instanceof Ability.IPreShot) {
+//                if (!((Ability.IPreShot) e).use(target)) shotMainProjectile = false;
+//            }
+//        }
         return shotMainProjectile;
     }
     private boolean procPreAttackAbilities(float delta){
         boolean canShotNow = true;
-        for (Ability a : abilities) {
-            if (a instanceof Ability.IPreAttack) {
-                if(!((Ability.IPreAttack) a).use(delta)) canShotNow = false;
+        if(abilities.containsKey(Ability.IPreAttack.class)){
+            for (Ability a : abilities.get(Ability.IPreAttack.class)) {
+//            if (a instanceof Ability.IPreAttack) {
+                if (!((Ability.IPreAttack) a).use(delta)) canShotNow = false;
+//            }
             }
         }
-        for (Effect e : effects) {
-            if (e instanceof Ability.IPreAttack) {
+        if(effects.containsKey(Ability.IPreAttack.class)) {
+            for (Effect e : effects.get(Ability.IPreAttack.class)) {
                 if(!((Ability.IPreAttack) e).use(delta)) canShotNow = false;
             }
         }
+//        for (Effect e : effects) {
+//            if (e instanceof Ability.IPreAttack) {
+//                if(!((Ability.IPreAttack) e).use(delta)) canShotNow = false;
+//            }
+//        }
         return canShotNow;
     }
     private void procPostAttackAbilities(){
-        for (Ability a : abilities) {
-            if (a instanceof Ability.IPostAttack) {
+        if(abilities.containsKey(Ability.IPostAttack.class)){
+            for (Ability a : abilities.get(Ability.IPostAttack.class)) {
+//            if (a instanceof Ability.IPostAttack) {
                 ((Ability.IPostAttack) a).use(target);
+//            }
             }
         }
-        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-        for (Effect e : tmp) {//concurrent
-            if (e instanceof Ability.IPostAttack) {
+        if(effects.containsKey(Ability.IPostAttack.class)) {
+            Array<Effect> arr = effects.get(Ability.IPostAttack.class);
+//            CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(arr);
+            for (/*Effect e : arr*/int i = 0; i < arr.size; i++) {//TODO rework or do it on each effect parsing
+                Effect e = arr.get(i);
                 ((Ability.IPostAttack) e).use(target);
             }
         }
+//        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+//        for (Effect e : tmp) {//concurrent
+//            if (e instanceof Ability.IPostAttack) {
+//                ((Ability.IPostAttack) e).use(target);
+//            }
+//        }
     }
     private int procOnHitAbilities(int dmg, Mob target, boolean isMain){
-        for (Ability a:abilities){
-            if(a instanceof Ability.IOnHit && (isMain || a.isWorkOnAdditionalProjectiles())){
+        if(abilities.containsKey(Ability.IOnHit.class)){
+            for (Ability a : abilities.get(Ability.IOnHit.class)) {
+//            if(a instanceof Ability.IOnHit && (isMain || a.isWorkOnAdditionalProjectiles())){
                 dmg = ((Ability.IOnHit) a).getDmg(target, dmg);
+//            }
             }
         }
-        for (Effect e:effects){
-            if(e instanceof Ability.IOnHit && (isMain || e.isWorkOnAdditionalProjectiles())){
-                dmg = ((Ability.IOnHit) e).getDmg(target, dmg);
+        if(effects.containsKey(Ability.IOnHit.class)) {
+            for (Effect e : effects.get(Ability.IOnHit.class)) {
+                if(isMain || e.isWorkOnAdditionalProjectiles()){
+                    dmg = ((Ability.IOnHit) e).getDmg(target, dmg);
+                }
             }
         }
+//        for (Effect e:effects){
+//            if(e instanceof Ability.IOnHit && (isMain || e.isWorkOnAdditionalProjectiles())){
+//                dmg = ((Ability.IOnHit) e).getDmg(target, dmg);
+//            }
+//        }
         return dmg;
     }
     private Projectile procAfteHitAbilities(Projectile p){
-        for (Ability a:abilities){
-            if(a instanceof Ability.IAfterHit){
+        if(abilities.containsKey(Ability.IAfterHit.class)){
+            for (Ability a : abilities.get(Ability.IAfterHit.class)) {
+//            if(a instanceof Ability.IAfterHit){
                 p.addAbilities(((Ability.IAfterHit) a));
+//            }
             }
         }
         return p;
     }
     private float procOnGetExp(float realDmg){
         float exp = getExpFromDmg(realDmg);
-        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-        for (Effect e:tmp){
-            if(e instanceof Ability.IOnGetExp){
+        if(effects.containsKey(Ability.IOnGetExp.class)){
+            for (Effect e:effects.get(Ability.IOnGetExp.class)){
                 exp = ((Ability.IOnGetExp) e).addExp(exp);
             }
         }
+//        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(getEffects());
+//        for (Effect e:tmp){
+//            if(e instanceof Ability.IOnGetExp){
+//                exp = ((Ability.IOnGetExp) e).addExp(exp);
+//            }
+//        }
         return exp;
     }
 
@@ -362,13 +441,6 @@ public class Tower extends Effectable implements DamageSource{
     public boolean hitTarget(Mob target, float dmg){
         if(target != null) {//hotfix
             float realDmg = target.hit(dmg, DamageType.Physic, this);
-            float exp = getExpFromDmg(realDmg);
-            CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-            for (Effect e:tmp){
-                if(e instanceof Ability.IOnGetExp){
-                    exp = ((Ability.IOnGetExp) e).addExp(exp);
-                }
-            }
             addExp(procOnGetExp(realDmg));
             return realDmg != 0;
 //            procAfterHitAbilities(target, dmg);

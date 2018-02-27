@@ -1,20 +1,11 @@
 package com.darkhouse.gdefence.Screens.BottomPanel;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.Align;
@@ -23,9 +14,6 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.HidingClickListener;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.User;
-import com.darkhouse.gdefence.Value;
-
-import java.util.HashMap;
 
 public class TowerMap extends Window{
 
@@ -302,7 +290,7 @@ public class TowerMap extends Window{
         /*19*/buttons.add(new RecipeButton(ItemEnum.Tower.Shotgun));
         /*20*/buttons.add(new RecipeButton(ItemEnum.Tower.Missle));
         /*21*/buttons.add(new ResearchButton(User.Research.Powder));
-        /*22*/buttons.add(new ResearchButton(User.Research.Steam));
+        /*22*/buttons.add(new ResearchButton(User.Research.Mech));
 
 
         for(TowerMapObject b:buttons){

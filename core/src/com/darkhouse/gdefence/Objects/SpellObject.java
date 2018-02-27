@@ -113,7 +113,7 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
 
     public SpellObject(int id, String name, int energyCost, float cooldown, int[] maxGems,
                        Class<? extends Effectable>... affectedTypes) {
-        super(id, name, maxGems);
+        super(id, name, maxGems, Ability.ITowerAbilityType.class); //TODO spellAbilityType
         this.affectedTypes = new Array<Class<? extends Effectable>>(affectedTypes);
         this.energyCost = energyCost;
         this.cooldown = cooldown;

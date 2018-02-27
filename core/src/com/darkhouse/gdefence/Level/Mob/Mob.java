@@ -512,12 +512,12 @@ public class Mob extends Effectable{
 //                System.out.println(a);
             }
         }
-        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-        for (Effect e:tmp){
-            if(e instanceof MobAbility.IAfterGetDmg){
-                ((MobAbility.IAfterGetDmg) e).afterGetDmg();
-            }
-        }
+//        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+//        for (Effect e:tmp){
+//            if(e instanceof MobAbility.IAfterGetDmg){
+//                ((MobAbility.IAfterGetDmg) e).afterGetDmg();
+//            }
+//        }
     }
     private float useStrongDefenceAbilities(DamageSource source, DamageType type, float dmg){
         float resistDmg = dmg;
@@ -526,12 +526,12 @@ public class Mob extends Effectable{
                 resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, type, resistDmg);
             }
         }
-        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-        for (Effect e:tmp){
-            if((e instanceof MobAbility.IGetDmg) && (e instanceof MobAbility.IStrong)){
-                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, type, resistDmg);
-            }
-        }
+//        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+//        for (Effect e:tmp){
+//            if((e instanceof MobAbility.IGetDmg) && (e instanceof MobAbility.IStrong)){
+//                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, type, resistDmg);
+//            }
+//        }
         return resistDmg;
     }
     private float useDefenceAbilities(DamageSource source, DamageType type, float dmg){
@@ -541,12 +541,12 @@ public class Mob extends Effectable{
                 resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, type, resistDmg);
             }
         }
-        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-        for (Effect e:tmp){
-            if(e instanceof MobAbility.IGetDmg){
-                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, type, resistDmg);
-            }
-        }
+//        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
+//        for (Effect e:tmp){
+//            if(e instanceof MobAbility.IGetDmg){
+//                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, type, resistDmg);
+//            }
+//        }
         return resistDmg;
     }
     private void useSpawnAbilities(){
@@ -599,39 +599,33 @@ public class Mob extends Effectable{
 //        System.out.println(getArmor() + " " + getArmorReduction(getArmor()));
         float resistDmg = 0;
 //        System.out.println("ahh, hitted");
-        switch (type){
-            case Pure:
-                resistDmg = useStrongDefenceAbilities(source, type, dmg);
-                break;
-            case Magic:
-                resistDmg = useDefenceAbilities(source, type, dmg);
-                break;
-            case Physic:
-                resistDmg = useDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));
-                break;
-            case PhysicNoContact:
-                resistDmg = useStrongDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));//sadist, etc
-        }
-//        if(type == DamageType.Pure) {
-//            resistDmg = dmg;
-//        }else if(type == DamageType.Magic){
-//            resistDmg = useDefenceAbilities(source, type, dmg);
-//        }else if(type == DamageType.Physic){
-//            resistDmg = useDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));
+        resistDmg = dmg;
+//        switch (type){
+//            case Pure:
+//                resistDmg = useStrongDefenceAbilities(source, type, dmg);
+//                break;
+//            case Magic:
+//                resistDmg = useDefenceAbilities(source, type, dmg);
+//                break;
+//            case Physic:
+//                resistDmg = useDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));
+//                break;
+//            case PhysicNoContact:
+//                resistDmg = useStrongDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));//sadist, etc
 //        }
 
 
         if(resistDmg < getHealth()){
             health -= resistDmg;
-            useAfterHitAbilities();
+//            useAfterHitAbilities();
             return resistDmg;
         }else if(isInGame()){
-            if(!useDieAbilities(/*source*/)) {
+//            if(!useDieAbilities(/*source*/)) {
                 float lesshp = health;
                 health = 0;
                 setDie(source);
                 return lesshp;
-            }else return 0;
+//            }else return 0;
         }else return 0;
     }
 
@@ -648,20 +642,27 @@ public class Mob extends Effectable{
         else health = maxHealth;
     }
     public void dispellDebuffs(){
-        CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
-        for (Effect e:tmpEffects){
+
+//        CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
+//        for (Effect e:tmpEffects){
+//            if(!e.isBuff() && e.isDispellable()) e.dispell();
+//        }
+        for (Effect e:getEffects()){
             if(!e.isBuff() && e.isDispellable()) e.dispell();
         }
     }
     public void dispellBuffs(){
-        CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
-        for (Effect e:tmpEffects){
+        for (Effect e:getEffects()){
             if(e.isBuff() && e.isDispellable()) e.dispell();
         }
+//        CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
+//        for (Effect e:tmpEffects){
+//            if(e.isBuff() && e.isDispellable()) e.dispell();
+//        }
     }
     public void removeBuffsListeners(){//used by staged abilities to remove old abilities listeners
-        CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
-        for (Effect e:tmpEffects){
+//        CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
+        for (Effect e:getEffects()){
             if(e.isBuff() && e instanceof MobAbility.IListener) {
                 e.dispell();
             }
@@ -670,8 +671,9 @@ public class Mob extends Effectable{
 
 
     public void actEffects(float delta){
-        for (int i = 0; i < effects.size(); i++){
-            effects.get(i).act(delta);
+        Array<Effect> ef = getEffects();
+        for (int i = 0; i < ef.size; i++){
+            ef.get(i).act(delta);
         }
 //        for (Debuff d:effects){//concurrent;
 //            d.act(delta);

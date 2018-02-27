@@ -22,7 +22,7 @@ public class Splash extends Ability implements Ability.IAfterHit{
         private AtomicReference<Integer> aoe;
 
         public P(int aoe, float aoeDmg, G grader) {
-            super(10, "splash", grader.gemCap);
+            super(10, "splash", grader.gemCap, IAfterHit.class);
             this.aoe = new AtomicReference<Integer>(aoe);
             this.aoeDmg = new AtomicReference<Float>(aoeDmg);
             this.g = grader;
@@ -80,6 +80,8 @@ public class Splash extends Ability implements Ability.IAfterHit{
     private float aoeDmg;
     private int aoe;
 
+    private Map map;
+
     public Splash(P prototype) {
         this.aoe = prototype.aoe.get();
         this.aoeDmg = prototype.aoeDmg.get();
@@ -90,7 +92,7 @@ public class Splash extends Ability implements Ability.IAfterHit{
 //        for (Mob m: Wave.mobs){
 //
 //        }
-        for (Mob m:Map.getMobsInRange(target, aoe)){
+        for (Mob m:map.getMobsInRange(target, aoe)){
             if(m != target) {//no splash damage to main target
 //                owner.hitTarget(m, (int) (dmg * aoeDmg));
                 float damaged = m.hit(dmg*aoeDmg, DamageType.PhysicNoContact, owner);
@@ -101,7 +103,7 @@ public class Splash extends Ability implements Ability.IAfterHit{
     }
 
     @Override
-    protected void init() {
-
+    protected void init(Map map) {
+        this.map = map;
     }
 }

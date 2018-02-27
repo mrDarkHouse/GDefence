@@ -483,18 +483,19 @@ public class LevelMap extends AbstractScreen {
     }
 
 
-    public void updateEnd(){//when new wave is ended
+    public void updateEnd(){//when new wave ends
         nWPanel.hasChanged();
-        switch (level.getType()){//polucshe sdelay
+        switch (level.getType()){
             case CLASSIC:cWpanel.setVisible(false); break;
             case INVASION:invasionPanel.setVisible(false); break;
             case KILLMADNESS:killMadnessPanel.setVisible(false); break;
             case TIME:timeRushPanel.setVisible(false);
         }
         nWPanel.setVisible(true);
-        if(pathSigner != null) pathSigner.initTextures();//== null in KillMadness mod
+        if(pathSigner != null) pathSigner.update(getLevel().currentWave);//TODO not works and slow
+        /*pathSigner.initTextures();*///== null in KillMadness mod//slow
     }
-    public void updateStart(){//when new wave is started
+    public void updateStart(){//when new wave starts
 //        nWPanel.hasChanged();
         nWPanel.setVisible(false);
         switch (level.getType()){

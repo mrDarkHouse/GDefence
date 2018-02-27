@@ -11,6 +11,7 @@ import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Model.Level.Map;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -23,7 +24,7 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
         private AtomicReference<Float> duration;
 
         public P(int damage, float delay, float duration, G grader) {
-            super(4, "fireArrow", grader.gemCap);
+            super(4, "fireArrow", grader.gemCap, IAfterHit.class);
             this.damage = new AtomicReference<Integer>(damage);
             this.delay = delay;
             this.duration = new AtomicReference<Float>(duration);
@@ -117,7 +118,7 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
     }
 
     @Override
-    protected void init() {
+    protected void init(Map map) {
 
     }
 

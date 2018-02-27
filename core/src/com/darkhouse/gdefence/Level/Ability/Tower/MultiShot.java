@@ -9,7 +9,6 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.Map;
-import com.darkhouse.gdefence.User;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -21,7 +20,7 @@ public class MultiShot extends Ability implements Ability.IPreShot {
         private AtomicReference<Float> dmgPercent;//not work yet
 
         public P(int bonusTarget, float dmgPercent, G grader) {
-            super(6, "multiShot", grader.gemCap);
+            super(6, "multiShot", grader.gemCap, IPreShot.class);
             this.bonusTarget = new AtomicReference<Integer>(bonusTarget);
             this.dmgPercent = new AtomicReference<Float>(dmgPercent);
             this.grader = grader;
@@ -114,7 +113,7 @@ public class MultiShot extends Ability implements Ability.IPreShot {
     }
 
     @Override
-    protected void init() {
+    protected void init(Map map) {
 
     }
 

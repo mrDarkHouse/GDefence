@@ -4,17 +4,12 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
-import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
-import com.darkhouse.gdefence.Level.Ability.Mob.HealingAura;
 import com.darkhouse.gdefence.Level.Ability.Tools.Aura;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Level;
-import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
-import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.Map;
-import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class SteamAura extends Ability implements Ability.IOnBuild{
 
@@ -26,7 +21,7 @@ public class SteamAura extends Ability implements Ability.IOnBuild{
 //        private ItemEnum.Tower owner;
 
         public P() {
-            super(13, "steamAura", new int[]{0, 0, 0});
+            super(13, "steamAura", new int[]{0, 0, 0}, IOnBuild.class);
         }
 
         @Override
@@ -152,7 +147,7 @@ public class SteamAura extends Ability implements Ability.IOnBuild{
     }
 
     @Override
-    protected void init() {
+    protected void init(Map map) {
         effect = new SteamAuraAura();
         effect.setOwner(owner);
     }

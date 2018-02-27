@@ -23,7 +23,7 @@ public class BuckShot extends Ability implements Ability.IPreShot {
         private AtomicReference<Integer> maxTargets;//
 
         public P(int projectiles, float angle/*, int maxTargets*//*, int range*/, G grader) {
-            super(1, "buckShot", grader.gemCap);
+            super(1, "buckShot", grader.gemCap, IPreShot.class);
             this.projectiles = new AtomicReference<Integer>(projectiles);
             this.angle = new AtomicReference<Float>(angle);
             this.maxTargets = new AtomicReference<Integer>(1);
@@ -115,7 +115,7 @@ public class BuckShot extends Ability implements Ability.IPreShot {
     }
 
     @Override
-    protected void init() {
+    protected void init(Map map) {
 
     }
 }

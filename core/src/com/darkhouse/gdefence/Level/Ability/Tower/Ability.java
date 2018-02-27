@@ -11,11 +11,11 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.User;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class Ability {
@@ -28,6 +28,12 @@ public abstract class Ability {
         protected int[] gemsNumber = new int[3];
         protected int[] gemsMax = new int[3];
         public Boost[] gemBoost = new Boost[3];
+        private Class<? extends ITowerAbilityType> abilityType;
+
+        public Class<? extends ITowerAbilityType> getAbilityType() {
+//            return abilityType.getClass();
+            return abilityType;
+        }
 
         public AbilityPrototype gemCur(int[] gems){
             gemsNumber = gems;
@@ -238,13 +244,15 @@ public abstract class Ability {
             return name;
         }
 
-        public AbilityPrototype(int id, String name, /*String texturePath, */int[] gemsMax) {
+        public AbilityPrototype(int id, String name, /*String texturePath, */int[] gemsMax,
+                                Class<? extends ITowerAbilityType> type) {
             this.id = id;
             this.name = name;
 //            this.texturePath = texturePath;
 //            this.grader = grader;
 //            this.gemsMax = grader.gemCap;
             this.gemsMax = gemsMax;
+            this.abilityType = type;
         }
 
         public boolean canGrade(User.GEM_TYPE t){
@@ -307,53 +315,45 @@ public abstract class Ability {
         }
     }
 
-    public interface IPreShot {
+    public interface ITowerAbilityType extends IAbilityType{}
+
+    public interface IAbilityType{}
+
+    public interface INone extends IAbilityType{}
+
+    public interface IPreShot extends ITowerAbilityType{
         boolean use(Mob target);
     }
-    public interface IPreAttack{
+    public interface IPreAttack extends ITowerAbilityType{
         boolean use(float delta);
     }
-    public interface IPostAttack{
+    public interface IPostAttack extends ITowerAbilityType{
         void use(Mob target);
     }
-    public interface IOnHit {
+    public interface IOnHit extends ITowerAbilityType{
         int getDmg(Mob target, int startDmg);
     }
-    public interface IAfterHit {
+    public interface IAfterHit extends ITowerAbilityType{
         void hit(Mob target, int dmg, Projectile hittingProjectile);
     }
-    public interface IOnBuild {
+    public interface IOnBuild extends ITowerAbilityType{
         void builded(MapTile tile);
     }
-    public interface IBuildedOnMap{
+    public interface IBuildedOnMap extends ITowerAbilityType{
         void buildedOnMap(Tower builded);
     }
-    public interface IOnKilled {
+    public interface IOnKilled extends ITowerAbilityType{
         void killed(Mob killedMob);
     }
-    public interface IOnGetExp {
+    public interface IOnGetExp extends ITowerAbilityType{
         float addExp(float exp);
     }
 
-    protected abstract void init();
-
-//    public enum UseType{
-//        preattack, onHit, onBuild, onKilled
-//
-//
-////        public
-//    }
-//    protected UseType useType;
-//
-//    public UseType getUseType() {
-//        return useType;
-//    }
-    //private int level;
-
-
-
+    protected abstract void init(Map map);
 
     protected Tower owner;
+//    protected E abilityType;
+
     private boolean workOnAdditionalProjectiles;
 
     public boolean isWorkOnAdditionalProjectiles() {
@@ -363,9 +363,9 @@ public abstract class Ability {
         this.workOnAdditionalProjectiles = true;
     }
 
-    public void setOwner(Tower owner) {
+    public void setOwner(Tower owner, Map map) {
         this.owner = owner;
-        init();
+        init(map);
     }
 
 //    public Ability(UseType useType) {

@@ -4,7 +4,6 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerType;
 
 import com.badlogic.gdx.Gdx;
-import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
@@ -12,10 +11,8 @@ import com.darkhouse.gdefence.Level.Ability.Spell.*;
 import com.darkhouse.gdefence.Model.Panels.StoreBuyPanel;
 import com.darkhouse.gdefence.Objects.*;
 import com.darkhouse.gdefence.Screens.BottomPanel.TowerMap;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -326,7 +323,7 @@ public class User {
 
     public enum Research implements Item{
         Powder(/*"powder", "Complete 1 map" + System.getProperty("line.separator") + "to open this research"*/),
-        Steam(/*"steam", "Beat boss on second map" + System.getProperty("line.separator") +  "to open this research"*/);
+        Mech(/*"steam", "Beat boss on second map" + System.getProperty("line.separator") +  "to open this research"*/);
 
         private String tooltip;
 //        private String texturePath;
@@ -636,7 +633,7 @@ public class User {
 //        maxEnergy = new Gradable("Max Energy", 5, 30, 10, 100, 25);
 
 //        openResearch(Research.Powder);
-//        openResearch(Research.Steam);
+//        openResearch(Research.Mech);
 //        towerInventory = new Inventory(TowerObject.class, 35);
 //        spellInventory = new Inventory(SpellObject.class, 35);
 //        detailInventory = new Inventory(DetailObject.class, 35);
@@ -649,7 +646,7 @@ public class User {
         if(isDebug) {
             addGold(51160);
             openResearch(Research.Powder);
-            openResearch(Research.Steam);
+            openResearch(Research.Mech);
             towerInventory.store(new TowerObject(ItemEnum.Tower.SteamMachine, 0, 0, 0));
             gems[0] = 7;
             gems[1] = 7;

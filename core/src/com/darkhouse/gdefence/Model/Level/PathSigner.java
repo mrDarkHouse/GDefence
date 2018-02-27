@@ -33,19 +33,26 @@ public class PathSigner extends WidgetGroup{
 
     private NextWaveTimer nextWaveTimer;
     private HashMap<Mob.MoveType, Array<Path>> paths;
+    private Array<Array<ImageButton>> arrows;
 //    private Array<Array<Texture>> arrows;
 
     public PathSigner(NextWaveTimer t, HashMap<Mob.MoveType, Array<Path>> paths) {
         this.nextWaveTimer = t;
         this.paths = paths;
-        initTextures();
+
+        arrows = new Array<Array<ImageButton>>();
+        Level lvl = LevelMap.getLevel();
+        for (int i = 0; i < lvl.numberWaves; i+= lvl.getMap().getSpawner().size()) {
+            arrows.add(initTextures(lvl, i));
+        }
 
     }
 
 
-    public void initTextures(){
-        clear();
-        Level lvl = LevelMap.getLevel();
+    public Array<ImageButton> initTextures(Level lvl, int currentWave){//TODO array of textures instead init textures in each round
+//        clear();
+        Array<ImageButton> arr = new Array<ImageButton>();
+//        Level lvl = LevelMap.getLevel();
 //        System.out.println(paths);
         int spawners = lvl.getMap().getSpawner().size();
         int ground = 0;
@@ -75,7 +82,7 @@ public class PathSigner extends WidgetGroup{
                 Color color = Color.WHITE;//default color()
 //                    System.out.println(Mob.getMobById(lvl.getCurrentWave().getMobID()));
                 Path currPath;
-                switch (Mob.getMobById(/*lvl.getCurrentWave().getMobID()*/lvl.getWave(lvl.currentWave + 1 + k).getMobID()).getMoveType()) {
+                switch (Mob.getMobById(/*lvl.getCurrentWave().getMobID()*/lvl.getWave(/*lvl.*/currentWave + 1 + k).getMobID()).getMoveType()) {
                     case ground:
                         if (/*currPath.getSpawnIndex()*/ground == 0) color = Color.FIREBRICK;
                         if (/*currPath.getSpawnIndex()*/ground == 1) color = Color.FOREST;
@@ -127,7 +134,8 @@ public class PathSigner extends WidgetGroup{
                     s.setBounds(currPath.get(j).getX(), currPath.get(j).getY(),
                             currPath.get(j).getWidth(), currPath.get(j).getHeight());
 
-                    addActor(s);
+//                    addActor(s);
+                    arr.add(s);
 //                    arrows.get(i).get(k).add(GDefence.getInstance().assetLoader.get("Path/Turn/turnLU.png", Texture.class));
 //                    switch ()
                 }
@@ -139,7 +147,14 @@ public class PathSigner extends WidgetGroup{
 //
 //            }
 //        }
+        return arr;
 
+    }
+    public void update(int currentWave){
+        clear();
+        for (int i = 0; i < arrows.get(currentWave).size; i++) {
+            addActor(arrows.get(currentWave).get(i));
+        }
     }
 
     @Override

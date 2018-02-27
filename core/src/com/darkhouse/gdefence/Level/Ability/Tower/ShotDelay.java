@@ -7,7 +7,7 @@ import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Tower.Tower;
-import com.darkhouse.gdefence.User;
+import com.darkhouse.gdefence.Model.Level.Map;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -19,7 +19,7 @@ public class ShotDelay extends Ability implements Ability.IPreAttack {
         private boolean onlyFirstAttack;
 
         public P(float delay, boolean onlyFirstAttack, G grader) {
-            super(9, "shotDelay", grader.gemCap);
+            super(9, "shotDelay", grader.gemCap, IPreAttack.class);
             this.delay = new AtomicReference<Float>(delay);
             this.onlyFirstAttack = onlyFirstAttack;
             this.g = grader;
@@ -144,7 +144,7 @@ public class ShotDelay extends Ability implements Ability.IPreAttack {
     }
 
     @Override
-    protected void init() {
+    protected void init(Map map) {
 
     }
 }

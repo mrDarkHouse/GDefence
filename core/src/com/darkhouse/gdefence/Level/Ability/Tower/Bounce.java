@@ -23,7 +23,7 @@ public class Bounce extends Ability implements Ability.IAfterHit{
         private AtomicReference<Integer> maxRange;
 
         public P(int bounces, float resDmgFromEachBounce, int maxRange, G grader) {
-            super(7, "bounce", grader.gemCap);
+            super(7, "bounce", grader.gemCap, IAfterHit.class);
             this.bounces = new AtomicReference<Integer>(bounces);
             this.resDmgFromEachBounce = new AtomicReference<Float>(resDmgFromEachBounce);
             this.maxRange = new AtomicReference<Integer>(maxRange);
@@ -86,6 +86,8 @@ public class Bounce extends Ability implements Ability.IAfterHit{
     private float resDmgFromEachBounce;
     private int maxRange;
 
+    private Map map;
+
     public Bounce(P prototype) {
         this.bounces = prototype.bounces.get();
         this.resDmgFromEachBounce = prototype.resDmgFromEachBounce.get();
@@ -108,15 +110,15 @@ public class Bounce extends Ability implements Ability.IAfterHit{
             Projectile p = new Projectile(owner, target.getCenter(), newTarget, false);
             p.setDmgMultiplayer(1 - resDmgFromEachBounce);
             Bounce g = new Bounce(bounces - 1, 1 - ((float) Math.pow(1 - resDmgFromEachBounce, 2)), maxRange);//
-            g.setOwner(owner);
+            g.setOwner(owner, map);
             p.addAbilities(g);
             Map.projectiles.add(p);
         }
     }
 
     @Override
-    protected void init() {
-
+    protected void init(Map map) {
+        this.map = map;
     }
 
 

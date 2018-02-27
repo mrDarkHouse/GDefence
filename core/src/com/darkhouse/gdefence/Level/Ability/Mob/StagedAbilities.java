@@ -56,7 +56,7 @@ public class StagedAbilities extends MobAbility implements MobAbility.ISpawn{
     public class StageChecker extends Effect<Mob> implements IAfterGetDmg, IStrong{
 
         public StageChecker() {
-            super(true, false, -1);
+            super(IAfterGetDmg.class, true, false, -1);
         }
 
         public int getStage(){

@@ -220,7 +220,7 @@ public enum ItemEnum {;
 
 
             Short.researchNeed.add(User.Research.Powder);
-            SteamMachine.researchNeed.add(User.Research.Steam);
+            SteamMachine.researchNeed.add(User.Research.Mech);
 
 
 
@@ -575,7 +575,7 @@ public enum ItemEnum {;
 //
 //    }
 //    public enum Research implements Item{
-//        Steam {
+//        Mech {
 //            @Override
 //            public String getTextureRegion() {
 //                return "steam";

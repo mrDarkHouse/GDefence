@@ -10,6 +10,7 @@ import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
+import com.darkhouse.gdefence.Model.Level.Map;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -22,7 +23,7 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
         private float delay;
 
         public P(float cdCap, int bonusAttacks, float delay, G grader) {
-            super(11, /*getName(bonusAttacks)*/"spreadAttack", grader.gemCap);
+            super(11, /*getName(bonusAttacks)*/"spreadAttack", grader.gemCap, IOnBuild.class);
             this.name = getName(bonusAttacks);
             this.cdCap = new AtomicReference<Float>(cdCap);
             this.shots = bonusAttacks;
@@ -91,7 +92,7 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
 //        private Mob target;
 
         public DoubleShotEffect(float cdCap, int shots, float delay) {
-            super(true, false, -1, "bonusArmor");
+            super(IPostAttack.class, true, false, -1, "bonusArmor");
             setCooldownable(new Cooldown(cdCap));
             this.shots = shots;
             this.delay = delay;
@@ -202,7 +203,7 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
     }
 
     @Override
-    public void init() {
+    public void init(Map map) {
         buff.setOwner(owner);
     }
 

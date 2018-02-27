@@ -6,10 +6,8 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Chance;
-import com.darkhouse.gdefence.User;
+import com.darkhouse.gdefence.Model.Level.Map;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Crit extends Ability {
@@ -20,7 +18,7 @@ public class Crit extends Ability {
         private AtomicReference<Float> multiplayer;
 
         public P(float chance, float multiplayer, G grader) {
-            super(2, "crit", grader.gemCap);
+            super(2, "crit", grader.gemCap, ITowerAbilityType.class);
             this.chance = new AtomicReference<Float>(chance);
             this.multiplayer = new AtomicReference<Float>(multiplayer);
             this.grader = grader;
@@ -86,7 +84,7 @@ public class Crit extends Ability {
     }
 
     @Override
-    protected void init() {
+    protected void init(Map map) {
 
     }
 }

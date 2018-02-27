@@ -102,30 +102,30 @@ public abstract class MapTile extends GDSprite{
 ////        }
 //    }
     public static MapTile generateTile(String loadCode){
-        String[] tryMulty = loadCode.split("z");
-//        System.out.println(tryMulty[0]);
+        String[] tryMulti = loadCode.split("z");
+//        System.out.println(tryMulti[0]);
 
-        if(tryMulty.length > 1){
+        if(tryMulti.length > 1){
 //            String[] additional = loadCode.split("|");
 //            System.out.println(additional[0] + " " + additional[1]);
 //            additional[0] = additional[0].substring(2);//removing 23:
 //                Array<Turn> turns = new Array<Turn>();
 
-            if(Integer.parseInt(tryMulty[0].substring(0, 2)) == 80){
+            if(Integer.parseInt(tryMulti[0].substring(0, 2)) == 80){
                 Array<WalkableMapTile> m = new Array<WalkableMapTile>();
-                for (int i = 1; i < tryMulty.length; i++){
-                    m.add(((WalkableMapTile) generateTile(tryMulty[i])));//must be walkable
+                for (int i = 1; i < tryMulti.length; i++){
+                    m.add(((WalkableMapTile) generateTile(tryMulti[i])));//must be walkable
                 }
-                return new Spawn(TargetType.values()[Integer.parseInt(tryMulty[0].substring(3, 4))], m);
+                return new Spawn(TargetType.values()[Integer.parseInt(tryMulti[0].substring(3, 4))], m);
             }
 
-            Turn[] turns = new Turn[tryMulty.length];
-            for (int i = 0; i < tryMulty.length; i++){
-//                String code = tryMulty[i].substring(0, 2);
+            Turn[] turns = new Turn[tryMulti.length];
+            for (int i = 0; i < tryMulti.length; i++){
+//                String code = tryMulti[i].substring(0, 2);
 //                if(Integer.parseInt(code) == 24)
-//                MapTile m = generateTile(tryMulty[i]);
+//                MapTile m = generateTile(tryMulti[i]);
 //                if(m instanceof B)
-                turns[i] = ((Turn) generateTile(tryMulty[i]));//must be turn (20 21 22)
+                turns[i] = ((Turn) generateTile(tryMulti[i]));//must be turn (20 21 22)
             }
             return new MultiTurn(turns);
         }
@@ -294,17 +294,21 @@ public abstract class MapTile extends GDSprite{
 //    }
 
     private Tower buildedTower;
+    private Map owner;
     public Tower getBuildedTower() {
         return buildedTower;
     }
 
     public MapTile(/*TileType type*/) {
+//        this.owner
 //        setType(type);
 
 //        initTexture();
     }
 
-
+    public void setOwner(Map owner) {
+        this.owner = owner;
+    }
 
     public abstract void initTexture();
 //        switch (type){
@@ -329,7 +333,7 @@ public abstract class MapTile extends GDSprite{
             Tower t = new Tower(tower, getX(), getY(), getWidth(), getHeight());
             LevelMap.levelMap.getStage().addActor(t);//TODO
             this.buildedTower = t;
-            t.init();
+            t.init(owner);
             t.procBuildAbilities(this);
             for (Tower tw: Level.getMap().getTowersOnMap()){
                 tw.procBuildOnMapAbilities(t);
