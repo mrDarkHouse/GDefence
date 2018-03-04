@@ -34,7 +34,7 @@ public class WaterFeel extends MobAbility implements MobAbility.IMove{
         private int speedValue;
 
         public P(int speedValue) {
-            super("waterFeel", false);
+            super("waterFeel", false, IMove.class);
             this.speedValue = speedValue;
 
         }

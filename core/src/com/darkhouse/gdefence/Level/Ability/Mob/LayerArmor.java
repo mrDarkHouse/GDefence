@@ -19,7 +19,7 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
         private BonusArmor modifier;
 
         public LayerArmorBuff(int stacks, int armor) {
-            super(true, false, -1, "bonusArmor");
+            super(true, false, -1, "layerArmor", IGetDmg.class);
             this.armorPerStack = armor;
             setStackable(new Stackable(stacks));
             getStackableObject().setCurrentStacks(stacks);
@@ -33,7 +33,9 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
         public float getDmg(DamageSource source, DamageType type, float dmg) {
             owner.changeArmor(-armorPerStack);
             getStackableObject().deleteStack();
-            if(getStackableObject().isZeroStacks()) dispell();
+            if(getStackableObject().isZeroStacks()) {
+                dispell();
+            }
             //        updateStack();
             return dmg;
         }
@@ -54,7 +56,7 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
         private int armor;
 
         public P(int stacks, int armor) {
-            super("layerArmor", false);
+            super("layerArmor", false, ISpawn.class);
             this.stacks = stacks;
             this.armor = armor;
         }
@@ -83,11 +85,12 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
     @Override
     public void init() {
         buff.setOwner(owner);
+        owner.addEffect(buff);
     }
 
     @Override
     public void spawned() {
-        owner.addEffect(buff);
+
     }
 
 

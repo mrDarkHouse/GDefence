@@ -218,10 +218,15 @@ public class Effectable extends GDSprite{
             for (Effect ab:e.getValue()){
                 if(ab.getClass() == d){
                     e.getValue().removeValue(ab, true);
+                    if(ab.getIconPath() != null) {
+                        effectBar.removeIcon(GDefence.getInstance().assetLoader.getEffectIcon(ab.getIconPath()));
+                        effectBar.pack();
+                    }
                 }
             }
         }
     }
+//    public void deleteEffect(Effect e)
 
     public Effect getEffect(Class d){
         for (Effect e:getEffects()){

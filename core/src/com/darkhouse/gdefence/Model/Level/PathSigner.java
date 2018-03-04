@@ -45,11 +45,12 @@ public class PathSigner extends WidgetGroup{
         for (int i = 0; i < lvl.numberWaves; i+= lvl.getMap().getSpawner().size()) {
             arrows.add(initTextures(lvl, i));
         }
+        update(0);
 
     }
 
 
-    public Array<ImageButton> initTextures(Level lvl, int currentWave){//TODO array of textures instead init textures in each round
+    public Array<ImageButton> initTextures(Level lvl, int currentWave){
 //        clear();
         Array<ImageButton> arr = new Array<ImageButton>();
 //        Level lvl = LevelMap.getLevel();
@@ -151,9 +152,10 @@ public class PathSigner extends WidgetGroup{
 
     }
     public void update(int currentWave){
+        currentWave = currentWave/Level.getMap().getSpawner().size();
         clear();
-        for (int i = 0; i < arrows.get(currentWave).size; i++) {
-            addActor(arrows.get(currentWave).get(i));
+        for (int i = 0; i < arrows.get(currentWave/* - Level.getMap().getSpawner().size()*/).size; i++) {
+            addActor(arrows.get(currentWave/* - Level.getMap().getSpawner().size()*/).get(i));
         }
     }
 

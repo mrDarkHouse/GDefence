@@ -92,7 +92,7 @@ public class SpreadAttack extends Ability implements Ability.IOnBuild{
 //        private Mob target;
 
         public DoubleShotEffect(float cdCap, int shots, float delay) {
-            super(IPostAttack.class, true, false, -1, "bonusArmor");
+            super(true, false, -1, "bonusArmor", IPostAttack.class);
             setCooldownable(new Cooldown(cdCap));
             this.shots = shots;
             this.delay = delay;

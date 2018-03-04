@@ -63,7 +63,7 @@ public class Sprint extends MobAbility implements MobAbility.ISpawn{
         private int speedBoost;
 
         public P(float cdCap, float duration, int speedBoost) {
-            super("sprint", false);
+            super("sprint", false, ISpawn.class);
             this.cdCap = cdCap;
             this.duration = duration;
             this.speedBoost = speedBoost;

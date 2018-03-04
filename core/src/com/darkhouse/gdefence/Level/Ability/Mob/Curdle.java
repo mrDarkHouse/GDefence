@@ -19,7 +19,7 @@ public class Curdle extends MobAbility implements MobAbility.ISpawn{
         private String texturePath;
 
         public P(float duration, float threshold, String texturePath) {
-            super("curdle", false);
+            super("curdle", false, ISpawn.class);
             this.duration = duration;
             this.threshold = threshold;
             this.texturePath = texturePath;
@@ -73,7 +73,7 @@ public class Curdle extends MobAbility implements MobAbility.ISpawn{
         private Texture[] curdleTexture;
 
         public CurdleBuff(float duration, float threshold, Texture[] curdleTexture) {
-            super(true, false, -1);
+            super(true, false, -1, IGetDmg.class);
             this.duration = duration;
             this.threshold = threshold;
             this.curdleTexture = curdleTexture;

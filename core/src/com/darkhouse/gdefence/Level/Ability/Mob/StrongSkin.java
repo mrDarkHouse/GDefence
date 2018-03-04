@@ -12,14 +12,15 @@ import com.darkhouse.gdefence.Objects.DamageSource;
 
 public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
 
-    private static class BlockDmg extends Effect<Mob> implements IGetDmg, IListener{
+    private static class BlockDmg extends Effect<Mob> implements IGetDmg/*, IListener*/{
         private int blockEmount;
         private int blockMinLimit;
 
         public BlockDmg(float duration, int blockEmount, int blockMinLimit) {
-            super(true, true, duration);
+            super(true, true, duration, IGetDmg.class);
             this.blockEmount = blockEmount;
             this.blockMinLimit = blockMinLimit;
+            setListener();
         }
 
         @Override
@@ -27,6 +28,7 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
             if(type == DamageType.Physic) {
                 if (dmg < blockMinLimit) return dmg;
                 float newDmg = dmg - blockEmount;
+                System.out.println(dmg + " " + newDmg);
                 return newDmg > blockMinLimit ? newDmg : blockMinLimit;
             }else return dmg;
         }
@@ -41,7 +43,7 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
         private int blockMinLimit;
 
         public P(int blockEmount, int blockMinLimit) {
-            super("strongSkin", false);
+            super("strongSkin", false, ISpawn.class);
             this.blockEmount = blockEmount;
             this.blockMinLimit = blockMinLimit;
 

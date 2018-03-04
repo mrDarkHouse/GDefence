@@ -85,7 +85,7 @@ public class HealingAura extends MobAbility implements MobAbility.ISpawn{
         private int healEmount;
 
         public P(int range, float healDelay, int healEmount) {
-            super("healingAura", false);
+            super("healingAura", false, ISpawn.class);
             this.range = range;
             this.healDelay = healDelay;
             this.healEmount = healEmount;

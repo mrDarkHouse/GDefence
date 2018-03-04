@@ -41,7 +41,7 @@ public class WaterShield extends MobAbility implements MobAbility.IGetDmg{
         private float duration;
 
         public P(float chance, float dmgAbsorb, float duration) {
-            super("waterShield", false);
+            super("waterShield", false, IMove.class);
             this.chance = chance;
             this.dmgAbsorb = dmgAbsorb;
             this.duration = duration;

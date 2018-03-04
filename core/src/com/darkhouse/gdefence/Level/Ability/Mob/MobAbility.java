@@ -19,6 +19,10 @@ public abstract class MobAbility{
     public abstract static class AbilityPrototype {
         protected String name;
         protected boolean isHidden;
+        protected Class<? extends Ability.IAbilityType> type;
+        public Class<? extends Ability.IAbilityType> getType() {
+            return type;
+        }
 
         public String getName() {
             return GDefence.getInstance().assetLoader.getWord(name);
@@ -27,6 +31,10 @@ public abstract class MobAbility{
             return isHidden;
         }
 
+        public AbilityPrototype(String name, boolean isHidden, Class<? extends Ability.IAbilityType> type) {
+            this(name, isHidden);
+            this.type = type;
+        }
         public AbilityPrototype(String name, boolean isHidden) {
             this.name = name;
             this.isHidden = isHidden;

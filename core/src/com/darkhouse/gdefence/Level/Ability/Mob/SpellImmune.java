@@ -13,7 +13,7 @@ public class SpellImmune extends MobAbility implements MobAbility.ISpawn{
     public static class P extends AbilityPrototype{
 
         public P() {
-            super("spellImmune", false);
+            super("spellImmune", false, ISpawn.class);
         }
 
         @Override
@@ -30,7 +30,7 @@ public class SpellImmune extends MobAbility implements MobAbility.ISpawn{
     public static class SpellImmuneBuff extends Effect<Mob> implements IGetDmg{
 
         public SpellImmuneBuff() {
-            super(true, false, -1, "swimSpeed");
+            super(true, false, -1, "spellImmune", IGetDmg.class);
         }
 
         @Override

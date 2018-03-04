@@ -492,8 +492,8 @@ public class LevelMap extends AbstractScreen {
             case TIME:timeRushPanel.setVisible(false);
         }
         nWPanel.setVisible(true);
-        if(pathSigner != null) pathSigner.update(getLevel().currentWave);//TODO not works and slow
-        /*pathSigner.initTextures();*///== null in KillMadness mod//slow
+        if(pathSigner != null) pathSigner.update(getLevel().currentWave);//== null in KillMadness mod
+        /*pathSigner.initTextures();*///slow
     }
     public void updateStart(){//when new wave starts
 //        nWPanel.hasChanged();

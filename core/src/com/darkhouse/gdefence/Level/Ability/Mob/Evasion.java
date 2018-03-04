@@ -16,7 +16,7 @@ public class Evasion extends MobAbility implements MobAbility.ISpawn{
         private com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.Evasion evasion;
 
         public EvasionBuff(float chance) {
-            super(true, false, -1, "greatEvasion");
+            super(true, false, -1, "greatEvasion", IGetDmg.class);
             evasion = new com.darkhouse.gdefence.Level.Ability.Mob.Modifiers.Evasion(chance);
         }
 
@@ -42,7 +42,7 @@ public class Evasion extends MobAbility implements MobAbility.ISpawn{
         private float chance;
 
         public P(float chance) {
-            super("evasion", false);
+            super("evasion", false, ISpawn.class);
             this.chance = chance;
 
         }

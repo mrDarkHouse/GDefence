@@ -22,7 +22,7 @@ public class ScorpionVenom extends MobAbility implements MobAbility.ISpawn{
         private float duration;
 
         public ScorpionVenomBuff(float duration, int asSlow) {
-            super(true, true, -1);
+            super(true, true, -1, IGetDmg.class);
             this.duration = duration;
             this.asSlow = asSlow;
         }
@@ -68,7 +68,7 @@ public class ScorpionVenom extends MobAbility implements MobAbility.ISpawn{
         private float duration;
 
         public P(int asSlow, float duration) {
-            super("scorpionVenom", false);
+            super("scorpionVenom", false, ISpawn.class);
             this.asSlow = asSlow;
             this.duration = duration;
         }

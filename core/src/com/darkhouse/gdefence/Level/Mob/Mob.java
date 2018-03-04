@@ -22,6 +22,8 @@ import com.darkhouse.gdefence.Objects.DamageSource;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Mob extends Effectable{
@@ -232,7 +234,9 @@ public class Mob extends Effectable{
     private ProgressBar hpBar;
 //    private EffectBar effectBar;
 //    private ArrayList <Effect> effects;//Effect[]
-    private Array<MobAbility> abilities;
+
+    private HashMap<Class<? extends Ability.IAbilityType> , Array<MobAbility>> abilities;
+//    private Array<MobAbility> abilities;
 
     private Way way;
 
@@ -423,25 +427,41 @@ public class Mob extends Effectable{
         this.bounty = bounty;
     }
     public void setAbilities(Array<MobAbility.AbilityPrototype> abilities) {
-        this.abilities = new Array<MobAbility>();
-        for (MobAbility.AbilityPrototype a:abilities){
-            this.abilities.add(a.getAbility());
-        }
-//        this.abilities = new Array<MobAbility>(abilities);
+        setAbilities(abilities.toArray());
     }
     public void setAbilities(MobAbility.AbilityPrototype[] abilities) {
-        this.abilities = new Array<MobAbility>();
+        this.abilities = new HashMap<Class<? extends Ability.IAbilityType>, Array<MobAbility>>();
         for (MobAbility.AbilityPrototype a:abilities){
-            this.abilities.add(a.getAbility());
+            putAbility(a);
+        }
+    }
+    public void addAbilities(MobAbility.AbilityPrototype[] abilities){
+        for (MobAbility.AbilityPrototype a:abilities){
+            putAbility(a);
+        }
+    }
+    private void putAbility(MobAbility.AbilityPrototype p){
+        if(abilities.containsKey(p.getType())){
+            abilities.get(p.getType()).add(p.getAbility());
+        }else {
+            Array<MobAbility> a = new Array<MobAbility>();
+            a.add(p.getAbility());
+            abilities.put(p.getType(), a);
         }
     }
 
 
     public Array<MobAbility> getAbilities() {
-        return abilities;
+        Array<MobAbility> a = new Array<MobAbility>();
+        for (java.util.Map.Entry<Class<? extends Ability.IAbilityType> , Array<MobAbility>> e:abilities.entrySet()){
+            for (MobAbility ab:e.getValue()){
+                a.add(ab);
+            }
+        }
+        return a;
     }
     public boolean haveAbility(Class d){
-        for (MobAbility db: abilities){
+        for (MobAbility db: getAbilities()){
             if(db.getClass() == d){
                 return true;
             }
@@ -494,51 +514,76 @@ public class Mob extends Effectable{
 //    }
 
     public void initAbilities(){
-        for (MobAbility a:abilities){
+        for (MobAbility a:getAbilities()){
             a.setOwner(this);
         }
     }
     private void useMoveAbilities(){
-        for (MobAbility a:abilities){
-            if(a instanceof MobAbility.IMove){
+        if(abilities.containsKey(MobAbility.IMove.class)) {
+            for (MobAbility a : abilities.get(MobAbility.IMove.class)) {
+//            if(a instanceof MobAbility.IMove){
                 ((MobAbility.IMove) a).move(currentTile);
+//            }
             }
         }
     }
     private void useAfterHitAbilities(){
-        for (MobAbility a:abilities){
-            if(a instanceof MobAbility.IAfterGetDmg){
+        if(abilities.containsKey(MobAbility.IAfterGetDmg.class)) {
+            for (MobAbility a : abilities.get(MobAbility.IAfterGetDmg.class)) {
+//            if(a instanceof MobAbility.IAfterGetDmg){
                 ((MobAbility.IAfterGetDmg) a).afterGetDmg();
 //                System.out.println(a);
+//            }
             }
         }
-//        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-//        for (Effect e:tmp){
-//            if(e instanceof MobAbility.IAfterGetDmg){
-//                ((MobAbility.IAfterGetDmg) e).afterGetDmg();
-//            }
-//        }
+        if(effects.containsKey(MobAbility.IAfterGetDmg.class)) {
+            Array.ArrayIterator<Effect> art = new Array.ArrayIterator<Effect>(effects.get(MobAbility.IAfterGetDmg.class));
+            while (art.hasNext()){
+                ((MobAbility.IAfterGetDmg) art.next()).afterGetDmg();
+            }
+        }
     }
     private float useStrongDefenceAbilities(DamageSource source, DamageType type, float dmg){
         float resistDmg = dmg;
-        for (MobAbility a:abilities){
-            if((a instanceof MobAbility.IGetDmg) && (a instanceof MobAbility.IStrong)){
-                resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, type, resistDmg);
+        if(abilities.containsKey(MobAbility.IGetDmg.class)) {
+            for (MobAbility a : abilities.get(MobAbility.IGetDmg.class)) {
+//                if ((a instanceof MobAbility.IGetDmg) && (a instanceof MobAbility.IStrong)) {//TODO strong abilities
+                    resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, type, resistDmg);
+//                }
             }
         }
-//        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
-//        for (Effect e:tmp){
-//            if((e instanceof MobAbility.IGetDmg) && (e instanceof MobAbility.IStrong)){
-//                resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, type, resistDmg);
+        if(effects.containsKey(MobAbility.IGetDmg.class)) {
+            Array.ArrayIterator<Effect> art = new Array.ArrayIterator<Effect>(effects.get(MobAbility.IGetDmg.class));
+            while (art.hasNext()){
+                Effect effect = art.next();
+                if(effect.isStrong()) {
+                    resistDmg = ((MobAbility.IGetDmg) effect).getDmg(source, type, dmg);
+                }
+            }
+        }
+//        if(effects.containsKey(MobAbility.IGetDmg.class)){
+//            for (Effect e:effects.get(MobAbility.IGetDmg.class)){
+//                if(e.isStrong()) {
+//                    resistDmg = ((MobAbility.IGetDmg) e).getDmg(source, type, dmg);
+//                }
 //            }
 //        }
         return resistDmg;
     }
     private float useDefenceAbilities(DamageSource source, DamageType type, float dmg){
         float resistDmg = dmg;
-        for (MobAbility a:abilities){
-            if(a instanceof MobAbility.IGetDmg){
-                resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, type, resistDmg);
+        if(abilities.containsKey(MobAbility.IGetDmg.class)) {
+            for (MobAbility a : abilities.get(MobAbility.IGetDmg.class)) {
+//                if (a instanceof MobAbility.IGetDmg) {
+                    resistDmg = ((MobAbility.IGetDmg) a).getDmg(source, type, resistDmg);
+//                }
+            }
+        }
+        if(effects.containsKey(MobAbility.IGetDmg.class)) {
+            Array.ArrayIterator<Effect> art = new Array.ArrayIterator<Effect>(effects.get(MobAbility.IGetDmg.class));
+            while (art.hasNext()){
+                resistDmg = ((MobAbility.IGetDmg) art.next()).getDmg(source, type, dmg);
+
             }
         }
 //        CopyOnWriteArrayList<Effect> tmp = new CopyOnWriteArrayList<Effect>(effects);
@@ -550,17 +595,21 @@ public class Mob extends Effectable{
         return resistDmg;
     }
     private void useSpawnAbilities(){
-        for (MobAbility a:abilities){
-            if(a instanceof MobAbility.ISpawn){
-                ((MobAbility.ISpawn) a).spawned();
+        if(abilities.containsKey(MobAbility.ISpawn.class)) {
+            for (MobAbility a : abilities.get(MobAbility.ISpawn.class)) {
+//                if (a instanceof MobAbility.ISpawn) {
+                    ((MobAbility.ISpawn) a).spawned();
+//                }
             }
         }
     }
     private boolean useDieAbilities(/*Tower source*/){
         boolean isAlive = false;
-        for (MobAbility a:abilities){
-            if(a instanceof MobAbility.IDie){
-                if(((MobAbility.IDie) a).die(/*source*/)) isAlive = true;
+        if(abilities.containsKey(MobAbility.IDie.class)) {
+            for (MobAbility a : abilities.get(MobAbility.IDie.class)) {
+//                if (a instanceof MobAbility.IDie) {
+                    if (((MobAbility.IDie) a).die(/*source*/)) isAlive = true;
+//                }
             }
         }
         return isAlive;
@@ -597,27 +646,27 @@ public class Mob extends Effectable{
 
     public float hit(float dmg, DamageType type, DamageSource source){//return really get damage
 //        System.out.println(getArmor() + " " + getArmorReduction(getArmor()));
-        float resistDmg = 0;
+        float resistDmg = dmg;
 //        System.out.println("ahh, hitted");
-        resistDmg = dmg;
-//        switch (type){
-//            case Pure:
-//                resistDmg = useStrongDefenceAbilities(source, type, dmg);
-//                break;
-//            case Magic:
-//                resistDmg = useDefenceAbilities(source, type, dmg);
-//                break;
-//            case Physic:
-//                resistDmg = useDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));
-//                break;
-//            case PhysicNoContact:
-//                resistDmg = useStrongDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));//sadist, etc
-//        }
+//        resistDmg = dmg;
+        switch (type){
+            case Pure:
+                resistDmg = useStrongDefenceAbilities(source, type, dmg);
+                break;
+            case Magic:
+                resistDmg = useDefenceAbilities(source, type, dmg);
+                break;
+            case Physic:
+                resistDmg = useDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));
+                break;
+            case PhysicNoContact:
+                resistDmg = useStrongDefenceAbilities(source, type, dmg * (1 - getArmorReduction(getArmor())));//sadist, etc
+        }
 
 
         if(resistDmg < getHealth()){
             health -= resistDmg;
-//            useAfterHitAbilities();
+            useAfterHitAbilities();
             return resistDmg;
         }else if(isInGame()){
 //            if(!useDieAbilities(/*source*/)) {
@@ -663,7 +712,7 @@ public class Mob extends Effectable{
     public void removeBuffsListeners(){//used by staged abilities to remove old abilities listeners
 //        CopyOnWriteArrayList<Effect> tmpEffects = new CopyOnWriteArrayList<Effect>(effects);
         for (Effect e:getEffects()){
-            if(e.isBuff() && e instanceof MobAbility.IListener) {
+            if(e.isBuff() && /*e instanceof MobAbility.IListener*/e.isListener()) {
                 e.dispell();
             }
         }

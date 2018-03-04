@@ -91,7 +91,6 @@ public class BossStatusPanel extends AbstractPanel{
 //        for (Label label:abilitiesLabels){
 //            abilities.add(label);
 //        }
-
         hasChanged();
 //        pack();
     }

@@ -20,7 +20,7 @@ public class StagedAbilities extends MobAbility implements MobAbility.ISpawn{
         private float[] healthTreshold;
 
         public P(int stages, String[] mobModelPath, float[] healthTreshold, MobAbility.AbilityPrototype[][] abilities) {
-            super("stagedAbilities", false);
+            super("stagedAbilities", false, ISpawn.class);
             this.stages = stages;
             this.mobModelPath = mobModelPath;
             this.healthTreshold = healthTreshold;
@@ -53,10 +53,11 @@ public class StagedAbilities extends MobAbility implements MobAbility.ISpawn{
 
     private StageChecker stageChecker;
 
-    public class StageChecker extends Effect<Mob> implements IAfterGetDmg, IStrong{
+    public class StageChecker extends Effect<Mob> implements IAfterGetDmg/*, IStrong*/{
 
         public StageChecker() {
-            super(IAfterGetDmg.class, true, false, -1);
+            super(true, false, -1, IAfterGetDmg.class);
+//            setStrong();
         }
 
         public int getStage(){
@@ -96,10 +97,7 @@ public class StagedAbilities extends MobAbility implements MobAbility.ISpawn{
 
     }
 
-    @Override
-    public void spawned() {
 
-    }
 
     private boolean checkStage(int stage/*, float dmg*/){
 //        System.out.println(owner.getHealth() + " " + owner.getMaxHealth() * healthTreshold[stage]);
@@ -136,8 +134,13 @@ public class StagedAbilities extends MobAbility implements MobAbility.ISpawn{
         for (MobAbility a:owner.getAbilities()){
             a.setOwner(getOwner());
         }
+//        System.out.println(LevelMap.getLevel().getCurrentWave().getBoss().getBonusArmor());
 //        System.out.println(owner.getAbilities());
 //        for ()
+    }
+    @Override
+    public void spawned() {
+
     }
 
 

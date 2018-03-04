@@ -12,13 +12,15 @@ import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Objects.DamageSource;
 
 public class Sadist extends MobAbility implements MobAbility.ISpawn{
-    private class SadistBuff extends Effect<Mob> implements IGetDmg, IStrong, IListener{
+    private class SadistBuff extends Effect<Mob> implements IGetDmg/*, IStrong, IListener*/{
         private int healEmount;
 
         public SadistBuff(int attacksNeed, int healEmount) {
-            super(true, true, -1, "waterBonusArmor");
+            super(true, true, -1, "waterBonusArmor", IGetDmg.class);
             this.healEmount = healEmount;
             setStackable(new Stackable(attacksNeed));
+            setStrong();
+            setListener();
         }
 
         @Override

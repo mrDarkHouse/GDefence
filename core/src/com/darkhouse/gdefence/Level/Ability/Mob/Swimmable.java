@@ -17,7 +17,7 @@ public class Swimmable extends MobAbility implements MobAbility.IMove{
         private String path;
 
         public P(String path) {
-            super("Swimmable", true);
+            super("Swimmable", true, IMove.class);
             this.path = path;
         }
         public MobAbility getAbility(){

@@ -18,7 +18,7 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
         private Evasion evasion;
 
         public GreatEvasionBuff(float cdCap) {
-            super(true, false, -1, "greatEvasion");
+            super(true, false, -1, "greatEvasion", IGetDmg.class);
             evasion = new Evasion(1);
             setCooldownable(new Cooldown(cdCap));
         }
@@ -46,7 +46,7 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
         private float cdCap;
 
         public P(float cdCap) {
-            super("greatEvasion", false);
+            super("greatEvasion", false, ISpawn.class);
             this.cdCap = cdCap;
 
         }

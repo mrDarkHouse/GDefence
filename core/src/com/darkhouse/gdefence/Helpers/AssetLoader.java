@@ -526,6 +526,8 @@ public class AssetLoader extends AssetManager{
         load("AbilityIcons/Effects/scorpionVenom.png", Texture.class);
         load("AbilityIcons/Effects/greatEvasion.png", Texture.class);
         load("AbilityIcons/Effects/waterShield.png", Texture.class);
+        load("AbilityIcons/Effects/layerArmor.png", Texture.class);
+        load("AbilityIcons/Effects/spellImmune.png", Texture.class);
 
 
 //        load("Mobs/mob.png", Texture.class);

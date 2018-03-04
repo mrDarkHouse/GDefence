@@ -18,10 +18,24 @@ public abstract class Effect<T extends Effectable>{
     public boolean isDispellable() {
         return isDispellable;
     }
+    private boolean strong;
+    public boolean isStrong() {
+        return strong;
+    }
+    protected void setStrong() {
+        this.strong = true;
+    }
+    private boolean listener;
+    public boolean isListener() {
+        return listener;
+    }
+    protected void setListener() {
+        this.listener = true;
+    }
+
     //    private Color color;// = Color.RED;
     protected float duration;
     protected float currentTime;
-    private WidgetGroup group;
     private String iconPath;
     public String getIconPath() {
         return iconPath;
@@ -92,19 +106,19 @@ public abstract class Effect<T extends Effectable>{
 //        void move(MapTile currentTile);
 //    }
 
-    public Effect(Class<? extends Ability.IAbilityType> type, boolean positive,
-                  boolean isDispellable, float duration){
-        this.type = type;
-        this.isHidden = true;
+    public Effect(boolean positive,
+                  boolean isDispellable, float duration, Class<? extends Ability.IAbilityType> type){
         this.isBuff = positive;
         this.isDispellable = isDispellable;
         this.duration = duration;
         currentTime = duration;
+        this.type = type;
+        this.isHidden = true;
     }
 
-    public Effect(Class<? extends Ability.IAbilityType> type, boolean positive,
-                  boolean isDispellable,/* Mob owner,*/ float duration, String effectIconPath/*32x32*/) {
-        this(type, positive, isDispellable, duration);
+    public Effect(boolean positive, boolean isDispellable,/* Mob owner,*/ float duration, String effectIconPath/*32x32*/,
+                  Class<? extends Ability.IAbilityType> type) {
+        this(positive, isDispellable, duration, type);
 //        this.type = type;
 //        this.isHidden = false;
 //        this.isBuff = positive;
@@ -112,15 +126,16 @@ public abstract class Effect<T extends Effectable>{
 //        this.duration = duration;
 //        currentTime = duration;
         this.iconPath = effectIconPath;
+        this.isHidden = false;
     }
 
     public Effect(boolean positive, boolean isDispellable,
                   /* Mob owner,*/ float duration, String effectIconPath/*32x32*/){
-        this(Ability.INone.class, positive, isDispellable, duration, effectIconPath);
+        this(positive, isDispellable, duration, effectIconPath, Ability.INone.class);
     }
     public Effect(boolean positive, boolean isDispellable,
                   /* Mob owner,*/ float duration){
-        this(Ability.INone.class, positive, isDispellable, duration);
+        this(positive, isDispellable, duration, Ability.INone.class);
     }
 
 

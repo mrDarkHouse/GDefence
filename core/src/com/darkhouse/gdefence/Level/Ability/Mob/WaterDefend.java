@@ -34,7 +34,7 @@ public class WaterDefend extends MobAbility implements MobAbility.IMove{
         private int armor;
 
         public P(int armor) {
-            super("waterDefend", false);
+            super("waterDefend", false, IMove.class);
             this.armor = armor;
 
         }
