@@ -31,9 +31,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 
-/**
- * @author Daniel Holderbaum
- */
+
 public class InventoryActor extends Window {
 	protected Array<SlotActor> actorArray;
 	protected Inventory inventory;

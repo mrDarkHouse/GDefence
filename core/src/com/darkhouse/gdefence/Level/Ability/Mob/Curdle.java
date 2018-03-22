@@ -33,9 +33,9 @@ public class Curdle extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("curdleTooltip1") + " " + FontLoader.colorString(threshold*100 + "%", 3) + " " +
+            return l.getWord("curdleTooltip1") + " " + FontLoader.colorString(threshold*100 + "%", 10) + " " +
                     l.getWord("curdleTooltip2") + System.getProperty("line.separator") +
-                    l.getWord("curdleTooltip3") + " " + FontLoader.colorString(Float.toString(duration), 3) + " " +
+                    l.getWord("curdleTooltip3") + " " + FontLoader.colorString(Float.toString(duration), 10) + " " +
                     l.getWord("curdleTooltip4") + System.getProperty("line.separator") +
                     l.getWord("curdleTooltip5");
         }
@@ -45,7 +45,7 @@ public class Curdle extends MobAbility implements MobAbility.ISpawn{
         private Texture[] curdleTexture;
 
         public CurdleInvulnerable(float duration, Texture[] curdleTexture) {
-            super(true, true, duration);
+            super(true, true, duration, IGetDmg.class);
             this.curdleTexture = curdleTexture;
         }
 

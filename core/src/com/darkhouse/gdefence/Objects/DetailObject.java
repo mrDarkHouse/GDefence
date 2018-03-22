@@ -3,8 +3,9 @@ package com.darkhouse.gdefence.Objects;
 
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.User;
 
-public class DetailObject implements GameObject{
+public abstract class DetailObject implements GameObject{
     private ItemEnum.Detail prototype;
 
     public static DetailObject loadSaveCode(String savecode) {
@@ -43,6 +44,15 @@ public class DetailObject implements GameObject{
         return null;
     }
 
+    @Deprecated
+    @Override
+    public String getGemGradeTooltip(User.GEM_TYPE gemType) {
+        return "";
+    }
 
+    @Deprecated
+    @Override
+    public void flushGems() {
 
+    }
 }

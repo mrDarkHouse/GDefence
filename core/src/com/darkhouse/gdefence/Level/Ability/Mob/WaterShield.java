@@ -41,7 +41,7 @@ public class WaterShield extends MobAbility implements MobAbility.IGetDmg{
         private float duration;
 
         public P(float chance, float dmgAbsorb, float duration) {
-            super("waterShield", false, IMove.class);
+            super("waterShield", false, IGetDmg.class);
             this.chance = chance;
             this.dmgAbsorb = dmgAbsorb;
             this.duration = duration;
@@ -55,10 +55,10 @@ public class WaterShield extends MobAbility implements MobAbility.IGetDmg{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("waterShieldTooltip1") + " " + FontLoader.colorString(Float.toString(chance*100), 3) + "% " +
+            return l.getWord("waterShieldTooltip1") + " " + FontLoader.colorString(Float.toString(chance*100), 10) + "% " +
                     l.getWord("waterShieldTooltip2") + " " + System.getProperty("line.separator") +
-                    l.getWord("waterShieldTooltip3") + " " + FontLoader.colorString(Float.toString(dmgAbsorb), 3) + " " +
-                    l.getWord("waterShieldTooltip4") + " " + FontLoader.colorString(Float.toString(duration), 3) + " " +
+                    l.getWord("waterShieldTooltip3") + " " + FontLoader.colorString(Float.toString(dmgAbsorb), 10) + " " +
+                    l.getWord("waterShieldTooltip4") + " " + FontLoader.colorString(Float.toString(duration), 10) + " " +
                     l.getWord("waterShieldTooltip5");
         }
     }

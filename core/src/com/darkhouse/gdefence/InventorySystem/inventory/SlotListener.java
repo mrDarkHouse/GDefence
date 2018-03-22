@@ -21,17 +21,9 @@
  */
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
-/**
- * @author Daniel Holderbaum
- */
+
 public interface SlotListener {
 
-	/**
-	 * Will be called whenever the slot has changed.
-	 * 
-	 * @param slot
-	 *            The changed slot.
-	 */
 	void hasChanged(AbstractSlot slot);
 
 }

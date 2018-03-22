@@ -43,6 +43,7 @@ public class Bash extends Ability implements Ability.IOnHit{
     }
     public static class P extends AbilityPrototype {
         private G g;
+        private S s;
         private AtomicReference<Float> chance;
         private AtomicReference<Float> duration;
         private AtomicReference<Integer> bonusDmg;
@@ -53,6 +54,7 @@ public class Bash extends Ability implements Ability.IOnHit{
             this.duration = new AtomicReference<Float>(duration);
             this.bonusDmg = new AtomicReference<Integer>(bonusDmg);
             this.g = grader;
+            s = new S(chance, duration, bonusDmg);
         }
 
 
@@ -60,13 +62,27 @@ public class Bash extends Ability implements Ability.IOnHit{
         public P copy(){
             AssetLoader l = GDefence.getInstance().assetLoader;
             P p = new P(chance.get(), duration.get(), bonusDmg.get(), g);
-            p.gemBoost[0] = new BoostFloat(p.chance,     g.chanceUp,   l.getWord("bashGrade1"),
-                    true, BoostFloat.FloatGradeFieldType.PERCENT);
+            p.gemBoost[0] = new BoostInteger(p.bonusDmg, g.bonusDmgUp, l.getWord("bashGrade3"),
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
             p.gemBoost[1] = new BoostFloat(p.duration,   g.durationUp, l.getWord("bashGrade2"),
                     true, BoostFloat.FloatGradeFieldType.TIME);
-            p.gemBoost[2] = new BoostInteger(p.bonusDmg, g.bonusDmgUp, l.getWord("bashGrade3"),
-                    true, BoostInteger.IntegerGradeFieldType.NONE);
+            p.gemBoost[2] = new BoostFloat(p.chance,     g.chanceUp,   l.getWord("bashGrade1"),
+                    true, BoostFloat.FloatGradeFieldType.PERCENT);
+            p.s = new S(chance.get(), duration.get(), bonusDmg.get());
             return p;
+        }
+        @Override
+        public void flush() {
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            this.bonusDmg = new AtomicReference<Integer>(s.bonusDmg);
+            this.duration = new AtomicReference<Float>(s.duration);
+            this.chance = new AtomicReference<Float>(s.chance);
+            gemBoost[0] = new BoostInteger(bonusDmg, g.bonusDmgUp, l.getWord("bashGrade3"),
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
+            gemBoost[1] = new BoostFloat(duration,   g.durationUp, l.getWord("bashGrade2"),
+                    true, BoostFloat.FloatGradeFieldType.TIME);
+            gemBoost[2] = new BoostFloat(chance,     g.chanceUp,   l.getWord("bashGrade1"),
+                    true, BoostFloat.FloatGradeFieldType.PERCENT);
         }
 
         @Override
@@ -76,11 +92,13 @@ public class Bash extends Ability implements Ability.IOnHit{
 
         @Override
         public String getTooltip() {
-            AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("bashTooltip1") + " " + FontLoader.colorCode(0) + chance.get()*100 + "%[] " + l.getWord("bashTooltip2") + System.getProperty("line.separator") +
-                   l.getWord("bashTooltip3") + " " + FontLoader.colorCode(1) + duration + "[] " + l.getWord("bashTooltip4")
-                    + " " + FontLoader.colorCode(2) + bonusDmg + "[] " + l.getWord("bashTooltip5");
+            AssetLoader l = GDefence.getInstance().assetLoader; ///*FontLoader.colorCode(0) + chance.get()*100 + "%[] "*/
+            return l.getWord("bashTooltip1") + " " + FontLoader.colorString(chance.get()*100 + "%", User.GEM_TYPE.WHITE) + " " + l.getWord("bashTooltip2") + System.getProperty("line.separator") +
+                   l.getWord("bashTooltip3") + " " + FontLoader.colorString(duration.get().toString(), User.GEM_TYPE.GREEN) + " " +
+                   l.getWord("bashTooltip4") + " " + FontLoader.colorString(bonusDmg.get().toString(), User.GEM_TYPE.BLACK) + " " + l.getWord("bashTooltip5");
         }
+
+
 
         @Override
         public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
@@ -138,6 +156,17 @@ public class Bash extends Ability implements Ability.IOnHit{
             this.chanceUp = chanceUp;
             this.durationUp = durationUp;
             this.bonusDmgUp = bonusDmgUp;
+        }
+    }
+    public static class S extends AbilitySaverStat{
+        private float chance;
+        private float duration;
+        private int bonusDmg;
+
+        public S(float chance, float duration, int bonusDmg) {
+            this.chance = chance;
+            this.duration = duration;
+            this.bonusDmg = bonusDmg;
         }
     }
 

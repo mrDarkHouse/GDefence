@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Level.Ability.Tower;
 
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
 import com.darkhouse.gdefence.Level.Ability.Spell.EchoSmash;
 import com.darkhouse.gdefence.Level.Ability.Spell.GlobalSlow;
@@ -47,6 +48,14 @@ public abstract class Ability {
             }
             return this;
         }
+
+        public void flushGems(){
+            gemsNumber = new int[3];
+            flush();
+        }
+        public  void flush(){};//TODO
+
+        protected void initBoosts(AssetLoader l){}
         public abstract Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft();
 
         public int[] getGemCur(){
@@ -201,7 +210,7 @@ public abstract class Ability {
 
             private String configurate(float f){
                 switch (type){
-                    case PERCENT: return Float.toString(new BigDecimal(f*100).setScale(2, RoundingMode.HALF_UP).floatValue());//(int)(f*100f) + "%";//
+                    case PERCENT: return Float.toString(new BigDecimal(f*100).setScale(2, RoundingMode.HALF_UP).floatValue()) + "%";//(int)(f*100f) + "%";//
                     case TIME: return Float.toString(new BigDecimal(f).setScale(2, RoundingMode.HALF_UP).floatValue()) + "s";//fix 20.0000001 bug
                     case MULTIPLAYER: return f + "x";
                     case ANGLE: return ((int) f) + "*";
@@ -313,6 +322,9 @@ public abstract class Ability {
         public AbilityGrader(int[] gemCap) {
             this.gemCap = gemCap;
         }
+    }
+    public abstract static class AbilitySaverStat{
+
     }
 
     public interface ITowerAbilityType extends IAbilityType{}

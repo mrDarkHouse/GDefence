@@ -13,7 +13,7 @@ import com.darkhouse.gdefence.User;
 
 import java.util.Arrays;
 
-public class TowerObject implements ExpEarner, GameObject, GemGradable{
+public class TowerObject implements ExpEarner, GameObject{
 
 
     public static boolean isMatches(Class<? extends GameObject> a, Class<? extends GameObject> b){
@@ -35,13 +35,13 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
                 tmp.add(new SpellObject(((ItemEnum.Spell) item)));
             }
             return tmp;
-        }*/else if(item instanceof ItemEnum.Detail){
+        }*//*else if(item instanceof ItemEnum.Detail){
             Array<DetailObject> tmp = new Array<DetailObject>();
             for (int i = 0; i < amount; i++) {
                 tmp.add(new DetailObject(((ItemEnum.Detail) item)));
             }
             return tmp;
-        }
+        }*/
         return null;
     }
     public static TowerObject generateClearTower(ItemEnum.Tower prototype){
@@ -79,8 +79,10 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
 //    private int globalCost;
     protected Array<Ability.AbilityPrototype> abilities;
 
-
-
+    @Override
+    public int getGlobalCost() {
+        return prototype.getGlobalCost();
+    }
 
     @Override
     public String getSaveCode() {
@@ -322,6 +324,17 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
         return getName();
     }
 
+    private void updateStat(){
+        dmg = prototype.getDmg();
+        speed = prototype.getSpeed();
+        range = prototype.getRange();
+
+        for (int i = 0; i < 3; i++){
+            updateGemStat(i, gemsNumber[i]);
+        }
+
+    }
+
     public void updateGemStat(int gemType, int value){
         switch (gemType){
             case 0:
@@ -333,16 +346,20 @@ public class TowerObject implements ExpEarner, GameObject, GemGradable{
             case 2:
                 for (int i = 0; i < value; i++)range += User.GEM_TYPE.getBoost(User.GEM_TYPE.BLUE);
                 break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
         }
+    }
+    public void flushGems(){
+//        int numberFlushed = getPrimaryGemsNumber();
+        for (int i = 0; i < gemsNumber.length; i++){
+//            numberFlushed += gemsNumber[i];
+            gemsNumber[i] = 0;
+            updateStat();
+        }
+        for (Ability.AbilityPrototype ap:getAbilities()){
+            ap.flushGems();
+        }
+
+//        return numberFlushed;
     }
 
     public void updateExp(){//currentExp bug

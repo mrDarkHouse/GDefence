@@ -55,6 +55,13 @@ public class GemGradePanel extends Window{
         }
     }
 
+    public void addSource(SlotSource s){
+        dragAndDrop.addSource(s);
+    }
+    public void addTarget(DragAndDrop.Target t){
+        dragAndDrop.addTarget(t);
+    }
+
     public GemGradePanel(DragAndDrop dragAndDrop, OverallInventory inventory, Skin skin) {
         super(GDefence.getInstance().assetLoader.getWord("grade_panel"), skin, "description");
         getTitleLabel().setAlignment(Align.center);
@@ -114,7 +121,6 @@ public class GemGradePanel extends Window{
                 for (EventListener t:a.getListeners()){
                     if(t instanceof TooltipListener){
                         ((TooltipListener) t).getTooltip().hasChanged();
-                        ((TooltipListener) t).getTooltip().pack();
                     }
                 }
                 if(a instanceof GemGradeButton){

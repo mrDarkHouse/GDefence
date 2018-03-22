@@ -187,7 +187,7 @@ public class Level {
         this.ownerScreen = ownerScreen;
         this.number = number;
         manager = new StatManager();
-        map = new Map(number, 60, Gdx.graphics.getHeight() - 60, 40);
+        map = new Map(number, 60, GDefence.HEIGHT - 60, 40);
         //this.map = map;
 //        System.out.println(map.getSpawner());
         loadProperies(map.getSpawner().size());

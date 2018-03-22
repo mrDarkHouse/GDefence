@@ -12,23 +12,26 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.User;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FireArrow extends Ability implements Ability.IAfterHit{
 
     public static class P extends AbilityPrototype {
-        private G grader;
         private AtomicReference<Integer> damage;
         private float delay;
         private AtomicReference<Float> duration;
+        private G g;
+        private S s;
 
         public P(int damage, float delay, float duration, G grader) {
             super(4, "fireArrow", grader.gemCap, IAfterHit.class);
             this.damage = new AtomicReference<Integer>(damage);
             this.delay = delay;
             this.duration = new AtomicReference<Float>(duration);
-            this.grader = grader;
+            this.g = grader;
+            this.s = new S(damage, duration);
         }
 
         @Override
@@ -36,20 +39,27 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
             return new Array<Class<? extends AbilityPrototype>>();
         }
 
-//        @Override
-//        public String getSaveCode() {
-//            return null;
-//        }
-
         @Override
         public AbilityPrototype copy() {
-            AssetLoader l = GDefence.getInstance().assetLoader;
-            P p = new P(damage.get(), delay, duration.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.damage, grader.dmgUp, l.getWord("fireArrowGrade1"),
-                    true, BoostInteger.IntegerGradeFieldType.DPS, delay);
-            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, l.getWord("fireArrowGrade2"),
-                    true, BoostFloat.FloatGradeFieldType.TIME);
+            P p = new P(damage.get(), delay, duration.get(), g);
+            p.initBoosts(GDefence.getInstance().assetLoader);
+            p.s = s;
             return p;
+        }
+
+        @Override
+        public void flush() {
+            damage = new AtomicReference<Integer>(s.damage);
+            duration = new AtomicReference<Float>(s.duration);
+            initBoosts(GDefence.getInstance().assetLoader);
+        }
+
+        @Override
+        protected void initBoosts(AssetLoader l) {
+            gemBoost[0] = new BoostInteger(damage, g.dmgUp, l.getWord("fireArrowGrade1"),
+                    true, BoostInteger.IntegerGradeFieldType.DPS, delay);
+            gemBoost[1] = new BoostFloat(duration, g.durationUp, l.getWord("fireArrowGrade2"),
+                    true, BoostFloat.FloatGradeFieldType.TIME);
         }
 
         @Override
@@ -61,8 +71,8 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
             return l.getWord("fireArrowTooltip1") + System.getProperty("line.separator") +
-                   l.getWord("fireArrowTooltip2") + " " + FontLoader.colorCode(0) + (int)(damage.get()*(1/delay)) + "[] " +
-                   l.getWord("fireArrowTooltip3") + " " + FontLoader.colorCode(1) + duration + "[] " +
+                   l.getWord("fireArrowTooltip2") + " " + FontLoader.colorString((int)(damage.get()*(1/delay)) + "", User.GEM_TYPE.BLACK) + " " +
+                   l.getWord("fireArrowTooltip3") + " " + FontLoader.colorString(duration.get().toString(), User.GEM_TYPE.GREEN) + " " +
                    l.getWord("fireArrowTooltip4");
         }
     }
@@ -74,6 +84,15 @@ public class FireArrow extends Ability implements Ability.IAfterHit{
             super(gemCap);
             this.dmgUp = dmgUp;
             this.durationUp = durationUp;
+        }
+    }
+    private static class S extends AbilitySaverStat{
+        private int damage;
+        private float duration;
+
+        public S(int damage, float duration) {
+            this.damage = damage;
+            this.duration = duration;
         }
     }
 

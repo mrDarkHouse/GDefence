@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
 import com.darkhouse.gdefence.InventorySystem.inventory.Target.SellTarget;
+import com.darkhouse.gdefence.Objects.GameObject;
 
 public class SellSlotSource extends SlotSource {
     public SellSlotSource(SlotActor actor) {
@@ -16,10 +17,16 @@ public class SellSlotSource extends SlotSource {
     @Override
     public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
         if (target instanceof SellTarget) {
-            Item item = payloadSlot.getPrototype();
+            if(payloadSlot.getLast().getGlobalCost() == 0) {
+                ifNullTarget();//not sell unsellable items (spells)
+                return;
+            }
+
+//            Item item = payloadSlot.getPrototype();
+            GameObject o = payloadSlot.getLast();
             int amount = payloadSlot.getAmount();
-            if (item != null) {
-                GDefence.getInstance().user.addGold(item.getGlobalCost() * amount);
+            if (o != null) {
+                GDefence.getInstance().user.addGold(o.getGlobalCost() * amount);
             } else {
                 GDefence.getInstance().log("SellSlotSource: Item - null");
             }

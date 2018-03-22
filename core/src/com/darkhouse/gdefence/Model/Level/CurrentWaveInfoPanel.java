@@ -49,7 +49,7 @@ public class CurrentWaveInfoPanel extends Table{
     @Override
     public void act(float delta) {
         super.act(delta);
-        mobsCount.setText(mobsLeft + ": " + Wave.mobs.size);
+        mobsCount.setText(mobsLeft + ": " + (LevelMap.getLevel().getCurrentWave().getMobsToSpawn().size + Wave.mobs.size));
 
     }
 }

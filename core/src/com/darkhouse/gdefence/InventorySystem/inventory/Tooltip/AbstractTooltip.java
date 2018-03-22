@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.InventorySystem.inventory.Tooltip;
 
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
@@ -17,5 +18,6 @@ public abstract class AbstractTooltip extends Window{
     }
 
     public abstract void hasChanged();
+    public void init(Stage stage){}
 //    public abstract void init();//adding to stage
 }

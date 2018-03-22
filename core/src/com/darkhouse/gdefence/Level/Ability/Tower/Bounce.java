@@ -17,41 +17,48 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Bounce extends Ability implements Ability.IAfterHit{
 
     public static class P extends AbilityPrototype {
-        private G grader;
         private AtomicReference<Integer> bounces;
         private AtomicReference<Float> resDmgFromEachBounce;
         private AtomicReference<Integer> maxRange;
+        private G g;
+        private S s;
 
         public P(int bounces, float resDmgFromEachBounce, int maxRange, G grader) {
             super(7, "bounce", grader.gemCap, IAfterHit.class);
             this.bounces = new AtomicReference<Integer>(bounces);
             this.resDmgFromEachBounce = new AtomicReference<Float>(resDmgFromEachBounce);
             this.maxRange = new AtomicReference<Integer>(maxRange);
-            this.grader = grader;
+            this.g = grader;
+            this.s = new S(bounces, resDmgFromEachBounce, maxRange);
         }
-
-//        @Override
-//        public String getSaveCode() {
-//            return null;
-//        }
 
         @Override
         public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
-            return new Array<Class<? extends AbilityPrototype>>(){};
+            Array<Class<? extends AbilityPrototype>> a = new Array<Class<? extends AbilityPrototype>>();
+            a.add(MultiShot.P.class);
+            return a;
         }
 
         @Override
         public AbilityPrototype copy() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            P p = new P(bounces.get(), resDmgFromEachBounce.get(), maxRange.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.bounces, grader.bouncesUp, l.getWord("bounceGrade1"),
+            P p = new P(bounces.get(), resDmgFromEachBounce.get(), maxRange.get(), g);
+            p.gemBoost[2] = new BoostInteger(p.bounces, g.bouncesUp, l.getWord("bounceGrade1"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostFloat(p.resDmgFromEachBounce, grader.resDmgFromEachBounceDown, l.getWord("bounceGrade2"),
+            p.gemBoost[0] = new BoostFloat(p.resDmgFromEachBounce, g.resDmgFromEachBounceDown, l.getWord("bounceGrade2"),
                     false, BoostFloat.FloatGradeFieldType.PERCENT);
-            p.gemBoost[2] = new BoostInteger(p.maxRange, grader.maxRangeUp, l.getWord("bounceGrade3"),
+            p.gemBoost[1] = new BoostInteger(p.maxRange, g.maxRangeUp, l.getWord("bounceGrade3"),
                     true, BoostInteger.IntegerGradeFieldType.NONE);
+            p.s = s;
             return p;
         }
+        @Override
+        public void flush() {
+            this.bounces = new AtomicReference<Integer>(s.bounces);
+            this.resDmgFromEachBounce = new AtomicReference<Float>(s.resDmgFromEachBounce);
+            this.maxRange = new AtomicReference<Integer>(s.maxRange);
+        }
+
 
         @Override
         public Ability getAbility() {
@@ -61,9 +68,11 @@ public class Bounce extends Ability implements Ability.IAfterHit{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("bounceTooltip1") + " " + FontLoader.colorCode(0) + bounces.get() + "[] " + l.getWord("bounceTooltip2") + System.getProperty("line.separator") +
-                   l.getWord("bounceTooltip3") + " " + FontLoader.colorCode(1) + resDmgFromEachBounce.get()*100 + "%[] " + l.getWord("bounceTooltip4") + System.getProperty("line.separator") +
-                   l.getWord("bounceTooltip5") + " " + FontLoader.colorCode(2) + "[] " + l.getWord("bounceTooltip6");
+            return l.getWord("bounceTooltip1") + " " + FontLoader.colorString(bounces.get().toString(), User.GEM_TYPE.BLACK) + " "+ l.getWord("bounceTooltip2")
+                    + System.getProperty("line.separator") +
+                   l.getWord("bounceTooltip3") + " " + FontLoader.colorString(resDmgFromEachBounce.get()*100 + "%", User.GEM_TYPE.GREEN) + " " + l.getWord("bounceTooltip4")
+                    + System.getProperty("line.separator") +
+                   l.getWord("bounceTooltip5") + " " + FontLoader.colorString(maxRange.get().toString(), User.GEM_TYPE.WHITE) + " " + l.getWord("bounceTooltip6");
         }
 
 
@@ -79,6 +88,17 @@ public class Bounce extends Ability implements Ability.IAfterHit{
             this.bouncesUp = bouncesUp;
             this.resDmgFromEachBounceDown = resDmgFromEachBounceDown;
             this.maxRangeUp = maxRangeUp;
+        }
+    }
+    private static class S extends AbilitySaverStat{
+        private int bounces;
+        private float resDmgFromEachBounce;
+        private int maxRange;
+
+        public S(int bounces, float resDmgFromEachBounce, int maxRange) {
+            this.bounces = bounces;
+            this.resDmgFromEachBounce = resDmgFromEachBounce;
+            this.maxRange = maxRange;
         }
     }
 

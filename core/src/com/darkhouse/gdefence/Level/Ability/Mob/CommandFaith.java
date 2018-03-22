@@ -59,9 +59,9 @@ public class CommandFaith extends MobAbility implements MobAbility.IDie{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("commandFaithTooltip1") + " " + FontLoader.colorString(Integer.toString(range), 3) + " " +
-                    l.getWord("commandFaithTooltip2") + " " + FontLoader.colorString(Integer.toString(speedBoost), 3) + " " +
-                    l.getWord("commandFaithTooltip3") + " " + FontLoader.colorString(Float.toString(duration), 3) + " " +
+            return l.getWord("commandFaithTooltip1") + " " + FontLoader.colorString(Integer.toString(range), 10) + " " +
+                    l.getWord("commandFaithTooltip2") + " " + FontLoader.colorString(Integer.toString(speedBoost), 10) + " " +
+                    l.getWord("commandFaithTooltip3") + " " + FontLoader.colorString(Float.toString(duration), 10) + " " +
                     l.getWord("commandFaithTooltip4") + System.getProperty("line.separator") +
                     l.getWord("commandFaithTooltip5");
         }

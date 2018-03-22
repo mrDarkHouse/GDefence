@@ -84,7 +84,7 @@ public class CampainChoose extends AbstractMenuScreen{
 
         table.setWidth(stage.getWidth());
         table.align(Align.center|Align.top);
-        table.setPosition(0, Gdx.graphics.getHeight());
+        table.setPosition(0, GDefence.HEIGHT);
 
 
         table.padTop(200);

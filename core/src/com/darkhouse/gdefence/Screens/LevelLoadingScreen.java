@@ -36,7 +36,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen{
         tipsLabel.setAlignment(Align.center);
         tipsTable = new Table();
         tipsTable.align(Align.center|Align.bottom);
-        tipsTable.setWidth(Gdx.graphics.getWidth());
+        tipsTable.setWidth(GDefence.WIDTH);
         tipsTable.setPosition(0, 160);
         tipsTable.add(tipsLabel)/*.align(Align.center)*/;
 //        tipsTable.debugAll();

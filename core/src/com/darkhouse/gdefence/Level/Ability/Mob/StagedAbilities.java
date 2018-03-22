@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Level.Ability.Mob;
 
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
@@ -18,10 +19,12 @@ public class StagedAbilities extends MobAbility implements MobAbility.ISpawn{
         private int stages;
         private String[] mobModelPath;
         private float[] healthTreshold;
+        private int energyBonus;
 
-        public P(int stages, String[] mobModelPath, float[] healthTreshold, MobAbility.AbilityPrototype[][] abilities) {
+        public P(int stages, int energyBonus, String[] mobModelPath, float[] healthTreshold, MobAbility.AbilityPrototype[][] abilities) {
             super("stagedAbilities", false, ISpawn.class);
             this.stages = stages;
+            this.energyBonus = energyBonus;
             this.mobModelPath = mobModelPath;
             this.healthTreshold = healthTreshold;
             this.abilities = abilities;
@@ -37,7 +40,9 @@ public class StagedAbilities extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("stagedAbilitiesTooltip1");
+            return l.getWord("stagedAbilitiesTooltip1") + System.getProperty("line.separator") +
+                   l.getWord("stagedAbilitiesTooltip2") + " " + FontLoader.colorString(Integer.toString(energyBonus), 9) + " " +
+                   l.getWord("stagedAbilitiesTooltip3");
         }
     }
 
@@ -46,6 +51,7 @@ public class StagedAbilities extends MobAbility implements MobAbility.ISpawn{
     private String[] mobModelPath;
     private float[] healthTreshold;
     private int curentStage;
+    private int energyBonus;
 
     public int getCurentStage() {
         return curentStage;
@@ -91,6 +97,7 @@ public class StagedAbilities extends MobAbility implements MobAbility.ISpawn{
         this.abilities = prototype.abilities;
         this.mobModelPath = prototype.mobModelPath;
         this.healthTreshold = prototype.healthTreshold;
+        this.energyBonus = prototype.energyBonus;
         stageChecker = new StageChecker();
 
 //        System.out.println(owner.getAbilities());
@@ -119,7 +126,7 @@ public class StagedAbilities extends MobAbility implements MobAbility.ISpawn{
         owner.initTextures(mobModelPath[curentStage]);
         owner.setWay(owner.getWay());
 
-        LevelMap.getLevel().addEnergy(20);
+        LevelMap.getLevel().addEnergy(energyBonus);
 //        System.out.println("abi " + owner.getAbilities());
 //        owner.setRegion(GDefence.getInstance().assetLoader.get("Mobs/" + ));
     }

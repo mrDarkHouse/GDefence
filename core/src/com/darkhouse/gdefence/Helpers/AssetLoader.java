@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.I18NBundleLoader;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
@@ -97,7 +98,15 @@ public class AssetLoader extends AssetManager{
 //        get("skins/uiskin.json", Skin.class).add("default-font", FontLoader.generateFont(20, Color.BLACK), BitmapFont.class);
         get("skins/uiskin.json", Skin.class).getFont("default-font").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         get("skins/uiskin.json", Skin.class).getFont("secondaryFont").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        get("skins/uiskin.json", Skin.class).getFont("default-font").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("skins/uiskin.json", Skin.class).getFont("default-font48").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("skins/uiskin.json", Skin.class).getFont("spellFont").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        get("skins/uiskin.json", Skin.class).getFont("iskoola").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+//        fontMap.put("default-font", FontLoader.generateFont(0, 26, Color.BLACK));
+//        fontMap.put("default-font48", FontLoader.generateFont(0, 48, Color.BLACK));
+//        fontMap.put("secondaryFont", FontLoader.generateFont(1, 16, Color.WHITE));
+//        fontMap.put("spellFont", FontLoader.generateFont(2, 14, Color.WHITE));
+//        fontMap.put("iskoola", FontLoader.generateFont(3, 64, Color.BLACK, 2, Color.WHITE));
 
         get("Gems/redGem.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         get("Gems/yellowGem.png", Texture.class).setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -266,6 +275,7 @@ public class AssetLoader extends AssetManager{
 
         //
         load("icons/icons.atlas", TextureAtlas.class);
+        load("Tower/towers.atlas", TextureAtlas.class);
 
 
         load("backButton.png", Texture.class);
@@ -280,6 +290,7 @@ public class AssetLoader extends AssetManager{
 //        load("mobHpBarBg.png", Texture.class);
 //        load("mobHpBarKnob.png", Texture.class);
         load("levelLock.png", Texture.class);
+        load("gemClear.png", Texture.class);
         load("arsenal.png", Texture.class);
         load("store.png", Texture.class);
         load("smith.png", Texture.class);
@@ -342,6 +353,9 @@ public class AssetLoader extends AssetManager{
 
         load("skins/uiskin.json", Skin.class, parameter);
 
+
+//        TextureLoader.TextureParameter textureParameter = new TextureLoader.TextureParameter();
+//        textureParameter.genMipMaps = true;
         load("Tower/basic.png", Texture.class);
         load("Tower/rock.png", Texture.class);
         load("Tower/arrow.png", Texture.class);
@@ -958,13 +972,30 @@ public class AssetLoader extends AssetManager{
     }
 
 
+    public TextureRegion getTowerTexture(String name){
+        TextureAtlas atlas = get("Tower/towers.atlas", TextureAtlas.class);
+//        System.out.println(name);
+        return atlas.findRegion(name);
+    }
+    public ImageButton.ImageButtonStyle generateImageButtonSkin(TextureRegion t){
+        ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
+        s.up = new TextureRegionDrawable(t);
+        return s;
+    }
+    public TextureRegionDrawable generateImageButtonSkin(ItemEnum.Tower t){
+        return new TextureRegionDrawable(new TextureRegion(t.getTowerTexture()));
+//        return generateImageButtonSkin(getTowerTexture(t.getTextureRegion()));
+    }
+
     public ImageButton.ImageButtonStyle generateImageButtonSkin(Texture t){
 //        t.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);//TODO
         ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
 //        System.out.println(t.getMinFilter() + " " + t.getMagFilter());
 //        System.out.println(new TextureRegionDrawable(new TextureRegion(t)).getRegion().getTexture().getMinFilter());
 //        s.up = new TextureRegionDrawable(new TextureRegion(t));
-        s.up = new SpriteDrawable(new Sprite(t));
+//        t.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.MipMapLinearLinear);
+        s.up = new TextureRegionDrawable(new TextureRegion(t));
+//        s.up = new SpriteDrawable(new Sprite(t));
 //        s.over = new TextureRegionDrawable(new TextureRegion(t));
 //        s.down = new TextureRegionDrawable(new TextureRegion(t));
         return s;
@@ -973,7 +1004,7 @@ public class AssetLoader extends AssetManager{
 
     public ImageButton.ImageButtonStyle generateResearchButtonSkin(String path){
         Texture t = get("Researches/" + path + ".png");
-
+//        t.setFilter(Texture.TextureFilter.MipMapLinearLinear, Texture.TextureFilter.MipMapLinearLinear);
         ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
         s.up = new TextureRegionDrawable(new TextureRegion(t));
         s.over = new TextureRegionDrawable(new TextureRegion(t));

@@ -22,6 +22,7 @@ public abstract class AbstractScreen implements Screen {
         viewport = new FitViewport(GDefence.WIDTH, GDefence.HEIGHT, camera);
         viewport.apply();
 
+
         stage = new Stage(viewport);
 //        camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
     }
@@ -38,14 +39,15 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void render(float delta) {
 //        camera.update();
-        Gdx.gl.glClearColor( 0, 0, 0, 0 );
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        stage.getViewport().update(width, height, false);
+//        camera.update();
 //        camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
     }
 }

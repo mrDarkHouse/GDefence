@@ -81,9 +81,9 @@ public class TowerTooltip extends AbstractTooltip{
 //        s += tower.getName() + "/n";
         AssetLoader l = GDefence.getInstance().assetLoader;
         String bonusDmg = tower.getBonusDmg() == 0 ? "" : tower.getBonusDmg() > 0 ?
-                FontLoader.colorString("+" + tower.getBonusDmg(), 1): FontLoader.colorString(tower.getBonusDmg() + "", 5);
+                FontLoader.colorString("+" + tower.getBonusDmg(), 1): FontLoader.colorString(tower.getBonusDmg() + "", 12);
         String bonusAs = tower.getBonusSpeed() == 0 ? "" : tower.getBonusSpeed() > 0 ?
-                FontLoader.colorString("+" + tower.getBonusSpeed() + "", 1): FontLoader.colorString(tower.getBonusSpeed() + "", 5);
+                FontLoader.colorString("+" + tower.getBonusSpeed() + "", 1): FontLoader.colorString(tower.getBonusSpeed() + "", 12);
 
         s += l.getWord("dmg") + ": " + tower.getDmg() + " " + bonusDmg + System.getProperty("line.separator");
         s += l.getWord("speed") + ": " + tower.getSpeed() + " " + bonusAs + "(" + Tower.getAttackSpeedDelay(tower.getSpeed() + tower.getBonusSpeed()) + ")" + System.getProperty("line.separator");

@@ -85,28 +85,28 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
     protected void define(){
         //OrthographicCamera cam = new OrthographicCamera();
         //cam.setToOrtho(false);
-        //stage.setViewport(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam));
+        //stage.setViewport(new ExtendViewport(GDefence.WIDTH, GDefence.HEIGHT, cam));
 
 //        OrthographicCamera camera = new OrthographicCamera();
-//        viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+//        viewport = new ExtendViewport(GDefence.WIDTH, GDefence.HEIGHT, camera);
 
         table = new Table();
 
         int backButtonsSize[] = {64, topPadSize};
-        int nameButtonSize[] = {Gdx.graphics.getWidth() - backButtonsSize[0]*2, backButtonsSize[1]};
+        int nameButtonSize[] = {GDefence.WIDTH - backButtonsSize[0]*2, backButtonsSize[1]};
 
 
 
         nameButton = new TextButton(name, /*GDefence.getInstance().assetLoader.getNameButtonStyle()*/GDefence.getInstance().assetLoader.getSkin(), "campainTop");
-        nameButton.setSize(Gdx.graphics.getWidth()/*nameButtonSize[0]*/, nameButtonSize[1]);
-        //nameButton.setPosition(0/*backButton.getX() + backButtonsSize[0]*/, Gdx.graphics.getHeight() - backButtonsSize[1]);
+        nameButton.setSize(GDefence.WIDTH/*nameButtonSize[0]*/, nameButtonSize[1]);
+        //nameButton.setPosition(0/*backButton.getX() + backButtonsSize[0]*/, GDefence.HEIGHT - backButtonsSize[1]);
 
 
         table.setPosition(0, stage.getHeight() - topPadSize);
         table.setSize(stage.getWidth(), topPadSize);
         BackButton backButton = new BackButton(true);
         //table.add(backButton);//do nameButton from 0 to getWidth
-        table.add(nameButton).height(topPadSize).width(Gdx.graphics.getWidth()).align(Align.center);//do without .height .width
+        table.add(nameButton).height(topPadSize).width(GDefence.WIDTH).align(Align.center);//do without .height .width
 
         table.pack();
         stage.addActor(table);
@@ -122,11 +122,11 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
         shape.begin(ShapeRenderer.ShapeType.Line);
         //shape.setProjectionMatrix(batch.getProjectionMatrix());
         shape.setColor(0, 0, 0, 1);
-        shape.line(0, Gdx.graphics.getHeight() - topPadSize, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - topPadSize);
-        shape.line(0, Gdx.graphics.getHeight() - lineWidth/2, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - lineWidth/2);
-        shape.line(topPadSize, Gdx.graphics.getHeight(), topPadSize, Gdx.graphics.getHeight() - topPadSize);
-        shape.line(lineWidth/2, Gdx.graphics.getHeight(), lineWidth/2, Gdx.graphics.getHeight() - topPadSize);
-        shape.line(Gdx.graphics.getWidth() - lineWidth/2, Gdx.graphics.getHeight(), Gdx.graphics.getWidth() - lineWidth/2, Gdx.graphics.getHeight() - topPadSize);
+        shape.line(0, GDefence.HEIGHT - topPadSize, GDefence.WIDTH, GDefence.HEIGHT - topPadSize);
+        shape.line(0, GDefence.HEIGHT - lineWidth/2, GDefence.WIDTH, GDefence.HEIGHT - lineWidth/2);
+        shape.line(topPadSize, GDefence.HEIGHT, topPadSize, GDefence.HEIGHT - topPadSize);
+        shape.line(lineWidth/2, GDefence.HEIGHT, lineWidth/2, GDefence.HEIGHT - topPadSize);
+        shape.line(GDefence.WIDTH - lineWidth/2, GDefence.HEIGHT, GDefence.WIDTH - lineWidth/2, GDefence.HEIGHT - topPadSize);
         shape.end();
     }
 

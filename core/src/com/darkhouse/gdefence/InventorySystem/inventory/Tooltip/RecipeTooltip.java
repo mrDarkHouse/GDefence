@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Objects.Recipe;
 
 public class RecipeTooltip extends AbstractTooltip{
@@ -17,7 +19,7 @@ public class RecipeTooltip extends AbstractTooltip{
     }
 
     public RecipeTooltip(Recipe recipe, Skin skin) {
-        super("Recipe...", skin);
+        super("Recipe", skin);
 
         this.recipe = recipe;
         this.skin = skin;
@@ -32,7 +34,13 @@ public class RecipeTooltip extends AbstractTooltip{
         getTitleLabel().setText(GDefence.getInstance().assetLoader.getWord("buy") + " " + recipe.getName());
         getTitleLabel().setAlignment(Align.center);
 
-        add(new Label(recipe.getTooltip(), skin, "description")).row();
+        AssetLoader l = GDefence.getInstance().assetLoader;
+
+
+        String c = FontLoader.colorString(l.getWord("cost") + ":", 9) + System.getProperty("line.separator") + recipe.getGlobalCost() + " " + GDefence.getInstance().assetLoader.getWord("gold2");
+        Label cost = new Label(c, skin, "description");
+        add(cost).align(Align.left).row();
+        add(new Label(recipe.getTooltip(), skin, "description"));
         //setText();
 //        if(recipe.getComponents().size > 0) {
 //            if(recipe.getComponents().size == 1) {
@@ -45,8 +53,8 @@ public class RecipeTooltip extends AbstractTooltip{
 //                add(components).row();
 //            }
 //        }
-        Label cost = new Label(recipe.getRecipeCost() + " " + GDefence.getInstance().assetLoader.getWord("gold2"), skin, "description");
-        add(cost);
+
+
         pack();
     }
 

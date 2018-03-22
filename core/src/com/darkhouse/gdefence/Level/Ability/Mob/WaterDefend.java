@@ -45,7 +45,7 @@ public class WaterDefend extends MobAbility implements MobAbility.IMove{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("waterDefendTooltip1") + " " + FontLoader.colorString(Integer.toString(armor), 3) + " " +
+            return l.getWord("waterDefendTooltip1") + " " + FontLoader.colorString(Integer.toString(armor), 10) + " " +
                     l.getWord("waterDefendTooltip2") + System.getProperty("line.separator") +
                     l.getWord("waterDefendTooltip3");
         }

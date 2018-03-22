@@ -28,9 +28,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.darkhouse.gdefence.InventorySystem.inventory.Slot;
 import com.darkhouse.gdefence.InventorySystem.inventory.SlotActor;
 
-/**
- * @author Daniel Holderbaum
- */
 public class SlotTarget extends Target {
 
 	private Slot targetSlot;
@@ -43,7 +40,7 @@ public class SlotTarget extends Target {
 
 	@Override
 	public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-		Slot payloadSlot = (Slot) payload.getObject();
+//		Slot payloadSlot = (Slot) payload.getObject();
 		// if (targetSlot.getPrototype() == payloadSlot.getPrototype() ||
 		// targetSlot.getPrototype() == null) {
 		getActor().setColor(Color.WHITE);

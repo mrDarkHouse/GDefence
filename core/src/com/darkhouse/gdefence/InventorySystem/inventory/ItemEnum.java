@@ -22,6 +22,8 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
@@ -120,68 +122,68 @@ public enum ItemEnum {;
 	public enum Tower implements Item {
 
 		//	  texturePath              attackType         projSp cost glCost  recCost dmg range speed /n abilities
-		Basic(   /*"basic",*/          AttackType.projectile, 250, 10,   80,     0,    10, 80, 20/*,
+		Basic(   /*"basic",*/          AttackType.projectile, 250, 10,   80,     0,   10, 80, 20/*,
                 new Bash.P(0.2f, 1f, 20, new Bash.G(0.05f, 0.5f, 10, new int[]{3, 3, 3}))*//*,
                 new SteelArrow.P(2, 300, new SteelArrow.G(1, 50, new int[]{3, 2, 0})),
                 new ShotDelay.P(1f, new ShotDelay.G(0.2f, new int[]{2, 0, 0}))*/),
 
-		Rock(     /*"rock",  */        AttackType.projectile, 400, 20,  120,    70,  22, 90,  25/*,
+		Rock(     /*"rock",  */        AttackType.projectile, 400, 15,  120,    70,   22, 90,  25/*,
                 new BuckShot.P(5, 20f, new BuckShot.G(1, 5f, new int[]{3, 2, 0})),
                 new SpreadAttack.P(3f, 2, new SpreadAttack.G(0.5f, new int[]{2, 0, 0}))*/),
 
-		Arrow(    /*"arrow",*/         AttackType.projectile, 250, 20,  120,    70,   15, 90,  32/*,
+		Arrow(    /*"arrow",*/         AttackType.projectile, 250, 15,  120,    70,   15, 90,  32/*,
                 new Bash.P(0.5f, 1f, 20, new Bash.G(0.05f, 0.5f, 10, new int[]{3, 3, 3})),
                 new Crit.P(0.3f, 2f,     new Crit.G(0.05f, 0.5f,     new int[]{2, 2, 0}))*/),
 
-        Range(  /*  "range",  */       AttackType.projectile, 350, 20,  120,    70,   15, 115, 30/*,
+        Range(  /*  "range",  */       AttackType.projectile, 350, 15,  120,    70,   15, 115, 30/*,
                 new FireArrow.P(10, 0.2f, 2, new FireArrow.G(5, 1f, new int[]{2, 2, 0})),
                 new HunterSpeed.P(5, 30, 5, new HunterSpeed.G(10, 1, 1, new int[]{3, 3, 2}))*/),
 
-        Short(   /* "short",       */  AttackType.projectile, 500, 20,  200,   120,  45, 70,  35),
-        Mountain( /*"mountain", */     AttackType.projectile, 250, 20,  200,   120,  35, 110, 30,
-                new Bash.P(0.25f, 2f, 20, new Bash.G(0.05f, 1f, 10, new int[]{3, 3, 3}))),
+        Short(   /* "short",       */  AttackType.projectile, 500, 20,  200,   120,   45, 70,  35),
+        Mountain( /*"mountain", */     AttackType.projectile, 250, 20,  200,   120,   35, 110, 30,
+                new Bash.P(0.25f, 2f, 20, new Bash.G(0.10f, 1f, 15, new int[]{2, 3, 3}))),
 
 //        SteelArrow("Steel Arrow","steelArrow", AttackType.projectile, 250, 25,  200,   20, 140, 30),
-        Catapult(  /*"range",      */  AttackType.projectile, 350, 30,  300,   240,  50, 140, 30,
+        Catapult(  /*"range",      */  AttackType.projectile, 350, 30,  300,   240,   50, 140, 30,
                 new Splash.P(60, 0.3f, new Splash.G(30, 0.2f, new int[]{1, 1, 0}))),
 
-		Ballista(  /*"range",     */   AttackType.projectile, 250, 30,  266,   180,  20, 120, 40,
+		Ballista(  /*"range",     */   AttackType.projectile, 250, 30,  266,   240,   35, 140, 55,
                 new SteelArrow.P(2, 300, new SteelArrow.G(1, 50, new int[]{3, 2, 0}))),
 
-        Spear(    /* "range",*/        AttackType.projectile, 250, 20,  266,   120,  20, 100, 48, new Desolate.P(2, 5, new Desolate.G(1, 5f, new int[]{3, 1, 0}))),
-        CrossBow(  /*"range", */       AttackType.projectile, 250, 25,  266,   120,  20, 110, 40),
-        Gun(      /* "range",       */ AttackType.projectile, 500, 25,  266,   240,  50, 120, 55),
-        Rifle(     /*"range",    */    AttackType.projectile, 500, 30,  266,   240,  40, 140, 35, new SpreadAttack.P(2f, 2, 0.1f, new SpreadAttack.G(0.5f, new int[]{2, 0, 0}))),
-        MachineGun(/*"range",        */AttackType.projectile, 500, 35,  266,   300,  40, 140, 110,
+        Spear(    /* "range",*/        AttackType.projectile, 250, 20,  266,   120,   20, 100, 42),
+        CrossBow(  /*"range", */       AttackType.projectile, 250, 20,  266,   120,   25, 110, 50, new Desolate.P(2, 5, new Desolate.G(1, 5f, new int[]{3, 1, 0}))),
+        Gun(      /* "range",       */ AttackType.projectile, 500, 25,  266,   180,   50, 120, 55),
+        Rifle(     /*"range",    */    AttackType.projectile, 500, 30,  266,   240,   40, 140, 35, new SpreadAttack.P(2f, 2, 0.1f, new SpreadAttack.G(0.3f, new int[]{0, 2, 0}))),
+        MachineGun(/*"range",        */AttackType.projectile, 500, 35,  266,   300,   40, 140, 110,
                 new ShotDelay.P(2f, true, new ShotDelay.G(0.5f, new int[]{2, 0, 0}))),
 
-        Sniper(    /*"range", */       AttackType.projectile, 1200, 45,  350,   360,  700, 240, 20,
+        Sniper(    /*"range", */       AttackType.projectile, 1200, 45,  350,  360,   700, 240, 20,
                 new ShotDelay.P(1.6f, false, new ShotDelay.G(0.2f, new int[]{3, 0, 0}))),
 
-        Shotgun(   /*"range", */       AttackType.projectile, 250, 25,  266,   240,  20, 180, 40,
+        Shotgun(   /*"range", */       AttackType.projectile, 250, 45,  266,   420,   240, 120, 60,
                 new BuckShot.P(5, 20f, new BuckShot.G(1, 5f, new int[]{3, 2, 0}))),
 
-        DoubleBarrel(/*"range",*/      AttackType.projectile, 250, 50,  266,   240,  20, 180, 40,
-                new SpreadAttack.P(3f, 1, 0.1f, new SpreadAttack.G(0.5f, new int[]{3, 0, 0})),
+        DoubleBarrel(/*"range",*/      AttackType.projectile, 250, 50,  266,   500,   400, 140, 50,
+                new SpreadAttack.P(3f, 1, 0.1f, new SpreadAttack.G(0.5f, new int[]{0, 3, 0})),
                 new BuckShot.P(5, 20f, new BuckShot.G(1, 5f, new int[]{3, 2, 0}))),
 
-        Cannon(    /*"range",      */  AttackType.projectile, 500, 35,  266,   300,  85, 130, 50,
+        Cannon(    /*"range",      */  AttackType.projectile, 500, 35,  266,   300,   85, 130, 50,
                 new Splash.P(60, 0.3f, new Splash.G(30, 0.2f, new int[]{2, 2, 0}))),
 
-        Rocket(    /*"range",        */AttackType.projectile, 300, 40,  266,   360,  120, 160, 30,
+        Rocket(    /*"range",        */AttackType.projectile, 300, 40,  266,   360,   120, 160, 30,
                 new Splash.P(60, 0.3f, new Splash.G(30, 0.2f, new int[]{3, 3, 0}))),
 
-        Missle(    /* "range",       */AttackType.projectile, 250, 45,  400,   420,  200, 220, 20,
+        Missle(    /* "range",       */AttackType.projectile, 250, 45,  400,   420,   200, 220, 20,
                 new Splash.P(50, 0.3f, new Splash.G(30, 0.2f, new int[]{4, 3, 0})),
-                new SpreadAttack.P(3.5f, 1, 0.3f, new SpreadAttack.G(0.5f, new int[]{3, 0, 0}))),
+                new SpreadAttack.P(3.5f, 1, 0.3f, new SpreadAttack.G(0.5f, new int[]{0, 3, 0}))),
 
-        Glaive(    /*"range",*/        AttackType.projectile, 250, 25,  266,   240,  20, 180, 40,
+        Glaive(    /*"range",*/        AttackType.projectile, 250, 35,  266,   300,   55, 150, 70,
                 new Bounce.P(2, 0.2f, 200, new Bounce.G(1, 0.05f, 50, new int[]{3, 3, 2}))),
 
-        MultiShot( /*"range",  */      AttackType.projectile, 250, 25,  266,   240, 20,  180,  40,
+        MultiShot( /*"range",  */      AttackType.projectile, 250, 40,  266,   360,   70,  160,  120,
                 new MultiShot.P(2, 0.8f, new MultiShot.G(1, 0.1f, new int[]{3, 2, 0}))),
 
-        SteamMachine(/*,"range",*/     AttackType.none,       250, 15,  266,   240,  5,  60,   10, new SteamAura.P());
+        SteamMachine(/*,"range",*/     AttackType.none,       250, 15,  266,   180,   5,  50,   5, new SteamAura.P());
 
 
         protected static void setComponents(){
@@ -189,7 +191,7 @@ public enum ItemEnum {;
             Arrow.components.add(new TowerObject(Basic, 1, 2, 1));
             Range.components.add(new TowerObject(Basic, 1, 1, 2));
             Short.components.add(new TowerObject(Rock, 1, 1, 0));
-            Spear.components.add(new TowerObject(Arrow, 2, 1, 0));
+            Spear.components.add(new TowerObject(Arrow, 1, 0, 1));
             Gun.components.add(new TowerObject(Short, 1, 2, 1));
             Gun.components.add(new TowerObject(Spear, 1, 1, 1));
             Mountain.components.add(new TowerObject(Rock, 0, 1, 1));
@@ -201,21 +203,21 @@ public enum ItemEnum {;
             Catapult.components.add(new TowerObject(SteamMachine, 2, 1, 0));
             Ballista.components.add(new TowerObject(CrossBow, 1, 2, 2));
             Ballista.components.add(new TowerObject(SteamMachine, 0, 1, 2));
-            MachineGun.components.add(new TowerObject(Rifle, 2, 3, 0));
+            MachineGun.components.add(new TowerObject(Rifle, 2, 3, 1));
             MachineGun.components.add(new TowerObject(SteamMachine, 0, 3, 0));
             Cannon.components.add(new TowerObject(Short, 2, 0, 1));
-            Cannon.components.add(new TowerObject(Catapult, 2, 2, 1));
+            Cannon.components.add(new TowerObject(Catapult, 3, 2, 1));
             Glaive.components.add(new TowerObject(Spear, 2, 1, 0));
-            Glaive.components.add(new TowerObject(Ballista, 1, 3, 1));
+            Glaive.components.add(new TowerObject(Ballista, 1, 3, 2));
             Rocket.components.add(new TowerObject(Cannon, 4, 1, 2));
-            MultiShot.components.add(new TowerObject(Glaive, 0, 4, 1));
-            Shotgun.components.add(new TowerObject(Gun, 3, 1, 2));
-            Shotgun.components.add(new TowerObject(MultiShot, 3, 0, 1));
+            MultiShot.components.add(new TowerObject(Glaive, 2, 4, 1));
+            Shotgun.components.add(new TowerObject(Gun, 2, 0, 2));
+            Shotgun.components.add(new TowerObject(MultiShot, 6, 1, 1));
             Missle.components.add(new TowerObject(Rocket, 3, 1, 4));
             Missle.components.add(new TowerObject(Rifle, 3, 0, 1));
             Sniper.components.add(new TowerObject(MachineGun, 4, 0, 4));
-            DoubleBarrel.components.add(new TowerObject(Shotgun, 5, 1, 1));
-            DoubleBarrel.components.add(new TowerObject(Rifle, 2, 2, 1));
+            DoubleBarrel.components.add(new TowerObject(Shotgun, 4, 1, 2));
+            DoubleBarrel.components.add(new TowerObject(Rifle, 1, 0, 3));
             SteamMachine.components.add(new TowerObject(Basic, 1, 1, 1));
 
 
@@ -261,7 +263,14 @@ public enum ItemEnum {;
         private Array<User.Research> researchNeed = new Array<User.Research>();
 
 		public void setTextures(){
+//            TextureAtlas a = GDefence.getInstance().assetLoader.get("Tower/towers.atlas", TextureAtlas.class);
+//            towerTexture = new TextureRegion(a.findRegion(textureName)).getTexture();
+//            System.out.println("a" + a.findRegion(textureName));
+//            System.out.println(textureName);
+//            towerTexture = a.findRegion(textureName).getTexture();
+//            System.out.println("t " + towerTexture);
 			towerTexture = GDefence.getInstance().assetLoader.get("Tower/" + textureName + ".png", Texture.class);
+//            System.out.println(towerTexture.getMinFilter() + " " + towerTexture.getMagFilter());
 //            towerTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 			projectileTexture = GDefence.getInstance().assetLoader.get("Projectiles/" + textureName + ".png", Texture.class);
 		}
@@ -436,72 +445,6 @@ public enum ItemEnum {;
         }
     }
 
-//	public enum Spell implements Item{
-//		Firestorm("Firestorm", "fireStorm", 20, 100) {
-//			@Override
-//			public String getTextureRegion() {
-//				return null;
-//			}
-//
-//			@Override
-//			public int getRecipeCost() {
-//				return 0;
-//			}
-//		},
-//		IceBlast("Ice Blast", "iceBlast", 10, 60) {
-//			@Override
-//			public String getTextureRegion() {
-//				return null;
-//			}
-//
-//
-//			@Override
-//			public int getRecipeCost() {
-//				return 0;
-//			}
-//		};
-//
-//
-//		private String name;
-//        private String texturePath;
-//		private int dmg;
-//		private int manaCost;
-//
-//        public int getDmg() {
-//            return dmg;
-//        }
-//        public int getManaCost() {
-//            return manaCost;
-//        }
-//
-//        Spell(String name, String texturePath, int dmg, int manaCost) {
-//			this.name = name;
-//            this.texturePath = texturePath;
-//			this.dmg = dmg;
-//			this.manaCost = manaCost;
-//		}
-//
-//
-//        @Override
-//        public int getID() {
-//            return ordinal() + 200;
-//        }
-//
-//        @Override
-//        public String getName() {
-//            return name();
-//        }
-//
-//        @Override
-//        public String getTooltip() {//
-//            return "Dmg: " + getDmg() + System.getProperty("line.separator") +
-//                    "Mana Cost: " + getManaCost();
-//        }
-//
-//    }
-
-	//Иличев Глеб
-
 
 	public enum Detail implements Item{
 		Recipe{
@@ -518,7 +461,7 @@ public enum ItemEnum {;
             public int getGlobalCost() {
                 return 0;
             }
-        },;
+        };
 
 
         @Override
@@ -538,86 +481,5 @@ public enum ItemEnum {;
 
 
     }
-//    public enum Gem implements Item{
-//        Red {
-//            @Override
-//            public String getTextureRegion() {
-//                return "red";
-//            }
-//
-//            @Override
-//            public int getRecipeCost() {
-//                return 0;
-//            }
-//        },
-//        Yellow {
-//            @Override
-//            public String getTextureRegion() {
-//                return "yellow";
-//            }
-//
-//            @Override
-//            public int getRecipeCost() {
-//                return 0;
-//            }
-//        },
-//        Blue {
-//            @Override
-//            public String getTextureRegion() {
-//                return "blue";
-//            }
-//
-//            @Override
-//            public int getRecipeCost() {
-//                return 0;
-//            }
-//        }
-//
-//    }
-//    public enum Research implements Item{
-//        Mech {
-//            @Override
-//            public String getTextureRegion() {
-//                return "steam";
-//            }
-//
-//            @Override
-//            public int getRecipeCost() {
-//                return 0;
-//            }
-//        },
-//        Powder {
-//            @Override
-//            public String getTextureRegion() {
-//                return "powder";
-//            }
-//
-//            @Override
-//            public int getRecipeCost() {
-//                return 0;
-//            }
-//        }
-//
-//
-//    }
-
-
-
-	//Detail;
-
-
-	//protected String textureRegion;
-
-
-
-
-//	private Item(String textureRegion) {
-//		this.textureRegion = textureRegion;
-//	}
-
-
-//	public String getTextureRegion() {
-//		return textureRegion;
-//	}
 
 }

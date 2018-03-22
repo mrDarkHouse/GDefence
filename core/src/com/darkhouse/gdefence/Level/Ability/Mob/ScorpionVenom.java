@@ -81,8 +81,8 @@ public class ScorpionVenom extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("scorpionVenomTooltip1") + " " + FontLoader.colorString(Integer.toString(asSlow), 3) + " " + System.getProperty("line.separator") +
-                    l.getWord("scorpionVenomTooltip2") + " " + FontLoader.colorString(Float.toString(duration), 3) + " " +
+            return l.getWord("scorpionVenomTooltip1") + " " + FontLoader.colorString(Integer.toString(asSlow), 10) + " " + System.getProperty("line.separator") +
+                    l.getWord("scorpionVenomTooltip2") + " " + FontLoader.colorString(Float.toString(duration), 10) + " " +
                     l.getWord("scorpionVenomTooltip3");
         }
     }

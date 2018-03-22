@@ -48,6 +48,11 @@ public class SteamAura extends Ability implements Ability.IOnBuild{
                     l.getWord("steamAuraTooltip2") + System.getProperty("line.separator") +
                     l.getWord("steamAuraTooltip3"));
         }
+
+        @Override
+        public void flush() {
+            //no grades - nothing to flush
+        }
     }
 //    public static class G extends AbilityGrader{
 //
@@ -62,7 +67,7 @@ public class SteamAura extends Ability implements Ability.IOnBuild{
         private float multiple;
 
         public ExpTether(float duration, Tower tethered, float multiple) {
-            super(true, false, duration);
+            super(true, false, duration, IOnGetExp.class);
             this.tethered = tethered;
             this.multiple = multiple;
         }
@@ -82,7 +87,7 @@ public class SteamAura extends Ability implements Ability.IOnBuild{
     private class SteamAuraAura extends Effect<Tower> implements Ability.IBuildedOnMap{
 
         public SteamAuraAura(/*int range, float duration*/) {
-            super(true, true, -1, "slow");
+            super(true, true, -1, "slow", IBuildedOnMap.class);
         }
 
         @Override

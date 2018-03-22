@@ -58,7 +58,7 @@ public class GreatEvasion extends MobAbility implements MobAbility.ISpawn{
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
              return l.getWord("greatEvasionTooltip1") + System.getProperty("line.separator") +
-                     l.getWord("greatEvasionTooltip2") + " " + FontLoader.colorString(Float.toString(cdCap), 3) + " " +
+                     l.getWord("greatEvasionTooltip2") + " " + FontLoader.colorString(Float.toString(cdCap), 10) + " " +
                      l.getWord("greatEvasionTooltip3");
         }
     }

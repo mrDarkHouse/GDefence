@@ -45,7 +45,7 @@ public class WaterFeel extends MobAbility implements MobAbility.IMove{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("waterFeelTooltip1") + " " + FontLoader.colorString(Integer.toString(speedValue), 3) + " " +
+            return l.getWord("waterFeelTooltip1") + " " + FontLoader.colorString(Integer.toString(speedValue), 10) + " " +
                     l.getWord("waterFeelTooltip2") + System.getProperty("line.separator") +
                     l.getWord("waterFeelTooltip3");
         }

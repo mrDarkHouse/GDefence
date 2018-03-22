@@ -5,10 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
 
 import java.util.HashMap;
 
-public interface GameObject {
+public interface GameObject extends GemGradable{
 
 
 
@@ -28,10 +29,11 @@ public interface GameObject {
 //    public Item getPrototype() {
 //        return prototype;
 //    }
-    public abstract Item getPrototype();
-    public abstract String getTooltip();
+    /*public abstract */Item getPrototype();
+    /*public abstract */String getTooltip();
 
-    public abstract String getSaveCode();
+    /*public abstract */String getSaveCode();
+    /*public abstract */int getGlobalCost();
 //    public static GameObject loadSaveCode(String s){return null;}
 
 //    public void setPrototype(Item prototype) {

@@ -30,18 +30,34 @@ public class BuySlotSource extends SlotSource {
         }else return false;
     }
 
+//    @Override
+//    protected void ifSlotTarget(DragAndDrop.Target target) {
+//        Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
+//        if (!targetSlot.isFull() && (targetSlot.matches(payloadSlot) || targetSlot.getPrototype() == null)) {
+//            Item item = sourceSlot.getPrototype();
+//            if(GDefence.getInstance().user.deleteGold(item.getGlobalCost())){
+//                targetSlot.add(payloadSlot.takeAll());
+//            } else {
+////                System.out.println("No enough money");
+//            }
+//        } else {
+//            //dont swap items
+//        }
+//    }
+
+
     @Override
-    protected void ifSlotTarget(DragAndDrop.Target target) {
-        Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-        if (!targetSlot.isFull() && (targetSlot.matches(payloadSlot) || targetSlot.getPrototype() == null)) {
-            Item item = sourceSlot.getPrototype();
-            if(GDefence.getInstance().user.deleteGold(item.getGlobalCost())){
-                targetSlot.add(payloadSlot.takeAll());
-            } else {
-//                System.out.println("No enough money");
+    protected void checkCount(Slot targetSlot, int toMove) {
+        if(payloadSlot.getAmount() <= toMove) {
+            if(GDefence.getInstance().user.deleteGold(payloadSlot.getLast().getGlobalCost())) {
+                move(targetSlot, payloadSlot.takeAll());
             }
-        } else {
-            //dont swap items
+            else {
+////                System.out.println("No enough money");
+            }
+        } else {//dont swap items
+//            move(targetSlot, payloadSlot.take(toMove));
+//            sourceSlot.add(payloadSlot.takeAll());
         }
     }
 

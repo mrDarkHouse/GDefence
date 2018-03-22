@@ -11,8 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.InventorySystem.inventory.*;
+import com.darkhouse.gdefence.InventorySystem.inventory.Source.SlotSource;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GradableTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
+import com.darkhouse.gdefence.Model.Panels.GemClearPanel;
 import com.darkhouse.gdefence.Model.Panels.GemGradePanel;
 import com.darkhouse.gdefence.Model.Panels.GemPanel;
 import com.darkhouse.gdefence.Model.Panels.GoldPanel;
@@ -23,6 +26,7 @@ public class Smith extends AbstractCampainScreen{
     private ImageButton upHealth;
     private ImageButton upEnergy;
     private GemGradePanel pn;
+    private GemClearPanel cp;
 //    private InventoryActor inventoryActor;
     private OverallInventory inventory;
 
@@ -108,6 +112,15 @@ public class Smith extends AbstractCampainScreen{
             }
         }*/;
         pn.setPosition(700, 100);
+
+
+        cp = new GemClearPanel(new DragAndDrop(), inventory, GDefence.getInstance().assetLoader.getSkin());
+        cp.setPosition(1050, 100);
+
+        cp.addTarget(new SlotTarget(pn.getGradeTowerSlot()));//Allow to move items from grade panel to clear panel(vice versa) directly
+        pn.addTarget(new SlotTarget(cp.getItemSlot()));
+
+
 //        pn.setSize(400, 250);
 //        pn.pack();
 
@@ -124,10 +137,12 @@ public class Smith extends AbstractCampainScreen{
         inventory.init();
         stage.addActor(pn);
         pn.addTooltips();
+        stage.addActor(cp);
+        cp.initListeners();
         stage.addActor(upHealth);
         stage.addActor(upEnergy);
         stage.addActor(new GoldPanel(800, 500, 160, 100));
-        stage.addActor(new GemPanel(Gdx.graphics.getWidth() - 270, Gdx.graphics.getHeight() - 160 - topPadSize, 270, 160));
+        stage.addActor(new GemPanel(GDefence.WIDTH - 270, GDefence.HEIGHT - 160 - topPadSize, 270, 160));
     }
 
     public void notifyListeners(){

@@ -16,40 +16,50 @@ import java.util.concurrent.atomic.AtomicReference;
 public class BuckShot extends Ability implements Ability.IPreShot {
 
     public static class P extends AbilityPrototype {
-        private G grader;
 //        private int range;
         private AtomicReference<Integer> projectiles;
         private AtomicReference<Float> angle;
         private AtomicReference<Integer> maxTargets;//
+        private G g;
+        private S s;
+
+        @Override
+        public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
+            Array<Class<? extends AbilityPrototype>> a = new Array<Class<? extends AbilityPrototype>>();
+            a.add(BuckShot.P.class);
+            return a;
+        }
 
         public P(int projectiles, float angle/*, int maxTargets*//*, int range*/, G grader) {
             super(1, "buckShot", grader.gemCap, IPreShot.class);
             this.projectiles = new AtomicReference<Integer>(projectiles);
             this.angle = new AtomicReference<Float>(angle);
             this.maxTargets = new AtomicReference<Integer>(1);
-            this.grader = grader;
+            this.g = grader;
+            this.s = new S(projectiles, angle);
 //            this.range = range;
         }
 
         @Override
-        public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
-            return new Array<Class<? extends AbilityPrototype>>();
+        public AbilityPrototype copy() {
+            P p = new P(projectiles.get(), angle.get(), g);
+            p.initBoosts(GDefence.getInstance().assetLoader);
+            p.s = s;
+            return p;
+        }
+        @Override
+        public void flush() {
+            this.projectiles = new AtomicReference<Integer>(s.projectiles);
+            this.angle = new AtomicReference<Float>(s.angle);
+            initBoosts(GDefence.getInstance().assetLoader);
         }
 
-//        @Override
-//        public String getSaveCode() {
-//            return null;
-//        }
-
         @Override
-        public AbilityPrototype copy() {
-            AssetLoader l = GDefence.getInstance().assetLoader;
-            P p = new P(projectiles.get(), angle.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.projectiles, grader.projectilesUp, l.getWord("buckShotGrade1"),
-                    true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostFloat(p.angle, grader.angleDown, l.getWord("buckShotGrade2"),
+        protected void initBoosts(AssetLoader l) {
+            gemBoost[1] = new BoostFloat(angle, g.angleDown, l.getWord("buckShotGrade2"),
                     false, BoostFloat.FloatGradeFieldType.ANGLE);
-            return p;
+            gemBoost[2] = new BoostInteger(projectiles, g.projectilesUp, l.getWord("buckShotGrade1"),
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
         }
 
         @Override
@@ -60,8 +70,8 @@ public class BuckShot extends Ability implements Ability.IPreShot {
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("buckShotTooltip1") + " " + FontLoader.colorCode(0) + projectiles.get() + "[] " + l.getWord("buckShotTooltip2") + System.getProperty("line.separator") +
-                    l.getWord("buckShotTooltip3") + " " + FontLoader.colorCode(1) + angle.get().intValue() + "*[] " + l.getWord("buckShotTooltip4");
+            return l.getWord("buckShotTooltip1") + " " + FontLoader.colorString(projectiles.get().toString(), User.GEM_TYPE.WHITE) + " " + l.getWord("buckShotTooltip2") + System.getProperty("line.separator") +
+                    l.getWord("buckShotTooltip3") + " " + FontLoader.colorString(angle.get().toString(), User.GEM_TYPE.GREEN) + " " + l.getWord("buckShotTooltip4");
         }
     }
     public static class G extends AbilityGrader{
@@ -74,6 +84,15 @@ public class BuckShot extends Ability implements Ability.IPreShot {
             this.projectilesUp = projectilesUp;
             this.angleDown = angleDown;
 //            this.maxTargetsUp = maxTargetsUp;
+        }
+    }
+    private static class S extends AbilitySaverStat{
+        private int projectiles;
+        private float angle;
+
+        public S(int projectiles, float angle) {
+            this.projectiles = projectiles;
+            this.angle = angle;
         }
     }
 

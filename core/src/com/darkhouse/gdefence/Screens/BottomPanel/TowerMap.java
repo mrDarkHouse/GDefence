@@ -87,6 +87,8 @@ public class TowerMap extends Window{
             linkTowers(sr, buttons.get(22), buttons.get(12));
             linkTowers(sr, buttons.get(9), buttons.get(20));
 
+            linkTowers(sr, buttons.get(19), buttons.get(23));
+
 //        linkTowers(sr, buttons.get(1), buttons.get(7));
 //        linkTowers(sr, buttons.get(2), buttons.get(6));
 //        linkTowers(sr, buttons.get(2), buttons.get(8));
@@ -145,7 +147,7 @@ public class TowerMap extends Window{
 //        table.padRight(50);
 //        table.padBottom(50);
         table.pad(50);
-        table.defaults().size(60, 60);
+        table.defaults().size(64, 64);
 //        table.row().fill().expandX();
 
         initButtons();
@@ -224,8 +226,8 @@ public class TowerMap extends Window{
 
                 int lxLimit = -70;
                 int rxLimit = 70;
-                int dyLimit = -140;
-                int uyLimit = 120;
+                int dyLimit = -220;
+                int uyLimit = 210;
 
                 if(offsetX + x < lxLimit) cx = lxLimit;
                 else if(offsetX + x > rxLimit) cx = rxLimit;
@@ -291,6 +293,7 @@ public class TowerMap extends Window{
         /*20*/buttons.add(new RecipeButton(ItemEnum.Tower.Missle));
         /*21*/buttons.add(new ResearchButton(User.Research.Powder));
         /*22*/buttons.add(new ResearchButton(User.Research.Mech));
+        /*23*/buttons.add(new RecipeButton(ItemEnum.Tower.DoubleBarrel));
 
 
         for(TowerMapObject b:buttons){
@@ -332,7 +335,9 @@ public class TowerMap extends Window{
         table.add(buttons.get(17)).colspan(1).row();
         table.add(buttons.get(18)).colspan(1);
         table.add(buttons.get(19)).colspan(1);
-        table.add(buttons.get(20)).colspan(1);
+        table.add(buttons.get(20)).colspan(1).row();
+        table.add(new Actor());
+        table.add(buttons.get(23)).colspan(1);
 
 
     }

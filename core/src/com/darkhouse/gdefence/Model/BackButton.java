@@ -20,7 +20,7 @@ public class BackButton extends ImageButton{
 
         setSize(backButtonsSize[0], backButtonsSize[1]);
         if(ownPosition) {
-            setPosition(10, Gdx.graphics.getHeight() - backButtonsSize[1]);
+            setPosition(10,GDefence.HEIGHT - backButtonsSize[1]);
         }
         addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

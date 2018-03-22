@@ -499,6 +499,7 @@ public class Tower extends Effectable implements DamageSource{
 //            batch.end();
 //            shape.setAutoShapeType(true);
 //            shape.begin(/*ShapeRenderer.ShapeType.Line*/);
+            shape.setProjectionMatrix(getStage().getCamera().combined);
             shape.circle(attackRange.x, attackRange.y, attackRange.radius, 256);
 //            shape.end();
 //            batch.draw(attackRangeTexture, attackRange.x - attackRange.radius, attackRange.y - attackRange.radius,

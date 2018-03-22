@@ -97,10 +97,10 @@ public class HealingAura extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("healingAuraTooltip1") + " " + FontLoader.colorString(Integer.toString(healEmount), 3) + " " +
-                    l.getWord("healingAuraTooltip2") + " " + FontLoader.colorString(Integer.toString(range), 3) + " " +
+            return l.getWord("healingAuraTooltip1") + " " + FontLoader.colorString(Integer.toString(healEmount), 10) + " " +
+                    l.getWord("healingAuraTooltip2") + " " + FontLoader.colorString(Integer.toString(range), 10) + " " +
                     l.getWord("healingAuraTooltip3") + System.getProperty("line.separator") +
-                    l.getWord("healingAuraTooltip4") + " " + FontLoader.colorString(Float.toString(healDelay), 3) + " " +
+                    l.getWord("healingAuraTooltip4") + " " + FontLoader.colorString(Float.toString(healDelay), 10) + " " +
                     l.getWord("healingAuraTooltip5");
         }
     }

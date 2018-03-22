@@ -53,7 +53,7 @@ public class Evasion extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("evasionTooltip1") + " " + FontLoader.colorString((chance*100 + "%"), 3) +
+            return l.getWord("evasionTooltip1") + " " + FontLoader.colorString((chance*100 + "%"), 10) +
                     System.getProperty("line.separator") + l.getWord("evasionTooltip2");
 //            return l.getWord("greatEvasionTooltip1") + System.getProperty("line.separator") +
 //                    l.getWord("greatEvasionTooltip2") + " " + FontLoader.colorString(Float.toString(cdCap), 3) + " " +

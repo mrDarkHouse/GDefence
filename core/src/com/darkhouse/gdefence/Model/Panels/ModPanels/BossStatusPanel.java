@@ -98,10 +98,10 @@ public class BossStatusPanel extends AbstractPanel{
     public void hasChanged(){
         AssetLoader l = GDefence.getInstance().assetLoader;
         String s = "";
-        s += /*"[#000000ff]Armor: "*/FontLoader.colorString(l.getWord("mobArmor") + ":" + boss.getOwnArmor(), 0)   /*+ " (" + Mob.getArmorReduction(boss.getArmor())*100f + ")"*/;
+        s += /*"[#000000ff]Armor: "*/FontLoader.colorString(l.getWord("mobArmor") + ":" + boss.getOwnArmor(), 13)   /*+ " (" + Mob.getArmorReduction(boss.getArmor())*100f + ")"*/;
         if(boss.getBonusArmor() != 0) s += FontLoader.colorString("+" + boss.getBonusArmor(), 1);
         s += System.getProperty("line.separator");
-        s += FontLoader.colorString(l.getWord("mobSpeed") + ":" + boss.getSpeed(), 0);
+        s += FontLoader.colorString(l.getWord("mobSpeed") + ":" + boss.getSpeed(), 13);
         s += System.getProperty("line.separator");
 //        for (MobAbility a:boss.getAbilities()){
 //            s += a.getPrototype().getTooltip();

@@ -30,7 +30,6 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
 //    private SellButton sellButton;
 
     private Table table;
-    private Table container;
     private VerticalGroup items;
     private VerticalGroup costs;
 
@@ -261,7 +260,7 @@ public class StoreBuyPanel extends Window /*InventoryActor*/{
         a.addListener(new DoubleClickListener(fastInventory, a){//fastInventory can be null in loading, check it //TODO
             @Override
             protected void move() {
-                if(GDefence.getInstance().user.deleteGold(owner.getSlot().getPrototype().getGlobalCost())) {
+                if(GDefence.getInstance().user.deleteGold(owner.getSlot().getLast().getGlobalCost())) {
                         toInventory.store(TowerObject.generateStartObjects(owner.getSlot().getPrototype(), 1));
                     }else {
                         //tooltip no enough money

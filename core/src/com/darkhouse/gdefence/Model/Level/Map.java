@@ -22,6 +22,7 @@ import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.Objects.TowerObject;
+import com.darkhouse.gdefence.Screens.LevelMap;
 
 import java.awt.*;
 import java.util.*;
@@ -827,6 +828,7 @@ public class Map {
 
 
     private void drawTowerRange(/*SpriteBatch batch*/ShapeRenderer shape){//rework with draw in payload
+        shape.setProjectionMatrix(LevelMap.levelMap.getStage().getCamera().combined);//need local levelMap
         float x = payload.getValidDragActor().getX();
         float y = payload.getValidDragActor().getY();
         float width = payload.getValidDragActor().getWidth();

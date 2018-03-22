@@ -196,11 +196,12 @@ public class LevelMap extends AbstractScreen {
     }
 
     public LevelMap(int number, Inventory towers, Inventory spells) {
+        super();
         this.number = number;
         this.towers = towers;
 
         batch = new SpriteBatch();
-        stage = new Stage();
+//        stage = new Stage();
         levelMap = this;
         level = new Level(number, this);
         initHpMpBar();
@@ -211,6 +212,8 @@ public class LevelMap extends AbstractScreen {
         initSpellPanel(spells);
         initPauseDialog();
         initExtraEventPanels();
+
+
 
         logger = new FPSLogger();
     }
@@ -298,11 +301,20 @@ public class LevelMap extends AbstractScreen {
 //        batch = new SpriteBatch();
 //        stage = new Stage();
 //        levelMap = this;
+
+
         Gdx.input.setInputProcessor(input);
         if(guideDialog != null) {
             guideDialog.show(stage);
             isPaused = true;
         }
+
+        System.out.println(getStage().getWidth() + " " + getStage().getHeight());
+
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+//        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        System.out.println(Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
 //        initTextures();
 
 //        level = new Level(number, this);
@@ -314,7 +326,10 @@ public class LevelMap extends AbstractScreen {
 
 
 
+
         level.start();
+
+
 
 
     }
@@ -330,7 +345,9 @@ public class LevelMap extends AbstractScreen {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         batch.begin();
+        batch.setProjectionMatrix(camera.combined);
         batch.draw(GDefence.getInstance().assetLoader.get("LevelMapBg.png", Texture.class), 0, 0);
         if(!isPaused) {
 //            if (delta < 5) {
@@ -352,13 +369,13 @@ public class LevelMap extends AbstractScreen {
     }
     private void initHpMpBar(){
         if(level.getType() == Map.MapType.TIME) {
-            healthBar = new BossHealth(Gdx.graphics.getWidth(), 55, 0, Gdx.graphics.getHeight() - 55, level.getCurrentWave().getBoss());
+            healthBar = new BossHealth(GDefence.WIDTH, 55, 0, GDefence.HEIGHT - 55, level.getCurrentWave().getBoss());
         }else {
-            healthBar = new HealthBar(Gdx.graphics.getWidth(), 55, 0, Gdx.graphics.getHeight() - 55);
+            healthBar = new HealthBar(GDefence.WIDTH, 55, 0, GDefence.HEIGHT - 55);
         }
         healthBar.init();
         healthBar.update();
-        enegryBar = new EnegryBar(55, Gdx.graphics.getHeight() - 55, 0, 0);
+        enegryBar = new EnegryBar(55, GDefence.HEIGHT - 55, 0, 0);
         stage.addActor(healthBar);
         stage.addActor(enegryBar);
 
@@ -367,7 +384,7 @@ public class LevelMap extends AbstractScreen {
         nWPanel = new NextWaveInfoPanel();
         stage.addActor(nWPanel);
         nWPanel.init();
-        nWPanel.setPosition(Gdx.graphics.getWidth() - /*205*/nWPanel.getWidth() - 5, 5);
+        nWPanel.setPosition(GDefence.WIDTH - /*205*/nWPanel.getWidth() - 5, 5);
 
 
         if(level.getType() == Map.MapType.CLASSIC) {
@@ -376,7 +393,7 @@ public class LevelMap extends AbstractScreen {
 
             cWpanel = new CurrentWaveInfoPanel(nWPanel.getNextWaveTimer());
             cWpanel.setVisible(false);
-            cWpanel.setPosition(Gdx.graphics.getWidth() - cWpanel.getWidth() - 5, 5);
+            cWpanel.setPosition(GDefence.WIDTH - cWpanel.getWidth() - 5, 5);
             stage.addActor(cWpanel);
         }
     }
@@ -386,14 +403,14 @@ public class LevelMap extends AbstractScreen {
             case INVASION:
                 invasionPanel = new InvasionPanel(level.getMobLimit(), Wave.mobs);
                 invasionPanel.setVisible(false);
-                invasionPanel.setPosition(Gdx.graphics.getWidth() - invasionPanel.getWidth() - 5, 5);
+                invasionPanel.setPosition(GDefence.WIDTH - invasionPanel.getWidth() - 5, 5);
                 stage.addActor(invasionPanel);
                 guideDialog = new InvasionDialog();
                 break;
             case KILLMADNESS:
                 killMadnessPanel = new KillMadnessPanel(level.getTimeLimit(), level);
                 killMadnessPanel.setVisible(false);
-                killMadnessPanel.setPosition(Gdx.graphics.getWidth() - killMadnessPanel.getWidth() - 5, 5);
+                killMadnessPanel.setPosition(GDefence.WIDTH - killMadnessPanel.getWidth() - 5, 5);
                 stage.addActor(killMadnessPanel);
                 guideDialog = new KillMadnessDialog();
                 break;
@@ -401,16 +418,16 @@ public class LevelMap extends AbstractScreen {
                 Table t = new Table();
                 timeRushPanel = new TimeRushPanel(level.getTimeLimit(), level);
                 timeRushPanel.setVisible(false);
-//                timeRushPanel.setPosition(Gdx.graphics.getWidth() - timeRushPanel.getWidth() - 5, 5);
+//                timeRushPanel.setPosition(GDefence.WIDTH - timeRushPanel.getWidth() - 5, 5);
 //                stage.addActor(timeRushPanel);
                 guideDialog = new TimeRushDialog();
                 bossStatusPanel = new BossStatusPanel(timeRushPanel.getWidth());
                 bossStatusPanel.setVisible(false);
-//                bossStatusPanel.setPosition(Gdx.graphics.getWidth() - timeRushPanel.getWidth() - 5, timeRushPanel.getHeight() + 5);
+//                bossStatusPanel.setPosition(GDefence.WIDTH - timeRushPanel.getWidth() - 5, timeRushPanel.getHeight() + 5);
 //                stage.addActor(bossStatusPanel);
                 t.add(bossStatusPanel).row();
                 t.add(timeRushPanel);
-                t.setPosition(Gdx.graphics.getWidth() - timeRushPanel.getWidth() - 5, timeRushPanel.getHeight()/2 + 10);
+                t.setPosition(GDefence.WIDTH - timeRushPanel.getWidth() - 5, timeRushPanel.getHeight()/2 + 10);
                 t.pack();
                 stage.addActor(t);
                 bossStatusPanel.init(level.getCurrentWave().getBoss());//must be after add (tooltip adding)

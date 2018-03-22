@@ -30,12 +30,14 @@ public class LoadingStage extends Stage{
 
 
         Image bg = new Image(GDefence.getInstance().assetLoader.get("MainMenuBg.png", Texture.class));
+//        bg.setSize(this.getWidth(), this.getHeight());
+        System.out.println(this.getWidth() + " " + this.getHeight());
         addActor(bg);
         loadBar = new ProgressBar(0, 100, 1, false, GDefence.getInstance().assetLoader.getMobHpBarStyle());
-        loadBar.setSize(300, 50);
+        loadBar.setSize(GDefence.WIDTH/4, GDefence.HEIGHT/14.4f);
         loadBar.getStyle().background.setMinHeight(loadBar.getHeight());
         loadBar.getStyle().knob.setMinHeight(loadBar.getHeight());
-        loadBar.setPosition(Gdx.graphics.getWidth()/2 - loadBar.getWidth()/2, Gdx.graphics.getHeight()/2 - loadBar.getHeight()/2);
+        loadBar.setPosition(GDefence.WIDTH/2 - loadBar.getWidth()/2, GDefence.HEIGHT/2 - loadBar.getHeight()/2);
         addActor(loadBar);
         I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
         Label loading = new Label(b.get("loading"), FontLoader.generateStyle(0, 34, Color.BLACK));//

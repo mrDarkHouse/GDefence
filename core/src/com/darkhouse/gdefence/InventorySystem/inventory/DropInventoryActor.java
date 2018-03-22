@@ -53,7 +53,6 @@ public class DropInventoryActor extends Window{
             SlotTooltip tooltip = new SlotTooltip(s.getStage(), s.getSlot(), skin);
             tooltip.setTouchable(Touchable.disabled);
             s.addListener(new TooltipListener(tooltip, true));
-//            System.out.println(s);
         }
 
     }

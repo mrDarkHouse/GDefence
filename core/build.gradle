@@ -11,4 +11,5 @@ eclipse.project {
 }
 dependencies {
     compile 'org.lwjgl.lwjgl:lwjgl_util:2.9.2'
+    compile 'com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.3'
 }

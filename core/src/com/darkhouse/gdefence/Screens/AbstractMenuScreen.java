@@ -60,7 +60,7 @@ public abstract class AbstractMenuScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-//        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.combined);
 //        batch.setTransformMatrix(camera.view);
 //        batch.setProjectionMatrix(camera.projection);
 

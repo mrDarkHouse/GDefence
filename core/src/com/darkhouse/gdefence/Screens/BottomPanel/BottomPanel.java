@@ -32,7 +32,7 @@ public class BottomPanel extends Table {
         ImageButton[] bottomPanel = new ImageButton[5];
 
 
-        int bottomButtonsSize[] = {Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/5};
+        int bottomButtonsSize[] = {GDefence.WIDTH/5, GDefence.HEIGHT/5};
         defaults().size(bottomButtonsSize[0], bottomButtonsSize[1]);
         setPosition(bottomButtonsSize[0] - lineWidth, 0);
 
@@ -86,11 +86,11 @@ public class BottomPanel extends Table {
 //        sr.begin(ShapeRenderer.ShapeType.Filled);
 //        sr.setProjectionMatrix(batch.getProjectionMatrix());
 //        sr.setColor(0, 0, 0, 1);
-//        sr.rectLine(Gdx.graphics.getWidth()/5 - lineWidth*1.5f,  Gdx.graphics.getHeight()/5 + lineWidth,   Gdx.graphics.getWidth()/5*4 - lineWidth * 0.5f,   Gdx.graphics.getHeight()/5 + lineWidth, lineWidth);
-//        sr.rectLine(Gdx.graphics.getWidth()/5 - lineWidth,       Gdx.graphics.getHeight()/5 + lineWidth,   Gdx.graphics.getWidth()/5 - lineWidth,            0, lineWidth);
-//        sr.rectLine(Gdx.graphics.getWidth()/5 * 2 - lineWidth,   Gdx.graphics.getHeight()/5 + lineWidth,   Gdx.graphics.getWidth()/5 * 2 - lineWidth,        0, lineWidth);
-//        sr.rectLine(Gdx.graphics.getWidth()/5 * 3 - lineWidth,   Gdx.graphics.getHeight()/5 + lineWidth,   Gdx.graphics.getWidth()/5 * 3 - lineWidth,        0, lineWidth);
-//        sr.rectLine(Gdx.graphics.getWidth() / 5 * 4 - lineWidth, Gdx.graphics.getHeight() / 5 + lineWidth, Gdx.graphics.getWidth() / 5 * 4 - lineWidth,      0, lineWidth);
+//        sr.rectLine(GDefence.WIDTH/5 - lineWidth*1.5f,  GDefence.HEIGHT/5 + lineWidth,   GDefence.WIDTH/5*4 - lineWidth * 0.5f,   GDefence.HEIGHT/5 + lineWidth, lineWidth);
+//        sr.rectLine(GDefence.WIDTH/5 - lineWidth,       GDefence.HEIGHT/5 + lineWidth,   GDefence.WIDTH/5 - lineWidth,            0, lineWidth);
+//        sr.rectLine(GDefence.WIDTH/5 * 2 - lineWidth,   GDefence.HEIGHT/5 + lineWidth,   GDefence.WIDTH/5 * 2 - lineWidth,        0, lineWidth);
+//        sr.rectLine(GDefence.WIDTH/5 * 3 - lineWidth,   GDefence.HEIGHT/5 + lineWidth,   GDefence.WIDTH/5 * 3 - lineWidth,        0, lineWidth);
+//        sr.rectLine(GDefence.WIDTH / 5 * 4 - lineWidth, GDefence.HEIGHT / 5 + lineWidth, GDefence.WIDTH / 5 * 4 - lineWidth,      0, lineWidth);
 //        sr.end();
 //        batch.begin();
     }

@@ -62,7 +62,7 @@ public class Mob extends Effectable{
         SpaceShip   ("spaceShip",     MoveType.ground, 650,  7, 50,  3,  3, new Sprint.P(7, 3, 40)),
         EnergySphere("energySphere",  MoveType.ground, 1000, 0, 60,  2,  4, new Sadist.P(5, 400)),
         SpaceLord   ("galaxyLordFirst",MoveType.ground,50000,10, 50,  0,  0, new BossResist.P(),
-                new StagedAbilities.P(4, new String[]{"galaxyLordFirst", "galaxyLordSecond", "galaxyLordThird", "galaxyLordLast"}, new float[]{0.6f, 0.3f, 0.1f},
+                new StagedAbilities.P(4, 20, new String[]{"galaxyLordFirst", "galaxyLordSecond", "galaxyLordThird", "galaxyLordLast"}, new float[]{0.6f, 0.3f, 0.1f},
                         new MobAbility.AbilityPrototype[][]{{new BossResist.P(), new LayerArmor.P(40, 20)},
                                                             {new BossResist.P(), new Sadist.P(3, 300), /*new WaterShield.P(0.2f, 0.2f, 5)*/},
                                                             {new BossResist.P(), new SpellImmune.P(), new StrongSkin.P(40, 5)},
@@ -633,12 +633,12 @@ public class Mob extends Effectable{
         return v;
     }
 
-    public void setDie(DamageSource source) {
+    public void setDie(DamageSource source, boolean giveBounty) {
         this.inGame = false;
         LevelMap.getLevel().mobDieEvent(source);
         Wave.mobs.removeValue(this, true);//add "if contains this" if error
-        if(source!= null){
-            LevelMap.getLevel().addEnergy(getBounty());
+        if(source!= null){//need if mob already dead and projectile hit him
+            if(giveBounty) LevelMap.getLevel().addEnergy(getBounty());
             LevelMap.getLevel().getStatManager().MobsKilledAdd(1);
             source.addKill(this);
         }
@@ -672,7 +672,7 @@ public class Mob extends Effectable{
 //            if(!useDieAbilities(/*source*/)) {
                 float lesshp = health;
                 health = 0;
-                setDie(source);
+                setDie(source, true);
                 return lesshp;
 //            }else return 0;
         }else return 0;
@@ -812,7 +812,7 @@ public class Mob extends Effectable{
 
         LevelMap.getLevel().damage(dmg);
         //System.out.println("died");
-        setDie(null);
+        setDie(null, false);
     }
 
 

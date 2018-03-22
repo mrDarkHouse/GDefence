@@ -95,6 +95,7 @@ public class GDefence extends Game {
     //public AssetManager assets;
 
 
+
 	@Override
 	public void create () {
 		mainClass = this;

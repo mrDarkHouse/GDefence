@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.loaders.I18NBundleLoader;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import org.lwjgl.LWJGLException;
@@ -133,46 +135,49 @@ public class OptionScreen extends AbstractMenuScreen {
         apply.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                try {
-                    Display.setDisplayMode(new DisplayMode(resolution.getSelected().a, resolution.getSelected().b));//
-                    if(fullscreen.isChecked()) {
-                        if(!Gdx.graphics.isFullscreen())
-                        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-                    }
+
+//                    Display.setDisplayMode(new DisplayMode(resolution.getSelected().a, resolution.getSelected().b));//
+                Gdx.graphics.setWindowedMode(resolution.getSelected().a, resolution.getSelected().b);
+                if(fullscreen.isChecked()) {
+                    if(!Gdx.graphics.isFullscreen())
+//                            Display.setFullscreen(true);
+                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+
+                }
+//                Graphics.DisplayMode desktopMode = LwjglApplicationConfiguration.getDesktopDisplayMode();
+//                System.out.println(desktopMode);
+
 
 //                    getStage().getViewport().update(resolution.getSelected().a, resolution.getSelected().b);
 //                    else Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
 
-                    if(vSync.isChecked() != GDefence.getInstance().vSync) {
-                        if (vSync.isChecked()) {
-                            Gdx.graphics.setVSync(true);
-                            GDefence.getInstance().vSync = true;
-                        } else {
-                            Gdx.graphics.setVSync(false);
-                            GDefence.getInstance().vSync = false;
-                        }
+                if(vSync.isChecked() != GDefence.getInstance().vSync) {
+                    if (vSync.isChecked()) {
+                        Gdx.graphics.setVSync(true);
+                        GDefence.getInstance().vSync = true;
+                    } else {
+                        Gdx.graphics.setVSync(false);
+                        GDefence.getInstance().vSync = false;
                     }
+                }
 
-                    switch (language.getSelectedIndex()){
-                        case 0: {
-                            if(!l.getLanguage().equals("en")) {
-                                l.changeLang("en");
+                switch (language.getSelectedIndex()){
+                    case 0: {
+                        if(!l.getLanguage().equals("en")) {
+                            l.changeLang("en");
 
-                            }
-                        }break;
-                        case 1: {
-                            if(!l.getLanguage().equals("ru")) {
-                                l.changeLang("ru");
+                        }
+                    }break;
+                    case 1: {
+                        if(!l.getLanguage().equals("ru")) {
+                            l.changeLang("ru");
 
 //                                System.out.println(l.getLanguage());
 //                                System.out.println(language.getSelected());
-                            }
-                        }break;
-                    }
-                } catch (LWJGLException e) {
-                    e.printStackTrace();
+                        }
+                    }break;
                 }
-//                if(fullscreen.isChecked()) {
+                //                if(fullscreen.isChecked()) {
 //                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 //                }else {
 //                    Gdx.graphics.setWindowedMode(resolution.getSelected().a, resolution.getSelected().b);
@@ -200,7 +205,7 @@ public class OptionScreen extends AbstractMenuScreen {
 //        });
         table.setWidth(stage.getWidth());
         table.align(Align.center|Align.top);
-        table.setPosition(0, Gdx.graphics.getHeight());
+        table.setPosition(0, GDefence.HEIGHT);
 
         I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
 //        System.out.println(b.get("options"));
@@ -231,7 +236,7 @@ public class OptionScreen extends AbstractMenuScreen {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        batch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
+//        batch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
     }
 
     @Override

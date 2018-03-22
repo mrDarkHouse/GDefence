@@ -55,9 +55,9 @@ public class Sadist extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("sadistTooltip1") + " " + FontLoader.colorString(Integer.toString(attacksNeed), 3) + " " +
+            return l.getWord("sadistTooltip1") + " " + FontLoader.colorString(Integer.toString(attacksNeed), 10) + " " +
                     l.getWord("sadistTooltip2")  +  System.getProperty("line.separator") +
-                    l.getWord("sadistTooltip3") + " " + FontLoader.colorString(Integer.toString(healEmount), 3) + " " +
+                    l.getWord("sadistTooltip3") + " " + FontLoader.colorString(Integer.toString(healEmount), 10) + " " +
                     l.getWord("sadistTooltip4");
         }
     }

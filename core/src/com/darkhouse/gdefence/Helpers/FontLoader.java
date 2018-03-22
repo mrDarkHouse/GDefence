@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.darkhouse.gdefence.User;
 
 public class FontLoader {
     private static FreeTypeFontGenerator generator;
@@ -44,27 +45,53 @@ public class FontLoader {
 
     public static String colorCode(int id){
         switch (id){
-            case 0:return "[#000000ff]";
+            case 0:return "[#990000ff]";//red
             case 1:return "[#0ffe00ff]";//green
-            case 2:return "[#00ffffff]";
-            case 3:return "[#64A619ff]";
-            case 4:return "[#CD6600ff]";
-            case 5:return "[#8B0000ff]";
+            case 2:return "[#00ffffff]";//blue
+            case 3:return "[#900274ff]";//Amethyst
+            case 4:return "[#009900ff]";//Emerald
+            case 5:return "[#66ffffff]";//Diamond
             case 6:return "[#4169E1ff]";//royalBlue
             case 7:return "[#CCCC00ff]";//darkYellow
             case 8:return "[#00886Bff]";//observatory green
             case 9:return "[#F09135ff]";//orange
-            case 10:return "[#000033ff]";//Obsidian
-            case 11:return "[#009900ff]";//Emerald
-            case 12:return "[#66ffffff]";//Diamond
+            case 10:return "[#64A619ff]";//green (mob spells)
+            case 11:return "[#CD6600ff]";//dark orange (layer armor)
+            case 12:return "[#8B0000ff]";//dark red (debuffs)
+            case 13:return "[#000000ff]";//black
+
+
             default:return "";
         }
     }
+
+//    public static String colorCode(int id){
+//        switch (id){
+//            case 0:return "[#000000ff]";//black
+//            case 1:return "[#0ffe00ff]";//green
+//            case 2:return "[#00ffffff]";
+//            case 3:return "[#64A619ff]";
+//            case 4:return "[#CD6600ff]";
+//            case 5:return "[#8B0000ff]";
+//            case 6:return "[#4169E1ff]";//royalBlue
+//            case 7:return "[#CCCC00ff]";//darkYellow
+//            case 8:return "[#00886Bff]";//observatory green
+//            case 9:return "[#F09135ff]";//orange
+//            case 10:return "[#5b0274ff]";//Amethyst
+//            case 11:return "[#009900ff]";//Emerald
+//            case 12:return "[#66ffffff]";//Diamond
+//            default:return "";
+//        }
+//    }
+
     public static String colorCode(Color c){
         return "[#" + c.toString() + "]";
     }
     public static String colorString(String s, int id){
         return colorCode(id) + s + "[]";
+    }
+    public static String colorString(String s, User.GEM_TYPE t){
+        return colorCode(t.ordinal()) + s + "[]";
     }
 
 

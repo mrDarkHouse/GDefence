@@ -16,11 +16,13 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
     public AbstractLoadingScreen() {
         super();
+        stage = new LoadingStage();
     }
 
     @Override
     public void show() {
-        stage = new LoadingStage();
+
+//        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //        GDefence.getInstance().assetLoader.loadAll();
 
 
@@ -30,6 +32,8 @@ public abstract class AbstractLoadingScreen extends AbstractScreen {
 
 
     }
+
+
 
     @Override
     public void render(float delta) {

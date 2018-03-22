@@ -8,6 +8,7 @@ import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.User;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -75,8 +76,8 @@ public class PoisonArrow extends Ability implements Ability.IOnHit {
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("poisonArrowTooltip1") + " " + FontLoader.colorString(slowPercent.get()*100 + "%", 0) + " " +
-                    l.getWord("poisonArrowTooltip2") + " " + FontLoader.colorString(duration.get().toString(), 1) + " " +
+            return l.getWord("poisonArrowTooltip1") + " " + FontLoader.colorString(slowPercent.get()*100 + "%", User.GEM_TYPE.BLACK) + " " +
+                    l.getWord("poisonArrowTooltip2") + " " + FontLoader.colorString(duration.get().toString(), User.GEM_TYPE.GREEN) + " " +
                     l.getWord("poisonArrowTooltip3");
         }
 

@@ -120,23 +120,31 @@ public class SlotSource extends Source {
 		if (targetSlot.matches(payloadSlot) || targetSlot.isEmpty()){
 
 //			targetSlot.add(payloadSlot.takeAll());
-
 			int toMove = targetSlot.getMaxItems() - targetSlot.getAmount();//if < 0 error with maxItems
-            if(toMove == 0) {//cant swap with low possible number slots
-                ifNullTarget();
-                return;
-            }
-            if(payloadSlot.getAmount() <= toMove) {
-				targetSlot.add(payloadSlot.takeAll());
-			} else {
-				targetSlot.add(payloadSlot.take(toMove));
-				sourceSlot.add(payloadSlot.takeAll());
+			if(toMove == 0) {//cant swap with low possible number slots
+				ifNullTarget();
+				return;
 			}
+            checkCount(targetSlot, toMove);
 		} else{//swap slot items
 			Array<? extends GameObject> tmp = targetSlot.takeAll();
 			targetSlot.add(payloadSlot.takeAll());
 			sourceSlot.add(tmp);
 		}
+	}
+	protected void checkCount(Slot targetSlot, int toMove){
+		if(payloadSlot.getAmount() <= toMove) {
+			move(targetSlot, payloadSlot.takeAll());
+//				targetSlot.add(payloadSlot.takeAll());
+		} else {
+			move(targetSlot, payloadSlot.take(toMove));
+//				targetSlot.add(payloadSlot.take(toMove));
+			sourceSlot.add(payloadSlot.takeAll());
+		}
+	}
+
+	protected void move(Slot targetSlot, Array<? extends GameObject> objects){
+		targetSlot.add(objects);
 	}
 
 

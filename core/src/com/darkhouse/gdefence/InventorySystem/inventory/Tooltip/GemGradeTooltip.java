@@ -22,7 +22,7 @@ public class GemGradeTooltip extends AbstractTooltip{
 //    private String s = "";
 
     public GemGradeTooltip(Stage stage, GemGradable g, User.GEM_TYPE gemType, Skin skin) {
-        super("Grade...", skin);
+        super("Grade", skin);
         this.gemType = gemType;
         this.skin = skin;
         this.g = g;
@@ -45,6 +45,7 @@ public class GemGradeTooltip extends AbstractTooltip{
 
     public void hasChanged(){
         upLabel.setText(g.getGemGradeTooltip(gemType));
+        pack();
     }
 
 

@@ -28,7 +28,6 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
             if(type == DamageType.Physic) {
                 if (dmg < blockMinLimit) return dmg;
                 float newDmg = dmg - blockEmount;
-                System.out.println(dmg + " " + newDmg);
                 return newDmg > blockMinLimit ? newDmg : blockMinLimit;
             }else return dmg;
         }
@@ -55,9 +54,9 @@ public class StrongSkin extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("strongSkinTooltip1") + " " + FontLoader.colorString(Integer.toString(blockEmount), 3) + " " +
+            return l.getWord("strongSkinTooltip1") + " " + FontLoader.colorString(Integer.toString(blockEmount), 10) + " " +
                     l.getWord("strongSkinTooltip2") + System.getProperty("line.separator") +
-                    l.getWord("strongSkinTooltip3") + " " + FontLoader.colorString(Integer.toString(blockMinLimit), 3) + " " +
+                    l.getWord("strongSkinTooltip3") + " " + FontLoader.colorString(Integer.toString(blockMinLimit), 10) + " " +
                     l.getWord("strongSkinTooltip4");
         }
     }

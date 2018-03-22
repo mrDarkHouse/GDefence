@@ -40,9 +40,6 @@ import com.darkhouse.gdefence.Objects.ExpEarner;
 import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
-/**
- * @author Daniel Holderbaum
- */
 public class SlotTooltip extends AbstractTooltip implements SlotListener {
 
 	private Skin skin;
@@ -58,6 +55,7 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
 		setVisible(false);
 
 		stage.addActor(this);
+//        hasChanged(slot);
 //		GDefence.getInstance().getSmith().getStage().addActor(this);
 	}
 
@@ -65,6 +63,7 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
 	public void hasChanged(AbstractSlot slot) {
 		if (slot.isEmpty()) {
 			setVisible(false);
+            pack();
 			return;
 		}
 
@@ -80,15 +79,13 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
         if (slot instanceof Slot) {
             Slot s = ((Slot) slot);
 
-
-
-
             if (s.getLast() instanceof ExpEarner) {
                 ExpEarner t = ((ExpEarner) s.getLast());
 
             /*FontLoader.generateStyle(16, Color.WHITE)*/
                 Label level = new Label(GDefence.getInstance().assetLoader.getWord("level") + " " + t.getLevel() + "", skin, "description");//allow FontLoader load skin fonts
                 add(level).align(Align.center).row();
+                pack();//need to know real width
                 final float width = getWidth();
 
 
@@ -96,24 +93,25 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
                         GDefence.getInstance().assetLoader.getExpBarSkin()) {
                     @Override
                     public float getPrefWidth() {
-                        return width - 10;
+                        return width + 10;
                     }
                 };//add text inside
                 expBar.getStyle().background.setMinHeight(20);
                 expBar.getStyle().knob.setMinHeight(20);
                 expBar.getStyle().background.setMinWidth(50);
                 expBar.getStyle().knob.setMinWidth(0.1f);
+                expBar.setWidth(getWidth());
 //                expBar.setSize(80, 20);//dont work first argument
                 expBar.setValue(t.getCurrentExp());
                 add(expBar);
             }
 
-        }else if(slot instanceof DropSlot){
+        }/*else if(slot instanceof DropSlot){ //not need other information
             DropSlot s = ((DropSlot) slot);
 
 
-        }
-		pack();
+        }*/
+        pack();
 	}
     @Override
     public void hasChanged() {
@@ -123,8 +121,6 @@ public class SlotTooltip extends AbstractTooltip implements SlotListener {
 	@Override
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-		// the listener sets this to true in case the slot is hovered
-		// however, we don't want that in case the slot is empty
 		if (slot.isEmpty()) {
 			super.setVisible(false);
 		}

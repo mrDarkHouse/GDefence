@@ -8,6 +8,7 @@ import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.User;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -54,7 +55,7 @@ public class ShotDelay extends Ability implements Ability.IPreAttack {
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            String s = l.getWord("shotDelayTooltip1") + " " + FontLoader.colorString(delay.get().toString(), 0) + " " +
+            String s = l.getWord("shotDelayTooltip1") + " " + FontLoader.colorString(delay.get().toString(), User.GEM_TYPE.BLACK) + " " +
                     l.getWord("shotDelayTooltip2") + System.getProperty("line.separator");
             if(onlyFirstAttack) s += l.getWord("shotDelayTooltip3");
             else                s += l.getWord("shotDelayTooltip4");

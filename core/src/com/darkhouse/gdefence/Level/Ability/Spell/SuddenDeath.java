@@ -14,6 +14,7 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Effectable;
 import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
+import com.darkhouse.gdefence.User;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -25,7 +26,7 @@ public class SuddenDeath extends Spell{
         private AtomicReference<Float> bountyMultiplayer;
         private AtomicReference<Float> bossDamage;
         private G g;
-
+        private S s;
 
         public P(int energyCost, final float cooldown, float bountyMultiplayer, final float cooldownDown, float bossDamage, final G grader) {
             super(151, "suddenDeath", energyCost, cooldown, grader.gemCap, Mob.class);
@@ -34,11 +35,25 @@ public class SuddenDeath extends Spell{
             this.bossDamage = new AtomicReference<Float>(bossDamage);
 
             this.g = grader;
+            this.s = new S(cooldownDown, bountyMultiplayer, bossDamage);
 
-            AssetLoader l = GDefence.getInstance().assetLoader;
-            gemBoost[0] = new BoostFloat(this.bountyMultiplayer, grader.bountyMultiplayerUp, l.getWord("suddenDeathGrade1"),
+            initBoosts(GDefence.getInstance().assetLoader);
+
+        }
+
+        @Override
+        public void flush() {
+            this.cooldownDown = new AtomicReference<Float>(s.cooldownDown);
+            this.bountyMultiplayer = new AtomicReference<Float>(s.bountyMultiplayer);
+            this.bossDamage = new AtomicReference<Float>(s.bossDamage);
+            initBoosts(GDefence.getInstance().assetLoader);
+        }
+
+        @Override
+        protected void initBoosts(AssetLoader l) {
+            gemBoost[0] = new BoostFloat(this.bountyMultiplayer, g.bountyMultiplayerUp, l.getWord("suddenDeathGrade1"),
                     true, BoostFloat.FloatGradeFieldType.MULTIPLAYER);
-            gemBoost[1] = new BoostFloat(this.cooldownDown, grader.cooldownDown, l.getWord("suddenDeathGrade2"),
+            gemBoost[1] = new BoostFloat(this.cooldownDown, g.cooldownDown, l.getWord("suddenDeathGrade2"),
                     true, BoostFloat.FloatGradeFieldType.TIME){
                 @Override
                 public String boostField() {
@@ -49,18 +64,17 @@ public class SuddenDeath extends Spell{
                 @Override
                 public String concate() {
 //                    return super.concate();
-                    return (getCooldown() - grader.cooldownDown) + "s";
+                    return (getCooldown() - g.cooldownDown) + "s";
                 }
 
                 @Override
                 public void grade() {
 //                    super.grade();
-                    P.super.setCooldown(P.super.cooldown - grader.cooldownDown);
+                    P.super.setCooldown(P.super.cooldown - g.cooldownDown);
                 }
             };
-            gemBoost[2] = new BoostFloat(this.bossDamage, grader.bossDamageUp, l.getWord("suddenDeathGrade3"),
+            gemBoost[2] = new BoostFloat(this.bossDamage, g.bossDamageUp, l.getWord("suddenDeathGrade3"),
                     true, BoostFloat.FloatGradeFieldType.PERCENT);
-
         }
 
         @Override
@@ -68,19 +82,19 @@ public class SuddenDeath extends Spell{
             return null;
         }
 
-        @Override
-        public String getSaveCode() {
-            return super.getSaveCode() + ";" + bountyMultiplayer.get() + ";" + cooldownDown.get() + ";" + bossDamage.get() + ";" +
-                    g.bountyMultiplayerUp + ";" + g.cooldownDown + ";" + g.bossDamageUp;
-        }
+//        @Override
+//        public String getSaveCode() {
+//            return super.getSaveCode() + ";" + bountyMultiplayer.get() + ";" + cooldownDown.get() + ";" + bossDamage.get() + ";" +
+//                    g.bountyMultiplayerUp + ";" + g.cooldownDown + ";" + g.bossDamageUp;
+//        }
 
         @Override
         protected String getChildTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
             return l.getWord("suddenDeathTooltip1") + System.getProperty("line.separator") +
-                   l.getWord("suddenDeathTooltip2") + " " + FontLoader.colorString(bountyMultiplayer.get() + "x", 10) + " " +
+                   l.getWord("suddenDeathTooltip2") + " " + FontLoader.colorString(bountyMultiplayer.get() + "x", User.GEM_TYPE.BLACK) + " " +
                    l.getWord("suddenDeathTooltip3") + System.getProperty("line.separator") +
-                   l.getWord("suddenDeathTooltip4") + " " + FontLoader.colorString((int)(bossDamage.get()*100) + "%", 12) + " " +
+                   l.getWord("suddenDeathTooltip4") + " " + FontLoader.colorString((int)(bossDamage.get()*100) + "%" , User.GEM_TYPE.WHITE) + " " +
                    l.getWord("suddenDeathTooltip5") + System.getProperty("line.separator") +
                    l.getWord("suddenDeathTooltip6");
         }
@@ -104,7 +118,7 @@ public class SuddenDeath extends Spell{
 
         @Override
         public int[] exp2nextLevel() {
-            return new int[]{5, 15, 30, 45, 60, 75, 90};
+            return new int[]{10, 20, 40, 50, 60, 75, 90};
         }
 
         @Override
@@ -125,6 +139,17 @@ public class SuddenDeath extends Spell{
             this.bossDamageUp = bossDamageUp;
         }
     }
+    private static class S extends Ability.AbilitySaverStat{
+        private float cooldownDown;
+        private float bountyMultiplayer;
+        private float bossDamage;
+
+        public S(float cooldownDown, float bountyMultiplayer, float bossDamage) {
+            this.cooldownDown = cooldownDown;
+            this.bountyMultiplayer = bountyMultiplayer;
+            this.bossDamage = bossDamage;
+        }
+    }
 
     private float bountyMultiplier;
     private float bossDamage;
@@ -143,7 +168,7 @@ public class SuddenDeath extends Spell{
 //            hitMob(m, )//dont use it because no need to get exp
             m.hit(m.getHealth()*bossDamage, DamageType.Pure, this);
         }else {
-            m.setDie(this);
+            m.setDie(this, false);
             LevelMap.getLevel().addEnergy((int) (m.getBounty()*bountyMultiplier));
             getPrototype().addExp(1f);
 

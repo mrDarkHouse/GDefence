@@ -136,6 +136,7 @@ public class CampainMap extends AbstractCampainScreen {
             if(!p.isVisible()) return;
             batch.end();
             sr.begin(ShapeRenderer.ShapeType.Filled);
+            sr.setProjectionMatrix(camera.combined);
 //            Gdx.gl.glLineWidth(6);
             for (int i = 0; i < /*pagedMap.getCurrentPage().levels.length */p.levels.length; i++){
                 LevelButton l = p.levels[i];
@@ -183,10 +184,10 @@ public class CampainMap extends AbstractCampainScreen {
             name = new Label(GDefence.getInstance().assetLoader.getWord(text), FontLoader.generateStyle(0, 70, Color.GRAY, 5, Color.BLACK));
 
             levels = new LevelButton[buttons];
-            int borderSize = Gdx.graphics.getWidth()/8;
-            int sizeBetween = Gdx.graphics.getWidth()/42;
+            int borderSize = GDefence.WIDTH/8;
+            int sizeBetween = GDefence.WIDTH/42;
             int levelButtonsSize[] = new int[2];
-            levelButtonsSize[0] = (Gdx.graphics.getWidth() - (borderSize * 2 + sizeBetween * (buttons - 1))) / buttons;
+            levelButtonsSize[0] = (GDefence.WIDTH - (borderSize * 2 + sizeBetween * (buttons - 1))) / buttons;
             levelButtonsSize[1] = levelButtonsSize[0];
 
 
@@ -199,11 +200,11 @@ public class CampainMap extends AbstractCampainScreen {
 //                }
                 levels[i].setSize(levelButtonsSize[0], levelButtonsSize[1]);
                 levels[i].setPosition(borderSize + (levelButtonsSize[0] + sizeBetween)*i,
-                        Gdx.graphics.getHeight()/2 - Gdx.graphics.getHeight()/8);
+                        GDefence.HEIGHT/2 - GDefence.HEIGHT/8);
 
                 addActor(levels[i]);
             }
-            name.setPosition(Gdx.graphics.getWidth()/2 - name.getWidth()/2, Gdx.graphics.getHeight()/2 + levels[0].getHeight() - 20);
+            name.setPosition(GDefence.WIDTH/2 - name.getWidth()/2, GDefence.HEIGHT/2 + levels[0].getHeight() - 20);
 //            updateLockedLevels();
 
         }
@@ -256,6 +257,7 @@ public class CampainMap extends AbstractCampainScreen {
     public void show() {
         super.show();
         update();
+        System.out.println(getStage().getWidth() + " " + getStage().getHeight());
         //init();
         //loadFrames();
     }
@@ -265,19 +267,19 @@ public class CampainMap extends AbstractCampainScreen {
         stage.addActor(pagedMap);
 
 
-        //Viewport viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //Viewport viewport = new ExtendViewport(GDefence.WIDTH, GDefence.HEIGHT);
         //stage = new Stage(viewport,batch);
         //Gdx.input.setInputProcessor(stage);
 
         int userPanelSize[] = {240, 120};
         int goldPanelSize[] = {60, userPanelSize[1]};
-        stage.addActor(new GoldPanel(Gdx.graphics.getWidth() - userPanelSize[0] - goldPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] -
+        stage.addActor(new GoldPanel(GDefence.WIDTH - userPanelSize[0] - goldPanelSize[0], GDefence.HEIGHT - userPanelSize[1] -
                 topPadSize, goldPanelSize[0], goldPanelSize[1]));
-        userPanel = new UserPanel(Gdx.graphics.getWidth() - userPanelSize[0], Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize,
+        userPanel = new UserPanel(GDefence.WIDTH - userPanelSize[0], GDefence.HEIGHT - userPanelSize[1] - topPadSize,
                 userPanelSize[0], userPanelSize[1]);
         stage.addActor(userPanel);
-        //System.out.println(Gdx.graphics.getHeight() - userPanelSize[1] - topPadSize);
-        stage.addActor(new GemPanel(0, Gdx.graphics.getHeight() - 140 - topPadSize, 200, 140));
+        //System.out.println(GDefence.HEIGHT - userPanelSize[1] - topPadSize);
+        stage.addActor(new GemPanel(0, GDefence.HEIGHT - 140 - topPadSize, 200, 140));
 
 
         BottomPanel p = new BottomPanel();
@@ -308,11 +310,11 @@ public class CampainMap extends AbstractCampainScreen {
 //        shape.begin(ShapeRenderer.ShapeType.Line);
 //        shape.setProjectionMatrix(batch.getProjectionMatrix());
 //        shape.setColor(0, 0, 0, 1);
-//        shape.line(0, Gdx.graphics.getHeight()/5 + lineWidth, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()/5 + lineWidth);
-//        shape.line(Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/5 + lineWidth, Gdx.graphics.getWidth()/5 , 0);
-//        shape.line(Gdx.graphics.getWidth()/5 * 2, Gdx.graphics.getHeight()/5 + lineWidth, Gdx.graphics.getWidth()/5 * 2 , 0);
-//        shape.line(Gdx.graphics.getWidth()/5 * 3, Gdx.graphics.getHeight()/5 + lineWidth, Gdx.graphics.getWidth()/5 * 3, 0);
-//        shape.line(Gdx.graphics.getWidth() / 5 * 4, Gdx.graphics.getHeight() / 5 + lineWidth, Gdx.graphics.getWidth() / 5 * 4, 0);
+//        shape.line(0, GDefence.HEIGHT/5 + lineWidth, GDefence.WIDTH, GDefence.HEIGHT/5 + lineWidth);
+//        shape.line(GDefence.WIDTH/5, GDefence.HEIGHT/5 + lineWidth, GDefence.WIDTH/5 , 0);
+//        shape.line(GDefence.WIDTH/5 * 2, GDefence.HEIGHT/5 + lineWidth, GDefence.WIDTH/5 * 2 , 0);
+//        shape.line(GDefence.WIDTH/5 * 3, GDefence.HEIGHT/5 + lineWidth, GDefence.WIDTH/5 * 3, 0);
+//        shape.line(GDefence.WIDTH / 5 * 4, GDefence.HEIGHT / 5 + lineWidth, GDefence.WIDTH / 5 * 4, 0);
 //
 ////        linkLevels();
 //

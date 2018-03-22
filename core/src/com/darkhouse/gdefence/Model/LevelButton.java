@@ -57,11 +57,6 @@ public class LevelButton extends TextButton {
 
     }
 
-
-
-
-
-
 //    public void lock(){
 //        isLocked = true;
         //getStyle().up = new TextureRegionDrawable(new TextureRegion(AssetLoader.levelLock));

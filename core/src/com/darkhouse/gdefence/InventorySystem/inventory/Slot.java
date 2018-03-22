@@ -23,6 +23,7 @@ package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.GemGradable;
 import com.darkhouse.gdefence.Objects.*;
 
 
@@ -215,6 +216,7 @@ public class Slot/*<T extends GameObject>*/ extends AbstractSlot{
 			return null;
 		}
 	}
+
 	public Array<GameObject> get(int amount){
 		Array<GameObject> tmpArr = new Array<GameObject>();
 		if(getAmount() >= amount){

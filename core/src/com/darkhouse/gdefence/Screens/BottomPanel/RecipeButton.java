@@ -1,6 +1,7 @@
 package com.darkhouse.gdefence.Screens.BottomPanel;
 
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -33,6 +34,7 @@ public class RecipeButton extends TowerMapObject{
 //        this.updateButtons = updateButtons;
 //    }
 
+
     public RecipeButton(final ItemEnum.Tower tower) {
         super(GDefence.getInstance().assetLoader.generateImageButtonSkin(tower.getTowerTexture()));
 //        System.out.println(tower.getTowerTexture().getMinFilter() + " " + tower.getTowerTexture().getMagFilter());
@@ -46,7 +48,7 @@ public class RecipeButton extends TowerMapObject{
         addListener(new InputListener() {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(type != User.RecipeType.locked && tower != ItemEnum.Tower.Basic){
-                    if(GDefence.getInstance().user.deleteGold(towerRecipe.getRecipeCost())){
+                    if(GDefence.getInstance().user.deleteGold(towerRecipe.getGlobalCost())){
                         GDefence.getInstance().user.buyTowerRecipe(tower);
                         owner.updateTypes();//if owner != null
                     }

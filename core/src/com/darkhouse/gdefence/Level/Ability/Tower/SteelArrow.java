@@ -11,42 +11,54 @@ import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.User;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SteelArrow extends Ability implements Ability.IAfterHit{
 
     public static class P extends AbilityPrototype {
-        private G grader;
         private AtomicReference<Integer> maxTargets;
         private AtomicReference<Integer> range;
+        private G g;
+        private S s;
 
         public P(int maxTargets, int range, G grader) {
             super(12, "steelArrow", grader.gemCap, IAfterHit.class);
             this.maxTargets = new AtomicReference<Integer>(maxTargets);
             this.range = new AtomicReference<Integer>(range);
-            this.grader = grader;
+            this.g = grader;
+            this.s = new S(maxTargets, range);
         }
 
         @Override
         public Array<Class<? extends AbilityPrototype>> getAbilitiesToSaveOnCraft() {
-            return new Array<Class<? extends AbilityPrototype>>();
+            Array<Class<? extends AbilityPrototype>> a = new Array<Class<? extends AbilityPrototype>>();
+            a.add(Bounce.P.class);
+            return a;
         }
-
-//        @Override
-//        public String getSaveCode() {
-//            return null;
-//        }
 
         @Override
         public AbilityPrototype copy() {
-            AssetLoader l = GDefence.getInstance().assetLoader;
-            P p = new P(maxTargets.get(), range.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.maxTargets, grader.maxTargetsUp, l.getWord("steelArrowGrade1"),
-                    true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostInteger(p.range, grader.rangeUp, l.getWord("steelArrowGrade2"),
-                    true, BoostInteger.IntegerGradeFieldType.NONE);
+            P p = new P(maxTargets.get(), range.get(), g);
+            p.initBoosts(GDefence.getInstance().assetLoader);
+            p.s = s;
             return p;
+        }
+
+        @Override
+        public void flush() {
+            maxTargets = new AtomicReference<Integer>(s.maxTargets);
+            range = new AtomicReference<Integer>(s.range);
+            initBoosts(GDefence.getInstance().assetLoader);
+        }
+
+        @Override
+        protected void initBoosts(AssetLoader l) {
+            gemBoost[0] = new BoostInteger(maxTargets, g.maxTargetsUp, l.getWord("steelArrowGrade1"),
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
+            gemBoost[1] = new BoostInteger(range, g.rangeUp, l.getWord("steelArrowGrade2"),
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
         }
 
         @Override
@@ -60,9 +72,9 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
             return l.getWord("steelArrowTooltip1") + " " + System.getProperty("line.separator") +
                     l.getWord("steelArrowTooltip2") + " " + /*can do changeable */100 + "%" + " " +
                     l.getWord("steelArrowTooltip3") + System.getProperty("line.separator") +
-                    l.getWord("steelArrowTooltip4") + " " + FontLoader.colorString(maxTargets.get().toString(), 0) + " " +
+                    l.getWord("steelArrowTooltip4") + " " + FontLoader.colorString(maxTargets.get().toString(), User.GEM_TYPE.BLACK) + " " +
                     l.getWord("steelArrowTooltip5") + System.getProperty("line.separator") +
-                    l.getWord("steelArrowTooltip6") + " " + FontLoader.colorString(range.get().toString(), 1);
+                    l.getWord("steelArrowTooltip6") + " " + FontLoader.colorString(range.get().toString(), User.GEM_TYPE.GREEN);
         }
     }
     public static class G extends AbilityGrader{
@@ -73,6 +85,15 @@ public class SteelArrow extends Ability implements Ability.IAfterHit{
             super(gemCap);
             this.maxTargetsUp = maxTargetsUp;
             this.rangeUp = rangeUp;
+        }
+    }
+    private static class S extends AbilitySaverStat{
+        private int maxTargets;
+        private int range;
+
+        public S(int maxTargets, int range) {
+            this.maxTargets = maxTargets;
+            this.range = range;
         }
     }
 

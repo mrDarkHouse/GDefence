@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		config.title = "GDefence";
 		config.width = 1280;
 		config.height = 720;
+//		config.resizable = false;
 //        config.fullscreen = true;
         config.addIcon("Logo/logo16.png", Files.FileType.Internal);
         config.addIcon("Logo/logo32.png", Files.FileType.Internal);

@@ -16,7 +16,7 @@ import com.darkhouse.gdefence.User;
 
 import java.util.Arrays;
 
-public abstract class SpellObject extends Ability.AbilityPrototype implements ExpEarner, GameObject, GemGradable{
+public abstract class SpellObject extends Ability.AbilityPrototype implements ExpEarner, GameObject{
 //    public static int[] exp2nextLvl = {30, 70, 130, 190, 260, 340, 430, 530};
     //                                 30  100 230  420  660  800  1230 1760
 
@@ -48,13 +48,17 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
 
     @Override
     public String getSaveCode() {
-        String s = totalExp + "-" + super.getSaveCode() + "z" + energyCost + ";" + cooldown;
-        if(this instanceof Spell.IAoe) s += ";" + ((Spell.IAoe) this).getAoe();
+        String s = totalExp + "-" + super.getSaveCode()/* + "z" + energyCost + ";" + cooldown*/;
+//        if(this instanceof Spell.IAoe) s += ";" + ((Spell.IAoe) this).getAoe();
         return s;
     }
 
+    @Override
+    public int getGlobalCost() {
+        return 0;//unsellable
+    }
 
-//    private int[] currentGems;
+    //    private int[] currentGems;
 //    private int[] maxGems;
 
 //    protected Ability.AbilityPrototype.Boost[] gemBoost = new Ability.AbilityPrototype.Boost[3];
@@ -157,7 +161,7 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
         String s = "";
         if(level <= getGemsNumber() && super.canGrade(gemType)) s += l.getWord("gemGradeSpellTooltip") +
                 System.getProperty("line.separator");
-        return s + super.getGemGradeTooltip(gemType);//TODO Max when not max
+        return s + super.getGemGradeTooltip(gemType);
     }
 
     @Deprecated

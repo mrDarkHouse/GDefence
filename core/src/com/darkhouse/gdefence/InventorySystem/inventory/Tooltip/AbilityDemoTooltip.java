@@ -14,6 +14,7 @@ import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 public class AbilityDemoTooltip extends AbstractTooltip{
     private Label label;
     private Ability.AbilityPrototype ab;
+    private String s;
 
     public AbilityDemoTooltip(Stage stage, Ability.AbilityPrototype ab, Skin skin) {
         super(ab.getName() + ab.getGemStat(), skin);
@@ -26,8 +27,10 @@ public class AbilityDemoTooltip extends AbstractTooltip{
     }
 
     private void init(){
-//        skin.getFont().
-        label = new Label(ab.getTooltip(), /*FontLoader.generateStyle(15, Color.LIGHT_GRAY*/
+        s = System.getProperty("line.separator");
+        if(ab.getAbilitiesToSaveOnCraft().size != 0) s += "(" + GDefence.getInstance().assetLoader.getWord("saveOnCraft1") + ")";
+        else                                         s += "(" + GDefence.getInstance().assetLoader.getWord("saveOnCraft2") + ")";
+        label = new Label(ab.getTooltip() + s, /*FontLoader.generateStyle(15, Color.LIGHT_GRAY*/
                 GDefence.getInstance().assetLoader.getSkin(), "description");
         label.getStyle().font.getData().markupEnabled = true;
         label.setAlignment(Align.center);
@@ -36,7 +39,7 @@ public class AbilityDemoTooltip extends AbstractTooltip{
     }
     public void hasChanged() {
         getTitleLabel().setText(ab.getName() + ab.getGemStat());
-        label.setText(ab.getTooltip());
+        label.setText(ab.getTooltip() + s);
     }
 
 }

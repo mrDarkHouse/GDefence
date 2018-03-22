@@ -67,10 +67,10 @@ public class LayerArmor extends MobAbility implements MobAbility.ISpawn{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("layerArmorTooltip1") + " " + FontLoader.colorString(Integer.toString(stacks), 3) + " " +
-                    l.getWord("layerArmorTooltip2") + " " + FontLoader.colorString(Integer.toString(armor), 3) + " " +
+            return l.getWord("layerArmorTooltip1") + " " + FontLoader.colorString(Integer.toString(stacks), 10) + " " +
+                    l.getWord("layerArmorTooltip2") + " " + FontLoader.colorString(Integer.toString(armor), 10) + " " +
                     l.getWord("layerArmorTooltip3") + System.getProperty("line.separator") +
-                    l.getWord("layerArmorTooltip4") + " " + FontLoader.colorString(Integer.toString(1), 4) + " " +
+                    l.getWord("layerArmorTooltip4") + " " + FontLoader.colorString(Integer.toString(1), 11) + " " +
                     l.getWord("layerArmorTooltip5");
         }
     }

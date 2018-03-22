@@ -11,23 +11,26 @@ import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Model.Level.Map;
+import com.darkhouse.gdefence.User;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 public class HunterSpeed extends Ability implements Ability.IOnBuild{
 
     public static class P extends AbilityPrototype {
-        private G grader;
         private AtomicReference<Integer> kills;
         private AtomicReference<Integer> speed;
         private AtomicReference<Float> duration;
+        private G g;
+        private S s;
 
         public P(int kills, int speed, float duration, G grader) {
             super(5, "hunterSpeed", grader.gemCap, IOnBuild.class);
             this.kills = new AtomicReference<Integer>(kills);
             this.speed = new AtomicReference<Integer>(speed);
             this.duration = new AtomicReference<Float>(duration);
-            this.grader = grader;
+            this.g = grader;
+            this.s = new S(kills, speed, duration);
         }
 
         @Override
@@ -35,22 +38,30 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
             return new Array<Class<? extends AbilityPrototype>>();
         }
 
-//        @Override
-//        public String getSaveCode() {
-//            return null;
-//        }
-
         @Override
         public AbilityPrototype copy() {
-            AssetLoader l = GDefence.getInstance().assetLoader;
-            P p = new P(kills.get(), speed.get(), duration.get(), grader);
-            p.gemBoost[0] = new BoostInteger(p.speed, grader.speedUp, l.getWord("hunterSpeedGrade1"),
-                    true, BoostInteger.IntegerGradeFieldType.NONE);
-            p.gemBoost[1] = new BoostFloat(p.duration, grader.durationUp, l.getWord("hunterSpeedGrade2"),
-                    true, BoostFloat.FloatGradeFieldType.TIME);
-            p.gemBoost[2] = new BoostInteger(p.kills, grader.killsDown, l.getWord("hunterSpeedGrade3"),
-                    false, BoostInteger.IntegerGradeFieldType.NONE);
+            P p = new P(kills.get(), speed.get(), duration.get(), g);
+            p.initBoosts(GDefence.getInstance().assetLoader);
+            p.s = s;
             return p;
+        }
+
+        @Override
+        public void flush() {
+            this.kills = new AtomicReference<Integer>(s.kills);
+            this.speed = new AtomicReference<Integer>(s.speed);
+            this.duration = new AtomicReference<Float>(s.duration);
+            initBoosts(GDefence.getInstance().assetLoader);
+        }
+
+        @Override
+        protected void initBoosts(AssetLoader l) {
+            gemBoost[0] = new BoostInteger(speed, g.speedUp, l.getWord("hunterSpeedGrade1"),
+                    true, BoostInteger.IntegerGradeFieldType.NONE);
+            gemBoost[1] = new BoostFloat(duration, g.durationUp, l.getWord("hunterSpeedGrade2"),
+                    true, BoostFloat.FloatGradeFieldType.TIME);
+            gemBoost[2] = new BoostInteger(kills, g.killsDown, l.getWord("hunterSpeedGrade3"),
+                    false, BoostInteger.IntegerGradeFieldType.NONE);
         }
 
         @Override
@@ -61,10 +72,10 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("hunterSpeedTooltip1") + " " + FontLoader.colorString(kills.get().toString(), 2) + " " +
+            return l.getWord("hunterSpeedTooltip1") + " " + FontLoader.colorString(kills.get().toString(), User.GEM_TYPE.WHITE) + " " +
                     l.getWord("hunterSpeedTooltip2") + System.getProperty("line.separator") +
-                    l.getWord("hunterSpeedTooltip3") + " " + FontLoader.colorString(speed.get().toString(), 0) + " " +
-                    l.getWord("hunterSpeedTooltip4") + " " + FontLoader.colorString(duration.get().toString(), 1) + " " +
+                    l.getWord("hunterSpeedTooltip3") + " " + FontLoader.colorString(speed.get().toString(), User.GEM_TYPE.BLACK) + " " +
+                    l.getWord("hunterSpeedTooltip4") + " " + FontLoader.colorString(duration.get().toString(), User.GEM_TYPE.GREEN) + " " +
                     l.getWord("hunterSpeedTooltip5");
         }
 
@@ -79,6 +90,17 @@ public class HunterSpeed extends Ability implements Ability.IOnBuild{
             this.speedUp = speedUp;
             this.durationUp = durationUp;
             this.killsDown = killsDown;
+        }
+    }
+    private static class S extends AbilitySaverStat{
+        private int kills;
+        private int speed;
+        private float duration;
+
+        public S(int kills, int speed, float duration) {
+            this.kills = kills;
+            this.speed = speed;
+            this.duration = duration;
         }
     }
 

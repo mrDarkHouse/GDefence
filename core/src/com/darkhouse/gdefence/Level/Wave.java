@@ -39,7 +39,10 @@ public class Wave {
 
     private Array<Mob> mobsToSpawn = new Array<Mob>();
 
-//    public ArrayList<Mob> getMobsToSpawn() {
+    public Array<Mob> getMobsToSpawn() {
+        return mobsToSpawn;
+    }
+    //    public ArrayList<Mob> getMobsToSpawn() {
 //        return mobsToSpawn;
 //    }
 
