@@ -22,6 +22,8 @@ import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.User;
 
+import java.util.Arrays;
+
 public class TowerCraftPanel extends Window{
     private DragAndDrop dragAndDrop;
 
@@ -37,6 +39,8 @@ public class TowerCraftPanel extends Window{
     private Array<ComponentListener> componentListeners;
     private SlotActor resultSlot;
 //    private ResultListener resultListener;
+
+    private int[] savedGems;
 
     private OverallInventory sourceTargetInventory;
 
@@ -155,6 +159,10 @@ public class TowerCraftPanel extends Window{
 
 //        pack();
     }
+    public void clearPanel(){
+        User.getDetailInventory().store(recipeSlot.getSlot().takeAll());
+        removeRecipe();
+    }
     public void removeRecipe(){
 //        for (SlotActor a:componentSlots){//#iterator cannot be used nested
 //            User.getTowerInventory().store(a.getSlot().getAll());//saving items
@@ -210,22 +218,32 @@ public class TowerCraftPanel extends Window{
                 currentComponents.add(((TowerObject) a.getSlot().getLast()));
             }
         }
-        int contains = 0;//
-        for (TowerObject t:needComponents){
+        boolean[] have = new boolean[needComponents.size];
+        boolean match = false;
+
+//        int contains = 0;//
+        for (int t = 0; t < needComponents.size; t++){
             for (TowerObject at:currentComponents){//
-                if(t.equalsOrHigher(at)){
-                    contains++;
+                if(needComponents.get(t).equalsOrHigher(at)){
+//                    contains++;
+                    have[t] = true;
                 }
             }
         }
-        if(contains == needComponents.size){
+
+        d:{for (boolean b:have){//check if all in have[] are true
+            if(!b) break d;
+        }match = true;}
+
+        if(match/* == needComponents.size*/){
             Array<Ability.AbilityPrototype> spellMatch = new Array<Ability.AbilityPrototype>();
             for (Ability.AbilityPrototype ap:r.getTower().getAbilities()) {
                 for (TowerObject at : currentComponents) {
                     for (Ability.AbilityPrototype so : at.getAbilities()) {
-                        for (Class<? extends Ability.AbilityPrototype> a:ap.getAbilitiesToSaveOnCraft()){
-                            if(a == so.getClass()){
+                        for (Class<? extends Ability.AbilityPrototype> a:so.getAbilitiesToSaveOnCraft()){
+                            if(a == ap.getClass()){
                                 spellMatch.add(so);
+
                             }
                         }
 //                        if (ap.getClass() == so.getClass()){
@@ -239,8 +257,10 @@ public class TowerCraftPanel extends Window{
             Array<Ability.AbilityPrototype> att = ((TowerObject) t.get(0)).getAbilities();
             for (Ability.AbilityPrototype at:att){
                 for (Ability.AbilityPrototype ap:spellMatch){
-                    if(at.getClass() == ap.getClass()) {
-                        at.gemCur(ap.getGemCur());
+//                    System.out.println(at.getAbilitiesToSaveOnCraft());
+//                    System.out.println(ap.getClass());
+                    if(ap.getAbilitiesToSaveOnCraft().contains(at.getClass(), true)) {//
+                        savedGems = at.gemCur(ap.getGemCur());
                     }
                 }
             }
@@ -275,9 +295,10 @@ public class TowerCraftPanel extends Window{
 //        recipeSlot.getSlot().take(1);
 //        recipeSlot.getSlot().addListener(recipeListener);
 
-
-
         GDefence.getInstance().user.craftTower(/*(ItemEnum.Tower)*/ (TowerObject) resultSlot.getSlot().getLast()/*.getPrototype()*/);//
+        for (int i = 0; i < savedGems.length; i++){
+            GDefence.getInstance().user.addGems(User.GEM_TYPE.values()[i + 3], savedGems[i]);
+        }
 //        TowerObject.generateStartObjects(r.getTower(), 1);
 //        User.getTowerInventory().store(resultSlot.getSlot().take(1));
 

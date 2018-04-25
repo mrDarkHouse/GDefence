@@ -20,8 +20,6 @@ public class UserPanel extends AbstractPanel {
     public UserPanel(int x, int y, int width, int height) {
         super(x, y, width, height);
 
-
-
         userlevelButton = new ImageTextButton("" + GDefence.getInstance().user.getLevel(), GDefence.getInstance().assetLoader.getUserLevelSkin());
         //userlevelButton.getLabel().setFontScale(1.5f);
         int userLevelSize[] = {width/4, width/4};

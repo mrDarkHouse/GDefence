@@ -81,6 +81,15 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
 
     }
 
+    private boolean pierceImmunity;
+
+    public boolean isPierceImmunity() {
+        return pierceImmunity;
+    }
+    public void setPierceImmunity(boolean pierceImmunity) {
+        this.pierceImmunity = pierceImmunity;
+    }
+
     public void addExp(float value){
         totalExp += value;
         updateExp();
@@ -163,6 +172,8 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
                 System.getProperty("line.separator");
         return s + super.getGemGradeTooltip(gemType);
     }
+
+
 
     @Deprecated
     public Ability getAbility() {

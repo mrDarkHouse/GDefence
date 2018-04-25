@@ -1,6 +1,8 @@
 package com.darkhouse.gdefence.desktop;
 
 import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.darkhouse.gdefence.GDefence;
@@ -15,6 +17,10 @@ public class DesktopLauncher {
 		config.height = 720;
 //		config.resizable = false;
 //        config.fullscreen = true;
+
+//		Preferences pref = Gdx.app.getPreferences("config");
+//		if (pref.getBoolean("fullscreen", false)) Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+
         config.addIcon("Logo/logo16.png", Files.FileType.Internal);
         config.addIcon("Logo/logo32.png", Files.FileType.Internal);
 		new LwjglApplication(new GDefence(), config);

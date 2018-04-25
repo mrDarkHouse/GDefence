@@ -34,7 +34,7 @@ public class GemGradeTooltip extends AbstractTooltip{
     }
 
     private void init(){
-        getTitleLabel().setText(GDefence.getInstance().assetLoader.getWord("upgrade") + " " + gemType.getName());
+        getTitleLabel().setText(GDefence.getInstance().assetLoader.getWord("upgrade") + " " + gemType.getName() + " " + g.getGradeNumberInfo(gemType));
         getTitleLabel().setAlignment(Align.center);
         upLabel = new Label(g.getGemGradeTooltip(gemType), skin, "description");
         upLabel.setAlignment(Align.center);
@@ -44,6 +44,7 @@ public class GemGradeTooltip extends AbstractTooltip{
     }
 
     public void hasChanged(){
+        getTitleLabel().setText(GDefence.getInstance().assetLoader.getWord("upgrade") + " " + gemType.getName() + " " + g.getGradeNumberInfo(gemType));
         upLabel.setText(g.getGemGradeTooltip(gemType));
         pack();
     }

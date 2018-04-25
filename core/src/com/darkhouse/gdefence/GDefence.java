@@ -1,11 +1,10 @@
 package com.darkhouse.gdefence;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.backends.lwjgl.LwjglCursor;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -101,6 +100,14 @@ public class GDefence extends Game {
 		mainClass = this;
 		//assets = new AssetManager();
 		Texture.setAssetManager(assetLoader);
+
+
+		Pixmap pm = new Pixmap(Gdx.files.internal("Cursors/stock.png"));
+		int xHotSpot = /*pm.getWidth() / 2 */9;  //for stick cursor
+		int yHotSpot = /*pm.getHeight() / 2 */3;
+		Gdx.graphics.setCursor(new LwjglCursor(pm, xHotSpot, yHotSpot));
+		pm.dispose();
+
 
 
 //        assetLoader.loadOld();

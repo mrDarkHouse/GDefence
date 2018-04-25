@@ -257,7 +257,7 @@ public class CampainMap extends AbstractCampainScreen {
     public void show() {
         super.show();
         update();
-        System.out.println(getStage().getWidth() + " " + getStage().getHeight());
+//        System.out.println(getStage().getWidth() + " " + getStage().getHeight());
         //init();
         //loadFrames();
     }

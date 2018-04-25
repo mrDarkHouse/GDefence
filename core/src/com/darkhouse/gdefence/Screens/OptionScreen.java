@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.loaders.I18NBundleLoader;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -138,14 +139,16 @@ public class OptionScreen extends AbstractMenuScreen {
 
 //                    Display.setDisplayMode(new DisplayMode(resolution.getSelected().a, resolution.getSelected().b));//
                 Gdx.graphics.setWindowedMode(resolution.getSelected().a, resolution.getSelected().b);
+                Preferences pref = Gdx.app.getPreferences("config");
+                pref.putBoolean("fullscreen", fullscreen.isChecked());
+                pref.flush();
+
                 if(fullscreen.isChecked()) {
                     if(!Gdx.graphics.isFullscreen())
 //                            Display.setFullscreen(true);
                     Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 
                 }
-//                Graphics.DisplayMode desktopMode = LwjglApplicationConfiguration.getDesktopDisplayMode();
-//                System.out.println(desktopMode);
 
 
 //                    getStage().getViewport().update(resolution.getSelected().a, resolution.getSelected().b);

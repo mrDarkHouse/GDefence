@@ -113,7 +113,7 @@ public class Splash extends Ability implements Ability.IAfterHit{
 //        for (Mob m: Wave.mobs){
 //
 //        }
-        for (Mob m:map.getMobsInRange(target, aoe)){
+        for (Mob m:map.getMobsInRange(target, aoe, false)){
             if(m != target) {//no splash damage to main target
 //                owner.hitTarget(m, (int) (dmg * aoeDmg));
                 float damaged = m.hit(dmg*aoeDmg, DamageType.PhysicNoContact, owner);

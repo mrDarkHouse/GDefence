@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -61,6 +63,9 @@ public class LevelMap extends AbstractScreen {
     private TimeRushPanel timeRushPanel;
     private KillMadnessPanel killMadnessPanel;
     private BossStatusPanel bossStatusPanel;
+
+//    private AlphaAction fadeOut;
+//    private AlphaAction fadeIn;
 
     public BossStatusPanel getBossStatusPanel() {
         return bossStatusPanel;
@@ -212,6 +217,8 @@ public class LevelMap extends AbstractScreen {
         initSpellPanel(spells);
         initPauseDialog();
         initExtraEventPanels();
+        initActions();
+
 
 
 
@@ -309,7 +316,7 @@ public class LevelMap extends AbstractScreen {
             isPaused = true;
         }
 
-        System.out.println(getStage().getWidth() + " " + getStage().getHeight());
+//        System.out.println(getStage().getWidth() + " " + getStage().getHeight());
 
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
@@ -443,6 +450,14 @@ public class LevelMap extends AbstractScreen {
         shop.init();
 
     }
+    private void initActions(){
+//        fadeIn = new AlphaAction();
+//        fadeIn.setDuration(2f);
+//        fadeIn.setAlpha(1f);
+//        fadeOut = new AlphaAction();
+//        fadeOut.setDuration(2f);
+//        fadeOut.setAlpha(0.2f);
+    }
     private void initSpellPanel(Inventory spells){
         Array<SpellObject> a = new Array<SpellObject>();
 //        SpellObject[] ar = new SpellObject[4];
@@ -509,12 +524,33 @@ public class LevelMap extends AbstractScreen {
             case TIME:timeRushPanel.setVisible(false);
         }
         nWPanel.setVisible(true);
+//        fadeOut.reset();
+        AlphaAction a = new AlphaAction();
+        a.setDuration(2f);
+        a.setAlpha(0.2f);
+//        a.setActor(spellPanel);
+//        spellPanel.clearActions();
+//        spellPanel.clearActions();
+//        spellPanel.addAction(a);
+//        System.out.println(fadeOut.getActor());
+//        spellPanel.setVisible(false);
         if(pathSigner != null) pathSigner.update(getLevel().currentWave);//== null in KillMadness mod
         /*pathSigner.initTextures();*///slow
     }
     public void updateStart(){//when new wave starts
 //        nWPanel.hasChanged();
         nWPanel.setVisible(false);
+//        fadeIn.reset();
+        AlphaAction a = new AlphaAction();
+        a.setDuration(2f);
+        a.setAlpha(1f);
+//        a.setActor(spellPanel);
+//        spellPanel.clearActions();
+//        System.out.println(fadeIn.getActor());
+//        spellPanel.clearActions();
+//        spellPanel.addAction(a);
+//        System.out.println(fadeIn.getActor());
+//        spellPanel.setVisible(true);
         switch (level.getType()){
             case CLASSIC:cWpanel.setVisible(true); break;
             case INVASION:invasionPanel.setVisible(true); break;

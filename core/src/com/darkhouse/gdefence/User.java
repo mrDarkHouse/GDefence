@@ -255,7 +255,7 @@ public class User {
     }
 
     public void craftTower(/*ItemEnum.Tower t*/TowerObject t){
-        getTowerInventory().store(/*TowerObject.generateStartObjects(t.getPrototype(), 1)*/TowerObject.generateClearTower(t.getPrototype()).addAbilitiesGems(t));
+        getTowerInventory().store(TowerObject.generateClearTower(t.getPrototype()).addAbilitiesGems(t)/*t*/);
         craftedTowers[t.getPrototype().ordinal()]++;
         if(craftedTowers[t.getPrototype().ordinal()] >= 3){//3 = NUMBER TO AVAILABLE TOWER
 //            if(getOpenType(t) != RecipeType.available){
@@ -671,13 +671,13 @@ public class User {
 
 
 
-
 //        openRecipes();//need to init
 //        System.out.println(towerMap);
 //        System.out.println(towerMap);
 
 
 //        towerInventory.storeNew(ItemEnum.Tower.Basic, 1);
+
 
 
 //        towerInventory.store(new TowerObject(ItemEnum.Tower.Basic, 0, 0, 0));
@@ -993,6 +993,22 @@ public class User {
 
 
             update();
+
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.Arrow, 1, 1, 1));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.Range, 0, 2, 1));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.CrossBow, 1, 2, 2));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.SteamMachine, 1, 1, 2));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.Spear, 2, 1, 2));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.Ballista, 1, 3, 2));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.Glaive, 2, 4, 1));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.Gun, 2, 2, 2));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.Arrow, 1, 2, 1));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.Rifle, 1, 0, 3));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.MultiShot, 6, 1, 1));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.Shotgun, 4, 1, 2));
+//            addGold(5260);
+//            update();
+
             GDefence.getInstance().log("User loaded");
 
             return true;//TODO

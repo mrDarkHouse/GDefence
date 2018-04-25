@@ -11,6 +11,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
+import com.darkhouse.gdefence.Level.Tower.AttackType;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
@@ -50,7 +51,7 @@ public class TowerTooltip extends AbstractTooltip{
                 GDefence.getInstance().assetLoader.getExpBarSkin()) {
             @Override
             public float getPrefWidth() {
-                return width - 10;
+                return width + 10;
             }
         };//add text inside
         expBar.getStyle().background.setMinHeight(20);
@@ -86,7 +87,9 @@ public class TowerTooltip extends AbstractTooltip{
                 FontLoader.colorString("+" + tower.getBonusSpeed() + "", 1): FontLoader.colorString(tower.getBonusSpeed() + "", 12);
 
         s += l.getWord("dmg") + ": " + tower.getDmg() + " " + bonusDmg + System.getProperty("line.separator");
-        s += l.getWord("speed") + ": " + tower.getSpeed() + " " + bonusAs + "(" + Tower.getAttackSpeedDelay(tower.getSpeed() + tower.getBonusSpeed()) + ")" + System.getProperty("line.separator");
+        s += l.getWord("speed") + ": " + tower.getSpeed() + " " + bonusAs;
+        if(tower.getTowerPrototype().getPrototype().getAttackType() != AttackType.none) s += "(" + Tower.getAttackSpeedDelay(tower.getSpeed() + tower.getBonusSpeed()) + ")";
+        s += System.getProperty("line.separator");
         s += l.getWord("range") + ": " + tower.getTowerPrototype().getRange() + System.getProperty("line.separator");
         for (int i = 0; i < tower.getTowerPrototype().getAbilities().size; i++){
             s += System.getProperty("line.separator");

@@ -5,6 +5,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
+import com.darkhouse.gdefence.Level.Mob.Way;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Level.Path.WalkableMapTile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
@@ -100,6 +101,9 @@ public abstract class MobAbility{
     }
     public interface IMove extends IType{
         void move(WalkableMapTile currentTile);
+    }
+    public interface IRotate extends IType{
+        void rotate(Way way);
     }
     public interface ISpawn extends IType{
         void spawned();

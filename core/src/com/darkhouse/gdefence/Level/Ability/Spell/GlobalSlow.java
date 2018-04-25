@@ -198,7 +198,7 @@ public class GlobalSlow extends Spell{
         @Override
         public void act(float delta) {
             super.act(delta);
-            getPrototype().addExp(slowPercent/10);
+            addExp(slowPercent/10);
 //            System.out.println(getPrototype().getTotalExp());
         }
     }

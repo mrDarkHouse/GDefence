@@ -31,7 +31,6 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
     private String name;
     protected final int topPadSize = 64;
     private Texture background;
-    private Drawable bg;
 
     public void setBackground(Texture background) {
         this.background = background;
@@ -50,11 +49,7 @@ public abstract class AbstractCampainScreen extends AbstractScreen {
     }
 
     protected SpriteBatch batch;
-
-
     protected ShapeRenderer shape;
-
-//    private Viewport viewport;
 
     private Table table;
 

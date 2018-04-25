@@ -34,7 +34,7 @@ public class Mob extends Effectable{
         Dog         ("wolf",           MoveType.ground, 30,   0, 60,  1, 1/*, new HealingAura.P(250, 1, 5)*//*, new ScorpionVenom.P(10, 5)*/),
         Eagle       ("eagle",          MoveType.ground, 45,   1, 45,  1, 1),
         Hedgehog    ("hedgehog",       MoveType.ground, 100,  0, 30,  2, 2, new Curdle.P(2, 0.5f, "Mobs/hedgehogBlock")),
-        Lynx        ("lynx",           MoveType.ground, 80,   3, 40,  2, 2, new Sprint.P(4, 2, 50)),
+        Lynx        ("lynx",           MoveType.ground, 80,   3, 40,  2, 2, new Sprint.P(4, 2, 50, "sprint1", "Mobs/lynx")),
         Boar        ("boar",           MoveType.ground, 1000, 5, 30,100, 7, new LayerArmor.P(10, 1), new StrongSkin.P(5, 2), new BossResist.P()),
 
         Ant         ("ant",            MoveType.ground, 70,   1, 80,  1,  1),
@@ -59,7 +59,7 @@ public class Mob extends Effectable{
 //        Tank       ("tank",       MoveType.ground, 800,  8, 50,  4,  5),
 
         UFO         ("ufo",           MoveType.ground, 500,  3, 80,  2,  2, new SpellImmune.P()),
-        SpaceShip   ("spaceShip",     MoveType.ground, 650,  7, 50,  3,  3, new Sprint.P(7, 3, 40)),
+        SpaceShip   ("spaceShip",     MoveType.ground, 650,  7, 50,  3,  3, new Sprint.P(7, 3, 40, "sprint2", "Mobs/spaceShipBurst")),
         EnergySphere("energySphere",  MoveType.ground, 1000, 0, 60,  2,  4, new Sadist.P(5, 400)),
         SpaceLord   ("galaxyLordFirst",MoveType.ground,50000,10, 50,  0,  0, new BossResist.P(),
                 new StagedAbilities.P(4, 20, new String[]{"galaxyLordFirst", "galaxyLordSecond", "galaxyLordThird", "galaxyLordLast"}, new float[]{0.6f, 0.3f, 0.1f},
@@ -220,6 +220,11 @@ public class Mob extends Effectable{
     //protected int xC, yC;
     protected WalkableMapTile currentTile;
     protected Texture[] textures;
+//    protected boolean ignoreChangeTexture;
+//
+//    public void setIgnoreChangeTexture(boolean ignoreChangeTexture) {
+//        this.ignoreChangeTexture = ignoreChangeTexture;
+//    }
 
     private String texturePath;
 
@@ -247,6 +252,7 @@ public class Mob extends Effectable{
     public void setWay(Way way) {
         this.way = way;
         setRegion(textures[way.ordinal()]);
+        useRotateAbilities(way);
     }
 
     public enum State{
@@ -527,6 +533,19 @@ public class Mob extends Effectable{
             }
         }
     }
+    private void useRotateAbilities(Way way){
+        if(abilities.containsKey(MobAbility.IRotate.class)) {
+            for (MobAbility a : abilities.get(MobAbility.IRotate.class)) {
+                ((MobAbility.IRotate) a).rotate(way);
+            }
+        }
+        if(effects.containsKey(MobAbility.IRotate.class)) {
+            Array.ArrayIterator<Effect> art = new Array.ArrayIterator<Effect>(effects.get(MobAbility.IRotate.class));
+            while (art.hasNext()){
+                ((MobAbility.IRotate) art.next()).rotate(way);
+            }
+        }
+    }
     private void useAfterHitAbilities(){
         if(abilities.containsKey(MobAbility.IAfterGetDmg.class)) {
             for (MobAbility a : abilities.get(MobAbility.IAfterGetDmg.class)) {
@@ -737,12 +756,12 @@ public class Mob extends Effectable{
 
     private void step(float delta){
 //        currentTile = Level.getMap().getTileContainMob(this);
-        MapTile t = Level.getMap().getTileContainMob(this);
-        if(t!= null && t != currentTile && t instanceof WalkableMapTile) {
+        WalkableMapTile tt = Level.getMap().getTileContainMob(this);
+        if(tt!= null && tt != currentTile /*&& t instanceof WalkableMapTile*/) {
 //            System.out.println(t);
             //MapTile nextTile = Level.getMap().getNextTile(currentTile, way);
             //if(nextTile!= null && nextTile.getType() != moveType){
-            WalkableMapTile tt = ((WalkableMapTile) t);
+//            WalkableMapTile tt = ((WalkableMapTile) t);
             checkTurn(tt);
             //}
 //            currentTile = tt;
@@ -752,12 +771,12 @@ public class Mob extends Effectable{
 //        update();//
 
         checkCastle(currentTile);//may be first
+//        System.out.println(delta);
 
         if(getState() == State.normal) {
-
             switch (way) {
                 case RIGHT:
-                    setX(getX() + delta);//bug when delta > time when check turn//fixed maybe
+                    setX(getX() + delta);//bug when delta > time when check turn//fixed maybe//not fixed
                     break;
                 case LEFT:
                     setX(getX() - delta);
@@ -788,7 +807,6 @@ public class Mob extends Effectable{
 
         Way w = currentTile.manipulatePath(this.getMoveType(), way);
 
-
         if(w!= null && way!= w){
             setWay(w);
             //System.out.println(way);
@@ -799,7 +817,7 @@ public class Mob extends Effectable{
     }
     private void checkCastle(MapTile currentTile){
         if(currentTile != null){
-            if(currentTile instanceof Castle/* == MapTile.TileLogic.castle*/){
+            if(currentTile.getLogic() == /* instanceof Castle*//* == MapTile.TileLogic.castle*/MapTile.Logic.Castle){
                 if(isInGame()) {
                     damage();
                 }

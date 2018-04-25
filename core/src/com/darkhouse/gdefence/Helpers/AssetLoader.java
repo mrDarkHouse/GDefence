@@ -2,6 +2,7 @@ package com.darkhouse.gdefence.Helpers;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.I18NBundleLoader;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
@@ -96,11 +97,11 @@ public class AssetLoader extends AssetManager{
 //        b = get("Language/text", I18NBundle.class);
 
 //        get("skins/uiskin.json", Skin.class).add("default-font", FontLoader.generateFont(20, Color.BLACK), BitmapFont.class);
-        get("skins/uiskin.json", Skin.class).getFont("default-font").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        get("skins/uiskin.json", Skin.class).getFont("secondaryFont").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        get("skins/uiskin.json", Skin.class).getFont("default-font48").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        get("skins/uiskin.json", Skin.class).getFont("spellFont").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        get("skins/uiskin.json", Skin.class).getFont("iskoola").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        get("skins/uiskin.json", Skin.class).getFont("default-font").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        get("skins/uiskin.json", Skin.class).getFont("secondaryFont").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        get("skins/uiskin.json", Skin.class).getFont("default-font48").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        get("skins/uiskin.json", Skin.class).getFont("spellFont").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        get("skins/uiskin.json", Skin.class).getFont("iskoola").getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
 //        fontMap.put("default-font", FontLoader.generateFont(0, 26, Color.BLACK));
 //        fontMap.put("default-font48", FontLoader.generateFont(0, 48, Color.BLACK));
@@ -542,6 +543,7 @@ public class AssetLoader extends AssetManager{
         load("AbilityIcons/Effects/waterShield.png", Texture.class);
         load("AbilityIcons/Effects/layerArmor.png", Texture.class);
         load("AbilityIcons/Effects/spellImmune.png", Texture.class);
+        load("AbilityIcons/Effects/recovery.png", Texture.class);
 
 
 //        load("Mobs/mob.png", Texture.class);
@@ -621,6 +623,10 @@ public class AssetLoader extends AssetManager{
         load("Mobs/spaceShip1.png", Texture.class);
         load("Mobs/spaceShip2.png", Texture.class);
         load("Mobs/spaceShip3.png", Texture.class);
+        load("Mobs/spaceShipBurst0.png", Texture.class);
+        load("Mobs/spaceShipBurst1.png", Texture.class);
+        load("Mobs/spaceShipBurst2.png", Texture.class);
+        load("Mobs/spaceShipBurst3.png", Texture.class);
         load("Mobs/energySphere0.png", Texture.class);
         load("Mobs/energySphere1.png", Texture.class);
         load("Mobs/energySphere2.png", Texture.class);
@@ -961,6 +967,10 @@ public class AssetLoader extends AssetManager{
         GDefence.getInstance().initScreens();
         GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
 
+        Preferences pref = Gdx.app.getPreferences("config");
+        pref.putString("locale", locale);
+        pref.flush();
+
         System.out.println(get("Language/text", I18NBundle.class).getLocale());
 //        System.out.println(getLanguage());
     }
@@ -1132,9 +1142,8 @@ public class AssetLoader extends AssetManager{
         TextButton.TextButtonStyle s = new TextButton.TextButtonStyle();
 
         s.up = new TextureRegionDrawable(new TextureRegion(get("cell.png", Texture.class)));
-        s.font = FontLoader.generateFont(0, 52, Color.WHITE);
-        s.fontColor = Color.BLACK;
-
+        s.font = FontLoader.generateFont(0, 52, Color.BLACK);
+//        s.fontColor = Color.BLACK;
         return s;
     }
 
@@ -1153,10 +1162,10 @@ public class AssetLoader extends AssetManager{
         userLevelButtonStyle.up = new TextureRegionDrawable(new TextureRegion(get("cell.png", Texture.class)));
         userLevelButtonStyle.over = new TextureRegionDrawable(new TextureRegion(get("cell.png", Texture.class)));
         userLevelButtonStyle.down = new TextureRegionDrawable(new TextureRegion(get("cell.png", Texture.class)));
-        userLevelButtonStyle.font = FontLoader.impact28;
+        userLevelButtonStyle.font = FontLoader.generateFont(0, 28, Color.BLACK);
         //userLevelButtonStyle
 
-        userLevelButtonStyle.fontColor = new Color(0, 0, 0, 255);
+//        userLevelButtonStyle.fontColor = new Color(0, 0, 0, 255);
 
 
         return userLevelButtonStyle;

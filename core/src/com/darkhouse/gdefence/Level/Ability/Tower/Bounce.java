@@ -11,6 +11,8 @@ import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.User;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -68,11 +70,11 @@ public class Bounce extends Ability implements Ability.IAfterHit{
         @Override
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
-            return l.getWord("bounceTooltip1") + " " + FontLoader.colorString(bounces.get().toString(), User.GEM_TYPE.BLACK) + " "+ l.getWord("bounceTooltip2")
+            return l.getWord("bounceTooltip1") + " " + FontLoader.colorString(bounces.get().toString(), User.GEM_TYPE.WHITE) + " "+ l.getWord("bounceTooltip2")
                     + System.getProperty("line.separator") +
-                   l.getWord("bounceTooltip3") + " " + FontLoader.colorString(resDmgFromEachBounce.get()*100 + "%", User.GEM_TYPE.GREEN) + " " + l.getWord("bounceTooltip4")
+                   l.getWord("bounceTooltip3") + " " + FontLoader.colorString(new BigDecimal(resDmgFromEachBounce.get()*100).setScale(2, RoundingMode.HALF_UP).floatValue() + "%", User.GEM_TYPE.GREEN) + " " + l.getWord("bounceTooltip4")
                     + System.getProperty("line.separator") +
-                   l.getWord("bounceTooltip5") + " " + FontLoader.colorString(maxRange.get().toString(), User.GEM_TYPE.WHITE) + " " + l.getWord("bounceTooltip6");
+                   l.getWord("bounceTooltip5") + " " + FontLoader.colorString(maxRange.get().toString(), User.GEM_TYPE.BLACK) + " " + l.getWord("bounceTooltip6");
         }
 
 

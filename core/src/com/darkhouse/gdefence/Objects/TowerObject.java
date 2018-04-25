@@ -233,17 +233,20 @@ public class TowerObject implements ExpEarner, GameObject{
     }
     public TowerObject addAbilitiesGems(TowerObject other){
         if(other.getPrototype() == this.getPrototype()){
-            for (Ability.AbilityPrototype ap:getAbilities()){
-                for (Ability.AbilityPrototype at:other.getAbilities()){
+            for (int i = 0; i < getAbilities().size; i++){
+//                for (Ability.AbilityPrototype at:other.getAbilities()){
 //                    ap.gemCur(at.getGemCur());
-                    for (int i = 0; i < at.getGemCur().length; i++){
-                        for (int a = 0; a < at.getGemCur()[i]; a++) {
-                            ap.addGem(User.GEM_TYPE.values()[i + 3]);
+                Ability.AbilityPrototype ap = abilities.get(i);
+                Ability.AbilityPrototype at = other.abilities.get(i);
+                    for (int r = 0; r < at.getGemCur().length; r++){
+                        for (int a = 0; a < at.getGemCur()[r]; a++) {
+                            ap.addGem(User.GEM_TYPE.values()[r + 3]);
                         }
                     }
-                    return this;
-                }
+//
+//                }
             }
+            return this;
         }
         return other;
     }
@@ -430,5 +433,9 @@ public class TowerObject implements ExpEarner, GameObject{
 //            return getBoostName(gemType) + " MAX" + System.getProperty("line.separator") +
 //                    "(" + getBoostValue(gemType) + ")";
 //        }
+    }
+    @Override
+    public String getGradeNumberInfo(User.GEM_TYPE gemType) {
+        return "";
     }
 }

@@ -170,7 +170,7 @@ public class SuddenDeath extends Spell{
         }else {
             m.setDie(this, false);
             LevelMap.getLevel().addEnergy((int) (m.getBounty()*bountyMultiplier));
-            getPrototype().addExp(1f);
+            addExp(1f);
 
         }
 

@@ -87,6 +87,10 @@ public class Recipe extends DetailObject{
         return s;
 
     }
+    @Override
+    public String getGradeNumberInfo(User.GEM_TYPE gemType) {
+        return "";
+    }
 
     @Override
     public String getName() {

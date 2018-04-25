@@ -16,7 +16,7 @@ public class Sadist extends MobAbility implements MobAbility.ISpawn{
         private int healEmount;
 
         public SadistBuff(int attacksNeed, int healEmount) {
-            super(true, true, -1, "waterBonusArmor", IGetDmg.class);
+            super(true, true, -1, "recovery", IGetDmg.class);
             this.healEmount = healEmount;
             setStackable(new Stackable(attacksNeed));
             setStrong();
@@ -44,7 +44,7 @@ public class Sadist extends MobAbility implements MobAbility.ISpawn{
         private int healEmount;
 
         public P(int attackNeed, int healEmount) {
-            super("sadist", false);
+            super("sadist", false, ISpawn.class);
             this.attacksNeed = attackNeed;
             this.healEmount = healEmount;
         }

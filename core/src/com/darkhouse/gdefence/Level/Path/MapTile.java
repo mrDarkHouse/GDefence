@@ -25,7 +25,7 @@ public abstract class MapTile extends GDSprite{
     public enum Logic{
         Spawner, Castle, Turn, Road, Portal
     }
-    public Logic getLogic(){return Logic.Road;};
+    public Logic getLogic(){return Logic.Road;}
 
     public MapTile getInstance(){return this;};
 

@@ -125,35 +125,35 @@ public class Map {
         return currentMob;
     }
 
-    public static Array<Mob> getMobsInRange(Mob searchMob, int range){
+    public static Array<Mob> getMobsInRange(Mob searchMob, int range, boolean ignoreImmunity){
         Array<Mob> found = new Array<Mob>();
         for (int i = 0; i < Wave.mobs.size; i++){
             Mob m = Wave.mobs.get(i);
             float dst = m.getCenter().dst(searchMob.getCenter());
-            if(dst <= range&& targetMob(m)){
+            if(dst <= range && (ignoreImmunity || targetMob(m))){
                 found.add(m);
             }
         }
         return found;
     }
-    public static Array<Mob> getMobsInRange(Vector2 searchPoint, int range){
+    public static Array<Mob> getMobsInRange(Vector2 searchPoint, int range, boolean ignoreImmunity){
         Array<Mob> found = new Array<Mob>();
         for (int i = 0; i < Wave.mobs.size; i++){
             Mob m = Wave.mobs.get(i);
             float dst = m.getCenter().dst(searchPoint);
-            if(dst <= range && targetMob(m)){
+            if(dst <= range && (ignoreImmunity || targetMob(m))){
                 found.add(m);
             }
         }
         return found;
     }
 
-    public static Array<Mob> getMobsMaskInRange(Vector2 searchPoint, int range){
+    public static Array<Mob> getMobsMaskInRange(Vector2 searchPoint, int range, boolean ignoreImmunity){
         Array<Mob> found = new Array<Mob>();
         for (int i = 0; i < Wave.mobs.size; i++){
             Mob m = Wave.mobs.get(i);
             float dst = m.getCenter().dst(searchPoint) - m.getWidth()/2;
-            if(dst <= range && targetMob(m)){
+            if(dst <= range && (ignoreImmunity || targetMob(m))){
                 found.add(m);
             }
         }
@@ -188,14 +188,28 @@ public class Map {
         }
         return found;
     }
-    public Array<Effectable> getUnitsInRange(Vector2 searchPoint, int range, Array<Class<? extends Effectable>> affected, boolean centerSearch){
+    public Array<Effectable> getUnitsInRange(Vector2 searchPoint, int range, Array<Class<? extends Effectable>> affected, boolean centerSearch, boolean ignoreImmunity){
         Array<Effectable> tmp = new Array<Effectable>();
         if(affected.contains(Mob.class, true)) {
-            if(centerSearch) tmp.addAll(getMobsInRange(searchPoint, range));
-            else             tmp.addAll(getMobsMaskInRange(searchPoint, range));
+            if(centerSearch) tmp.addAll(getMobsInRange(searchPoint, range, ignoreImmunity));
+            else             tmp.addAll(getMobsMaskInRange(searchPoint, range, ignoreImmunity));
         }
         if(affected.contains(Tower.class, true)){
             tmp.addAll(getTowersInRange(searchPoint, range));
+        }
+        return tmp;
+    }
+    public Array<Effectable> getAllUnitsOnMap(Array<Class<? extends Effectable>> affected, boolean ignoreImmunity){
+        Array<Effectable> tmp = new Array<Effectable>();
+        if(affected.contains(Mob.class, true)) {
+            for (int i = 0; i < Wave.mobs.size; i++) {
+                if (ignoreImmunity || targetMob(Wave.mobs.get(i))) {
+                    tmp.add(Wave.mobs.get(i));
+                }
+            }
+        }
+        if(affected.contains(Tower.class, true)){
+            tmp.addAll(getTowersOnMap());
         }
         return tmp;
     }
@@ -221,7 +235,7 @@ public class Map {
     }
 
 
-    public MapTile getTileContainMob(Mob mob){
+    public WalkableMapTile getTileContainMob(Mob mob){
         for (int x = 0; x < tiles.length; x++){
             for (int y = 0; y < tiles[0].length; y++){
                 if (tiles[x][y].contains(mob.getBoundingRectangle())){//
@@ -229,7 +243,7 @@ public class Map {
                         //System.out.println(tiles[x][y].getX() + " " + tiles[x][y].getY());
                         //System.out.println(mob.getX() + " " + mob.getY());
                     //}
-                    return tiles[x][y];
+                    return ((WalkableMapTile) tiles[x][y]);
                 }
             }
         }
@@ -772,7 +786,6 @@ public class Map {
         for (Projectile p:tmp){
             p.draw(batch, 1);
         }
-
 
         if(isBuild){
             drawBuildGrid(batch);

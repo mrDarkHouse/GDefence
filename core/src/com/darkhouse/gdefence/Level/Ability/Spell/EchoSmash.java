@@ -164,7 +164,7 @@ public class EchoSmash extends Spell{
         @Override
         public void act(float delta) {
             super.act(delta);
-            getPrototype().addExp(delta * 2f);
+            addExp(delta * 2f);
         }
     }
     private int dmg;

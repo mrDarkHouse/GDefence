@@ -67,7 +67,7 @@ public class NextWaveInfoPanel extends Table{
         pad(10);
         //setFillParent(false);
         abilities = new Array<Label>();
-        abilities.add(new Label(abilitiesS, FontLoader.generateStyle(0, 16, null)));
+        abilities.add(new Label(abilitiesS, FontLoader.generateStyle(0, 16, Color.BLACK)));
         abilities.get(0).getStyle().font.getData().markupEnabled = true;
         Array<Label> abilitiesLabels = initString(Level.getMap().getSpawner().size());
         for (Label label:abilitiesLabels){
@@ -78,7 +78,7 @@ public class NextWaveInfoPanel extends Table{
         currentWave = new Label(currentWaveS, l.getInfoPanelSkin());
         mobsNumber = new Label(mobsNumberS, l.getInfoPanelSkin());
 //        mobName = new Label(mobNameS, l.getInfoPanelSkin());
-        mobName = new Label(mobNameS, FontLoader.generateStyle(0, 16, null));//without color
+        mobName = new Label(mobNameS, FontLoader.generateStyle(0, 16, Color.WHITE));//without color
         mobName.getStyle().font.getData().markupEnabled = true;
         mobHealth = new Label(mobHealthS, l.getInfoPanelSkin());
         mobArmor = new Label(mobArmorS, l.getInfoPanelSkin());
@@ -128,7 +128,7 @@ public class NextWaveInfoPanel extends Table{
         mobSpeedS = l.getWord("mobSpeed") + ": ";//"Speed: ";// + m.getSpeed();
         mobDmgS = l.getWord("mobDmg") + ": ";//"Dmg: " ;//+ m.getDmg();
         mobBountyS = l.getWord("mobBounty") + ": ";//"Bounty: " ;//+ m.getBounty();
-        mobNameS = "[#000000ff]" + l.getWord("mobName") + ": ";//Name: ";
+        mobNameS = "[#000000ff]" /*+ l.getWord("mobName") + ": "*/;//Name: ";
         abilitiesS = "[#000000ff]" + l.getWord("mobAbilities") + ": ";// + System.getProperty("line.separator");//Abilities: ";// + System.getProperty("line.separator");
 
         int ground = 0;
@@ -206,6 +206,7 @@ public class NextWaveInfoPanel extends Table{
 
             if(i + 1 != spawners) {
                 mobNameS += " + ";
+                mobNameS += System.getProperty("line.separator");
                 currentWaveS += " + ";
                 mobsNumberS += " + ";
             }
@@ -250,7 +251,10 @@ public class NextWaveInfoPanel extends Table{
         mobBounty.setText(mobBountyS);
         add(nextWaveTimer).align(Align.left).padLeft(35);//.padBottom(10);
 
-        pack();//fix small window for big table
+
+        pack();
+        setPosition(GDefence.WIDTH - /*205*/getWidth() - 5, 5);
+        //fix small window for big table
 //        abilities.setText(abilitiesS);
 
 //        if(nextWaveTimer.getTimeLimit() > 0){

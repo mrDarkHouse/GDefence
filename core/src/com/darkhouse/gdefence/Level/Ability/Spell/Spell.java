@@ -7,6 +7,7 @@ import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.Effectable;
+import com.darkhouse.gdefence.Model.Panels.SpellPanel;
 import com.darkhouse.gdefence.Objects.DamageSource;
 import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Screens.LevelMap;
@@ -16,6 +17,12 @@ public abstract class Spell implements DamageSource{
     private int energyCost;
 //    private int cooldown;
     private Cooldown cooldown;
+    private SpellPanel.SpellButton.SpellTooltip tooltip;
+
+
+    public void setTooltip(SpellPanel.SpellButton.SpellTooltip tooltip) {
+        this.tooltip = tooltip;
+    }
 
     public int getEnergyCost() {
         return energyCost;
@@ -32,6 +39,10 @@ public abstract class Spell implements DamageSource{
 
     public SpellObject getPrototype() {
         return prototype;
+    }
+
+    public boolean isPierceImmunity() {
+        return prototype.isPierceImmunity();
     }
 
     public Spell(SpellObject prototype) {
@@ -63,8 +74,12 @@ public abstract class Spell implements DamageSource{
     }
     public float hitMob(Mob m, DamageType type, int dmg){
         float getDmg = m.hit(dmg, type, this);
-        getPrototype().addExp(getDmg/10);
+        addExp(getDmg/10);
         return getDmg;
+    }
+    public void addExp(float value){
+        getPrototype().addExp(value);
+        if(tooltip != null) tooltip.hasChanged();
     }
 
     abstract public void use(Array<? extends Effectable> targets);

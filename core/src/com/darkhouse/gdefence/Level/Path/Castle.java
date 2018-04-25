@@ -35,4 +35,9 @@ public class Castle extends WalkableMapTile/* implements Walkable*/{
     public Way manipulatePath(Mob.MoveType enterMobType, Way currentWay) {
         return null;//
     }
+
+    @Override
+    public Logic getLogic() {
+        return Logic.Castle;
+    }
 }

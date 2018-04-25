@@ -23,8 +23,8 @@ public class Amount extends Label{
     private void init(){
         Label.LabelStyle style = new Label.LabelStyle();
         style.background = new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("cell.png", Texture.class)));
-        style.font = FontLoader.impact20;
-        style.fontColor = Color.BLACK;
+        style.font = FontLoader.generateFont(0, 20, Color.BLACK);
+//        style.fontColor = Color.BLACK;
         setStyle(style);
         setSize(22, 22);
 

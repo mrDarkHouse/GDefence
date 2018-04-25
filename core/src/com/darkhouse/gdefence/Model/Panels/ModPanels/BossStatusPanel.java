@@ -80,7 +80,7 @@ public class BossStatusPanel extends AbstractPanel{
 
 //        bossHealth = new BossHealth();
 
-        info = new Label("", /*GDefence.getInstance().assetLoader.getSkin(), "description"*/FontLoader.generateStyle(0, 16, null));
+        info = new Label("", /*GDefence.getInstance().assetLoader.getSkin(), "description"*/FontLoader.generateStyle(0, 16, Color.BLACK));
         info.getStyle().font.getData().markupEnabled = true;
         add(info).align(Align.center).padLeft(5f).padRight(5f).row();
 

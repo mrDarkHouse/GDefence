@@ -11,14 +11,17 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.AbstractTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 import com.darkhouse.gdefence.Level.Ability.Spell.Spell;
+import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Effectable;
+import com.darkhouse.gdefence.Model.Level.Map;
 import com.darkhouse.gdefence.Model.ShapeCircle;
 import com.darkhouse.gdefence.Model.ShapeTarget;
 import com.darkhouse.gdefence.Objects.SpellObject;
@@ -87,7 +90,7 @@ public class SpellPanel extends Table{
 
 
                     Vector2 center = new Vector2(circle.getX() + circle.getWidth()/2, circle.getY() + circle.getHeight()/2);
-                    return LevelMap.getLevel().getMap().getUnitsInRange(center, aoe/2, targetTypes, false);
+                    return Level.getMap().getUnitsInRange(center, aoe/2, targetTypes, false, spell.isPierceImmunity());
                     //            return tmp;
                 }
 
@@ -150,7 +153,7 @@ public class SpellPanel extends Table{
                 }
 
                 private Array<? extends Effectable> getTarget(Vector2 point){
-                    Effectable target = LevelMap.getLevel().getMap().getTargetUnit(point, targetTypes);
+                    Effectable target = Level.getMap().getTargetUnit(point, targetTypes);
                     if(target != null) return new Array<Effectable>(new Effectable[]{target});
                     else return null;
                 }
@@ -192,7 +195,7 @@ public class SpellPanel extends Table{
             private void use(Vector2 useCoord){
                 //
                 if (spell.getPrototype() instanceof Spell.INonTarget){
-                    spell.use(Wave.mobs);
+                    spell.use(Level.getMap().getAllUnitsOnMap(spell.getAffectedTypes(), spell.isPierceImmunity()));
                     LevelMap.getLevel().removeEnergy(spell.getEnergyCost());
                     resetCooldown(spell);
 //                    spell.getCooldownObject().resetCooldown();
@@ -218,11 +221,16 @@ public class SpellPanel extends Table{
 
         public class SpellTooltip extends AbstractTooltip{
             private Label tooltipLabel;
+            private ProgressBar expBar;
+            private Label level;
+            private String levelString;
+            private int levelNum;
 //            private TextButton cooldown;
 
             public SpellTooltip(Skin skin) {
                 super(SpellButton.this.spell.getPrototype().getName(), skin);
                 getTitleLabel().setStyle(FontLoader.generateStyle(1, 14, Color.WHITE));
+                setTouchable(Touchable.disabled);
 //                getTitleLabel().setAlignment(Align.center);
                 tooltipLabel = new Label(SpellButton.this.spell.getPrototype().getTooltip(), skin, "spell");
 //                tooltipLabel.getStyle().font = FontLoader.generateSecondaryFont(12, Color.WHITE);
@@ -230,16 +238,32 @@ public class SpellPanel extends Table{
 //                cooldown = new TextButton(SpellButton.this.spell.getPrototype().getCooldown() + "", skin);
 
                 setVisible(false);
-                add(tooltipLabel);
+                add(tooltipLabel).padBottom(5f).row();
 //                setKeepWithinStage(true);
-                setTouchable(Touchable.disabled);
 
-//                add(cooldown).align(Align.right);
+
+                level = new Label("", skin, "description");
+                levelString = GDefence.getInstance().assetLoader.getWord("level") + " ";
+                levelNum = spell.getPrototype().getLevel();
 
                 pack();
+                final float width = getWidth();
+                expBar = new ProgressBar(0, spell.getPrototype().exp2nextLevel()[spell.getPrototype().getLevel() - 1], 0.2f, false,
+                        GDefence.getInstance().assetLoader.getExpBarSkin()) {
+                    @Override
+                    public float getPrefWidth() {
+                        return width + 10;
+                    }
+                };//add text inside
+                expBar.getStyle().background.setMinHeight(20);
+                expBar.getStyle().knob.setMinHeight(20);
+                expBar.getStyle().knob.setMinWidth(0.1f);
+                expBar.setValue(spell.getPrototype().getCurrentExp());
 
-//                setKeepWithinStage(false);
-
+                add(level).align(Align.center).row();
+                add(expBar).align(Align.center);
+                hasChanged();
+                pack();
 
             }
             public void init(Stage stage){
@@ -248,7 +272,31 @@ public class SpellPanel extends Table{
 
             @Override
             public void hasChanged() {
+                level.setText(levelString + levelNum);
+                if(levelNum != spell.getPrototype().getLevel()){
+                    Cell c = getCell(expBar);
+                    final float width = getWidth();
+                    expBar = new ProgressBar(0, spell.getPrototype().exp2nextLevel()[spell.getPrototype().getLevel() - 1], 0.2f, false,
+                            GDefence.getInstance().assetLoader.getExpBarSkin()) {
+                        @Override
+                        public float getPrefWidth() {
+                            return width - 10;
+                        }
+                    };
+                    expBar.getStyle().background.setMinHeight(20);
+                    expBar.getStyle().knob.setMinHeight(20);
+                    expBar.getStyle().knob.setMinWidth(0.1f);
+                    expBar.setValue(spell.getPrototype().getCurrentExp());
+                    c.setActor(expBar);
+                    pack();
+                }else {
+                    expBar.setValue(spell.getPrototype().getCurrentExp());
+                }
 
+                levelNum = spell.getPrototype().getLevel();
+                level.setText(levelString + levelNum);
+
+                pack();
             }
         }
 
@@ -294,7 +342,9 @@ public class SpellPanel extends Table{
 
 //            cdText = new Label("", FontLoader.generateStyle(19, Color.BLACK));
 //            cdText.setAlignment(Align.center);
-            TooltipListener t = new TooltipListener(new SpellTooltip(GDefence.getInstance().assetLoader.getSkin()), true);
+            SpellTooltip tooltip = new SpellTooltip(GDefence.getInstance().assetLoader.getSkin());
+            TooltipListener t = new TooltipListener(tooltip, true);
+            spell.setTooltip(tooltip);
 //            t.setOffset(-50, -40);
             addListener(t);
 //            System.out.println(this.getListeners());
@@ -321,7 +371,7 @@ public class SpellPanel extends Table{
 //            System.out.println(getX() + " " + getY() + " " + getWidth() + " " + getHeight());
             for (EventListener l:getListeners()) {
                 if (l instanceof TooltipListener) {
-                    ((SpellTooltip) ((TooltipListener) l).getTooltip()).init(getStage());
+                    ((TooltipListener) l).getTooltip().init(getStage());
                 }
                 if(l instanceof SpellButton.SpellThrower){
                     ((SpellButton.SpellThrower) l).init(getStage());
@@ -407,11 +457,6 @@ public class SpellPanel extends Table{
 //        debug();
 
         pack();
-    }
-    public void cancelTargeting(){
-        for (EventListener e:getListeners()){
-//            if(e instanceof )
-        }
     }
 
     public void init(){

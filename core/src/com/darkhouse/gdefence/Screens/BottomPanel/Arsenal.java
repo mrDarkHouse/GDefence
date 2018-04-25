@@ -19,6 +19,7 @@ import com.darkhouse.gdefence.User;
 public class Arsenal extends AbstractCampainScreen{
     private OverallInventory inventoryActor;
     private TowerMap towerMap;
+    private TowerCraftPanel towerCraftPanel;
 
     public TowerMap getTowerMap() {
         return towerMap;
@@ -53,6 +54,12 @@ public class Arsenal extends AbstractCampainScreen{
 //
 //    }
 
+
+    @Override
+    public void hide() {
+        towerCraftPanel.clearPanel();
+    }
+
     public void init(){
         //Skin skin = LibgdxUtils.assets.get("skins/uiskin.json", Skin.class);
 //        inventoryActor = new InventoryActor(User.getTowerInventory(), new DragAndDrop(),
@@ -75,7 +82,7 @@ public class Arsenal extends AbstractCampainScreen{
             }
         });
         stage.addActor(towerMapButton);
-        TowerCraftPanel towerCraftPanel = new TowerCraftPanel(new DragAndDrop(), inventoryActor, GDefence.getInstance().assetLoader.getSkin());
+        towerCraftPanel = new TowerCraftPanel(new DragAndDrop(), inventoryActor, GDefence.getInstance().assetLoader.getSkin());
         stage.addActor(towerCraftPanel);
         towerCraftPanel.init();
 

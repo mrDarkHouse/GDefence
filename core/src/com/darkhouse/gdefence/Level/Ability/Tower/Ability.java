@@ -36,10 +36,20 @@ public abstract class Ability {
             return abilityType;
         }
 
-        public AbilityPrototype gemCur(int[] gems){
-            gemsNumber = gems;
-            return this;
+        public int[] gemCur(int[] gems){
+            int savedGems[] = new int[gems.length];
+            for (int i = 0; i < gems.length; i++) {
+                if (canGrade(User.GEM_TYPE.values()[i + 3])){
+                    gemsNumber[i] = gems[i];
+                }else {
+                    savedGems[i] += gems[i];
+//                    GDefence.getInstance().user.addGems(User.GEM_TYPE.values()[i + 3], gems[i]);
+                }
+            }
+//            gemsNumber = gems;
+            return savedGems;
         }
+//        public AbilityPrototype gemsCh
         public AbilityPrototype addGems(int[] gems){
             for (int i = 0; i < gems.length; i++){
                 for (int a = 0; a < gems[i]; a++){
@@ -66,71 +76,75 @@ public abstract class Ability {
             return id + "z" + gemsNumber[0] + ";" + gemsNumber[1] + ";" + gemsNumber[2];
         }
 
-        public static AbilityPrototype loadAbilityCode(String code){
-            String[] info = code.split("z");
-            int id = Integer.parseInt(info[0]);
-            String[] tmp = info[1].split(";");
-//            System.out.println(Arrays.toString(tmp));
-            int[] gemCur = new int[3];
-            int[] gemCap = new int[3];
-            for (int i = 0; i < gemCap.length; i++){
-                gemCur[i] = Integer.parseInt(tmp[i]);
-            }
-            for (int i = 3; i < gemCap.length*2; i++){
-                gemCap[i - 3] = Integer.parseInt(tmp[i]);
-            }
-
-            String[] param = info.length >= 3 ? info[2].split(";") : new String[]{""};//need for empty param abilities like steam aura
-//            System.out.println(Arrays.toString(param));
-//            System.out.println(param[0] + " " + param[1] + " " + param[2] + " " +param[3] + " " +param[4]);
-//            System.out.println(Arrays.toString(param));
-//            System.out.println(code);
-            switch (id){//TODO do all
-                case 0:return new Bash.P(Float.parseFloat(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[2]),
-                              new Bash.G(Float.parseFloat(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap)).copy().gemCur(gemCur);
-                case 1:return new BuckShot.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
-                              new BuckShot.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
-                case 2:return new Crit.P(Float.parseFloat(param[0]), Float.parseFloat(param[1]),
-                              new Crit.G(Float.parseFloat(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
-                case 3:return new Desolate.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
-                              new Desolate.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
-                case 4:return new FireArrow.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Float.parseFloat(param[2]),
-                              new FireArrow.G(Integer.parseInt(param[3]), Float.parseFloat(param[4]), gemCap)).copy().gemCur(gemCur);
-                case 5:return new HunterSpeed.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]), Float.parseFloat(param[2]),
-                        new HunterSpeed.G(Integer.parseInt(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap)).copy().gemCur(gemCur);
-
-
-                case 9:return new ShotDelay.P(Float.parseFloat(param[0]), Boolean.parseBoolean(param[1]),
-                        new ShotDelay.G(Float.parseFloat(param[2]), gemCap)).copy().gemCur(gemCur);
-                case 10:return new Splash.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
-                        new Splash.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
-                case 11:return new SpreadAttack.P(Float.parseFloat(param[0]), Integer.parseInt(param[1]), Float.parseFloat(param[2]),
-                        new SpreadAttack.G(Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
-                case 13:return new SteamAura.P().copy();
-
-
-
-                case 20:
-                    return new EchoSmash.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[2]),
-                            new EchoSmash.G(Integer.parseInt(param[5]), Float.parseFloat(param[6]), Integer.parseInt(param[7]), gemCap))/*.addExp()*/.gemCur(gemCur);
-                case 21:
-                    return new SuddenDeath.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Float.parseFloat(param[2]), Float.parseFloat(param[3]), Float.parseFloat(param[4]),
-                            new SuddenDeath.G(Float.parseFloat(param[5]), Float.parseFloat(param[6]), Float.parseFloat(param[7]), gemCap)).gemCur(gemCur);
-                case 24:
-                    return new GlobalSlow.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Float.parseFloat(param[2]), Float.parseFloat(param[3]), Float.parseFloat(param[4]),
-                            new GlobalSlow.G(Float.parseFloat(param[5]), Float.parseFloat(param[6]), Float.parseFloat(param[7]),gemCap))/*.copy()*/.gemCur(gemCur);
+//        public static AbilityPrototype loadAbilityCode(String code){
+//            String[] info = code.split("z");
+//            int id = Integer.parseInt(info[0]);
+//            String[] tmp = info[1].split(";");
+////            System.out.println(Arrays.toString(tmp));
+//            int[] gemCur = new int[3];
+//            int[] gemCap = new int[3];
+//            for (int i = 0; i < gemCap.length; i++){
+//                gemCur[i] = Integer.parseInt(tmp[i]);
+//            }
+//            for (int i = 3; i < gemCap.length*2; i++){
+//                gemCap[i - 3] = Integer.parseInt(tmp[i]);
+//            }
+//
+//            String[] param = info.length >= 3 ? info[2].split(";") : new String[]{""};//need for empty param abilities like steam aura
+////            System.out.println(Arrays.toString(param));
+////            System.out.println(param[0] + " " + param[1] + " " + param[2] + " " +param[3] + " " +param[4]);
+////            System.out.println(Arrays.toString(param));
+////            System.out.println(code);
+//            switch (id){//TODO do all
+//                case 0:return new Bash.P(Float.parseFloat(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[2]),
+//                              new Bash.G(Float.parseFloat(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap)).copy().gemCur(gemCur);
+//                case 1:return new BuckShot.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
+//                              new BuckShot.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
+//                case 2:return new Crit.P(Float.parseFloat(param[0]), Float.parseFloat(param[1]),
+//                              new Crit.G(Float.parseFloat(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
+//                case 3:return new Desolate.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
+//                              new Desolate.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
+//                case 4:return new FireArrow.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Float.parseFloat(param[2]),
+//                              new FireArrow.G(Integer.parseInt(param[3]), Float.parseFloat(param[4]), gemCap)).copy().gemCur(gemCur);
+//                case 5:return new HunterSpeed.P(Integer.parseInt(param[0]), Integer.parseInt(param[1]), Float.parseFloat(param[2]),
+//                        new HunterSpeed.G(Integer.parseInt(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[5]), gemCap)).copy().gemCur(gemCur);
+//
+//
+//                case 9:return new ShotDelay.P(Float.parseFloat(param[0]), Boolean.parseBoolean(param[1]),
+//                        new ShotDelay.G(Float.parseFloat(param[2]), gemCap)).copy().gemCur(gemCur);
+//                case 10:return new Splash.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]),
+//                        new Splash.G(Integer.parseInt(param[2]), Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
+//                case 11:return new SpreadAttack.P(Float.parseFloat(param[0]), Integer.parseInt(param[1]), Float.parseFloat(param[2]),
+//                        new SpreadAttack.G(Float.parseFloat(param[3]), gemCap)).copy().gemCur(gemCur);
+//                case 13:return new SteamAura.P().copy();
+//
+//
+//
+//                case 20:
+//                    return new EchoSmash.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Integer.parseInt(param[3]), Float.parseFloat(param[4]), Integer.parseInt(param[2]),
+//                            new EchoSmash.G(Integer.parseInt(param[5]), Float.parseFloat(param[6]), Integer.parseInt(param[7]), gemCap))/*.addExp()*/.gemCur(gemCur);
 //                case 21:
-//                  return
-                default:return null;
-            }
-
-        }
+//                    return new SuddenDeath.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Float.parseFloat(param[2]), Float.parseFloat(param[3]), Float.parseFloat(param[4]),
+//                            new SuddenDeath.G(Float.parseFloat(param[5]), Float.parseFloat(param[6]), Float.parseFloat(param[7]), gemCap)).gemCur(gemCur);
+//                case 24:
+//                    return new GlobalSlow.P(Integer.parseInt(param[0]), Float.parseFloat(param[1]), Float.parseFloat(param[2]), Float.parseFloat(param[3]), Float.parseFloat(param[4]),
+//                            new GlobalSlow.G(Float.parseFloat(param[5]), Float.parseFloat(param[6]), Float.parseFloat(param[7]),gemCap))/*.copy()*/.gemCur(gemCur);
+////                case 21:
+////                  return
+//                default:return null;
+//            }
+//
+//        }
 
         public int getGemsNumber(){
             return gemsNumber[0] + gemsNumber[1] + gemsNumber[2];
         }
 
-
+        @Override
+        public String getGradeNumberInfo(User.GEM_TYPE gemType) {
+            if (gemsMax[gemType.ordinal() - 3] == 0) return "";
+            else return "(" + gemsNumber[gemType.ordinal() - 3] + "/" + gemsMax[gemType.ordinal() - 3] + ")";
+        }
 
         public static abstract class Boost{
 //            public static Boost createInstance(AtomicReference boostField, Number boostUp, String name, boolean positive){
@@ -213,7 +227,7 @@ public abstract class Ability {
                     case PERCENT: return Float.toString(new BigDecimal(f*100).setScale(2, RoundingMode.HALF_UP).floatValue()) + "%";//(int)(f*100f) + "%";//
                     case TIME: return Float.toString(new BigDecimal(f).setScale(2, RoundingMode.HALF_UP).floatValue()) + "s";//fix 20.0000001 bug
                     case MULTIPLAYER: return f + "x";
-                    case ANGLE: return ((int) f) + "*";
+                    case ANGLE: return ((int) f) + "°";
                     case NONE: return f + "";
                     default: return "error";
                 }
@@ -281,15 +295,16 @@ public abstract class Ability {
         @Override
         public String getGemGradeTooltip(User.GEM_TYPE gemType) {
             String s = "";
+            AssetLoader l = GDefence.getInstance().assetLoader;
             Boost b = gemBoost[gemType.ordinal() - 3];
-            if(b == null || gemsMax[gemType.ordinal() - 3] == 0) return "Cant grade this gem";
+            if(b == null || gemsMax[gemType.ordinal() - 3] == 0) return l.getWord("cantGradeGem");
             if(/*canGrade(gemType)*/gemsNumber[gemType.ordinal() - 3] + 1 <= gemsMax[gemType.ordinal() - 3]) {//it take override version so it's better
                 if (b.positive) s += "+ ";
                 else s += "- ";
                 s += b.boostUp() + " " + b.name + System.getProperty("line.separator") +
                         "(" + b.boostField() + "=>" + (b.concate()) + ")";
             }else {
-                s += "MAX" + System.getProperty("line.separator") +
+                s += l.getWord("maxBig") + System.getProperty("line.separator") +
                         "(" + b.boostField() + ")";
             }
             return s;

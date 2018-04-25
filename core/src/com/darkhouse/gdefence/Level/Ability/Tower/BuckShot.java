@@ -71,7 +71,7 @@ public class BuckShot extends Ability implements Ability.IPreShot {
         public String getTooltip() {
             AssetLoader l = GDefence.getInstance().assetLoader;
             return l.getWord("buckShotTooltip1") + " " + FontLoader.colorString(projectiles.get().toString(), User.GEM_TYPE.WHITE) + " " + l.getWord("buckShotTooltip2") + System.getProperty("line.separator") +
-                    l.getWord("buckShotTooltip3") + " " + FontLoader.colorString(angle.get().toString(), User.GEM_TYPE.GREEN) + " " + l.getWord("buckShotTooltip4");
+                    l.getWord("buckShotTooltip3") + " " + FontLoader.colorString(angle.get().toString() + "°", User.GEM_TYPE.GREEN) + " " + l.getWord("buckShotTooltip4");
         }
     }
     public static class G extends AbilityGrader{

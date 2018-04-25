@@ -43,6 +43,9 @@ public class LevelEndScreen implements Screen{
         batch = new SpriteBatch();
         stage = new Stage();
 
+
+
+        GDefence.getInstance().user.save();
         init(isWin);
 
         Gdx.input.setInputProcessor(stage);

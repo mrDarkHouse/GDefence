@@ -3,6 +3,7 @@ package com.darkhouse.gdefence.Level;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.StatManager;
@@ -266,6 +267,7 @@ public class Level {
     private void winLevel(){
         Wave.mobs.clear();//bug when mobs from prev level appear in current
         isWin = true;
+        map.setBuild(false, null, null);//bug when when render build grid after change screen
         //System.out.println("win");
 
         //LevelMap.levelMap.hide();
@@ -291,6 +293,7 @@ public class Level {
 
     public void looseLevel(){
         Wave.mobs.clear();
+        map.setBuild(false, null, null);
         //System.out.println("loose");
         GDefence.getInstance().setScreen(new LevelEndScreen(false, getStatManager()));
 
@@ -420,12 +423,12 @@ public class Level {
     }
 
 
-    private void drawTowers(){
-
-    }
-    private void drawParticles(){
-
-    }
+//    private void drawTowers(){
+//
+//    }
+//    private void drawParticles(){
+//
+//    }
 
     private void updateRoundTimer(float delta) {
         timeBetweenWaves[currentWave] -= delta;

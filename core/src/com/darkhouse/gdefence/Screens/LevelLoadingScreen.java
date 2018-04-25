@@ -29,6 +29,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen{
 
     public LevelLoadingScreen(int level, Inventory towers, Inventory spells) {
         super();
+        init();
         this.level = level;
         this.towers = towers;
         this.spells = spells;
@@ -39,6 +40,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen{
         tipsTable.setWidth(GDefence.WIDTH);
         tipsTable.setPosition(0, 160);
         tipsTable.add(tipsLabel)/*.align(Align.center)*/;
+
 //        tipsTable.debugAll();
     }
 
@@ -50,7 +52,7 @@ public class LevelLoadingScreen extends AbstractLoadingScreen{
 //        if (Gdx.input.isTouched()) {
 //            GDefence.getInstance().assetLoader.setLevelMapFilters();
             GDefence.getInstance().switchScreen(map);
-//            LevelMap.getLevel().start();//WHAT THE SHIT THIS
+//            LevelMap.getLevel().start();
 //        }
     }
 }
