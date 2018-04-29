@@ -10,10 +10,8 @@ import com.darkhouse.gdefence.Level.Path.Spawn;
 import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Model.Level.Map;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -81,8 +79,20 @@ public class MapLoader {
     }
 
     public MapLoader(int map) {
+//        System.out.println(new File(".").getAbsolutePath());
         try{
-            loadFile = new File("Maps/Map" + map + ".properties");
+//            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+//            ClassLoader cl = Properties.class.getClassLoader();
+//            URL u = cl.getResource("Maps" + File.separator + "Map" + map + ".properties");
+//            System.out.println(u);
+
+//            URL i = Properties.class.getResource("Maps" + File.separator + "Map" + map + ".properties");
+//            URL stream = classLoader.getResource("Maps" + File.separator + "Map" + map + ".properties");
+//            System.out.println(i.getPath());
+//            i.close();
+//            System.out.println(stream + " " + stream.getFile());
+//            loadFile = new File(u.toURI());
+            loadFile = new File("Maps" + File.separator + "Map" + map + ".properties");
         }catch (Exception e){
             Gdx.app.log("Error", e.toString());
         }

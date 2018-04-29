@@ -49,7 +49,7 @@ public class Tower extends Effectable implements DamageSource{
     private Mob target;
     //private Texture texturePath;
     private Circle attackRange;
-    private Texture attackRangeTexture;
+//    private Texture attackRangeTexture;
 
     private TowerTooltip tooltip;
     private Map map;

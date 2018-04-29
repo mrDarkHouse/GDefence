@@ -23,6 +23,7 @@ import com.darkhouse.gdefence.Objects.GameObject;
 import com.darkhouse.gdefence.User;
 
 import java.util.Locale;
+import java.util.Properties;
 
 import static com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum.Tower.*;
 
@@ -278,7 +279,6 @@ public class AssetLoader extends AssetManager{
         load("icons/icons.atlas", TextureAtlas.class);
         load("Tower/towers.atlas", TextureAtlas.class);
 
-
         load("backButton.png", Texture.class);
         load("cell.png", Texture.class);
         load("nameButtonFone.png", Texture.class);
@@ -301,7 +301,7 @@ public class AssetLoader extends AssetManager{
         load("Projectiles/range.png", Texture.class);
         load("Projectiles/short.png", Texture.class);
         load("Projectiles/mountain.png", Texture.class);
-        load("Projectiles/steelArrow.png", Texture.class);
+//        load("Projectiles/steelarrow.png", Texture.class);
         load("Projectiles/ballista.png", Texture.class);
         load("Projectiles/catapult.png", Texture.class);
         load("Projectiles/spear.png", Texture.class);
@@ -363,7 +363,7 @@ public class AssetLoader extends AssetManager{
         load("Tower/range.png", Texture.class);
         load("Tower/short.png", Texture.class);
         load("Tower/mountain.png", Texture.class);
-        load("Tower/steelarrow.png", Texture.class);
+//        load("Tower/steelarrow.png", Texture.class);
         load("Tower/ballista.png", Texture.class);
         load("Tower/catapult.png", Texture.class);
         load("Tower/spear.png", Texture.class);
@@ -952,14 +952,14 @@ public class AssetLoader extends AssetManager{
     }
     public void changeLang(String locale){
         I18NBundleLoader.I18NBundleParameter param = new I18NBundleLoader.I18NBundleParameter(new Locale(locale), "UTF-8");
-        System.out.println(param.locale);
+//        System.out.println(param.locale);
         unload("Language/text");
 //        System.out.println(get("Language/text"));
         load("Language/text", I18NBundle.class, param);
 //        System.out.println(isLoaded("Language/text"));
         finishLoadingAsset("Language/text");
 //        finishLoading();
-        System.out.println(isLoaded("Language/text"));
+//        System.out.println(isLoaded("Language/text"));
 //        b = null;
         b = get("Language/text", I18NBundle.class);
 //        System.out.println(b.getLocale());
@@ -967,11 +967,9 @@ public class AssetLoader extends AssetManager{
         GDefence.getInstance().initScreens();
         GDefence.getInstance().switchScreen(GDefence.getInstance().getOptionScreen());
 
-        Preferences pref = Gdx.app.getPreferences("config");
-        pref.putString("locale", locale);
-        pref.flush();
 
-        System.out.println(get("Language/text", I18NBundle.class).getLocale());
+
+//        System.out.println(get("Language/text", I18NBundle.class).getLocale());
 //        System.out.println(getLanguage());
     }
     public void initLang(String locale){

@@ -63,9 +63,9 @@ public enum ItemEnum {;
             }case 151:{
                 return new SuddenDeath.P(10, 20, 0.5f, 0, 0.1f, new SuddenDeath.G(0.5f, 3f, 0.1f, new int[]{3, 3, 2}));
             }case 152:{
-                return new EmergencyRepair.P(5, 15, 3, new EmergencyRepair.G(2, new int[]{3, 0, 0}));
+                return new EmergencyRepair.P(15, 30, 3, new EmergencyRepair.G(2, new int[]{3, 0, 0}));
             }case 153:{
-                return new IceBlast.P(5, 10, 10, 0.3f, 3, 200, new IceBlast.G(5, 0.1f, 1, new int[]{3, 2, 3}));
+                return new IceBlast.P(10, 15, 30, 0.7f, 2, 200, new IceBlast.G(15, 0.1f, 1, new int[]{3, 2, 3}));
             }case 154:{
                 return new GlobalSlow.P(8, 24, 0.3f, 4, 0, new GlobalSlow.G(0.1f, 1, 4f, new int[]{4, 4, 2}));
             }default: throw new RuntimeException("no spell found with id: " + id);

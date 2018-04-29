@@ -21,8 +21,8 @@ import java.io.File;
 public class CampainChoose extends AbstractMenuScreen{
     //private GDefence mainclass;
     //private TextButton newCamp;
-    //private TextButton loadCamp;
     private Dialog d;
+    private TextButton loadCamp;
 
     public CampainChoose() {
         super(true);
@@ -37,6 +37,17 @@ public class CampainChoose extends AbstractMenuScreen{
         super.show();
 
 //        loadButtons();
+        updateLoadCampButton();
+    }
+    private void updateLoadCampButton(){
+        File f = new File("Save/UserSave.properties");
+        if(!f.exists()) {
+            loadCamp.setTouchable(Touchable.disabled);
+            loadCamp.setStyle(GDefence.getInstance().assetLoader.getSkin().get("rect-over", TextButton.TextButtonStyle.class));
+        }else {
+            loadCamp.setTouchable(Touchable.enabled);
+            loadCamp.setStyle(GDefence.getInstance().assetLoader.getSkin().get("rect", TextButton.TextButtonStyle.class));
+        }
     }
 
     private void loadButtons(){
@@ -54,12 +65,13 @@ public class CampainChoose extends AbstractMenuScreen{
             }
         });
         //newCamp.setSize();
-        TextButton loadCamp = new TextButton(a.getWord("load_game"), GDefence.getInstance().assetLoader.getSkin(), "rect");
-        File f = new File("Save/UserSave.properties");
-        if(!f.exists()) {
-            loadCamp.setTouchable(Touchable.disabled);
-            loadCamp.setColor(255, 255, 255, 100);
-        }
+        loadCamp = new TextButton(a.getWord("load_game"), GDefence.getInstance().assetLoader.getSkin(), "rect");
+//        File f = new File("Save/UserSave.properties");
+        updateLoadCampButton();
+//        if(!f.exists()) {
+//            loadCamp.setTouchable(Touchable.disabled);
+//            loadCamp.setStyle(GDefence.getInstance().assetLoader.getSkin().get("rect-over", TextButton.TextButtonStyle.class));
+//        }
 
         loadCamp.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

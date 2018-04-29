@@ -17,6 +17,7 @@ public class DesktopLauncher {
 		config.height = 720;
 //		config.resizable = false;
 //        config.fullscreen = true;
+		config.samples = 64;
 
 //		Preferences pref = Gdx.app.getPreferences("config");
 //		if (pref.getBoolean("fullscreen", false)) Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());

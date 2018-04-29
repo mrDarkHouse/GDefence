@@ -158,7 +158,7 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
             s += FontLoader.colorString(l.getWord("radius"), 9) + ": " + ((Spell.IAoe) this).getAoe() + System.getProperty("line.separator");
         }
         s += FontLoader.colorString(l.getWord("energyCost"), 6) + ": " + energyCost + System.getProperty("line.separator") +
-                FontLoader.colorString(l.getWord("cooldown"), 8) + ": " + cooldown + "s";
+                FontLoader.colorString(l.getWord("cooldown"), 8) + ": " + cooldown + l.getWord("sec");
         return s;
     }
 

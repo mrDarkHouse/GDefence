@@ -877,12 +877,13 @@ public class User {
         GDefence.getInstance().log("Saving");
         //File saveFile = new File("UserSave");
         //
-        File f = new File("Save/UserSave.properties");
+        File f = new File("Save" + File.separator + "UserSave.properties");
         try {
 //            if(f.exists()) {
 //                f.delete();
 //            }
-            f.createNewFile();
+            GDefence.getInstance().log("Created new save file - " + f.createNewFile());
+            f.getParentFile().mkdirs();
             Properties prop = new Properties();
             FileOutputStream fs = new FileOutputStream(f);
 
@@ -971,28 +972,15 @@ public class User {
             loadCraftedTowersCode(prop.getProperty("craftedTowers"));
             loadAvailableTowers();
 
-
-//            getTowerInventory().store(new TowerObject(ItemEnum.Tower.Rifle, 2, 1, 1));
-//            System.out.println(gold + " " + totalExp);
-
-//            openLevel(19);
-//            openLevel(20);
-//            openLevel(21);
-
-//            gold = sc.nextInt();
-//            totalExp = sc.nextInt();
-//            //level = sc.nextInt();
-//            setLevelsCompleted(sc.nextInt());
-//            redGems = sc.nextInt();
-//            yellowGems = sc.nextInt();
-//            blueGems = sc.nextInt();
-//            blackGems = sc.nextInt();
-//            greenGems = sc.nextInt();
-//            whiteGems = sc.nextInt();
-
-
-
             update();
+
+//            GDefence.getInstance().user.openResearch(Research.Powder);
+//            GDefence.getInstance().user.openResearch(Research.Mech);
+//
+//            ItemEnum.addItemById(152, 1, this);
+//            ItemEnum.addItemById(153, 1, this);
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.Catapult, 0, 0, 0));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.MultiShot, 0, 0, 0));
 
 //            towerInventory.store(new TowerObject(ItemEnum.Tower.Arrow, 1, 1, 1));
 //            towerInventory.store(new TowerObject(ItemEnum.Tower.Range, 0, 2, 1));
@@ -1006,12 +994,11 @@ public class User {
 //            towerInventory.store(new TowerObject(ItemEnum.Tower.Rifle, 1, 0, 3));
 //            towerInventory.store(new TowerObject(ItemEnum.Tower.MultiShot, 6, 1, 1));
 //            towerInventory.store(new TowerObject(ItemEnum.Tower.Shotgun, 4, 1, 2));
-//            addGold(5260);
 //            update();
 
             GDefence.getInstance().log("User loaded");
 
-            return true;//TODO
+            return true;
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -23,7 +23,7 @@ public class EmergencyRepair extends Spell{
         private S s;
 
         public P(int energyCost, float cooldown, int healAmount, G grader) {
-            super(22, "emergencyRepair", energyCost, cooldown, grader.gemCap);
+            super(152, "emergencyRepair", energyCost, cooldown, grader.gemCap);
             this.healAmount = new AtomicReference<Integer>(healAmount);
             this.g = grader;
             this.s = new S(healAmount);

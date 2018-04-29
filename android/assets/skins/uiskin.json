@@ -19,6 +19,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: default-round-down, up: default-round, font: default-font, fontColor: white },
     rect: { down: rect-down, up: rect-up, font: default-font, fontColor: white },
+	rect-over: { down: rect-down, up: rect-over, font: default-font, fontColor: white },
     description : { down: default-round-down, up: default-round, font: secondaryFont, fontColor: white },
 
     campainTop: { down: default-rect-pad, up: default-rect-pad, font: default-font, fontColor: white},

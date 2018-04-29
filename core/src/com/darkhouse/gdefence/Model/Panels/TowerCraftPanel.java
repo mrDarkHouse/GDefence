@@ -296,8 +296,10 @@ public class TowerCraftPanel extends Window{
 //        recipeSlot.getSlot().addListener(recipeListener);
 
         GDefence.getInstance().user.craftTower(/*(ItemEnum.Tower)*/ (TowerObject) resultSlot.getSlot().getLast()/*.getPrototype()*/);//
-        for (int i = 0; i < savedGems.length; i++){
-            GDefence.getInstance().user.addGems(User.GEM_TYPE.values()[i + 3], savedGems[i]);
+        if(savedGems != null) {
+            for (int i = 0; i < savedGems.length; i++) {
+                GDefence.getInstance().user.addGems(User.GEM_TYPE.values()[i + 3], savedGems[i]);
+            }
         }
 //        TowerObject.generateStartObjects(r.getTower(), 1);
 //        User.getTowerInventory().store(resultSlot.getSlot().take(1));

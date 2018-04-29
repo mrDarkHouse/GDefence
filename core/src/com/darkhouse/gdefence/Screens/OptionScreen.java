@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.User;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -28,9 +29,31 @@ import java.util.Locale;
 
 public class OptionScreen extends AbstractMenuScreen {
 
+    private Dialog restart;
+
+    private void initDialogs(){
+        final AssetLoader l = GDefence.getInstance().assetLoader;
+        restart = new Dialog("", l.getSkin(), "dialog"){
+            {
+                text(l.getWord("restartInfo2")).padTop(250);
+                button(l.getWord("ok"), true);
+                Array<Cell> cells = getButtonTable().getCells();
+
+                Cell cell = cells.get(0);
+                cell.width(50).padBottom(360);
+                cell.height(40);
+            }
+            @Override
+            protected void result(Object object) {
+                hide();
+            }
+        };
+    }
+
     public OptionScreen() {
         super(true);
         loadButtons();
+        initDialogs();
     }
 
     @Override
@@ -69,7 +92,7 @@ public class OptionScreen extends AbstractMenuScreen {
 
 
         final VariableStorer[][] allResolutions = new VariableStorer[2][];
-        allResolutions[0] = new VariableStorer[]{new VariableStorer(1280, 720, 'x'), new VariableStorer(1920, 1080, 'x'), new VariableStorer(680, 320, 'x')};
+        allResolutions[0] = new VariableStorer[]{new VariableStorer(1280, 720, 'x'), new VariableStorer(1920, 1080, 'x')/*, new VariableStorer(680, 320, 'x')*/};
         allResolutions[1] = new VariableStorer[]{new VariableStorer(1440, 1080, 'x'), new VariableStorer(1600, 1200, 'x')};
 
         final SelectBox<VariableStorer> resolution = new SelectBox<VariableStorer>(skin, "description"){
@@ -138,15 +161,15 @@ public class OptionScreen extends AbstractMenuScreen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
 //                    Display.setDisplayMode(new DisplayMode(resolution.getSelected().a, resolution.getSelected().b));//
-                Gdx.graphics.setWindowedMode(resolution.getSelected().a, resolution.getSelected().b);
+//                Gdx.graphics.setWindowedMode(resolution.getSelected().a, resolution.getSelected().b);
                 Preferences pref = Gdx.app.getPreferences("config");
                 pref.putBoolean("fullscreen", fullscreen.isChecked());
                 pref.flush();
 
                 if(fullscreen.isChecked()) {
-                    if(!Gdx.graphics.isFullscreen())
-//                            Display.setFullscreen(true);
-                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+//                    if(!Gdx.graphics.isFullscreen())
+////                            Display.setFullscreen(true);
+//                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 
                 }
 
@@ -167,13 +190,18 @@ public class OptionScreen extends AbstractMenuScreen {
                 switch (language.getSelectedIndex()){
                     case 0: {
                         if(!l.getLanguage().equals("en")) {
-                            l.changeLang("en");
-
+                            pref.putString("locale", "en");
+                            pref.flush();
+                            restart.show(stage);
+//                            l.changeLang("en");
                         }
                     }break;
                     case 1: {
                         if(!l.getLanguage().equals("ru")) {
-                            l.changeLang("ru");
+                            pref.putString("locale", "ru");
+                            pref.flush();
+                            restart.show(stage);
+//                            l.changeLang("ru");
 
 //                                System.out.println(l.getLanguage());
 //                                System.out.println(language.getSelected());
