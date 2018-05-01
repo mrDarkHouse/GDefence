@@ -147,43 +147,43 @@ public enum ItemEnum {;
         Catapult( AttackType.projectile, 350, 30,  300,   240,   50, 140, 30,
                 new Splash.P(60, 0.3f, new Splash.G(30, 0.2f, new int[]{1, 1, 0}))),
 
-		Ballista(  AttackType.projectile, 250, 30,  266,   240,   35, 140, 55,
+		Ballista(  AttackType.projectile, 250, 30,  300,   240,   35, 140, 55,
                 new SteelArrow.P(2, 300, new SteelArrow.G(1, 50, new int[]{3, 2, 0}))),
 
-        Spear(    AttackType.projectile, 250, 20,  266,   120,   20, 100, 42),
-        CrossBow(  AttackType.projectile, 250, 20,  266,   120,   25, 110, 50, new Desolate.P(2, 5, new Desolate.G(1, 5f, new int[]{3, 1, 0}))),
-        Gun(      AttackType.projectile, 500, 25,  266,   180,   50, 120, 55),
-        Rifle(     AttackType.projectile, 500, 30,  266,   240,   40, 140, 35, new SpreadAttack.P(2f, 2, 0.1f, new SpreadAttack.G(0.3f, new int[]{0, 2, 0}))),
-        MachineGun(AttackType.projectile, 500, 35,  266,   300,   40, 140, 110,
+        Spear(    AttackType.projectile, 250, 20,  300,   120,   20, 100, 42),
+        CrossBow(  AttackType.projectile, 250, 20,  300,   120,   25, 110, 50, new Desolate.P(2, 5, new Desolate.G(1, 5f, new int[]{3, 1, 0}))),
+        Gun(      AttackType.projectile, 500, 25,  300,   180,   50, 120, 55),
+        Rifle(     AttackType.projectile, 500, 30,  300,   240,   40, 140, 35, new SpreadAttack.P(2f, 2, 0.1f, new SpreadAttack.G(0.3f, new int[]{0, 2, 0}))),
+        MachineGun(AttackType.projectile, 500, 35,  300,   300,   40, 140, 110,
                 new ShotDelay.P(2f, true, new ShotDelay.G(0.5f, new int[]{2, 0, 0}))),
 
         Sniper(   AttackType.projectile, 1200, 45,  350,  420,   700, 240, 20,
                 new ShotDelay.P(1.6f, false, new ShotDelay.G(0.2f, new int[]{3, 0, 0}))),
 
-        Shotgun(  AttackType.projectile, 250, 45,  266,   420,   160, 120, 50,
+        Shotgun(  AttackType.projectile, 250, 45,  300,   420,   160, 120, 50,
                 new BuckShot.P(3, 25f, new BuckShot.G(1, 5f, new int[]{0, 3, 2}))),
 
-        DoubleBarrel(AttackType.projectile, 250, 50,  266,   500,   180, 140, 10,
+        DoubleBarrel(AttackType.projectile, 250, 50,  300,   500,   180, 140, 10,
                 new SpreadAttack.P(3f, 1, 0.1f, new SpreadAttack.G(0.5f, new int[]{0, 3, 0})),
                 new BuckShot.P(5, 25f, new BuckShot.G(1, 5f, new int[]{0, 4, 3}))),
 
-        Cannon(   AttackType.projectile, 500, 35,  266,   300,   85, 130, 50,
+        Cannon(   AttackType.projectile, 500, 35,  300,   300,   85, 130, 50,
                 new Splash.P(60, 0.3f, new Splash.G(30, 0.2f, new int[]{2, 2, 0}))),
 
-        Rocket(   AttackType.projectile, 300, 40,  266,   360,   120, 160, 30,
+        Rocket(   AttackType.projectile, 300, 40,  300,   360,   120, 160, 30,
                 new Splash.P(60, 0.3f, new Splash.G(30, 0.2f, new int[]{3, 3, 0}))),
 
         Missle(  AttackType.projectile, 250, 45,  400,   420,   200, 220, 20,
                 new Splash.P(50, 0.3f, new Splash.G(30, 0.2f, new int[]{4, 3, 0})),
                 new SpreadAttack.P(3.5f, 1, 0.3f, new SpreadAttack.G(0.5f, new int[]{0, 3, 0}))),
 
-        Glaive(   AttackType.projectile, 250, 35,  266,   300,   55, 150, 70,
+        Glaive(   AttackType.projectile, 250, 35,  300,   300,   55, 150, 70,
                 new Bounce.P(2, 0.2f, 200, new Bounce.G(1, 0.05f, 50, new int[]{3, 3, 2}))),
 
-        MultiShot( AttackType.projectile, 250, 40,  266,   360,   70,  160,  100,
+        MultiShot( AttackType.projectile, 250, 40,  300,   360,   70,  160,  100,
                 new MultiShot.P(2, 0.5f, new MultiShot.G(1, 0.2f, new int[]{3, 0, 3}))),
 
-        SteamMachine(AttackType.none,       250, 15,  266,   180,   5,  50,   5, new SteamAura.P());
+        SteamMachine(AttackType.none,       250, 15,  300,   180,   5,  50,   5, new SteamAura.P());
 
 
         protected static void setComponents(){

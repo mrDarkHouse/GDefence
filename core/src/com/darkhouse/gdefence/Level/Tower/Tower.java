@@ -13,6 +13,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TowerTooltip;
 import com.darkhouse.gdefence.Level.Ability.Tools.DamageType;
 import com.darkhouse.gdefence.Level.Ability.Tools.Effect;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
+import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Path.MapTile;
 import com.darkhouse.gdefence.Model.Effectable;
@@ -202,7 +203,7 @@ public class Tower extends Effectable implements DamageSource{
 
     @Override
     public void act(float delta) {
-        physic(delta);
+        if (!LevelMap.levelMap.isPaused()) physic(delta);
     }
 
     public void physic(float delta){

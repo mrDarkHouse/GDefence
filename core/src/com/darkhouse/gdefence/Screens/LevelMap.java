@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
@@ -105,6 +106,7 @@ public class LevelMap extends AbstractScreen {
             getButtonTable().defaults().width(190).height(40).space(10);
 //            defaults().space(50);
             getTitleLabel().setAlignment(Align.center);
+            getButtonTable().add(new Actor()).row();
 
 //            Label title = new Label("Pause", getSkin(), "description");
 //

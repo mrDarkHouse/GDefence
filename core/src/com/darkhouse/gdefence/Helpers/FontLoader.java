@@ -116,7 +116,7 @@ public class FontLoader {
                 break;
             case 2:f = Gdx.files.internal("Fonts/Roboto-Medium.ttf");
                 break;
-            case 3:f = Gdx.files.internal("Fonts/11434.ttf");
+            case 3:f = Gdx.files.internal("Fonts/Signboard.ttf");
                 break;
             default:throw new IllegalArgumentException("cant find font with type " + type);
         }
