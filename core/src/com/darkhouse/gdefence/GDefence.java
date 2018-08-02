@@ -102,11 +102,15 @@ public class GDefence extends Game {
 		Texture.setAssetManager(assetLoader);
 
 
-		Pixmap pm = new Pixmap(Gdx.files.internal("Cursors/stock.png"));
-		int xHotSpot = /*pm.getWidth() / 2 */9;  //for stick cursor
-		int yHotSpot = /*pm.getHeight() / 2 */3;
-		Gdx.graphics.setCursor(new LwjglCursor(pm, xHotSpot, yHotSpot));
-		pm.dispose();
+
+		if(Gdx.app.getType() == Application.ApplicationType.Desktop) {
+            Pixmap pm = new Pixmap(Gdx.files.internal("Cursors/stock.png"));
+            int xHotSpot = /*pm.getWidth() / 2 */9;  //for stick cursor
+            int yHotSpot = /*pm.getHeight() / 2 */3;
+            Gdx.graphics.setCursor(new LwjglCursor(pm, xHotSpot, yHotSpot));
+            pm.dispose();
+        }
+
 
 
 

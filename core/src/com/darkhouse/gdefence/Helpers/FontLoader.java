@@ -12,6 +12,8 @@ import com.darkhouse.gdefence.User;
 public class FontLoader {
     private static FreeTypeFontGenerator generator;
 
+    public static BitmapFont amountFont;
+
     final static String font_chars_ru =
             "абвгдежзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
 
@@ -62,7 +64,7 @@ public class FontLoader {
 
     public static void load(){
 //        generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Impact.ttf"));
-
+        amountFont = generateFont(0, 20, Color.BLACK);
     }
     public static Label.LabelStyle generateStyle(int type, int size, Color fontColor){
         Label.LabelStyle style = new Label.LabelStyle();

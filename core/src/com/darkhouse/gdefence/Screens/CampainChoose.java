@@ -81,6 +81,7 @@ public class CampainChoose extends AbstractMenuScreen{
                 GDefence.getInstance().flushCampainScreens();
 //                GDefence.getInstance().user.initNewUser();
                 GDefence.getInstance().user.load();
+                GDefence.getInstance().getLevelPreparationScreen().init();
 
                 GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainMap());
 
@@ -144,6 +145,7 @@ public class CampainChoose extends AbstractMenuScreen{
                     GDefence.getInstance().user = new User();
                     GDefence.getInstance().flushCampainScreens();
                     GDefence.getInstance().user.initNewUser();
+                    GDefence.getInstance().getLevelPreparationScreen().init();
 
                     GDefence.getInstance().switchScreen(GDefence.getInstance().getCampainMap());
 

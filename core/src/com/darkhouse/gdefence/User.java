@@ -4,10 +4,12 @@ package com.darkhouse.gdefence;
 //import ru.Towers.TowerType;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.InventorySystem.inventory.Inventory;
 import com.darkhouse.gdefence.InventorySystem.inventory.Item;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Ability.Spell.*;
+import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
 import com.darkhouse.gdefence.Model.Panels.StoreBuyPanel;
 import com.darkhouse.gdefence.Objects.*;
 import com.darkhouse.gdefence.Screens.BottomPanel.TowerMap;
@@ -219,6 +221,18 @@ public class User {
     //public ArrayList <Tower> towers;
 
     //public ArrayList <Item> items;
+
+    public static void store(Array<? extends GameObject> objects){
+        if (objects.size == 0) return;
+        System.out.println(objects.first().getClass());
+        if(objects.first().getPrototype() instanceof ItemEnum.Tower){
+            getTowerInventory().store(objects);
+        }else if(objects.first() instanceof SpellObject){
+            getSpellInventory().store(objects);
+        }else if(objects.first() instanceof DetailObject){
+            getDetailInventory().store(objects);
+        }
+    }
 
     private static Inventory towerInventory;//<Tower>
     private static Inventory spellInventory;//<Spell>

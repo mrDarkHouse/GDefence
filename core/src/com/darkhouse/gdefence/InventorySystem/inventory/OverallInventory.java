@@ -138,6 +138,14 @@ public class OverallInventory extends Window{
             a.init();
         }
     }
+    public void flush(){
+        for (InventoryActor a:actors){
+            a.inventory.flush();
+//            a.clear();
+        }
+        dragAndDrop.clear();
+    }
+
     public void notifyListeners(){
         for (InventoryActor a:actors){
             a.notifyListeners();

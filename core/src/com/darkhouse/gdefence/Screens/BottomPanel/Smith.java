@@ -162,7 +162,8 @@ public class Smith extends AbstractCampainScreen{
     @Override
     public void hide() {
         super.hide();
-        User.getTowerInventory().store(pn.getGradeTowerSlot().getSlot().takeAll());
+        User.store(pn.getGradeTowerSlot().getSlot().takeAll());
+//        User.getTowerInventory().store(pn.getGradeTowerSlot().getSlot().takeAll());
     }
 
     //    @Override

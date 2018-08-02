@@ -22,6 +22,8 @@
 package com.darkhouse.gdefence.InventorySystem.inventory;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -31,6 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.SlotTooltip;
 import com.darkhouse.gdefence.InventorySystem.inventory.Tooltip.TooltipListener;
 
@@ -39,7 +42,8 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 	private Slot slot;
 	private Skin skin;
-	private Amount amount;
+//	private Amount amount;
+	private Label amount;
 
 	public SlotActor(Skin skin, Slot slot) {
 		super(createStyle(skin, slot.getPrototype()));
@@ -49,11 +53,18 @@ public class SlotActor extends ImageButton implements SlotListener {
 		slot.addListener(this);
 
 
-		amount = new Amount(skin, slot);
+//		amount = new Amount(skin, slot);
+		Label.LabelStyle style = new Label.LabelStyle();
+		style.background = new TextureRegionDrawable(new TextureRegion(GDefence.getInstance().assetLoader.get("cell.png", Texture.class)));
+		style.font = FontLoader.amountFont;
+//        style.fontColor = Color.BLACK;
+
+		amount = new Label(slot.getAmount() + "", style);
+		amount.setSize(22, 22);
 		addActor(amount);
 		//do align right //TODO
 		amount.setAlignment(Align.center);
-//		addTooltip();
+		updateAmount();
 	}
 
     @Override
@@ -105,7 +116,15 @@ public class SlotActor extends ImageButton implements SlotListener {
 	@Override
 	public void hasChanged(AbstractSlot slot) {
 		setStyle(createStyle(skin, slot.getPrototype()));
-		amount.change();
+		updateAmount();
+	}
+	private void updateAmount(){
+		if(slot.getAmount() > 1){
+			amount.setText("" + slot.getAmount());
+			amount.setVisible(true);
+		}else {
+			amount.setVisible(false);
+		}
 	}
 
 
