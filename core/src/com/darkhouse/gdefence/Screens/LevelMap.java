@@ -224,7 +224,7 @@ public class LevelMap extends AbstractScreen {
 
 
 
-        logger = new FPSLogger();
+//        logger = new FPSLogger();
     }
 
     public void init(){
@@ -365,7 +365,7 @@ public class LevelMap extends AbstractScreen {
 //            stage.act(delta);
 //            }
         }
-        logger.log();
+//        logger.log();
         level.render(batch);
         //drawNextWavePanel(delta, batch);
         //drawHpMpBar();

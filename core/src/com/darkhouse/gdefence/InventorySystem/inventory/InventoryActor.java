@@ -33,7 +33,7 @@ import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 
 
 public class InventoryActor extends Window {
-	protected Array<SlotActor> actorArray;
+	public Array<SlotActor> actorArray;
 	protected Inventory inventory;
 	private int rowNumber;
 	private int rows;
@@ -99,6 +99,17 @@ public class InventoryActor extends Window {
 			a.notifyListeners();
 		}
 	}
+
+	public void update(Inventory newInv){
+		clear();
+		initCells(skin, newInv);
+		init();
+	}
+	public void flush(){
+	    for (SlotActor a:actorArray){
+	        a.getSlot().takeAll();
+        }
+    }
 
 	protected void setDefaults(){
 		setPosition(100, 250);

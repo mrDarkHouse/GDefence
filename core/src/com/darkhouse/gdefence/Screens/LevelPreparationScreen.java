@@ -50,6 +50,8 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         //System.out.println(saveInventory.getSlots());
     }
     public void flush(){
+        preparationSpellInventoryActor.flush();
+        preparationTowerInventoryActor.flush();
 //        saveInventory = null;
 //        inventoryActor.flush();
     }
@@ -151,6 +153,19 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
 //        saveInventory[0] = new Inventory(User.getTowerInventory());
 //        saveInventory[1] = new Inventory(User.getSpellInventory());
 //        saveInventory[2] = new Inventory(User.getDetailInventory());
+
+        saveInventory = new Inventory[3];
+        saveInventory[0] = new Inventory(User.getTowerInventory());
+        saveInventory[1] = new Inventory(User.getSpellInventory());
+        saveInventory[2] = new Inventory(User.getDetailInventory());
+
+        inventoryActor.getActor(0).update(saveInventory[0]);
+        inventoryActor.getActor(1).update(saveInventory[1]);
+        inventoryActor.getActor(2).update(saveInventory[2]);
+
+        inventoryActor.getActor(0).addFastMoving(preparationTowerInventoryActor.getInventory());
+        inventoryActor.getActor(1).addFastMoving(preparationSpellInventoryActor.getInventory());
+
         inventoryActor.notifyListeners();
         preparationTowerInventoryActor.notifyListeners();
         preparationSpellInventoryActor.notifyListeners();
@@ -158,7 +173,8 @@ public class LevelPreparationScreen extends AbstractCampainScreen{
         startButton.clearListeners();
         startButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                GDefence.getInstance().setScreen(new LevelLoadingScreen(level, preparationTowerInventoryActor.getInventory(),
+                Inventory s = new Inventory(preparationTowerInventoryActor.getInventory());
+                GDefence.getInstance().setScreen(new LevelLoadingScreen(level, s,
                         preparationSpellInventoryActor.getInventory()));
                 return true;
             }

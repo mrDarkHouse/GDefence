@@ -234,7 +234,7 @@ public class GDefence extends Game {
 
 	}
     public void log(String s){
-        System.out.println("LOG: " + s);
+//        System.out.println("LOG: " + s);
     }
 
 
