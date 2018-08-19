@@ -15,7 +15,7 @@ public class Bridge extends WalkableMapTile/* implements Walkable*/{
     private Way endWay1;
     private Way endWay2;
     public Texture[] textures;
-//    public Texture texture1; //oh shit oh shit IT'S PUBLIC
+//    public Texture texture1;
 //    public Texture texture2;
     private TargetType applyMobs;
 
@@ -175,7 +175,7 @@ public class Bridge extends WalkableMapTile/* implements Walkable*/{
                 return w;
             }
 
-            Way w = counter == toAct ? endWay2 : endWay1;//2:1 or 1:2 ???
+            Way w = calculateWay();
 
 //        switch (inputWay){
 //            case LEFT:
@@ -191,20 +191,7 @@ public class Bridge extends WalkableMapTile/* implements Walkable*/{
 //                w = counter%toAct == 0? Way.RIGHT:Way.LEFT;
 //                break;
 //        }
-            if (counter < toAct) {
-                counter++;
-                if (counter == toAct){
-                    if (state < 1) state++;
-                    else state = 0;
-//                    setRegion(textures[state]);
-                }
-            } else {
-                counter = 0;
-                if (state < 1) state++;
-                else state = 0;
-//                setRegion(textures[state]);
-            }
-            setRegion(textures[state]);
+            switchTurn();
 
 
 //            updateTexture();//pre level not need //TODO
@@ -212,4 +199,31 @@ public class Bridge extends WalkableMapTile/* implements Walkable*/{
         }
         return null;
     }
+    protected Way calculateWay(){
+        return counter == toAct ? endWay2 : endWay1;//2:1 or 1:2 ???
+    }
+
+    protected void switchTurn(){
+        if (counter < toAct) {
+            counter++;
+            if (counter == toAct){
+                if (state < 1) state++;
+                else state = 0;
+//                    setRegion(textures[state]);
+            }
+        } else {
+            counter = 0;
+            if (state < 1) state++;
+            else state = 0;
+//                setRegion(textures[state]);
+        }
+        setRegion(textures[state]);
+    }
+
+
+
+
+
+
+
 }

@@ -140,6 +140,7 @@ public abstract class MapTile extends GDSprite{
                 switch (info.length){
                     case 1: return new Road();
                     case 2: return new Road(TargetType.values()[Integer.parseInt(info[1])]);
+                    default:throw new IllegalArgumentException("Wrong argument size, your: " + info.length);
                 }
 //                return new Road();
 //            case 19:
@@ -154,6 +155,7 @@ public abstract class MapTile extends GDSprite{
 //                    case 4:return new Turn(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])], true, TargetType.values()[Integer.parseInt(info[3])]);
                     case 6:return new Turn(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
                             Way.values()[Integer.parseInt(info[3])], Way.values()[Integer.parseInt(info[4])], TargetType.values()[Integer.parseInt(info[5])]);
+                    default:throw new IllegalArgumentException("Wrong argument size, your: " + info.length);
                 }
 
 //                return new Turn(null, Way.values()[Integer.parseInt(info[1])], false, TargetType.values()[Integer.parseInt(info[2])]);
@@ -179,22 +181,28 @@ public abstract class MapTile extends GDSprite{
                     case 6: return new Bridge(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
                             Way.values()[Integer.parseInt(info[3])], TargetType.values()[Integer.parseInt(info[4])], Integer.parseInt(info[5]));
                     case 3: return new Bridge(TargetType.values()[Integer.parseInt(info[1])],Integer.parseInt(info[2]));
+                    default:throw new IllegalArgumentException("Wrong argument size, your: " + info.length);
                 }
 //                return new Bridge(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
 //                        Way.values()[Integer.parseInt(info[3])], TargetType.values()[Integer.parseInt(info[4])],Integer.parseInt(info[5]));
 //            case 19:
 //                return new WaterRoad(Way.values()[Integer.parseInt(info[1])]);
+            case 25:
+                return new Door(Way.values()[Integer.parseInt(info[1])], Way.values()[Integer.parseInt(info[2])],
+                        Way.values()[Integer.parseInt(info[3])], TargetType.values()[Integer.parseInt(info[4])]);
             case 50:
                 return new Decor(Integer.parseInt(info[1]));
             case 60:
                 switch (info.length) {
                     case 3:return new Portal(Way.values()[Integer.parseInt(info[1])], Integer.parseInt(info[2]));
                     case 5:return new Portal(Way.values()[Integer.parseInt(info[1])], Integer.parseInt(info[2]), Integer.parseInt(info[3]), Integer.parseInt(info[4]));
+                    default:throw new IllegalArgumentException("Wrong argument size, your: " + info.length);
                 }
             case 80:
                 switch (info.length){
 //                    case 2:return new Spawn(TargetType.values()[Integer.parseInt(info[1])]);
                     case 3:return new Spawn(Way.values()[Integer.parseInt(info[1])], TargetType.values()[Integer.parseInt(info[2])]);
+                    default:throw new IllegalArgumentException("Wrong argument size, your: " + info.length);
                 }
             case 99:
                 return new Castle();

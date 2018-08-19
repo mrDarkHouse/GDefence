@@ -50,6 +50,7 @@ public class Tower extends Effectable implements DamageSource{
     private Mob target;
     //private Texture texturePath;
     private Circle attackRange;
+    private Laser laser;
 //    private Texture attackRangeTexture;
 
     private TowerTooltip tooltip;
@@ -153,6 +154,11 @@ public class Tower extends Effectable implements DamageSource{
         this.speed = towerPrototype.getSpeed();
 
         preShotTime = getAttackSpeedDelay(speed + bonusSpeed);//for momental shot
+
+        if(getTowerPrototype().getPrototype().getAttackType() == AttackType.laser){
+            laser = new Laser(this);
+        }
+
 //        this.speedDelay = getAttackSpeedDelay(speed);
     }
     public void init(Map map){
@@ -161,6 +167,9 @@ public class Tower extends Effectable implements DamageSource{
         initAbilities();
         tooltip = new TowerTooltip(this, GDefence.getInstance().assetLoader.getSkin());
         addListener(new TooltipListener(tooltip, true));
+        if(getTowerPrototype().getPrototype().getAttackType() == AttackType.laser) {
+            Map.lasers.add(laser);
+        }
     }
 
     private void initAbilities(){
@@ -412,8 +421,20 @@ public class Tower extends Effectable implements DamageSource{
 
     private void shot(Mob target){
         //target.hit(towerPrototype.getDmg());
-        Projectile p = new Projectile(this, this.getCenter(), target, true);
-        Map.projectiles.add(procAfteHitAbilities(p));
+        switch (getTowerPrototype().getPrototype().getAttackType()){
+            case projectile:
+                Projectile p = new Projectile(this, this.getCenter(), target, true);
+                Map.projectiles.add(procAfteHitAbilities(p));
+                break;
+            case laser:
+//                Laser l = new Laser(this, target);
+                laser.setTarget(target);
+                break;
+            case spray:
+
+                break;
+        }
+
     }
 
 //    public void hitTarget(Mob target, boolean isMain){

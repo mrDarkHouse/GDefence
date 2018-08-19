@@ -17,6 +17,7 @@ import com.darkhouse.gdefence.Level.Loader.MapLoader;
 import com.darkhouse.gdefence.Level.Path.*;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Level.Mob.Way;
+import com.darkhouse.gdefence.Level.Tower.Laser;
 import com.darkhouse.gdefence.Level.Tower.Projectile;
 import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Level.Wave;
@@ -64,6 +65,7 @@ public class Map {
 //    }
 
     public static List<Projectile> projectiles;
+    public static List<Laser> lasers;
 
     private int x;
     private int y;
@@ -368,6 +370,7 @@ public class Map {
 
     public Map(final int number, int x, int y, int cellSize) {
         projectiles = new ArrayList<Projectile>();//dirty code
+        lasers = new ArrayList<Laser>();//no mne kak to poebat
         initMap(number);
         this.x = x;
         this.y = y;
@@ -782,10 +785,15 @@ public class Map {
 //        Gdx.gl.glLineWidth(1);
         batch.begin();
         List<Projectile> tmp = new CopyOnWriteArrayList<Projectile>(projectiles);
+        List<Laser> tmp2 = new CopyOnWriteArrayList<Laser>(lasers);
 
         for (Projectile p:tmp){
             p.draw(batch, 1);
         }
+        for (Laser l:tmp2){
+            l.draw(batch, 1);
+        }
+
 
         if(isBuild){
             drawBuildGrid(batch);
@@ -803,7 +811,7 @@ public class Map {
     public void physic(float delta){
         // Iterator<Projectile> it = projectiles.iterator();
         List<Projectile> tmp = new CopyOnWriteArrayList<Projectile>(projectiles);
-
+        List<Laser> tmp2 = new CopyOnWriteArrayList<Laser>(lasers);
 //        while(it.hasNext()){
 //            Projectile p = it.next();
 //            p.act(delta);
@@ -811,6 +819,9 @@ public class Map {
 //        }
         for (Projectile p:tmp){
             p.act(delta);
+        }
+        for (Laser l:tmp2){
+            l.act(delta);
         }
     }
 

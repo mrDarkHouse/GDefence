@@ -49,13 +49,53 @@ public class CampainMap extends AbstractCampainScreen {
         public PagedMap(int number) {
             currentPage = 0;
             pages = new Page[number];
-            pages[0] = new Page(6, 1, "forest");
-            pages[1] = new Page(6, pages[0].getLastButtonsInt(), "desert");
-            pages[2] = new Page(5, pages[1].getLastButtonsInt(), "lake");
-            pages[3] = new Page(5, pages[2].getLastButtonsInt(), "space");
+            pages[0] = new Page(10, 1, "forest"){
+                @Override
+                public void initActors() {
+                    levels[0].setPosition(100, 300);
+                    levels[1].setPosition(220, 340);
+                    levels[2].setPosition(440, 270);
+                    levels[3].setPosition(670, 250);
+                    levels[4].setPosition(810, 300);
+                    levels[5].setPosition(1000, 260);
+
+                    levels[6].setPosition(320, 170);
+                    levels[7].setPosition(470, 130);
+
+                    levels[8].setPosition(550, 420);
+                    levels[9].setPosition(650, 440);
+
+                    link = new Link(new int[][]{
+                            {0, 1, 2, 3, 4, 5},
+                            {1, 6, 7},
+                            {2, 8, 9}
+                    });
+                }
+            };
+            pages[1] = new Page(1, pages[0].getLastButtonsInt(), "desert") {
+                @Override
+                public void initActors() {
+
+                    link = new Link(new int[][]{});
+                }
+            };
+            pages[2] = new Page(1, pages[1].getLastButtonsInt(), "lake") {
+                @Override
+                public void initActors() {
+                    link = new Link(new int[][]{});
+
+                }
+            };
+            pages[3] = new Page(1, pages[2].getLastButtonsInt(), "space") {
+                @Override
+                public void initActors() {
+
+                    link = new Link(new int[][]{});
+                }
+            };
             for (Page p:pages){
                 addActor(p);
-                addActor(new Link(p));
+//                addActor(new Link(p));
             }
 //            addActor(pages[0]);
 //            addActor(pages[1]);
@@ -120,44 +160,66 @@ public class CampainMap extends AbstractCampainScreen {
             }
         }
     }
-    private class Link extends Actor{
-        private ShapeRenderer sr;
-        private Page p;
 
-        private Link(Page p) {
-            this.p = p;
-            sr = new ShapeRenderer();
-            sr.setColor(Color.BLACK);
-        }
+    private abstract class Page extends WidgetGroup{
+//        private boolean isLocked;
 
-        @Override
-        public void draw(Batch batch, float parentAlpha) {
-//            super.draw(batch, parentAlpha);
-            if(!p.isVisible()) return;
-            batch.end();
-            sr.begin(ShapeRenderer.ShapeType.Filled);
-            sr.setProjectionMatrix(camera.combined);
-//            Gdx.gl.glLineWidth(6);
-            for (int i = 0; i < /*pagedMap.getCurrentPage().levels.length */p.levels.length; i++){
-                LevelButton l = p.levels[i];
-                if(l.getNumber() + 1 != p.getLastButtonsInt()){
-                    sr.rectLine(l.getX() + l.getWidth(), l.getY() + l.getHeight()/2, p.levels[i + 1].getX(),
-                            p.levels[i + 1].getY() + p.levels[i + 1].getWidth()/2, 6);
-                }
+        protected class Link extends Actor{
+            private ShapeRenderer sr;
+//            private Page p;
+            private int[][] actors;
+
+            private Link(int[][] actors) {
+//                this.p = p;
+//            actors = new Actor[2];
+//            actors[0] = a1;
+//            actors[1] = a2;
+                this.actors = actors;
+                sr = new ShapeRenderer();
+                sr.setColor(Color.BLACK);
             }
+
+            @Override
+            public void draw(Batch batch, float parentAlpha) {
+//            super.draw(batch, parentAlpha);
+
+                if(!Page.this.isVisible()) return;
+                batch.end();
+                sr.begin(ShapeRenderer.ShapeType.Filled);
+                sr.setProjectionMatrix(camera.combined);
+//            Gdx.gl.glLineWidth(6);
+//            for (int i = 0; i < /*pagedMap.getCurrentPage().levels.length */p.levels.length; i++){
+//                LevelButton l = p.levels[i];
+//                if(l.getNumber() + 1 != p.getLastButtonsInt()){
+//                    sr.rectLine(l.getX() + l.getWidth(), l.getY() + l.getHeight()/2, p.levels[i + 1].getX(),
+//                            p.levels[i + 1].getY() + p.levels[i + 1].getWidth()/2, 6);
+//                }
+//            }
 
 //            sr.rectLine(getX() + table.getX() + r1.getX() + r1.getWidth()/2, getY() + table.getY() + r1.getY(),
 //                    getX() + table.getX() + r2.getX() + r2.getWidth()/2, getY() + table.getY() + r2.getY() + r2.getHeight(), 3);
 
-            sr.end();
-            batch.begin();
+                for (int i = 0; i < actors.length; i++){
+                    for (int j = 0; j < actors[i].length - 1; j++){
+                        Actor a1 = Page.this.levels[actors[i][j]];
+                        Actor a2 = Page.this.levels[actors[i][j + 1]];
+
+                        sr.rectLine(a1.getX() + a1.getWidth(), a1.getY() + a1.getHeight()/2,
+                                a2.getX(), a2.getY() + a2.getHeight()/2, 6);
+                    }
+                }
+//            sr.rectLine(actors[0].getX() + actors[0].getWidth(), actors[0].getY() + actors[0].getHeight()/2,
+//                    actors[1].getX(), actors[1].getY() + actors[1].getWidth()/2, 6);
+
+
+                sr.end();
+                batch.begin();
+            }
         }
-    }
-    private class Page extends WidgetGroup{
-//        private boolean isLocked;
 
         private int buttons;
         private int firstButtonInt;
+        protected Link link;
 
         private Label name;
         private String text;
@@ -166,7 +228,7 @@ public class CampainMap extends AbstractCampainScreen {
             return firstButtonInt + buttons;
         }
 
-        private LevelButton[] levels;
+        protected LevelButton[] levels;
 
         @Override
         public void setVisible(boolean visible) {
@@ -184,10 +246,11 @@ public class CampainMap extends AbstractCampainScreen {
             name = new Label(GDefence.getInstance().assetLoader.getWord(text), FontLoader.generateStyle(0, 70, Color.GRAY, 5, Color.BLACK));
 
             levels = new LevelButton[buttons];
-            int borderSize = GDefence.WIDTH/8;
-            int sizeBetween = GDefence.WIDTH/42;
+//            int borderSize = GDefence.WIDTH/8;
+//            int sizeBetween = GDefence.WIDTH/42;
             int levelButtonsSize[] = new int[2];
-            levelButtonsSize[0] = (GDefence.WIDTH - (borderSize * 2 + sizeBetween * (buttons - 1))) / buttons;
+//            levelButtonsSize[0] = (GDefence.WIDTH - (borderSize * 2 + sizeBetween * (buttons - 1))) / buttons;
+            levelButtonsSize[0] = 80;
             levelButtonsSize[1] = levelButtonsSize[0];
 
 
@@ -199,15 +262,21 @@ public class CampainMap extends AbstractCampainScreen {
 //                    levels[i].lock();
 //                }
                 levels[i].setSize(levelButtonsSize[0], levelButtonsSize[1]);
-                levels[i].setPosition(borderSize + (levelButtonsSize[0] + sizeBetween)*i,
-                        GDefence.HEIGHT/2 - GDefence.HEIGHT/8);
+//                levels[i].setPosition(borderSize + (levelButtonsSize[0] + sizeBetween)*i,
+//                        GDefence.HEIGHT/2 - GDefence.HEIGHT/8);
 
                 addActor(levels[i]);
             }
-            name.setPosition(GDefence.WIDTH/2 - name.getWidth()/2, GDefence.HEIGHT/2 + levels[0].getHeight() - 20);
+            initActors();
+
+            name.setPosition(GDefence.WIDTH/2 - name.getWidth()/2, GDefence.HEIGHT - topPadSize - 100/*/2 + levels[0].getHeight() - 20*/);
 //            updateLockedLevels();
 
+            addActor(link);
         }
+
+        public abstract void initActors();
+
         public boolean isLocked(){
             return levels[0].isLocked();
         }
@@ -230,14 +299,6 @@ public class CampainMap extends AbstractCampainScreen {
     public UserPanel getUserPanel() {
         return userPanel;
     }
-
-    //private GDefence mainClass;
-
-    //private SpriteBatch batch;
-    //private ShapeRenderer shape;
-
-    //private Stage stage;
-
 
     public CampainMap() {
         super("campain");
