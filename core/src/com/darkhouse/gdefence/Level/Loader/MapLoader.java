@@ -94,8 +94,8 @@ public class MapLoader {
 //            loadFile = new File(u.toURI());
 //            File sdcard = System;
 //            System.out.println(sdcard.getAbsolutePath());
-            System.out.println("dadada" + Gdx.files.getExternalStoragePath());
-            System.out.println("dododo" + Gdx.files.getLocalStoragePath());
+//            System.out.println("dadada" + Gdx.files.getExternalStoragePath());
+//            System.out.println("dododo" + Gdx.files.getLocalStoragePath());
             loadFile = new File("Maps" + File.separator + "Map" + map + ".properties");
         }catch (Exception e){
             Gdx.app.log("Error", e.toString());
@@ -106,7 +106,7 @@ public class MapLoader {
     public MapTile[][] loadMap(){
         try {
             Properties prop = new Properties();
-            System.out.println();
+//            System.out.println();
             FileInputStream fs = new FileInputStream(loadFile);
             prop.load(fs);
 

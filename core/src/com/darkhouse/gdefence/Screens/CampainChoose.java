@@ -113,6 +113,7 @@ public class CampainChoose extends AbstractMenuScreen{
         d = new Dialog("", GDefence.getInstance().assetLoader.getSkin(), "dialog"){
 
             {
+                setMovable(false);
 //                I18NBundle b = GDefence.getInstance().assetLoader.get("Language/text", I18NBundle.class);
                 AssetLoader a = GDefence.getInstance().assetLoader;
                 text(a.getWord("campain_sure")).padTop(250);

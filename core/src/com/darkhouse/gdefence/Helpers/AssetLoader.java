@@ -277,7 +277,7 @@ public class AssetLoader extends AssetManager{
 
         //
         load("icons/icons.atlas", TextureAtlas.class);
-        load("Tower/towers.atlas", TextureAtlas.class);
+//        load("Tower/towers.atlas", TextureAtlas.class);
 
         load("backButton.png", Texture.class);
         load("cell.png", Texture.class);
@@ -980,11 +980,11 @@ public class AssetLoader extends AssetManager{
     }
 
 
-    public TextureRegion getTowerTexture(String name){
-        TextureAtlas atlas = get("Tower/towers.atlas", TextureAtlas.class);
+//    public TextureRegion getTowerTexture(String name){
+//        TextureAtlas atlas = get("Tower/towers.atlas", TextureAtlas.class);
 //        System.out.println(name);
-        return atlas.findRegion(name);
-    }
+//        return atlas.findRegion(name);
+//    }
     public ImageButton.ImageButtonStyle generateImageButtonSkin(TextureRegion t){
         ImageButton.ImageButtonStyle s = new ImageButton.ImageButtonStyle();
         s.up = new TextureRegionDrawable(t);
