@@ -282,7 +282,7 @@ public class Level {
         }
 
         GDefence.getInstance().user.setLevelCompleted(number);
-//        GDefence.getInstance().user.openLevel(number + 1);
+        GDefence.getInstance().user.openLevel(number + 1);
 
 
         GDefence.getInstance().setScreen(new LevelEndScreen(true, getStatManager()));

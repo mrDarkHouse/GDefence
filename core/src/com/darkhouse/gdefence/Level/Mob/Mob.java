@@ -53,10 +53,10 @@ public class Mob extends Effectable{
 //        Seal       ("seal",       MoveType.ground, 300,  4, 60,  1,  1),
 //        PolarDeer  ("polardeer",  MoveType.ground, 400,  3, 80,  3,  3),
 //
-        Soldier    ("soldier",    MoveType.ground, 350,  2, 50,  1,  1),
-        Crusader   ("crusader",   MoveType.ground, 450,  5, 60,  2,  2, new CommandFaith.P(300, 30, 3)),
-        Medic      ("medic",      MoveType.ground, 100,  2, 60,  2,  3, new HealingAura.P(200, 1, 20)),
-        Tank       ("tank",       MoveType.ground, 800,  8, 50,  4,  5, new SpellImmune.P(), new StrongSkin.P(10, 2)),
+//        Soldier    ("soldier",    MoveType.ground, 350,  2, 50,  1,  1),
+//        Crusader   ("crusader",   MoveType.ground, 450,  5, 75,  2,  2),
+//        Medic      ("medic",      MoveType.ground, 100,  2, 60,  2,  1, new HealingAura.P(200, 1, 5)),
+//        Tank       ("tank",       MoveType.ground, 800,  8, 50,  4,  5),
 
         UFO         ("ufo",           MoveType.ground, 500,  3, 80,  2,  2, new SpellImmune.P()),
         SpaceShip   ("spaceShip",     MoveType.ground, 650,  7, 50,  3,  3, new Sprint.P(7, 3, 40, "sprint2", "Mobs/spaceShipBurst")),

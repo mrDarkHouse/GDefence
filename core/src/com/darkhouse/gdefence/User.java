@@ -15,7 +15,9 @@ import com.darkhouse.gdefence.Objects.*;
 import com.darkhouse.gdefence.Screens.BottomPanel.TowerMap;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 public class User {
     public int getTotalExp() {
@@ -81,14 +83,6 @@ public class User {
     public void setLevelCompleted(int numberLevel) {
         if(numberLevel > 0) {
             levelsCompleted[numberLevel - 1] = true;//array
-//            openLevel(numberLevel + 1);
-            if (levelOpenOrder != null) {
-                for (int i = 0; i < levelOpenOrder[numberLevel - 1].size; i++) {
-//                System.out.println(levelOpenOrder[]);
-                    openLevel(levelOpenOrder[numberLevel - 1].get(i) + 1);
-                }
-            }
-
         }else {
             Gdx.app.log("Error", "Wrong level number");
         }
@@ -102,9 +96,6 @@ public class User {
     private int currentMap;
     private boolean[] levelsCompleted = new boolean[30];////
     private boolean[] levelsAvailable = new boolean[30];////
-
-    private Array<Integer>[] levelOpenOrder = new Array[30];
-
 
     private String getLevelsCompletedSavecode(){
         String s = "";
@@ -233,7 +224,7 @@ public class User {
 
     public static void store(Array<? extends GameObject> objects){
         if (objects.size == 0) return;
-//        System.out.println(objects.first().getClass());
+        System.out.println(objects.first().getClass());
         if(objects.first().getPrototype() instanceof ItemEnum.Tower){
             getTowerInventory().store(objects);
         }else if(objects.first() instanceof SpellObject){
@@ -456,39 +447,6 @@ public class User {
 
         openRecipes();
     }
-    private void initLevelsOpenOrder(){
-        try {
-            File loadFile = new File("Maps/OpenOrder.txt");
-            Scanner sc = new Scanner(loadFile);
-//            levelOpenOrder = new Array<Integer>[30];
-            while (sc.hasNextLine()){
-                String s = sc.nextLine();
-                String[] arg = s.split("=");
-                if(arg.length > 1) {
-                    String[] open = arg[1].split(",");
-                    levelOpenOrder[Integer.parseInt(arg[0])] = new Array<Integer>();
-                    for (String anOpen : open) {
-                        levelOpenOrder[Integer.parseInt(arg[0])].add(Integer.parseInt(anOpen));
-                    }
-                }
-            }
-//            System.out.println(Arrays.toString(levelOpenOrder));
-
-
-//            Properties prop = new Properties();
-//            FileInputStream fs = new FileInputStream(loadFile);
-//            prop.load(fs);
-
-
-
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 
     private void unlockRecipe(ItemEnum.Tower t){
         if(getOpenType(t) == RecipeType.locked) openedTowers.put(t, RecipeType.canOpen);
@@ -666,7 +624,6 @@ public class User {
 
         initResearches();
         initOpenedTowers();
-        initLevelsOpenOrder();
     }
 //    public void init(){//
 //        File f = new File("Save/UserSave.properties");
@@ -674,7 +631,7 @@ public class User {
 //        else initNewUser();
 //    }
 
-    public boolean isDebug = true;
+    public boolean isDebug = false;
 
     public void initNewUser(){
         GDefence.getInstance().log("Init new User");
@@ -715,9 +672,6 @@ public class User {
             openLevel(3);
             openLevel(4);
             openLevel(5);
-            openLevel(6);
-            openLevel(7);
-            openLevel(8);
 
 
 //            spellInventory.store(new EchoSmash.P(5, 5, 5, 2f, 100, new EchoSmash.G(5, 1f, new int[]{2, 2, 2})));

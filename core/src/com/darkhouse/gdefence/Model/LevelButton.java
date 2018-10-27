@@ -30,7 +30,7 @@ public class LevelButton extends TextButton {
     }
 
     public LevelButton(int number) {
-        super("", GDefence.getInstance().assetLoader.getCampainLevelStyle());
+        super("" + number, GDefence.getInstance().assetLoader.getCampainLevelStyle());
         this.number = number;
         load();
     }
