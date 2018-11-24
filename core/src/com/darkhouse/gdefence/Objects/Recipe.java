@@ -29,6 +29,11 @@ public class Recipe extends DetailObject{
         return tower.getRecipeCost();
     }
 
+    @Override
+    public int getSellCost() {
+        return getGlobalCost()/2;
+    }
+
     public Array<TowerObject> getComponents() {
         return components;
     }

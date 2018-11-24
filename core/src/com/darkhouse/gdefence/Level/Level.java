@@ -37,6 +37,15 @@ public class Level {
         return type;
     }
 
+    private static float timeMultiplayer = 1f;
+
+    public static float getTimeMultiplayer() {
+        return timeMultiplayer;
+    }
+
+    public static void setTimeMultiplayer(float timeMultiplayer) {
+        Level.timeMultiplayer = timeMultiplayer;
+    }
 
     private int mobLimit;//for non classic types
     private float timeLimit;
@@ -431,7 +440,7 @@ public class Level {
 //    }
 
     private void updateRoundTimer(float delta) {
-        timeBetweenWaves[currentWave] -= delta;
+        timeBetweenWaves[currentWave] -= delta*Level.getTimeMultiplayer();
         //System.out.println(timeBetweenWaves[currentWave]);
 
         if(timeBetweenWaves[currentWave] <= 0){

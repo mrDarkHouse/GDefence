@@ -26,10 +26,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.darkhouse.gdefence.GDefence;
+import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.Helpers.FontLoader;
 import com.darkhouse.gdefence.Level.Ability.Spell.*;
 import com.darkhouse.gdefence.Level.Ability.Tower.*;
 import com.darkhouse.gdefence.Level.Tower.AttackType;
+import com.darkhouse.gdefence.Level.Tower.Tower;
 import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Objects.TowerObject;
 import com.darkhouse.gdefence.User;
@@ -335,7 +337,13 @@ public enum ItemEnum {;
 
         @Override
         public String getTooltip() {
-            String s = "";//"Damage: " + getDmg() + System.getProperty("line.separator")
+//            String s = "";
+            AssetLoader l = GDefence.getInstance().assetLoader;
+            String s = l.getWord("dmg") + ": " + getDmg() + System.getProperty("line.separator")
+                    + l.getWord("speed") + ": " + getSpeed() + "(" + com.darkhouse.gdefence.Level.Tower.Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
+                    + l.getWord("range") + ": " + getRange() + System.getProperty("line.separator")
+                    + l.getWord("energyCost") + ": " + getCost();// + System.getProperty("line.separator");
+            //"Damage: " + getDmg() + System.getProperty("line.separator")
 //                    + "Attack range: " + getRange() + System.getProperty("line.separator")
 //                    + "Attack speed: " + getSpeed() + "(" + com.darkhouse.gdefence.Level.Tower.Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
 //                    + "Energy cost: " + getCost() + System.getProperty("line.separator");
@@ -345,6 +353,7 @@ public enum ItemEnum {;
 //                s += a.getName();
 //                s += a.getGemStat();
 //            }
+
             return s;
         }
 

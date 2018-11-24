@@ -15,22 +15,27 @@ import com.darkhouse.gdefence.Level.Wave;
 import com.darkhouse.gdefence.Screens.LevelMap;
 
 public class CurrentWaveInfoPanel extends Table{
+    private Label currWaveL;
     private Label mobsCount;// = new Label("Mobs left: " + Wave.mobs.size, GDefence.getInstance().assetLoader.getCurrentInfoPanelSkin());
     private NextWaveTimer timer;
     private String mobsLeft;
+    private String currWave;
 
 
     public CurrentWaveInfoPanel(NextWaveTimer t) {
         this.timer = t;
-        mobsLeft = GDefence.getInstance().assetLoader.getWord("mobsLeft");
+        AssetLoader l = GDefence.getInstance().assetLoader;
+        mobsLeft = l.getWord("mobsLeft");
+        currWave = l.getWord("currentWave") + " ";//TODO same for multiwave levels;
         mobsCount = new Label(mobsLeft + ": " + Wave.mobs.size, GDefence.getInstance().assetLoader.getCurrentInfoPanelSkin());
-
+        currWaveL = new Label(currWave, GDefence.getInstance().assetLoader.getCurrentInfoPanelSkin());
         init();
     }
 
     private void init() {
         pad(20);
         setBackground(GDefence.getInstance().assetLoader.getSkin().getDrawable("info-panel"));
+        add(currWaveL).row();
         add(mobsCount);
 
         pack();
@@ -49,6 +54,7 @@ public class CurrentWaveInfoPanel extends Table{
     @Override
     public void act(float delta) {
         super.act(delta);
+        currWaveL.setText(currWave + (LevelMap.getLevel().currentWave + 1) + "/" + LevelMap.getLevel().numberWaves);
         mobsCount.setText(mobsLeft + ": " + (LevelMap.getLevel().getCurrentWave().getMobsToSpawn().size + Wave.mobs.size));
 
     }

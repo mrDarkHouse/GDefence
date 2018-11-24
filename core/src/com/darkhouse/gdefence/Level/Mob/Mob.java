@@ -415,7 +415,7 @@ public class Mob extends Effectable{
         this.moveType = moveType;
     }
     public float getSpeed() {
-        return speed;
+        return speed*Level.getTimeMultiplayer();
     }
     public void setSpeed(float speed) {
         this.speed = speed;
@@ -749,7 +749,7 @@ public class Mob extends Effectable{
     }
 
     public void move(float delta){
-        for (int i = 0; i < speed; i++){
+        for (int i = 0; i < getSpeed(); i++){
             step(delta);
         }
     }

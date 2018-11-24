@@ -17,7 +17,7 @@ public class SellSlotSource extends SlotSource {
     @Override
     public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
         if (target instanceof SellTarget) {
-            if(payloadSlot.getLast().getGlobalCost() == 0) {
+            if(payloadSlot.getLast().getSellCost() == 0) {
                 ifNullTarget();//not sell unsellable items (spells)
                 return;
             }
@@ -26,7 +26,7 @@ public class SellSlotSource extends SlotSource {
             GameObject o = payloadSlot.getLast();
             int amount = payloadSlot.getAmount();
             if (o != null) {
-                GDefence.getInstance().user.addGold(o.getGlobalCost() * amount);
+                GDefence.getInstance().user.addGold(o.getSellCost() * amount);
             } else {
                 GDefence.getInstance().log("SellSlotSource: Item - null");
             }

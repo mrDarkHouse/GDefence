@@ -36,11 +36,16 @@ public class RecipeTooltip extends AbstractTooltip{
 
         AssetLoader l = GDefence.getInstance().assetLoader;
 
-
-        String c = FontLoader.colorString(l.getWord("cost") + ":", 9) + System.getProperty("line.separator") + recipe.getGlobalCost() + " " + GDefence.getInstance().assetLoader.getWord("gold2");
+        String i = FontLoader.colorString(recipe.getTower().getName(), 9) +
+                System.getProperty("line.separator") + recipe.getTower().getTooltip();
+        Label info = new Label(i, skin, "description");
+        String c = FontLoader.colorString(l.getWord("cost") + ":", 9) +
+                System.getProperty("line.separator") + recipe.getGlobalCost() + " " +
+                GDefence.getInstance().assetLoader.getWord("gold2");
         Label cost = new Label(c, skin, "description");
+        add(info).align(Align.left).row();
         add(cost).align(Align.left).row();
-        add(new Label(recipe.getTooltip(), skin, "description"));
+        add(new Label(recipe.getTooltip(), skin, "description")).align(Align.left);
         //setText();
 //        if(recipe.getComponents().size > 0) {
 //            if(recipe.getComponents().size == 1) {

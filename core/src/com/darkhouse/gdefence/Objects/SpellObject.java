@@ -58,6 +58,11 @@ public abstract class SpellObject extends Ability.AbilityPrototype implements Ex
         return 0;//unsellable
     }
 
+    @Override
+    public int getSellCost() {
+        return 0;//unsellable
+    }
+
     //    private int[] currentGems;
 //    private int[] maxGems;
 

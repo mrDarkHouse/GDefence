@@ -228,15 +228,15 @@ public class Tower extends Effectable implements DamageSource{
 
         if(target == null || !isInRange(target.getCenter()) || !target.isInGame()) {
             target = Mob.getMobOnMap(AttackLogic.First, this);
-            preShotTime += delta;//fix when next attack after kill has delay
+            preShotTime += delta*Level.getTimeMultiplayer();//fix when next attack after kill has delay
         }else {
 //            preShotTime += delta;
-            if(preShotTime >= getAttackSpeedDelay(speed + bonusSpeed)){//
+            if(preShotTime >= getAttackSpeedDelay(speed + bonusSpeed)/*/Level.getTimeMultiplayer()*/){//
                 if(procPreAttackAbilities(delta)) {
                     shotProjectile(target, true);
                     procPostAttackAbilities();
                 }
-            }else preShotTime += delta;
+            }else preShotTime += delta*Level.getTimeMultiplayer();
         }
 
 
@@ -404,7 +404,7 @@ public class Tower extends Effectable implements DamageSource{
             if (usePreshotAbilities()) {
                 shot(target);
             }
-            if(followMainShots) preShotTime = 0;//if true, timer to next attack dont go before shot fired
+            if(followMainShots) preShotTime = 0;//if true, timer to next attack dont start before shot fired
         }
 
     }

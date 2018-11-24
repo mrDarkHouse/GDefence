@@ -34,6 +34,7 @@ public interface GameObject extends GemGradable{
 
     /*public abstract */String getSaveCode();
     /*public abstract */int getGlobalCost();
+                        int getSellCost();
 //    public static GameObject loadSaveCode(String s){return null;}
 
 //    public void setPrototype(Item prototype) {

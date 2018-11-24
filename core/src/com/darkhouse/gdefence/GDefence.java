@@ -209,12 +209,11 @@ public class GDefence extends Game {
 		//setInputProcessor
 	}
 
-
 	public Screen setPreviousScreen(){
 		Screen currentScreen = getScreen();
 		if(currentScreen instanceof CampainMap){//only in back button
-            GDefence.getInstance().user.save();
-            GDefence.getInstance().user.flush();//empty user info in main menu
+			GDefence.getInstance().user.save();
+			GDefence.getInstance().user.flush();//empty user info in main menu
 			setScreen(campainChoose);
 		}else if(currentScreen instanceof OptionScreen){
 			setScreen(mainMenu);

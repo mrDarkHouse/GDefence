@@ -85,6 +85,11 @@ public class TowerObject implements ExpEarner, GameObject{
     }
 
     @Override
+    public int getSellCost() {
+        return prototype.getGlobalCost();//full cost
+    }
+
+    @Override
     public String getSaveCode() {
         String gemsCode = "";
         for (int i = 0; i < gemsNumber.length; i++){
@@ -301,10 +306,10 @@ public class TowerObject implements ExpEarner, GameObject{
     public String getTooltip() {
 
         AssetLoader l = GDefence.getInstance().assetLoader;
-        String s = l.getWord("dmg") + ": " + getDmg() + System.getProperty("line.separator")
+        StringBuilder s = new StringBuilder(l.getWord("dmg") + ": " + getDmg() + System.getProperty("line.separator")
                 + l.getWord("speed") + ": " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
                 + l.getWord("range") + ": " + getRange() + System.getProperty("line.separator")
-                + l.getWord("cost") + ": " + getCost() + System.getProperty("line.separator");
+                + l.getWord("energyCost") + ": " + getCost() + System.getProperty("line.separator"));
 
 //        String s = FontLoader.getOneColorButtonString(0, l.getWord("dmg"), FontLoader.RED, Color.WHITE) + ": " + getDmg() + System.getProperty("line.separator")
 //                + FontLoader.getOneColorButtonString(0, l.getWord("speed"), FontLoader.YELLOW, Color.WHITE) + ": " + getSpeed() + "(" + Tower.getAttackSpeedDelay(getSpeed()) + ")" + System.getProperty("line.separator")
@@ -314,12 +319,12 @@ public class TowerObject implements ExpEarner, GameObject{
 
 //        s += prototype.getTooltip();
         for (int i = 0; i < getAbilities().size; i++){
-            s += System.getProperty("line.separator");
+            s.append(System.getProperty("line.separator"));
             Ability.AbilityPrototype a = getAbilities().get(i);
-            s += a.getName() + " ";
-            s += a.getGemStat();
+            s.append(a.getName()).append(" ");
+            s.append(a.getGemStat());
         }
-        return s;
+        return s.toString();
     }
 
     @Override

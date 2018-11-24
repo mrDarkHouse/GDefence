@@ -29,6 +29,7 @@ import com.darkhouse.gdefence.Model.Panels.ModPanels.KillMadnessPanel;
 import com.darkhouse.gdefence.Model.Panels.NextWaveInfoPanel;
 import com.darkhouse.gdefence.Model.Panels.SpellPanel;
 import com.darkhouse.gdefence.Model.Panels.ModPanels.TimeRushPanel;
+import com.darkhouse.gdefence.Model.Panels.TimeChangePanel;
 import com.darkhouse.gdefence.Objects.SpellObject;
 import com.darkhouse.gdefence.Objects.TowerObject;
 
@@ -59,6 +60,7 @@ public class LevelMap extends AbstractScreen {
         healthBar.update();
     }
     private EnegryBar enegryBar;
+    private TimeChangePanel timeChangePanel;
 //    private AbstractPanel
     private InvasionPanel invasionPanel;
     private TimeRushPanel timeRushPanel;
@@ -220,6 +222,7 @@ public class LevelMap extends AbstractScreen {
         initPauseDialog();
         initExtraEventPanels();
         initActions();
+        initTimeChangePanel();
 
 
 
@@ -460,6 +463,15 @@ public class LevelMap extends AbstractScreen {
 //        fadeOut.setDuration(2f);
 //        fadeOut.setAlpha(0.2f);
     }
+
+    private void initTimeChangePanel(){
+        timeChangePanel = new TimeChangePanel();
+        stage.addActor(timeChangePanel);
+        timeChangePanel.init();
+
+        timeChangePanel.setPosition(700, 20);
+    }
+
     private void initSpellPanel(Inventory spells){
         Array<SpellObject> a = new Array<SpellObject>();
 //        SpellObject[] ar = new SpellObject[4];

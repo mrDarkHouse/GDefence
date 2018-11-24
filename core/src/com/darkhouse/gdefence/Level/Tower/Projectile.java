@@ -10,6 +10,7 @@ import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
 import com.darkhouse.gdefence.InventorySystem.inventory.ItemEnum;
 import com.darkhouse.gdefence.Level.Ability.Tower.Ability;
+import com.darkhouse.gdefence.Level.Level;
 import com.darkhouse.gdefence.Level.Mob.Mob;
 import com.darkhouse.gdefence.Model.GameActor;
 import com.darkhouse.gdefence.Model.Level.Map;
@@ -26,6 +27,10 @@ public class Projectile extends GameActor{
     protected Tower tower;
     protected Mob target;
     protected float speed;
+
+    public float getSpeed() {
+        return speed*Level.getTimeMultiplayer();
+    }
 
     protected float dmgMultiplayer = 1.0f;
 
@@ -85,7 +90,7 @@ public class Projectile extends GameActor{
         position.set(getX(), getY());
         targetV.set(target.getCenter().x, target.getCenter().y);
         dir.set(targetV).sub(position).nor();
-        velocity.set(dir).scl(speed);
+        velocity.set(dir).scl(getSpeed());
         movement.set(velocity).scl(delta);
         if(position.dst2(targetV) > movement.len2()){
             position.add(movement);

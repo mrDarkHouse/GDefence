@@ -118,7 +118,7 @@ public class Wave {
 
 
     private void checkToSpawn(float delta){
-        spawnDelay += delta;
+        spawnDelay += delta*Level.getTimeMultiplayer();
 
 
         if (spawnDelay >= timeSpawn && mobsToSpawn.size > 0) {
