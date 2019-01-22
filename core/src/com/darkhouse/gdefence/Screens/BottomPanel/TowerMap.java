@@ -311,6 +311,7 @@ public class TowerMap extends Window{
 //        }
 //        defaults().align(Align.center);
 
+        table.add(new Actor());
         table.add(buttons.get(0))/*.align(Align.center)*/.colspan(6).row();
 //        add(new Actor()).prefWidth(defaults().getPrefWidth()/2);
         table.add(buttons.get(21));
@@ -322,13 +323,14 @@ public class TowerMap extends Window{
         table.add(buttons.get(6)).colspan(1);
         table.add(buttons.get(7)).colspan(1);//.row();
         table.add(buttons.get(22)).colspan(1).row();
-        table.add(buttons.get(8)).colspan(2);
+        table.add(new Actor());
+        table.add(buttons.get(8)).colspan(1);
         table.add(buttons.get(12)).colspan(2).row();
         table.add(buttons.get(9));
         table.add(buttons.get(10)).colspan(2).right();
         table.add(buttons.get(11)).colspan(2).row();
         table.add(buttons.get(13)).colspan(1);
-        table.add(buttons.get(14)).colspan(2).right();
+        table.add(buttons.get(14)).colspan(2);
         table.add(buttons.get(15)).colspan(2).row();
         table.add(new Actor());
         table.add(buttons.get(16)).colspan(2).right();
