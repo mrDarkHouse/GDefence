@@ -210,7 +210,7 @@ public class GDefence extends Game {
 	}
 
 
-	public Screen setPreviousScreen(){
+	public void setPreviousScreen(){
 		Screen currentScreen = getScreen();
 		if(currentScreen instanceof CampainMap){//only in back button
             GDefence.getInstance().user.save();
@@ -229,9 +229,6 @@ public class GDefence extends Game {
 		}else if(currentScreen instanceof LevelPreparationScreen){
 			setScreen(campainMap);
 		}
-		return null;
-
-
 	}
     public void log(String s){
 //        System.out.println("LOG: " + s);
