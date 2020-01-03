@@ -122,7 +122,6 @@ public class LevelMap extends AbstractScreen {
         @Override
         protected void result (Object object){
             if (object.equals(0)) {
-                hide();
                 offPause();
             } else if (object.equals(1)){
                 Wave.mobs.clear();
@@ -273,6 +272,7 @@ public class LevelMap extends AbstractScreen {
         }
     }
     public void offPause(){
+        pauseDialog.hide();
         isPaused = false;
     }
 

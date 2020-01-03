@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 import com.darkhouse.gdefence.GDefence;
 import com.darkhouse.gdefence.Helpers.AssetLoader;
+import com.darkhouse.gdefence.InventorySystem.inventory.Target.SlotTarget;
 import com.darkhouse.gdefence.Screens.CampainMap;
 import com.darkhouse.gdefence.User;
 
@@ -167,9 +168,10 @@ public class OverallInventory extends Window{
     }
 
     public void addTarget(SlotActor a){
-        for (InventoryActor i:actors){
-            i.addAnotherTarget(a);
-        }
+        dragAndDrop.addTarget(new SlotTarget(a));
+//        for (InventoryActor i:actors){
+//            i.addAnotherTarget(a);
+//        }
     }
     public void addSlotAsTarget(DragAndDrop d){//split into 2 methods
         for (InventoryActor i:actors){
@@ -177,8 +179,6 @@ public class OverallInventory extends Window{
             i.addThisAsTarget(d);
         }
     }
-
-
 
 
 

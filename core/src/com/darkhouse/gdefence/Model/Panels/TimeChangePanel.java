@@ -17,6 +17,7 @@ public class TimeChangePanel extends AbstractPanel{
 
     public TimeChangePanel() {
 //        init();
+        Level.setTimeMultiplayer(1f);
     }
 
     public void init(){

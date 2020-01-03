@@ -67,13 +67,13 @@ public class Curdle extends MobAbility implements MobAbility.ISpawn{
             super.dispell();
         }
     }
-    private class CurdleBuff extends Effect<Mob> implements IGetDmg{
+    private class CurdleBuff extends Effect<Mob> implements IAfterGetDmg{
         private float duration;
         private float threshold;
         private Texture[] curdleTexture;
 
         public CurdleBuff(float duration, float threshold, Texture[] curdleTexture) {
-            super(true, false, -1, IGetDmg.class);
+            super(true, false, -1, IAfterGetDmg.class);
             this.duration = duration;
             this.threshold = threshold;
             this.curdleTexture = curdleTexture;
@@ -85,12 +85,11 @@ public class Curdle extends MobAbility implements MobAbility.ISpawn{
         }
 
         @Override
-        public float getDmg(DamageSource source, DamageType type, float dmg) {
+        public void afterGetDmg() {
             if(owner.getHealthPercent() < threshold) {
                 owner.addEffect(new CurdleInvulnerable(duration, curdleTexture).setOwner(owner));
                 owner.deleteEffect(CurdleBuff.class);//once usable
-                return 0;
-            }else return dmg;
+            }
         }
     }
 

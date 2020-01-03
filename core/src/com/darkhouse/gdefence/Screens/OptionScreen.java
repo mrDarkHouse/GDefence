@@ -167,9 +167,9 @@ public class OptionScreen extends AbstractMenuScreen {
                 pref.flush();
 
                 if(fullscreen.isChecked()) {
-//                    if(!Gdx.graphics.isFullscreen())
-////                            Display.setFullscreen(true);
-//                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                    if(!Gdx.graphics.isFullscreen())
+//                            Display.setFullscreen(true);
+                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 
                 }
 

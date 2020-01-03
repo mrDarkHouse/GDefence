@@ -25,7 +25,7 @@ public abstract class Ability {
 //        protected AbilityGrader grader;
         protected int id;
         protected String name;
-        protected String texturePath;
+//        protected String texturePath;
         protected int[] gemsNumber = new int[3];
         protected int[] gemsMax = new int[3];
         public Boost[] gemBoost = new Boost[3];

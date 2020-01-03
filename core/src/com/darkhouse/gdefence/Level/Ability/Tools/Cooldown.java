@@ -1,6 +1,8 @@
 package com.darkhouse.gdefence.Level.Ability.Tools;
 
 
+import com.darkhouse.gdefence.Level.Level;
+
 public class Cooldown{
     private float cooldown;
     private float cdCap;
@@ -35,6 +37,6 @@ public class Cooldown{
 
     public void act(float delta){
         if(cooldown - delta <= 0)cooldown = 0;
-        else cooldown -= delta;
+        else cooldown -= delta*Level.getTimeMultiplayer();
     }
 }
