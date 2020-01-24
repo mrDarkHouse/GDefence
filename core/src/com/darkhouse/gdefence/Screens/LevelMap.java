@@ -79,7 +79,7 @@ public class LevelMap extends AbstractScreen {
     }
 
     private static Level level;
-    FPSLogger logger;
+//    FPSLogger logger;
 
 //    private Level level;//must be //TODO
 //    private Map map;

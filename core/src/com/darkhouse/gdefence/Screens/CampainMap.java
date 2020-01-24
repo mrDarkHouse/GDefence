@@ -49,7 +49,7 @@ public class CampainMap extends AbstractCampainScreen {
         public PagedMap(int number) {
             currentPage = 0;
             pages = new Page[number];
-            pages[0] = new Page(10, 1, "forest"){
+            pages[0] = new Page(11, 1, "forest"){
                 @Override
                 public void initActors() {
                     levels[0].setPosition(100, 300);
@@ -61,22 +61,41 @@ public class CampainMap extends AbstractCampainScreen {
 
                     levels[6].setPosition(320, 170);
                     levels[7].setPosition(470, 130);
+                    levels[8].setPosition(630, 140);
 
-                    levels[8].setPosition(550, 420);
-                    levels[9].setPosition(650, 440);
+                    levels[9].setPosition(550, 420);
+                    levels[10].setPosition(700, 440);
 
                     link = new Link(new int[][]{
                             {0, 1, 2, 3, 4, 5},
-                            {1, 6, 7},
-                            {2, 8, 9}
+                            {1, 6, 7, 8},
+                            {2, 9, 10}
                     });
                 }
             };
-            pages[1] = new Page(1, pages[0].getLastButtonsInt(), "desert") {
+            pages[1] = new Page(12, pages[0].getLastButtonsInt(), "desert") {
                 @Override
                 public void initActors() {
+                    levels[0].setPosition(100, 300);
+                    levels[1].setPosition(280, 260);
+                    levels[2].setPosition(400, 220);
+                    levels[3].setPosition(760, 270);
+                    levels[4].setPosition(940, 310);
+                    levels[5].setPosition(1100, 280);
 
-                    link = new Link(new int[][]{});
+                    levels[6].setPosition(390, 380);
+                    levels[7].setPosition(510, 420);
+                    levels[8].setPosition(630, 440);
+
+                    levels[9].setPosition(580, 160);
+                    levels[10].setPosition(800, 180);
+                    levels[11].setPosition(920, 160);
+
+                    link = new Link(new int[][]{
+                            {0, 1, 2, 3, 4, 5},
+                            {1, 6, 7, 8, 3},
+                            {2, 9, 10, 11}
+                    });
                 }
             };
             pages[2] = new Page(1, pages[1].getLastButtonsInt(), "lake") {
@@ -103,14 +122,14 @@ public class CampainMap extends AbstractCampainScreen {
 
             next = new ImageButton(GDefence.getInstance().assetLoader.getNextButtonSkin());
             prev = new ImageButton(GDefence.getInstance().assetLoader.getPrevButtonSkin());
-            next.setPosition(1100, 200);
+            next.setPosition(1200, 200);
             next.addListener(new InputListener(){
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                     nextPage();
                     return true;
                 }
             });
-            prev.setPosition(120, 200);
+            prev.setPosition(20, 200);
             prev.addListener(new InputListener(){
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                     prevPage();
@@ -176,7 +195,7 @@ public class CampainMap extends AbstractCampainScreen {
 //            actors[1] = a2;
                 this.actors = actors;
                 sr = new ShapeRenderer();
-                sr.setColor(Color.BLACK);
+                sr.setColor(Color.FIREBRICK);
             }
 
             @Override
@@ -205,7 +224,7 @@ public class CampainMap extends AbstractCampainScreen {
                         Actor a2 = Page.this.levels[actors[i][j + 1]];
 
                         sr.rectLine(a1.getX() + a1.getWidth(), a1.getY() + a1.getHeight()/2,
-                                a2.getX(), a2.getY() + a2.getHeight()/2, 6);
+                                a2.getX(), a2.getY() + a2.getHeight()/2, 2);
                     }
                 }
 //            sr.rectLine(actors[0].getX() + actors[0].getWidth(), actors[0].getY() + actors[0].getHeight()/2,
@@ -269,7 +288,7 @@ public class CampainMap extends AbstractCampainScreen {
             }
             initActors();
 
-            name.setPosition(GDefence.WIDTH/2 - name.getWidth()/2, GDefence.HEIGHT - topPadSize - 100/*/2 + levels[0].getHeight() - 20*/);
+            name.setPosition(GDefence.WIDTH/2f - name.getWidth()/2, GDefence.HEIGHT - topPadSize - 100/*/2 + levels[0].getHeight() - 20*/);
 //            updateLockedLevels();
 
             addActor(link);

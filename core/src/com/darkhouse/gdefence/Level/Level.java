@@ -264,7 +264,7 @@ public class Level {
 
 
 
-    private void winLevel(){
+    public void winLevel(){
         Wave.mobs.clear();//bug when mobs from prev level appear in current
         isWin = true;
         map.setBuild(false, null, null);//bug when when render build grid after change screen

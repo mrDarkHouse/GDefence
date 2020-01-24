@@ -28,9 +28,12 @@ public class LevelButton extends TextButton {
     public boolean isLocked(){
         return !GDefence.getInstance().user.getLevelAvailable(number);
     }
+    private boolean isCompleted(){
+        return GDefence.getInstance().user.getLevelCompleted(number);
+    }
 
     public LevelButton(int number) {
-        super("", GDefence.getInstance().assetLoader.getCampainLevelStyle());
+        super("" + (number - 1), GDefence.getInstance().assetLoader.getCampainLevelStyle());
         this.number = number;
         load();
     }
@@ -70,6 +73,11 @@ public class LevelButton extends TextButton {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        if(isCompleted()){
+            Texture t = GDefence.getInstance().assetLoader.get("openedTower.png", Texture.class);
+//            t.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            batch.draw(t, getX(), getY(), getWidth(), getHeight());
+        }
         super.draw(batch, parentAlpha);
         if(isLocked()){
             Texture t = GDefence.getInstance().assetLoader.get("levelLock.png", Texture.class);

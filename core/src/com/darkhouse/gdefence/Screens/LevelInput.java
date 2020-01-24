@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.darkhouse.gdefence.GDefence;
 
 public class LevelInput implements InputProcessor {
 
@@ -22,6 +23,9 @@ public class LevelInput implements InputProcessor {
         if(keycode == Input.Keys.ESCAPE){
             if(!screen.isPaused()) screen.setPause();
             else screen.offPause();
+        }
+        if(GDefence.getInstance().user.isDebug && keycode == Input.Keys.ENTER){
+            LevelMap.getLevel().winLevel();
         }
         return true;//false if need other listeners
     }

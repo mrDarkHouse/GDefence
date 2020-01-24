@@ -704,20 +704,21 @@ public class User {
             addGold(51160);
             openResearch(Research.Powder);
             openResearch(Research.Mech);
-            towerInventory.store(new TowerObject(ItemEnum.Tower.SteamMachine, 0, 0, 0));
+            towerInventory.store(new TowerObject(ItemEnum.Tower.Glaive, 2, 2, 2));
+//            towerInventory.store(new TowerObject(ItemEnum.Tower.SteamMachine, 0, 0, 0));
             gems[0] = 7;
             gems[1] = 7;
             gems[2] = 8;
             gems[3] = 10;
             gems[4] = 9;
             gems[5] = 41;
-            openLevel(2);
-            openLevel(3);
-            openLevel(4);
-            openLevel(5);
-            openLevel(6);
-            openLevel(7);
-            openLevel(8);
+//            openLevel(2);
+//            openLevel(3);
+//            openLevel(4);
+//            openLevel(5);
+//            openLevel(6);
+//            openLevel(7);
+//            openLevel(8);
 
 
 //            spellInventory.store(new EchoSmash.P(5, 5, 5, 2f, 100, new EchoSmash.G(5, 1f, new int[]{2, 2, 2})));

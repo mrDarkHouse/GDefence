@@ -112,7 +112,7 @@ public class Laser extends GameActor{
 //        System.out.println("pxpy " + px + " " + py);
 
 //        v.add(px, py);
-        System.out.println(v.angle(new Vector2(px, py)));
+//        System.out.println(v.angle(new Vector2(px, py)));
 
         line.setLine(x1, y1, x1 + px, y1 + py);
 //        line.setEndY(y1 + py);
